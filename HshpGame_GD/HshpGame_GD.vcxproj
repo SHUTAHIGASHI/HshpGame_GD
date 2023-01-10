@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXLIB_DIR)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -151,8 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerCube.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="SceneMain.cpp" />
@@ -162,7 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="InputState.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerCube.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneMain.h" />

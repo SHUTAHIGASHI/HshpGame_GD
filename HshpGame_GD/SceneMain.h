@@ -1,6 +1,7 @@
 #pragma once
 
 #include "player.h"
+#include "playerCube.h"
 
 class SceneMain
 {
@@ -29,13 +30,9 @@ private:
 	// 片側の敵の最大出現数
 	static constexpr int kEnemyMax = 10;
 
-private:	
-	// 背景のグラフィックハンドル
-	int m_hBackgroundGraphic;
+private:
 	// キャラクターのグラフィックハンドル
 	int m_hPlayerGraphic;
-	// 敵のグラフィックハンドル
-	int m_hEnemyGraphic;
 
 	// ゲームの制限時間
 	int m_gameTimeRemaining;
@@ -51,5 +48,6 @@ private:
 	bool m_isEnd;
 
 	// プレイヤー
-	Player m_player;
+	Player m_Player;
+	PlayerCube m_cPlayer;
 };

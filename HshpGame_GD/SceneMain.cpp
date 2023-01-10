@@ -1,6 +1,5 @@
-#include "DxLib.h"
-#include "SceneMain.h"
 #include "game.h"
+#include "SceneMain.h"
 
 namespace
 {
@@ -21,9 +20,7 @@ namespace
 
 SceneMain::SceneMain()
 {
-	m_hBackgroundGraphic = -1;
 	m_hPlayerGraphic = -1;
-	m_hEnemyGraphic = -1;
 
 	m_spawnDelay = 0;
 
@@ -42,15 +39,14 @@ void SceneMain::init()
 {
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/playerCube.png");
-	m_hEnemyGraphic = LoadGraph("imagedata/enemy.png");
 
 	// プレイヤー画像と音の設定
-	m_player.setHandle(m_hPlayerGraphic);
+	m_cPlayer.setHandle(m_hPlayerGraphic);
 
 	// プレイヤーの初期位置設定
-	m_player.setPos(Game::kScreenWidthHalf, Game::kScreenHeightHalf);
+	m_cPlayer.setPos(Game::kScreenWidthHalf, Game::kScreenHeightHalf);
 	// プレイヤー初期化 
-	m_player.init();
+	m_cPlayer.init();
 
 	// 各時間用変数の初期化
 	m_spawnDelay = kSpawnDelay;
@@ -66,17 +62,12 @@ void SceneMain::init()
 void SceneMain::end()
 {
 	// 画像データの削除
-	DeleteGraph(m_hBackgroundGraphic);
 	DeleteGraph(m_hPlayerGraphic);
-	DeleteGraph(m_hEnemyGraphic);
 }
 
 // 毎フレームの処理
 void SceneMain::update()
-{
-	// 背景の表示
-	DrawGraph(0, 0, m_hBackgroundGraphic, true);
-	
+{	
 	if (!m_gameTimeRemaining)	// ゲーム残り時間が0になった場合
 	{
 		m_isGameClear = true;	// ゲームクリアとシーン終了を true にする
@@ -88,7 +79,7 @@ void SceneMain::update()
 	}							// タイトルへ戻る
 
 	// プレイヤーの死亡判定が true の場合
-	if (m_player.isDead())
+	if (m_cPlayer.isDead())
 	{
 		// ゲームオーバー遅延を1フレームごとに減少させる
 		m_GameOverDelay--;
@@ -107,7 +98,7 @@ void SceneMain::update()
 	}
 
 	// プレイヤーの更新処理
-	m_player.update();
+	m_cPlayer.update();
 
 	// 当たり判定チェック処理
 	checkCollision();
@@ -117,7 +108,7 @@ void SceneMain::update()
 void SceneMain::draw()
 {
 	// プレイヤーの描画
-	m_player.draw();
+	m_cPlayer.draw();
 
 	// ステージの線の表示
 	DrawLine(0, Game::kStageUpperLimit, Game::kScreenWidth, Game::kStageUpperLimit, GetColor(255, 255, 255));

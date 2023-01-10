@@ -1,5 +1,8 @@
 #pragma once
 
+#include <DxLib.h>
+#include "InputState.h"
+
 namespace Game
 {
 	// ウィンドウモード設定
