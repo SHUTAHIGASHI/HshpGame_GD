@@ -11,22 +11,18 @@ Player::Player():
 {
 }
 
-void Player::init()
+void Player::Init()
 {
 }
 
-void Player::setHandle(int playerHandle)
+void Player::SetHandle(int playerHandle)
 {
 }
 
-void Player::setPos(float x, float y)
+void Player::Update()
 {
 }
 
-void Player::update()
-{
-}
-
-void Player::draw()
+void Player::Draw()
 {
 }

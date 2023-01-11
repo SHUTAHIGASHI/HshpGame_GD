@@ -9,9 +9,7 @@ public:
 	virtual ~PlayerCube() {}
 
 	// プレイヤーの初期化
-	void Init();
-	// プレイヤーの画像セット
-	void SetHandle(int playerHandle);
+	void Init(int playerHandle);
 
 	// プレイヤーの更新処理
 	void Update();
@@ -22,14 +20,17 @@ private:
 	int m_handle;
 
 	// 画像サイズ
-	int m_height;
-	int m_width;
+	float m_height;
+	float m_width;
 
 	// 表示位置
 	Vec2 m_pos;
 
 	// 移動量
 	Vec2 m_vec;
+
+	// 画像角度
+	double m_angle;
 
 	// 死亡判定
 	bool m_isDead;

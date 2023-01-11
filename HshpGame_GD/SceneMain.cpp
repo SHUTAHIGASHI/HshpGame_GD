@@ -40,13 +40,8 @@ void SceneMain::init()
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/playerCube.png");
 
-	// プレイヤー画像と音の設定
-	m_cPlayer.setHandle(m_hPlayerGraphic);
-
-	// プレイヤーの初期位置設定
-	m_cPlayer.setPos(Game::kScreenWidthHalf, Game::kScreenHeightHalf);
 	// プレイヤー初期化 
-	m_cPlayer.init();
+	m_cPlayer.Init(m_hPlayerGraphic);
 
 	// 各時間用変数の初期化
 	m_spawnDelay = kSpawnDelay;
@@ -79,7 +74,7 @@ void SceneMain::update()
 	}							// タイトルへ戻る
 
 	// プレイヤーの死亡判定が true の場合
-	if (m_cPlayer.isDead())
+	if (m_cPlayer.IsDead())
 	{
 		// ゲームオーバー遅延を1フレームごとに減少させる
 		m_GameOverDelay--;
@@ -98,7 +93,7 @@ void SceneMain::update()
 	}
 
 	// プレイヤーの更新処理
-	m_cPlayer.update();
+	m_cPlayer.Update();
 
 	// 当たり判定チェック処理
 	checkCollision();
@@ -108,7 +103,7 @@ void SceneMain::update()
 void SceneMain::draw()
 {
 	// プレイヤーの描画
-	m_cPlayer.draw();
+	m_cPlayer.Draw();
 
 	// ステージの線の表示
 	DrawLine(0, Game::kStageUpperLimit, Game::kScreenWidth, Game::kStageUpperLimit, GetColor(255, 255, 255));

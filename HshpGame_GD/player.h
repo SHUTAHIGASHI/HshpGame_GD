@@ -9,34 +9,32 @@ public:
 	virtual ~Player() {}
 
 	// プレイヤーの初期化
-	virtual void init();
+	virtual void Init();
 	// プレイヤーの画像セット
-	virtual void setHandle(int playerHandle);
-	// プレイヤーの座標設定
-	virtual void setPos(float x, float y);
+	virtual void SetHandle(int playerHandle);
 
 	// プレイヤーの更新処理
-	virtual void update();
+	virtual void Update();
 	// プレイヤーの描画処理
-	virtual void draw();
+	virtual void Draw();
 
 	// プレイヤーの中心座標取得
-	virtual float getCenterX(){ return m_pos.x + (m_width / 2); }
-	virtual float getCenterY(){ return m_pos.y + (m_height / 2); }
+	virtual float GetCenterX(){ return m_pos.x + (m_width / 2); }
+	virtual float GetCenterY(){ return m_pos.y + (m_height / 2); }
 
 	// m_isDead を true にする
-	virtual void setDead() { m_isDead = true; }
+	virtual void SetDead() { m_isDead = true; }
 	// m_isDead を取得
-	virtual bool isDead() { return m_isDead; }
+	virtual bool IsDead() { return m_isDead; }
 
 	// 当たり判定用に四方向の座標取得　
-	float getLeft()	const { return m_pos.x; }
-	float getRight()	const { return m_pos.x + static_cast<float>(m_width); }
-	float getTop()	const { return m_pos.y; }
-	float getBottom() const { return m_pos.y + static_cast<float>(m_height); }
+	float GetLeft()	const { return m_pos.x; }
+	float GetRight()	const { return m_pos.x + static_cast<float>(m_width); }
+	float GetTop()	const { return m_pos.y; }
+	float GetBottom() const { return m_pos.y + static_cast<float>(m_height); }
 	
 	// プレイヤーの座標取得
-	Vec2 getPos() const { return m_pos; }
+	Vec2 GetPos() const { return m_pos; }
 
 private:
 	// 画像データ
