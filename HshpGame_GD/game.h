@@ -2,6 +2,7 @@
 
 #include <DxLib.h>
 #include "InputState.h"
+#include "Vec2.h"
 
 namespace Game
 {
@@ -26,5 +27,5 @@ namespace Game
 	constexpr int kFontSize = 60;
 
 	// プレイヤーの基本設定
-	constexpr int kPlayerSize = 64;
+	constexpr int kBlockSize = 64;
 }

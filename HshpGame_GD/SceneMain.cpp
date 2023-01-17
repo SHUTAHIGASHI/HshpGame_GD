@@ -40,7 +40,9 @@ void SceneMain::init()
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCube.png");
 
+	m_Stage.Init();
 	// プレイヤー初期化 
+
 	m_cPlayer.Init(m_hPlayerGraphic);
 
 	// 各時間用変数の初期化
@@ -92,6 +94,8 @@ void SceneMain::update(const InputState& input)
 		m_spawnDelay = kSpawnDelay;
 	}
 
+	m_Stage.Update();
+
 	// プレイヤーの更新処理
 	m_cPlayer.Update(input);
 
@@ -102,12 +106,10 @@ void SceneMain::update(const InputState& input)
 // 毎フレームの描画
 void SceneMain::draw()
 {
+	m_Stage.Draw();
+
 	// プレイヤーの描画
 	m_cPlayer.Draw();
-
-	// ステージの線の表示
-	DrawLine(0, Game::kStageUpperLimit, Game::kScreenWidth, Game::kStageUpperLimit, GetColor(255, 255, 255));
-	DrawLine(0, Game::kStageLowerLimit, Game::kScreenWidth, Game::kStageLowerLimit, GetColor(255, 255, 255));
 
 	// フォントサイズ設定
 	SetFontSize(Game::kFontSize);

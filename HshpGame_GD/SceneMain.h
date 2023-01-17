@@ -2,6 +2,7 @@
 
 #include "player.h"
 #include "playerCube.h"
+#include "Stage.h"
 
 class SceneMain
 {
@@ -50,4 +51,5 @@ private:
 	// ƒvƒŒƒCƒ„[
 	Player m_Player;
 	PlayerCube m_cPlayer;
+	Stage m_Stage;
 };

@@ -31,6 +31,12 @@
     <Filter Include="ヘッダー ファイル\Util">
       <UniqueIdentifier>{8256d2c3-bc65-48f3-8ca6-0156b661828a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\StageObject">
+      <UniqueIdentifier>{e0ee5f07-740e-4c71-a338-da665125ccfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\StageObject">
+      <UniqueIdentifier>{c47cc162-fc6f-4c91-96ef-448c62956281}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +69,12 @@
     <ClCompile Include="InputState.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
+    <ClCompile Include="MapObject.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneBase.h">
@@ -94,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="InputState.h">
       <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObject.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

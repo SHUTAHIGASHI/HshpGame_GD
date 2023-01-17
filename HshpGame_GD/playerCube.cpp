@@ -48,37 +48,23 @@ void PlayerCube::Update(const InputState& input)
     {
         m_angle = 0;
         m_pos.y = Game::kStageLowerLimit - m_height;
+
+        m_pos.y = static_cast<float>(Game::kStageLowerLimit - m_height);    // ステージの範囲より下には行かない
         isField = true;
+
     }
 
-    if (input.IsTriggered(InputType::space))
+    if (input.IsPressed(InputType::space))
     {
         if (isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
         }
     }
-
-    // 画面端に行こうとした場合
-    if (GetLeft() < 0)
-    {
-        m_pos.x = 0.0f;    // 画面端より左には行かない
-        m_vec.x *= -1;
-    }
-    if (GetRight() > Game::kScreenWidth)
-    {
-        m_pos.x = static_cast<float>(Game::kScreenWidth - m_width); // 画面端より右には行かない
-        m_vec.x *= -1;
-    }
-    // ステージの範囲外に行こうとした場合
-    if (GetBottom() > Game::kStageLowerLimit)
-    {
-        m_pos.y = static_cast<float>(Game::kStageLowerLimit - m_height);    // ステージの範囲より下には行かない
-    }
 }
 
 void PlayerCube::Draw()
 {
 	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
-	DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
+	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
