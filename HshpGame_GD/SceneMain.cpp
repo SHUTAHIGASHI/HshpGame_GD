@@ -38,7 +38,7 @@ SceneMain::~SceneMain()
 void SceneMain::init()
 {
 	// 画像データの読み込み
-	m_hPlayerGraphic = LoadGraph("imagedata/playerCube.png");
+	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCube.png");
 
 	// プレイヤー初期化 
 	m_cPlayer.Init(m_hPlayerGraphic);
@@ -61,7 +61,7 @@ void SceneMain::end()
 }
 
 // 毎フレームの処理
-void SceneMain::update()
+void SceneMain::update(const InputState& input)
 {	
 	if (!m_gameTimeRemaining)	// ゲーム残り時間が0になった場合
 	{
@@ -93,10 +93,10 @@ void SceneMain::update()
 	}
 
 	// プレイヤーの更新処理
-	m_cPlayer.Update();
+	m_cPlayer.Update(input);
 
 	// 当たり判定チェック処理
-	checkCollision();
+	//checkCollision();
 }
 
 // 毎フレームの描画

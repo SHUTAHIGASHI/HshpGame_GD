@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game.h"
 #include "SceneTitle.h"
 #include "SceneMain.h"
 #include "SceneClear.h"
@@ -27,7 +28,7 @@ public:
 	void end();
 
 	// XV
-	void update();
+	void update(const InputState& input);
 	// •`‰æ
 	void draw();
 

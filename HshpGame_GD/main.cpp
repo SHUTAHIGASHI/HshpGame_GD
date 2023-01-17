@@ -23,6 +23,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ゲーム終了判定用の変数作成
 	int isGameMusicEnd = false;
 
+	InputState input;
+
 	SceneManager scene;
 
 	// 画像のロード
@@ -35,8 +37,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面のクリア
 		ClearDrawScreen();
 
+		input.Update();
+
 		// 現在のシーンの更新
-		scene.update();
+		scene.update(input);
 
 		// 現在のシーンの描画
 		scene.draw();

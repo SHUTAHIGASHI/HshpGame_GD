@@ -15,7 +15,7 @@ public:
 	void end();
 
 	// 毎フレームの処理
-	void update();
+	void update(const InputState& input);
 	// 毎フレームの描画
 	void draw();
 	// 当たり判定チェック処理

@@ -5,6 +5,7 @@ Player::Player():
 	m_handle(-1),
 	m_height(0),
 	m_width(0),
+	m_angle(0.0f),
 	m_pos(),
 	m_vec(),
 	m_isDead(false)

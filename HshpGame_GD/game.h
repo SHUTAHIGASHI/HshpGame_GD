@@ -24,4 +24,7 @@ namespace Game
 	
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;
+
+	// プレイヤーの基本設定
+	constexpr int kPlayerSize = 64;
 }

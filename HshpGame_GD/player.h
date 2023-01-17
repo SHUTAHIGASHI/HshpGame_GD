@@ -17,7 +17,7 @@ public:
 	virtual void Update();
 	// プレイヤーの描画処理
 	virtual void Draw();
-
+	
 	// プレイヤーの中心座標取得
 	virtual float GetCenterX(){ return m_pos.x + (m_width / 2); }
 	virtual float GetCenterY(){ return m_pos.y + (m_height / 2); }
@@ -36,13 +36,16 @@ public:
 	// プレイヤーの座標取得
 	Vec2 GetPos() const { return m_pos; }
 
-private:
+protected:
 	// 画像データ
 	int m_handle;
 
 	// 画像サイズ
-	int m_height;
-	int m_width;
+	float m_height;
+	float m_width;
+
+	// 画像表示角度
+	float m_angle;
 
 	// 表示位置
 	Vec2 m_pos;

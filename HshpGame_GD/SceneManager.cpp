@@ -60,7 +60,7 @@ void SceneManager::end()
 }
 
 // 更新
-void SceneManager::update()
+void SceneManager::update(const InputState& input)
 {
 	// 現在のシーンの更新処理を実行する
 	bool isEnd = false;
@@ -71,7 +71,7 @@ void SceneManager::update()
 		isEnd = m_title.isEnd();
 		break;
 	case SceneManager::kSceneKindMain:
-		m_main.update();	// シーンメインの更新
+		m_main.update(input);	// シーンメインの更新
 		isEnd = m_main.isEnd();
 		break;
 	case SceneManager::kSceneKindClear:
