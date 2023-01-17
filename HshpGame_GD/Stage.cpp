@@ -29,7 +29,7 @@ void Stage::Update()
 
 		if (m_pos[i].x + Game::kBlockSize < 0.0f)
 		{
-			m_pos[i].x = m_pos[kBlockMax - 1].x + Game::kBlockSize;
+			
 		}
 	}
 	m_Object.Update();
