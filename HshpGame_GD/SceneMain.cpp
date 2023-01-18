@@ -45,6 +45,8 @@ void SceneMain::init()
 
 	m_cPlayer.Init(m_hPlayerGraphic);
 
+	m_cPlayer.setObject(&m_Object);
+
 	// ŠeŠÔ—p•Ï”‚Ì‰Šú‰»
 	m_spawnDelay = kSpawnDelay;
 	m_gameTimeRemaining = kGameMaxTime;

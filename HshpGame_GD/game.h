@@ -6,6 +6,7 @@
 
 namespace Game
 {
+	// システム基本設定 //
 	// ウィンドウモード設定
 	constexpr bool kWindowMode = true;
 	// ウィンドウ名
@@ -26,6 +27,9 @@ namespace Game
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;
 
+	// ゲームの基本設定 //
 	// プレイヤーの基本設定
-	constexpr int kBlockSize = 64;
+	constexpr float kBlockSize = 64.0f;
+	// 基本移動速度
+	constexpr float kMoveSpeed = 7.0f;
 }

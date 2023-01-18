@@ -1,4 +1,5 @@
 #include "playerCube.h"
+#include "MapObject.h"
 #include "game.h"
 
 namespace
@@ -20,7 +21,8 @@ namespace
     constexpr float kGravity = 2.0f;
 }
 
-PlayerCube::PlayerCube()
+PlayerCube::PlayerCube() :
+    pObject(nullptr)
 {
 }
 
@@ -61,6 +63,8 @@ void PlayerCube::Update(const InputState& input)
             m_vec.y = kJumpAcc;	// ジャンプ開始
         }
     }
+
+    m_isDead = pObject->CollisionCheck(m_pos.x, m_pos.y);
 }
 
 void PlayerCube::Draw()

@@ -5,7 +5,7 @@
 
 namespace
 {
-	constexpr int kBlockMax = 40;
+	constexpr int kBlockMax = 22;
 }
 
 class Stage
@@ -19,7 +19,11 @@ public:
 	void Update();
 
 	void Draw();
+
+	//bool IsHit() { return isHit; }
 private:
+	//bool isHit;
+	
 	// ブロック座標
 	Vec2 m_pos[kBlockMax];
 	Vec2 m_vec;
