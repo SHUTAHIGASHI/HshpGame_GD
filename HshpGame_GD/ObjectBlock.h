@@ -10,7 +10,7 @@ public:
 
     void Init();
 
-    void SetPos();
+    void SetPos(float X, float Y);
 
     void Update();
 

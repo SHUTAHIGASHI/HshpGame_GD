@@ -20,7 +20,7 @@ void Stage::Init()
 	}
 	
 	m_Object.Init();
-	m_Object.SetPos();
+	m_Object.SetPos(Game::kScreenWidthHalf, Game::kStageLowerLimit - Game::kBlockSize);
 }
 
 void Stage::Update()

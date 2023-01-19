@@ -83,7 +83,7 @@ void PlayerCube::Update(const InputState& input)
 
     if (pStage->CollisionCheck(m_pos))
     {
-        m_vec.x = 0;
+        m_vec.y = 0;
     }
 }
 
