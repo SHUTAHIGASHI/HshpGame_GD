@@ -1,6 +1,6 @@
 #include "playerCube.h"
-#include "ObjectBlock.h"
 #include "game.h"
+#include "Stage.h"
 
 namespace
 {
@@ -22,7 +22,7 @@ namespace
 }
 
 PlayerCube::PlayerCube() :
-    pObject(nullptr)
+    pStage(nullptr)
 {
 }
 
@@ -81,7 +81,7 @@ void PlayerCube::Update(const InputState& input)
         }
     }
 
-    if (pObject->CollisionCheck(m_pos.x, m_pos.y))
+    if (pStage->CollisionCheck(m_pos))
     {
         m_vec.x = 0;
     }

@@ -5,7 +5,7 @@
 
 namespace
 {
-	constexpr int kBlockMax = 22;
+	constexpr int kBlockMax = 30;
 }
 
 class Stage
@@ -19,6 +19,8 @@ public:
 	void Update();
 
 	void Draw();
+
+	bool CollisionCheck(Vec2 playerPos);
 
 	//bool IsHit() { return isHit; }
 private:

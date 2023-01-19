@@ -68,3 +68,15 @@ void Stage::Draw()
 	
 	m_Object.Draw();
 }
+
+bool Stage::CollisionCheck(Vec2 playerPos)
+{
+	// 当たっていない場合処理をスキップ
+	if (m_Object.GetRight() <= playerPos.x) return false;
+	if (playerPos.x + Game::kBlockSize <= m_Object.GetLeft()) return false;
+	if (m_Object.GetBottom() <= playerPos.y) return false;
+	if (playerPos.y + Game::kBlockSize <= m_Object.GetTop()) return false;
+
+	// 当たっている場合プレイヤーを死亡判定にする
+	return true;
+}

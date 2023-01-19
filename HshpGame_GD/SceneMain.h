@@ -55,7 +55,6 @@ private:
 	Player m_Player;
 	PlayerCube m_cPlayer;
 	Stage m_Stage;
-	ObjectBlock m_Object;
 
 	Hp hp;
 };

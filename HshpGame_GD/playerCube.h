@@ -1,7 +1,7 @@
 #include "game.h"
 #include "player.h"
 
-class ObjectBlock;
+class Stage;
 
 class PlayerCube :
     public Player
@@ -10,7 +10,7 @@ public:
 	PlayerCube();
 	virtual ~PlayerCube() {}
 
-	void setObject(ObjectBlock* Object) { pObject = Object; }
+	void setStage(Stage* stage) { pStage = stage; }
 
 	// ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
 	void Init(int playerHandle);
@@ -21,5 +21,5 @@ public:
 	void Draw();
 
 private:
-	ObjectBlock* pObject;
+	Stage* pStage;
 };

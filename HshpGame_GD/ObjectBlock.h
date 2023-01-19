@@ -15,7 +15,4 @@ public:
     void Update();
 
     void Draw();
-
-    bool CollisionCheck(float X, float Y);
 };
-
