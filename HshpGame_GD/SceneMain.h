@@ -3,7 +3,9 @@
 #include "player.h"
 #include "playerCube.h"
 #include "Stage.h"
-#include "MapObject.h"
+#include "ObjectBlock.h"
+
+#include "Hp.h"
 
 class SceneMain
 {
@@ -53,5 +55,7 @@ private:
 	Player m_Player;
 	PlayerCube m_cPlayer;
 	Stage m_Stage;
-	MapObject m_Object;
+	ObjectBlock m_Object;
+
+	Hp hp;
 };

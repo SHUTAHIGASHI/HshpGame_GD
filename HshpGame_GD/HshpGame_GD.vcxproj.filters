@@ -69,11 +69,17 @@
     <ClCompile Include="InputState.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="MapObject.cpp">
-      <Filter>ソース ファイル\StageObject</Filter>
-    </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBase.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBlock.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Hp.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,11 +113,25 @@
     <ClInclude Include="InputState.h">
       <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="MapObject.h">
-      <Filter>ヘッダー ファイル\StageObject</Filter>
-    </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectBase.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBlock.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HshpGame_GD.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

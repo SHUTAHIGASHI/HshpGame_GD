@@ -1,5 +1,5 @@
 #include "playerCube.h"
-#include "MapObject.h"
+#include "ObjectBlock.h"
 #include "game.h"
 
 namespace
@@ -35,13 +35,19 @@ void PlayerCube::Init(int playerHandle)
 
 	m_pos.x = Game::kScreenWidthHalf - (m_width / 2);
 	m_pos.y = Game::kScreenHeightHalf - (m_height / 2);
+
+    m_vec.x = Game::kMoveSpeed;
+    m_vec.y = 0;
+
+    isMoveRight = true;
 }
 
 void PlayerCube::Update(const InputState& input)
 {
     m_pos += m_vec;
     m_vec.y += kGravity;
-    m_angle += kRotaSpeed;
+    if(isMoveRight) m_angle += kRotaSpeed;
+    else m_angle += -kRotaSpeed;
 
     // ’n–Ê‚Æ‚Ì“–‚½‚è”»’è
     bool isField = false;
@@ -56,6 +62,17 @@ void PlayerCube::Update(const InputState& input)
 
     }
 
+    if (m_pos.x < 0)
+    {
+        m_vec.x *= -1;
+        isMoveRight = true;
+    }
+    else if (m_pos.x  + Game::kBlockSize > Game::kScreenWidth)
+    {
+        m_vec.x *= -1;
+        isMoveRight = false;
+    }
+
     if (input.IsPressed(InputType::space))
     {
         if (isField)
@@ -64,7 +81,10 @@ void PlayerCube::Update(const InputState& input)
         }
     }
 
-    m_isDead = pObject->CollisionCheck(m_pos.x, m_pos.y);
+    if (pObject->CollisionCheck(m_pos.x, m_pos.y))
+    {
+        m_vec.x = 0;
+    }
 }
 
 void PlayerCube::Draw()

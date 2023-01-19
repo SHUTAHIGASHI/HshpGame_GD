@@ -6,6 +6,7 @@ Player::Player():
 	m_height(0),
 	m_width(0),
 	m_angle(0.0f),
+	isMoveRight(false),
 	m_pos(),
 	m_vec(),
 	m_isDead(false)

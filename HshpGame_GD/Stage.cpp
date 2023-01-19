@@ -18,8 +18,9 @@ void Stage::Init()
 		m_pos[i].x = i * Game::kBlockSize;
 		m_pos[i].y = Game::kStageLowerLimit;
 	}
-
+	
 	m_Object.Init();
+	m_Object.SetPos();
 }
 
 void Stage::Update()
@@ -42,7 +43,7 @@ void Stage::Update()
 			m_pos[i].x = tempMaxX + Game::kBlockSize;
 			if (i == 0) m_pos[i].x -= Game::kMoveSpeed;
 		}
-	}
+	}	
 	
 	m_Object.Update();
 }
@@ -60,8 +61,10 @@ void Stage::Draw()
 		else textColor = 0xFF00FF;
 		
 		DrawBox(m_pos[i].x, m_pos[i].y, m_pos[i].x + Game::kBlockSize, m_pos[i].y+ Game::kBlockSize, textColor, false);
+	
+		
+		// ステージギミックの描画
 	}
-
-	// ステージギミックの描画
+	
 	m_Object.Draw();
 }

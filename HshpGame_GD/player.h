@@ -47,6 +47,9 @@ protected:
 	// 画像表示角度
 	float m_angle;
 
+	// 移動方向
+	bool isMoveRight;
+
 	// 表示位置
 	Vec2 m_pos;
 

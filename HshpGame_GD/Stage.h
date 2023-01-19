@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game.h"
-#include "MapObject.h"
+#include "ObjectBlock.h"
 
 namespace
 {
@@ -30,6 +30,6 @@ private:
 	
 	//int m_stage[40];
 
-	MapObject m_Object;
+	ObjectBlock m_Object;
 };
 

@@ -151,9 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hp.cpp" />
     <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MapObject.cpp" />
+    <ClCompile Include="ObjectBase.cpp" />
+    <ClCompile Include="ObjectBlock.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerCube.cpp" />
     <ClCompile Include="SceneBase.cpp" />
@@ -166,10 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="Hp.h" />
     <ClInclude Include="InputState.h" />
-    <ClInclude Include="MapObject.h" />
+    <ClInclude Include="ObjectBase.h" />
+    <ClInclude Include="ObjectBlock.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerCube.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneMain.h" />
@@ -177,6 +182,9 @@
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Vec2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="HshpGame_GD.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
