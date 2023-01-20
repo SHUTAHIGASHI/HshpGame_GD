@@ -22,8 +22,6 @@ public:
 	void update(const InputState& input);
 	// 毎フレームの描画
 	void draw();
-	// 当たり判定チェック処理
-	void checkCollision();
 
 	// m_isGameClearを取得
 	virtual bool isGameClear() { return m_isGameClear; }

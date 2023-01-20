@@ -17,9 +17,12 @@ public:
 
 	// プレイヤーの更新処理
 	void Update(const InputState& input);
+	
+	// プレイヤーの操作処理
+	void OperatePlayer(const InputState& input);
+	
 	// プレイヤーの描画処理
 	void Draw();
-
 private:
 	Stage* pStage;
 };

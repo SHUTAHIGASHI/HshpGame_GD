@@ -8,7 +8,8 @@ enum class InputType
 	left,	// ç∂
 	up,		// è„
 	down,	// â∫
-	space
+	space,
+	jump
 };
 
 class InputState

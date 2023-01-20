@@ -50,6 +50,9 @@ protected:
 	// 移動方向
 	bool isMoveRight;
 
+	// 地面との当たり判定用変数
+	bool isField;
+
 	// 表示位置
 	Vec2 m_pos;
 

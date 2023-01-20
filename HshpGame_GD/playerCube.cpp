@@ -50,7 +50,7 @@ void PlayerCube::Update(const InputState& input)
     else m_angle += -kRotaSpeed;
 
     // 地面との当たり判定
-    bool isField = false;
+    isField = false;
 
     if (m_pos.y > Game::kStageLowerLimit - m_height)
     {
@@ -59,7 +59,6 @@ void PlayerCube::Update(const InputState& input)
 
         m_pos.y = static_cast<float>(Game::kStageLowerLimit - m_height);    // ステージの範囲より下には行かない
         isField = true;
-
     }
 
     if (m_pos.x < 0)
@@ -73,17 +72,23 @@ void PlayerCube::Update(const InputState& input)
         isMoveRight = false;
     }
 
-    if (input.IsPressed(InputType::space))
+    if (pStage->CollisionCheck(m_pos))
+    {
+        m_vec.y = 0;
+        isField = true;
+    }
+
+    OperatePlayer(input);
+}
+
+void PlayerCube::OperatePlayer(const InputState& input)
+{
+    if (input.IsPressed(InputType::jump))
     {
         if (isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
         }
-    }
-
-    if (pStage->CollisionCheck(m_pos))
-    {
-        m_vec.y = 0;
     }
 }
 

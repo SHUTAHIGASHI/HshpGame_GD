@@ -58,13 +58,10 @@ bool InputState::IsPressed(InputType type)const
 	{
 		return keyState[KEY_INPUT_RETURN];
 	}
-	else if (type == InputType::space)
+	else if (type == InputType::jump)
 	{
-		return keyState[KEY_INPUT_SPACE];
-	}
-	else if (type == InputType::up)
-	{
-		return keyState[KEY_INPUT_UP];
+		return keyState[KEY_INPUT_SPACE] ||
+			keyState[KEY_INPUT_UP];
 	}
 	return false;
 }

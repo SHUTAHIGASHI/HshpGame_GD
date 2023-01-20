@@ -24,6 +24,7 @@ public:
 	virtual float GetTop()	const { return m_pos.y; }
 	virtual float GetBottom() const { return m_pos.y + Game::kBlockSize; }
 
+	virtual Vec2 GetPos() const { return m_pos; }
 protected:
 	// ブロック表示位置
 	Vec2 m_pos;

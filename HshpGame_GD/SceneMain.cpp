@@ -78,7 +78,7 @@ void SceneMain::update(const InputState& input)
 	}
 	else if (!m_GameOverDelay)	// ゲームオーバー遅延が0になった場合
 	{
-		//m_isEnd = true;			// シーン終了のみを true にする			
+		m_isEnd = true;			// シーン終了のみを true にする			
 	}							// タイトルへ戻る
 
 	// プレイヤーの死亡判定が true の場合
@@ -104,9 +104,6 @@ void SceneMain::update(const InputState& input)
 
 	// プレイヤーの更新処理
 	m_cPlayer.Update(input);
-
-	// 当たり判定チェック処理
-	//checkCollision();
 }
 
 // 毎フレームの描画
@@ -137,18 +134,4 @@ void SceneMain::draw()
 		blue = 0;
 	}
 	DrawFormatString(kTimerPositionX, kTimerPositionY, GetColor(red, green, blue), "%d", m_gameTimeRemaining / 60);
-}
-
-// 当たり判定チェック処理
-void SceneMain::checkCollision()
-{
-	/*
-	// 当たっていない場合処理をスキップ
-	if (EnemyLeft.getRight() <= m_player.getLeft()) continue;
-	if (m_player.getRight() <= EnemyLeft.getLeft()) continue;
-	if (EnemyLeft.getBottom() <= m_player.getTop()) continue;
-	if (m_player.getBottom() <= EnemyLeft.getTop()) continue;
-	// 当たっている場合プレイヤーを死亡判定にする
-	m_player.setDead();
-	*/
 }
