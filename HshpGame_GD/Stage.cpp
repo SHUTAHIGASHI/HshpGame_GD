@@ -1,5 +1,6 @@
 #include "Stage.h"
 #include "game.h"
+#include "playerCube.h"
 
 namespace
 {
@@ -31,7 +32,8 @@ namespace
 	};
 }
 
-Stage::Stage()
+Stage::Stage() :
+	pCube(nullptr)
 {
 
 }
@@ -127,7 +129,7 @@ bool Stage::IsUnder(Vec2 playerPos)
 		{
 			if(m_stage[i][j] == 1)
 			{
-				// プレイヤーの下面、ブロックの上面での判定
+				// プレイヤーの中心、ブロックの上面での判定
 				if (playerPos.y + (Game::kBlockSize / 2) < m_Object[i][j].GetPos().y) return true;
 			}
 		}

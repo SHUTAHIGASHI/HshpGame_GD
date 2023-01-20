@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "ObjectBlock.h"
 
+class PlayerCube;
+
 namespace
 {
 
@@ -13,6 +15,8 @@ class Stage
 public:
 	Stage();
 	~Stage(){}
+	
+	void setPlayer(PlayerCube* cube) { pCube = cube; }
 
 	void Init();
 	
@@ -27,5 +31,7 @@ private:
 	//bool isHit;
 
 	ObjectBlock m_Object[Game::kScreenHeightNum][Game::kScreenWidthNum];
+
+	PlayerCube* pCube;
 };
 

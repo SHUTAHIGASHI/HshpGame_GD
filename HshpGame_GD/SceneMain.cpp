@@ -44,6 +44,7 @@ void SceneMain::init()
 	m_cPlayer.setStage(&m_Stage);
 
 	m_Stage.Init();
+	m_Stage.setPlayer(&m_cPlayer);
 
 	// ŠeŠÔ—p•Ï”‚Ì‰Šú‰»
 	m_spawnDelay = kSpawnDelay;
