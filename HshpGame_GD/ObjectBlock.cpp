@@ -6,8 +6,6 @@ ObjectBlock::ObjectBlock()
 
 void ObjectBlock::Init()
 {
-	m_pos.x = 0;
-	m_pos.y = 0;
 }
 
 void ObjectBlock::SetPos(float X, float Y)
@@ -18,9 +16,6 @@ void ObjectBlock::SetPos(float X, float Y)
 
 void ObjectBlock::Update()
 {
-	//m_pos.x += -Game::kMoveSpeed;
-
-	if (m_pos.x + Game::kBlockSize <= 0) m_pos.x = Game::kScreenWidth + Game::kBlockSize;
 }
 
 void ObjectBlock::Draw()

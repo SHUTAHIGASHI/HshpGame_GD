@@ -78,12 +78,10 @@ void PlayerCube::Update(const InputState& input)
             isField = true;
         }
     }
-    else
+    else 
     {
-        m_isDead = (pStage->CollisionCheck(m_pos));
+        m_isDead = pStage->CollisionCheck(m_pos);
     }
-
-    //m_isDead = pStage->CollisionCheck(m_pos);
 
     OperatePlayer(input);
 }

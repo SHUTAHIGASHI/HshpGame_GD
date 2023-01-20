@@ -7,6 +7,7 @@ Player::Player():
 	m_width(0),
 	m_angle(0.0f),
 	isMoveRight(false),
+	isField(false),
 	m_pos(),
 	m_vec(),
 	m_isDead(false)

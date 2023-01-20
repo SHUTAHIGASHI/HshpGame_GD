@@ -5,8 +5,6 @@
 #include "Stage.h"
 #include "ObjectBlock.h"
 
-#include "Hp.h"
-
 class SceneMain
 {
 public:
@@ -53,6 +51,4 @@ private:
 	Player m_Player;
 	PlayerCube m_cPlayer;
 	Stage m_Stage;
-
-	Hp hp;
 };

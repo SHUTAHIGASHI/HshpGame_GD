@@ -1,85 +1,137 @@
 #include "Stage.h"
 #include "game.h"
 
-Stage::Stage() :
-	m_pos(),
-	m_vec(),
-	m_stage()
+namespace
+{
+	//マップデータ
+	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0},
+		{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0},
+
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
+	};
+}
+
+Stage::Stage()
 {
 
 }
 
 void Stage::Init()
-{
-	for (int i = 0; i < Game::kScreenWidthNum; i++)
+{	
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenHeightNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			m_stage[i][j] = false;
+			m_Object[i][j].Init();
+
+			int blockPosX, blockPosY;
+			blockPosX = j * Game::kBlockSize;
+			blockPosY = i * Game::kBlockSize;
+			
+			if (m_stage[i][j] == 1)
+			{
+				m_Object[i][j].SetPos(blockPosX, blockPosY);
+			}
 		}
 	}
-	
-	m_vec.x = -Game::kMoveSpeed;
-	m_vec.y = 0.0f;
-	
-	m_pos.x = Game::kStageLowerLimit;
-	m_pos.y = Game::kStageLowerLimit;
-	
-	
-	m_Object.Init();
-	m_Object.SetPos(Game::kScreenWidthHalf, Game::kStageLowerLimit - Game::kBlockSize);
 }
 
 void Stage::Update()
 {	
-	m_Object.Update();
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
+		{
+			//m_Object[i][j].Update();
+		}
+	}
 }
 
 void Stage::Draw()
 {
-	// ステージの線の表示
-	DrawLine(0, Game::kStageUpperLimit, Game::kScreenWidth, Game::kStageUpperLimit, 0xffffff);
-
-	int stageColor = 0x40e0d0;
-
-	DrawBox(0, Game::kStageLowerLimit, Game::kScreenWidth, Game::kStageLowerLimit + Game::kBlockSize, stageColor, true);
-
-	stageColor = 0xe0ffff;
-
-	DrawLine(0, Game::kStageLowerLimit, Game::kScreenWidth, Game::kStageLowerLimit, stageColor, true);
-	DrawLine(0, Game::kStageLowerLimit + Game::kBlockSize, Game::kScreenWidth, Game::kStageLowerLimit + Game::kBlockSize, stageColor, true);
-	
-	for (int i = 0; i < Game::kScreenWidthNum; i++)
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenHeightNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			int drawPosX = 0, drawPosY = 0;
-			drawPosX = (i * Game::kBlockSize);
-			drawPosY = (j * Game::kBlockSize);
+			drawPosX = (j * Game::kBlockSize);
+			drawPosY = (i * Game::kBlockSize);
+			
+			// デバック用白線
+			DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, 0xFFFFFF, false);
 
-			DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, stageColor, false);
+			if (m_stage[i][j] == 2)
+			{
+				int stageColor = 0x40e0d0;
+
+				DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, stageColor, true);
+
+				stageColor = 0x483d8b;
+
+				DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, stageColor, false);
+			
+			}			
+				
+			if (m_stage[i][j] == 1)
+			{
+				// ステージギミックの描画
+				m_Object[i][j].Draw();
+			}
 		}
 	}
-
-	// ステージギミックの描画
-	m_Object.Draw();
 }
 
 bool Stage::CollisionCheck(Vec2 playerPos)
 {
-	// 当たっていない場合処理をスキップ
-	if (m_Object.GetRight() < playerPos.x) return false;
-	if (playerPos.x + Game::kBlockSize < m_Object.GetLeft()) return false;
-	if (m_Object.GetBottom() < playerPos.y) return false;
-	if (playerPos.y + Game::kBlockSize < m_Object.GetTop()) return false;
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
+		{
+			// 当たっている場合プレイヤーを死亡判定にする
+			if (m_Object[i][j].GetRight() >= playerPos.x &&
+				playerPos.x + Game::kBlockSize >= m_Object[i][j].GetLeft() &&
+				m_Object[i][j].GetBottom() >= playerPos.y &&
+				playerPos.y + Game::kBlockSize >= m_Object[i][j].GetTop()) return true;
+		}
+	}
 
-	// 当たっている場合プレイヤーを死亡判定にする
-	return true;
+	// 当たっていない場合処理をスキップ
+	return false;
 }
 
 bool Stage::IsUnder(Vec2 playerPos)
-{
-	if (playerPos.y + (Game::kBlockSize / 2) < m_Object.GetCenterY()) return true;
-	
+{	
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
+		{
+			if(m_stage[i][j] == 1)
+			{
+				// プレイヤーの下面、ブロックの上面での判定
+				if (playerPos.y + (Game::kBlockSize / 2) < m_Object[i][j].GetPos().y) return true;
+			}
+		}
+	}
+
 	return false;
 }

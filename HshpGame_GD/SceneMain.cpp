@@ -37,17 +37,13 @@ SceneMain::~SceneMain()
 // 初期化
 void SceneMain::init()
 {
-	hp.init();
-
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCubeMini.png");
+	// プレイヤー初期化 
+	m_cPlayer.Init(m_hPlayerGraphic);
+	m_cPlayer.setStage(&m_Stage);
 
 	m_Stage.Init();
-	// プレイヤー初期化 
-
-	m_cPlayer.Init(m_hPlayerGraphic);
-
-	m_cPlayer.setStage(&m_Stage);
 
 	// 各時間用変数の初期化
 	m_spawnDelay = kSpawnDelay;
@@ -69,8 +65,6 @@ void SceneMain::end()
 // 毎フレームの処理
 void SceneMain::update(const InputState& input)
 {	
-	hp.update(input);
-
 	if (!m_gameTimeRemaining)	// ゲーム残り時間が0になった場合
 	{
 		//m_isGameClear = true;	// ゲームクリアとシーン終了を true にする
@@ -84,6 +78,8 @@ void SceneMain::update(const InputState& input)
 	// プレイヤーの死亡判定が true の場合
 	if (m_cPlayer.IsDead())
 	{
+		m_isEnd = true;
+		
 		// ゲームオーバー遅延を1フレームごとに減少させる
 		m_GameOverDelay--;
 		return;
@@ -109,8 +105,6 @@ void SceneMain::update(const InputState& input)
 // 毎フレームの描画
 void SceneMain::draw()
 {
-	hp.draw();
-
 	m_Stage.Draw();
 
 	// プレイヤーの描画

@@ -3,6 +3,7 @@
 #include <DxLib.h>
 #include "InputState.h"
 #include "Vec2.h"
+#include <vector>
 
 namespace Game
 {
@@ -27,7 +28,7 @@ namespace Game
 	// プレイヤーの基本設定
 	constexpr float kBlockSize = 48.0f;
 	// 基本移動速度
-	constexpr float kMoveSpeed = 5.0f;
+	constexpr float kMoveSpeed = 7.0f;
 
 	// ゲームのステージサイズ
 	constexpr int kStageUpperLimit = Game::kBlockSize * 4;
