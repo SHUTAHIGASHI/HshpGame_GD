@@ -5,7 +5,7 @@
 
 namespace
 {
-	constexpr int kBlockMax = 30;
+
 }
 
 class Stage
@@ -24,7 +24,7 @@ public:
 
 	void GetBlockPos(Vec2& blockPos){ blockPos = m_Object.GetPos(); }
 
-	//bool IsHit() { return isHit; }
+	bool IsUnder(Vec2 playerPos);
 private:
 	//bool isHit;
 	
@@ -32,7 +32,7 @@ private:
 	Vec2 m_pos;
 	Vec2 m_vec;
 	
-	//int m_stage[40];
+	int m_stage[Game::kScreenWidthNum][Game::kScreenHeightNum];
 
 	ObjectBlock m_Object;
 };

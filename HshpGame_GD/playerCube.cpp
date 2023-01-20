@@ -4,9 +4,6 @@
 
 namespace
 {
-    // ˆÚ“®‘¬“x
-    constexpr float kMoveSpeed = 12.0f;
-
     // ‰æ‘œ‚Ì‰ñ“]‘¬“x
     constexpr float kRotaSpeed = 0.2f;
 
@@ -33,8 +30,8 @@ void PlayerCube::Init(int playerHandle)
 	
 	m_isDead = false;
 
-	m_pos.x = Game::kScreenWidthHalf - (m_width / 2);
-	m_pos.y = Game::kScreenHeightHalf - (m_height / 2);
+	m_pos.x = 0;
+	m_pos.y = Game::kStageLowerLimit - (m_height / 2);
 
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
@@ -72,11 +69,21 @@ void PlayerCube::Update(const InputState& input)
         isMoveRight = false;
     }
 
-    if (pStage->CollisionCheck(m_pos))
+    if (pStage->IsUnder(m_pos))
     {
-        m_vec.y = 0;
-        isField = true;
+        if (pStage->CollisionCheck(m_pos))
+        {
+            m_angle = 0;
+            m_vec.y = 0;
+            isField = true;
+        }
     }
+    else
+    {
+        m_isDead = (pStage->CollisionCheck(m_pos));
+    }
+
+    //m_isDead = pStage->CollisionCheck(m_pos);
 
     OperatePlayer(input);
 }

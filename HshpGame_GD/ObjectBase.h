@@ -18,6 +18,10 @@ public:
 
 	virtual bool CollisionCheck(float X, float Y);
 
+	// プレイヤーの中心座標取得
+	virtual float GetCenterX() { return m_pos.x + (Game::kBlockSize / 2); }
+	virtual float GetCenterY() { return m_pos.y + (Game::kBlockSize / 2); }
+
 	// 当たり判定用に四方向の座標取得　
 	virtual float GetLeft()	const { return m_pos.x; }
 	virtual float GetRight()	const { return m_pos.x + Game::kBlockSize; }
