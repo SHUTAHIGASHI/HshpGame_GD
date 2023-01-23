@@ -12,10 +12,10 @@ namespace
     constexpr float kPlayerDrawPosY = 34.0f;
 
     // ジャンプ力
-    constexpr float kJumpAcc = -16.0f;
+    constexpr float kJumpAcc = -14.0f;
 
     // 重力
-    constexpr float kGravity = 2.0f;
+    constexpr float kGravity = 1.15f;
 }
 
 PlayerCube::PlayerCube() :
@@ -41,6 +41,7 @@ void PlayerCube::Init(int playerHandle)
 
 void PlayerCube::Update(const InputState& input)
 {
+    // プレイヤーの挙動の処理
     m_pos += m_vec;
     m_vec.y += kGravity;
     if(isMoveRight) m_angle += kRotaSpeed;
@@ -77,8 +78,8 @@ void PlayerCube::Update(const InputState& input)
             {
                 if (pStage->IsUnder(m_pos, i, j))
                 {
-                    m_angle = 0;
-                    m_vec.y = 0;
+                    m_angle = 0.0f;
+                    m_vec.y = 0.0f;
                     isField = true;
                 }
                 else
