@@ -26,7 +26,7 @@ public:
 
 	bool CollisionCheck(Vec2 playerPos, int H, int W);
 
-	bool IsUnder(Vec2 playerPos, int Y, int X);
+	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
 private:
 	//bool isHit;
 

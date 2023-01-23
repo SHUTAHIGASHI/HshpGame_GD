@@ -76,10 +76,11 @@ void PlayerCube::Update(const InputState& input)
         {
             if (pStage->CollisionCheck(m_pos, i, j))
             {
-                if (pStage->IsUnder(m_pos, i, j))
+                float tempPos = 0.0f;
+                if (pStage->IsUnder(m_pos, tempPos, i, j))
                 {
                     m_angle = 0.0f;
-                    m_vec.y = 0.0f;
+                    m_pos.y = tempPos - Game::kBlockSize;
                     isField = true;
                 }
                 else
@@ -108,4 +109,6 @@ void PlayerCube::Draw()
 {
 	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
+
+    DrawFormatString(0, 0, 0xFFFFFF, "%f", GetBottom());
 }

@@ -117,14 +117,18 @@ bool Stage::CollisionCheck(Vec2 playerPos, int H, int W)
 }
 
 // オブジェクトがプレイヤーの下にあるかどうか
-bool Stage::IsUnder(Vec2 playerPos, int H, int W)
+bool Stage::IsUnder(Vec2 playerPos, float &tempPos,  int H, int W)
 {	
 	// ブロックが存在する場合
 	if(m_stage[H][W] == 1)
 	{
 		// プレイヤーの中心、ブロックの上面での判定
 		// 下にある場合、trueを返す
-		if (m_Object[H][W].GetPos().y > playerPos.y + (Game::kBlockSize / 2)) return true;
+		if (m_Object[H][W].GetPos().y > playerPos.y + (Game::kBlockSize / 2))
+		{
+			tempPos = m_Object[H][W].GetPos().y;
+			return true;
+		}
 	}
 	
 	// 下ではない場合、falseを返す
