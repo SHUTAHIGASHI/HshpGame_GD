@@ -19,11 +19,11 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0},
-		{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0},
+		{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,1,1,0},
 
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
@@ -103,37 +103,30 @@ void Stage::Draw()
 	}
 }
 
-bool Stage::CollisionCheck(Vec2 playerPos)
+// プレイヤーとオブジェクトの当たり判定チェック
+bool Stage::CollisionCheck(Vec2 playerPos, int H, int W)
 {
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
-	{
-		for (int j = 0; j < Game::kScreenWidthNum; j++)
-		{
-			// 当たっている場合プレイヤーを死亡判定にする
-			if (m_Object[i][j].GetRight() >= playerPos.x &&
-				playerPos.x + Game::kBlockSize >= m_Object[i][j].GetLeft() &&
-				m_Object[i][j].GetBottom() >= playerPos.y &&
-				playerPos.y + Game::kBlockSize >= m_Object[i][j].GetTop()) return true;
-		}
-	}
+	// 当たっている場合、trueを返す
+	if (m_Object[H][W].GetRight() >= playerPos.x &&
+		playerPos.x + Game::kBlockSize >= m_Object[H][W].GetLeft() &&
+		m_Object[H][W].GetBottom() >= playerPos.y &&
+		playerPos.y + Game::kBlockSize >= m_Object[H][W].GetTop()) return true;
 
-	// 当たっていない場合処理をスキップ
+	// 当たっていない場合、falseを返す
 	return false;
 }
 
-bool Stage::IsUnder(Vec2 playerPos)
+// オブジェクトがプレイヤーの下にあるかどうか
+bool Stage::IsUnder(Vec2 playerPos, int H, int W)
 {	
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	// ブロックが存在する場合
+	if(m_stage[H][W] == 1)
 	{
-		for (int j = 0; j < Game::kScreenWidthNum; j++)
-		{
-			if(m_stage[i][j] == 1)
-			{
-				// プレイヤーの中心、ブロックの上面での判定
-				if (playerPos.y + (Game::kBlockSize / 2) < m_Object[i][j].GetPos().y) return true;
-			}
-		}
+		// プレイヤーの中心、ブロックの上面での判定
+		// 下にある場合、trueを返す
+		if (m_Object[H][W].GetPos().y > playerPos.y + (Game::kBlockSize / 2)) return true;
 	}
-
+	
+	// 下ではない場合、falseを返す
 	return false;
 }

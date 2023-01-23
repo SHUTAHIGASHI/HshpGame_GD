@@ -24,9 +24,9 @@ public:
 
 	void Draw();
 
-	bool CollisionCheck(Vec2 playerPos);
+	bool CollisionCheck(Vec2 playerPos, int H, int W);
 
-	bool IsUnder(Vec2 playerPos);
+	bool IsUnder(Vec2 playerPos, int Y, int X);
 private:
 	//bool isHit;
 

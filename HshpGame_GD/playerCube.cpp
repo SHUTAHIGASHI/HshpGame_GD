@@ -12,7 +12,7 @@ namespace
     constexpr float kPlayerDrawPosY = 34.0f;
 
     // ƒWƒƒƒ“ƒv—Í
-    constexpr float kJumpAcc = -24.0f;
+    constexpr float kJumpAcc = -16.0f;
 
     // d—Í
     constexpr float kGravity = 2.0f;
@@ -69,18 +69,24 @@ void PlayerCube::Update(const InputState& input)
         isMoveRight = false;
     }
 
-    if (pStage->IsUnder(m_pos))
+    for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
-        if (pStage->CollisionCheck(m_pos))
+        for (int j = 0; j < Game::kScreenWidthNum; j++)
         {
-            m_angle = 0;
-            m_vec.y = 0;
-            isField = true;
+            if (pStage->CollisionCheck(m_pos, i, j))
+            {
+                if (pStage->IsUnder(m_pos, i, j))
+                {
+                    m_angle = 0;
+                    m_vec.y = 0;
+                    isField = true;
+                }
+                else
+                {
+                    m_isDead = true;
+                }
+            }
         }
-    }
-    else 
-    {
-        m_isDead = pStage->CollisionCheck(m_pos);
     }
 
     OperatePlayer(input);
