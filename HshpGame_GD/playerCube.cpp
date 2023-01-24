@@ -96,7 +96,14 @@ void PlayerCube::OnHitObject(const InputState& input)
             if (pStage->CollisionCheck(m_pos, i, j, object))
             {
                 float tempPos = 0.0f;
-                if (object == ObjectType::JumpRing)
+                if (pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
+                {
+                    m_angle = 0.0f;
+                    m_vec.y = 0.0f;
+                    m_pos.y = tempPos - Game::kBlockSize;
+                    isField = true;
+                }
+                else if (object == ObjectType::JumpRing)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
@@ -106,13 +113,6 @@ void PlayerCube::OnHitObject(const InputState& input)
                 else if (object == ObjectType::JumpPad)
                 {
                     m_vec.y = kJumpAcc;	// ジャンプ開始
-                }
-                else if (pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
-                {
-                    m_angle = 0.0f;
-                    m_vec.y = 0.0f;
-                    m_pos.y = tempPos - Game::kBlockSize;
-                    isField = true;
                 }
                 else
                 {
