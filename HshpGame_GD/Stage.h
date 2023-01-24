@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "ObjectBlock.h"
+#include "ObjectSpike.h"
 #include "ObjectJumpRing.h"
 #include "ObjectJumpPad.h"
 
@@ -31,6 +32,7 @@ public:
 	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
 private:
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 

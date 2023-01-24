@@ -84,6 +84,9 @@
     <ClCompile Include="ObjectJumpRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectSpike.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneBase.h">
@@ -132,6 +135,9 @@
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
     <ClInclude Include="ObjectJumpRing.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpike.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>

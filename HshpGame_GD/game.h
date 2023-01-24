@@ -9,6 +9,7 @@ enum class ObjectType
 {
 	Empty,
 	Block,
+	Spike,
 	JumpRing,
 	JumpPad,
 	End

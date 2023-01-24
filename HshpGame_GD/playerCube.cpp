@@ -11,8 +11,10 @@ namespace
     constexpr float kPlayerDrawPosX = 16.0f;
     constexpr float kPlayerDrawPosY = 34.0f;
 
-    // ジャンプ力
+    // 基本のジャンプ力
     constexpr float kJumpAcc = -14.0f;
+    // オブジェクト起動時のジャンプ力
+    constexpr float kObjectJumpAcc = -20.0f;
 
     // 重力
     constexpr float kGravity = 1.15f;
@@ -106,7 +108,12 @@ void PlayerCube::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::JumpPad)
                 {
-                    m_vec.y = kJumpAcc;	// ジャンプ開始
+                    m_vec.y = kObjectJumpAcc;	// ジャンプ開始
+                    return;
+                }
+                else if (object == ObjectType::Spike)
+                {
+                    m_isDead = true;
                     return;
                 }
                 else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)

@@ -5,6 +5,7 @@
 namespace
 {
 	//マップデータ
+	// 1 ステージの壁と床 / 2 ブロック / 3 ジャンプリング / 4 ジャンプパッド / 5 スパイク / 6  / 7  / 8  /
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -19,11 +20,11 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,3,0,0,0,0,0,0,0,0,0,2,2,2,2},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,3,0,0,0,0,0,0},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,5,0,4,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,0,3,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,5,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0},
 
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -51,6 +52,7 @@ void Stage::Init()
 			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Init(blockPosX, blockPosY);
 			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
 			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Init(blockPosX, blockPosY);
+			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Init(blockPosX, blockPosY);
 		}
 	}
 }
@@ -64,6 +66,7 @@ void Stage::Update()
 			m_ObjectBlock[i][j].Update();
 			m_ObjectJumpRing[i][j].Update();
 			m_ObjectJumpPad[i][j].Update();
+			m_ObjectSpike[i][j].Update();
 		}
 	}
 }
@@ -94,6 +97,7 @@ void Stage::Draw()
 			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Draw();
 			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Draw();
 			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
+			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Draw();
 		}
 	}
 }
@@ -126,6 +130,15 @@ bool Stage::CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object)
 		playerPos.y + Game::kBlockSize >= m_ObjectJumpPad[H][W].GetTop() + Game::kBlockSize - (Game::kBlockSize / 4))
 	{
 		object = ObjectType::JumpPad;
+		return true;
+	}
+
+	if (m_ObjectSpike[H][W].GetRight() >= playerPos.x &&
+		playerPos.x + Game::kBlockSize >= m_ObjectSpike[H][W].GetLeft() &&
+		m_ObjectSpike[H][W].GetBottom() >= playerPos.y &&
+		playerPos.y + Game::kBlockSize >= m_ObjectSpike[H][W].GetTop())
+	{
+		object = ObjectType::Spike;
 		return true;
 	}
 
