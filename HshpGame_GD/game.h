@@ -5,6 +5,14 @@
 #include "Vec2.h"
 #include <vector>
 
+enum class ObjectType
+{
+	Empty,
+	Block,
+	JumpRing,
+	End
+};
+
 namespace Game
 {
 	// システム基本設定 //
@@ -31,10 +39,10 @@ namespace Game
 	constexpr float kMoveSpeed = 7.0f;
 
 	// ゲームのステージサイズ
-	constexpr int kStageUpperLimit = Game::kBlockSize * 4;
-	constexpr int kStageLowerLimit = Game::kBlockSize * 18;
+	constexpr float kStageUpperLimit = Game::kBlockSize * 4;
+	constexpr float kStageLowerLimit = Game::kBlockSize * 18;
 	// ステージ横幅
-	constexpr int kScreenWidthNum = Game::kScreenWidth / Game::kBlockSize;
+	constexpr int kScreenWidthNum = static_cast<int>(Game::kScreenWidth / Game::kBlockSize);
 	// ステージ縦幅
-	constexpr int kScreenHeightNum = Game::kScreenHeight / Game::kBlockSize;
+	constexpr int kScreenHeightNum = static_cast<int>(Game::kScreenHeight / Game::kBlockSize);
 }

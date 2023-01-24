@@ -49,6 +49,13 @@ bool InputState::IsTriggered(InputType type)const
 		return !lastKeyState[KEY_INPUT_DOWN] &&
 			keyState[KEY_INPUT_DOWN];
 	}
+	else if (type == InputType::jump)
+	{
+		return !lastKeyState[KEY_INPUT_SPACE] &&
+			keyState[KEY_INPUT_SPACE] ||
+			!lastKeyState[KEY_INPUT_UP] &&
+			keyState[KEY_INPUT_UP];
+	}
 	return false;
 }
 

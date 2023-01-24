@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "ObjectBlock.h"
+#include "ObjectJumpRing.h"
 
 class PlayerCube;
 
@@ -24,13 +25,12 @@ public:
 
 	void Draw();
 
-	bool CollisionCheck(Vec2 playerPos, int H, int W);
+	bool CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object);
 
 	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
 private:
-	//bool isHit;
-
-	ObjectBlock m_Object[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
 	PlayerCube* pCube;
 };

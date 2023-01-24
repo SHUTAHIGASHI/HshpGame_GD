@@ -1,16 +1,21 @@
 #pragma once
 #include "ObjectBase.h"
 
-class ObjectBlock :
+class ObjectJumpRing :
     public ObjectBase
 {
 public:
-    ObjectBlock();
-    ~ObjectBlock(){}
+    ObjectJumpRing();
+    ~ObjectJumpRing() {}
 
     void Init(float X, float Y);
 
     void Update();
 
     void Draw();
+
+private:
+    float circleSize;
+    float sizeAcc;
 };
+

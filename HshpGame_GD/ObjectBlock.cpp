@@ -4,11 +4,7 @@ ObjectBlock::ObjectBlock()
 {
 }
 
-void ObjectBlock::Init()
-{
-}
-
-void ObjectBlock::SetPos(float X, float Y)
+void ObjectBlock::Init(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;

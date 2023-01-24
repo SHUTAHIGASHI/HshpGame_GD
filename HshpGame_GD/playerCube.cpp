@@ -70,37 +70,46 @@ void PlayerCube::Update(const InputState& input)
         isMoveRight = false;
     }
 
+    OnHitObject(input);
+
+    if (input.IsPressed(InputType::jump))
+    {
+        if (isField)
+        {
+            m_vec.y = kJumpAcc;	// ジャンプ開始
+        }
+    }
+}
+
+void PlayerCube::OnHitObject(const InputState& input)
+{
+    ObjectType object;
     for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
         for (int j = 0; j < Game::kScreenWidthNum; j++)
         {
-            if (pStage->CollisionCheck(m_pos, i, j))
+            if (pStage->CollisionCheck(m_pos, i, j, object))
             {
                 float tempPos = 0.0f;
-                if (pStage->IsUnder(m_pos, tempPos, i, j))
+                if (pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
                 {
                     m_angle = 0.0f;
+                    m_vec.y = 0.0f;
                     m_pos.y = tempPos - Game::kBlockSize;
                     isField = true;
+                }
+                else if (object == ObjectType::JumpRing)
+                {
+                    if (input.IsTriggered(InputType::jump))
+                    {
+                        m_vec.y = kJumpAcc;	// ジャンプ開始
+                    }
                 }
                 else
                 {
                     m_isDead = true;
                 }
             }
-        }
-    }
-
-    OperatePlayer(input);
-}
-
-void PlayerCube::OperatePlayer(const InputState& input)
-{
-    if (input.IsPressed(InputType::jump))
-    {
-        if (isField)
-        {
-            m_vec.y = kJumpAcc;	// ジャンプ開始
         }
     }
 }
