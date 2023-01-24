@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "ObjectBlock.h"
 #include "ObjectJumpRing.h"
+#include "ObjectJumpPad.h"
 
 class PlayerCube;
 
@@ -31,6 +32,7 @@ public:
 private:
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
 	PlayerCube* pCube;
 };

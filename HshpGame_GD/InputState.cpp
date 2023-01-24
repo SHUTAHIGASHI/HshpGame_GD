@@ -14,7 +14,7 @@ void InputState::Update()
 
 bool InputState::IsTriggered(InputType type)const
 {
-	if (type == InputType::next)
+	if (type == InputType::enter)
 	{
 		return !lastKeyState[KEY_INPUT_RETURN] &&
 			keyState[KEY_INPUT_RETURN];
@@ -56,12 +56,18 @@ bool InputState::IsTriggered(InputType type)const
 			!lastKeyState[KEY_INPUT_UP] &&
 			keyState[KEY_INPUT_UP];
 	}
+	else if (type == InputType::retry)
+	{
+		return !lastKeyState[KEY_INPUT_R] &&
+			keyState[KEY_INPUT_R];
+	}
+
 	return false;
 }
 
 bool InputState::IsPressed(InputType type)const
 {
-	if (type == InputType::next)
+	if (type == InputType::enter)
 	{
 		return keyState[KEY_INPUT_RETURN];
 	}

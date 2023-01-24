@@ -28,10 +28,10 @@ public:
 	virtual bool IsDead() { return m_isDead; }
 
 	// 当たり判定用に四方向の座標取得　
-	float GetLeft()	const { return m_pos.x; }
-	float GetRight()	const { return m_pos.x + static_cast<float>(m_width); }
-	float GetTop()	const { return m_pos.y; }
-	float GetBottom() const { return m_pos.y + static_cast<float>(m_height); }
+	virtual float GetLeft()	const { return m_pos.x; }
+	virtual float GetRight()	const { return m_pos.x + static_cast<float>(m_width); }
+	virtual float GetTop()	const { return m_pos.y; }
+	virtual float GetBottom() const { return m_pos.y + static_cast<float>(m_height); }
 	
 	// プレイヤーの座標取得
 	Vec2 GetPos() const { return m_pos; }

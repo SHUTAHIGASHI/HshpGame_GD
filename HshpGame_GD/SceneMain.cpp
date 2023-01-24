@@ -8,7 +8,7 @@ namespace
 	// ゲームの制限時間
 	constexpr int kGameMaxTime = 1800;	
 	// 死亡時の遅延
-	constexpr int kGameOverDelay = 90;
+	constexpr int kGameOverDelay = 30;
 
 	// 制限時間表示位置
 	constexpr int kTimerPositionX = Game::kScreenWidthHalf - 30;
@@ -18,11 +18,10 @@ namespace
 	constexpr int kSetColor = 255;
 }
 
-SceneMain::SceneMain()
+SceneMain::SceneMain() :
+	countAttempt(0)
 {
 	m_hPlayerGraphic = -1;
-
-	m_spawnDelay = 0;
 
 	m_gameTimeRemaining = kGameMaxTime;
 	m_GameOverDelay = kGameOverDelay;
@@ -47,7 +46,6 @@ void SceneMain::init()
 	m_Stage.setPlayer(&m_cPlayer);
 
 	// 各時間用変数の初期化
-	m_spawnDelay = kSpawnDelay;
 	m_gameTimeRemaining = kGameMaxTime;
 	m_GameOverDelay = kGameOverDelay;
 
@@ -66,41 +64,37 @@ void SceneMain::end()
 // 毎フレームの処理
 void SceneMain::update(const InputState& input)
 {	
-	if (!m_gameTimeRemaining)	// ゲーム残り時間が0になった場合
+	if (input.IsTriggered(InputType::enter))
 	{
-		//m_isGameClear = true;	// ゲームクリアとシーン終了を true にする
-		//m_isEnd = true;			// クリア用のシーンへ移行する
+		countAttempt = 0;
+		m_isEnd = true;
 	}
-	else if (!m_GameOverDelay)	// ゲームオーバー遅延が0になった場合
+	
+	// Rキーを押すとゲームリトライ
+	if (input.IsTriggered(InputType::retry))
 	{
-		m_isEnd = true;			// シーン終了のみを true にする			
-	}							// タイトルへ戻る
+		init();
+		countAttempt++;
+	}
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_cPlayer.IsDead())
 	{
-		m_isEnd = true;
-		
+		if (m_GameOverDelay < 0)
+		{
+			init();
+			countAttempt++;
+			return;
+		}
 		// ゲームオーバー遅延を1フレームごとに減少させる
 		m_GameOverDelay--;
 		return;
 	}
 
-	// 1フレームごとに残り時間と敵の出現遅延を減少させる
-	m_gameTimeRemaining--;
-	m_spawnDelay--;
-
-	// 出現遅延が0になった場合、敵を出現させる
-	if (!m_spawnDelay)
-	{
-		// 出現遅延に再び定数を代入
-		m_spawnDelay = kSpawnDelay;
-	}
-
 	m_Stage.Update();
 
 	// プレイヤーの更新処理
-	m_cPlayer.Update(input);
+	m_cPlayer.NormalUpdate(input);
 }
 
 // 毎フレームの描画
@@ -114,19 +108,5 @@ void SceneMain::draw()
 	// フォントサイズ設定
 	SetFontSize(Game::kFontSize);
 	
-	// ゲームの制限時間表示 (通常は白文字、合計時間の半分を過ぎると黄色文字、5秒を過ぎると赤文字で表示される)
-	int red = kSetColor;
-	int green = kSetColor;
-	int blue = kSetColor;
-	if (m_gameTimeRemaining <= 300)
-	{
-		green = 0;
-		blue = 0;
-	}
-	else if (m_gameTimeRemaining <= kGameMaxTime / 2)
-	{
-		green = 216;
-		blue = 0;
-	}
-	DrawFormatString(kTimerPositionX, kTimerPositionY, GetColor(red, green, blue), "%d", m_gameTimeRemaining / 60);
+	DrawFormatString(0, 50, 0xffffff, "Attempt : %d", countAttempt);
 }

@@ -2,14 +2,16 @@
 
 enum class InputType
 {
-	next, // 次へ行くボタン
+	enter, // 次へ行くボタン
+	space,
 	pause, // ポーズボタン
 	right,	// 右
 	left,	// 左
 	up,		// 上
 	down,	// 下
-	space,
-	jump
+	jump,
+	retry,
+	end
 };
 
 class InputState

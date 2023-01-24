@@ -10,6 +10,7 @@ enum class ObjectType
 	Empty,
 	Block,
 	JumpRing,
+	JumpPad,
 	End
 };
 

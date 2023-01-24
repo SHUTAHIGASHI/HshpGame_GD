@@ -16,12 +16,16 @@ public:
 	void Init(int playerHandle);
 
 	// プレイヤーの更新処理
-	void Update(const InputState& input);
+	void NormalUpdate(const InputState& input);
+	// プレイヤー死亡時の更新処理
+	void DeadUpdate();
 
+	// オブジェクトと当たった時の処理
 	void OnHitObject(const InputState& input);
 	
 	// プレイヤーの描画処理
 	void Draw();
 private:
+	// ステージのポインタ
 	Stage* pStage;
 };
