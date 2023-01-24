@@ -37,10 +37,10 @@ private:
 	// ゲームの制限時間
 	int m_gameTimeRemaining;
 	// ゲームオーバー時の遅延時間
-	int m_GameOverDelay;
+	int m_gameOverDelay;
 
 	// 挑戦回数
-	int countAttempt;
+	int m_countAttempt;
 
 	// ゲームクリア
 	bool m_isGameClear;

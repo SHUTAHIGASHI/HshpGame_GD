@@ -19,12 +19,12 @@ namespace
 }
 
 SceneMain::SceneMain() :
-	countAttempt(0)
+	m_countAttempt(0)
 {
 	m_hPlayerGraphic = -1;
 
 	m_gameTimeRemaining = kGameMaxTime;
-	m_GameOverDelay = kGameOverDelay;
+	m_gameOverDelay = kGameOverDelay;
 
 	m_isGameClear = false;
 	m_isEnd = false; 
@@ -47,7 +47,7 @@ void SceneMain::init()
 
 	// 各時間用変数の初期化
 	m_gameTimeRemaining = kGameMaxTime;
-	m_GameOverDelay = kGameOverDelay;
+	m_gameOverDelay = kGameOverDelay;
 
 	// シーン終了、ゲームクリアを false に初期化
 	m_isGameClear = false;
@@ -66,7 +66,7 @@ void SceneMain::update(const InputState& input)
 {	
 	if (input.IsTriggered(InputType::enter))
 	{
-		countAttempt = 0;
+		m_countAttempt = 0;
 		m_isEnd = true;
 	}
 	
@@ -74,20 +74,20 @@ void SceneMain::update(const InputState& input)
 	if (input.IsTriggered(InputType::retry))
 	{
 		init();
-		countAttempt++;
+		m_countAttempt++;
 	}
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_cPlayer.IsDead())
 	{
-		if (m_GameOverDelay < 0)
+		if (m_gameOverDelay < 0)
 		{
 			init();
-			countAttempt++;
+			m_countAttempt++;
 			return;
 		}
 		// ゲームオーバー遅延を1フレームごとに減少させる
-		m_GameOverDelay--;
+		m_gameOverDelay--;
 		return;
 	}
 
@@ -108,5 +108,5 @@ void SceneMain::draw()
 	// フォントサイズ設定
 	SetFontSize(Game::kFontSize);
 	
-	DrawFormatString(0, 50, 0xffffff, "Attempt : %d", countAttempt);
+	DrawFormatString(0, 0, 0xffffff, "Attempt : %d", m_countAttempt);
 }

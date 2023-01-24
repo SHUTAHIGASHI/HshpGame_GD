@@ -18,7 +18,7 @@ public:
 	Stage();
 	~Stage(){}
 	
-	void setPlayer(PlayerCube* cube) { pCube = cube; }
+	void setPlayer(PlayerCube* cube) { m_pCube = cube; }
 
 	void Init();
 	
@@ -34,6 +34,6 @@ private:
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
-	PlayerCube* pCube;
+	PlayerCube* m_pCube;
 };
 

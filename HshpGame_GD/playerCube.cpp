@@ -19,7 +19,7 @@ namespace
 }
 
 PlayerCube::PlayerCube() :
-    pStage(nullptr)
+    m_pStage(nullptr)
 {
 }
 
@@ -93,30 +93,34 @@ void PlayerCube::OnHitObject(const InputState& input)
     {
         for (int j = 0; j < Game::kScreenWidthNum; j++)
         {
-            if (pStage->CollisionCheck(m_pos, i, j, object))
+            if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
                 float tempPos = 0.0f;
-                if (pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
-                {
-                    m_angle = 0.0f;
-                    m_vec.y = 0.0f;
-                    m_pos.y = tempPos - Game::kBlockSize;
-                    isField = true;
-                }
-                else if (object == ObjectType::JumpRing)
+                if (object == ObjectType::JumpRing)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
                         m_vec.y = kJumpAcc;	// ジャンプ開始
+                        return;
                     }
                 }
                 else if (object == ObjectType::JumpPad)
                 {
                     m_vec.y = kJumpAcc;	// ジャンプ開始
+                    return;
+                }
+                else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
+                {
+                    m_angle = 0.0f;
+                    m_vec.y = 0.0f;
+                    m_pos.y = tempPos - Game::kBlockSize;
+                    isField = true;
+                    return;
                 }
                 else
                 {
                     m_isDead = true;
+                    return;
                 }
             }
         }
@@ -127,6 +131,4 @@ void PlayerCube::Draw()
 {
 	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
-
-    DrawFormatString(0, 0, 0xFFFFFF, "%f", GetBottom());
 }

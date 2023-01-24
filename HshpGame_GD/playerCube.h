@@ -10,7 +10,7 @@ public:
 	PlayerCube();
 	virtual ~PlayerCube() {}
 
-	void setStage(Stage* stage) { pStage = stage; }
+	void setStage(Stage* stage) { m_pStage = stage; }
 
 	// プレイヤーの初期化
 	void Init(int playerHandle);
@@ -27,5 +27,5 @@ public:
 	void Draw();
 private:
 	// ステージのポインタ
-	Stage* pStage;
+	Stage* m_pStage;
 };
