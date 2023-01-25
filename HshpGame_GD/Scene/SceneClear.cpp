@@ -16,25 +16,16 @@ void SceneClear::init()
 	
 	m_isEnd = false;
 
-	// 音データの読み込み
-	m_clearSound = LoadSoundMem("sounddata/stageclear.wav");
-	PlaySoundMem(m_clearSound, DX_PLAYTYPE_BACK);
-
-	// 画像の読み込み
-	m_hClearTextGraphic = LoadGraph("imagedata/GameClear.png");
 	// 画像サイズの取得
-	GetGraphSize(m_hClearTextGraphic, &m_width, &m_height);
+	//GetGraphSize(m_hClearTextGraphic, &m_width, &m_height);
 }
 
 // 終了処理
 void SceneClear::end()
 {
-	// 音データの削除
-	DeleteSoundMem(m_clearSound);
-
 	// 画像データの削除
-	DeleteGraph(m_hClearTextGraphic);
-	DeleteGraph(m_hBackgroundGraphic);
+	//DeleteGraph(m_hClearTextGraphic);
+	//DeleteGraph(m_hBackgroundGraphic);
 }
 
 // 更新
@@ -52,8 +43,7 @@ void SceneClear::update()
 void SceneClear::draw()
 {
 	// 背景画像の描画
-	DrawGraph(0, 0, m_hBackgroundGraphic, true);
+	//DrawGraph(0, 0, m_hBackgroundGraphic, true);
 
-	// クリアテキスト画像の表示
-	DrawRotaGraphF(Game::kScreenWidthHalf, Game::kScreenHeightHalf, 1.5, 0, m_hClearTextGraphic, true, false);
+	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "ゲームクリア", 0xffffff);
 }

@@ -10,11 +10,6 @@ public:
 		
 		m_isEnd = false;
 
-		m_clearSound = -1;
-
-		m_hClearTextGraphic = -1;
-		m_hBackgroundGraphic = -1;
-
 		m_width = 0;
 		m_height = 0;
 	}
@@ -38,13 +33,6 @@ private:
 	
 	// シーン終了
 	bool m_isEnd;
-
-	// 音データ
-	int m_clearSound;
-
-	// 画像データ
-	int m_hClearTextGraphic;
-	int m_hBackgroundGraphic;
 
 	// 画像サイズ
 	int m_width;

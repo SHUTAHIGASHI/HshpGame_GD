@@ -6,7 +6,7 @@ namespace
 {
 	//マップデータ
 	// 1 ゴール / 2 ブロック / 3 ジャンプリング / 4 ジャンプパッド / 5 スパイク / 6  / 7  / 8  /
-	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+	int m_stage_first[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -31,6 +31,32 @@ namespace
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 	};
+
+	int m_stage_second[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		// ステージ地面
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+	};
 }
 
 Stage::Stage() :
@@ -49,11 +75,11 @@ void Stage::Init()
 			blockPosX = j * Game::kBlockSize;
 			blockPosY = i * Game::kBlockSize;
 			
-			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 1) m_ObjectGoalGate[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 2) m_ObjectBlock[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 4) m_ObjectJumpPad[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 5) m_ObjectSpike[i][j].Init(blockPosX, blockPosY);
 		}
 	}
 }
@@ -86,11 +112,11 @@ void Stage::Draw()
 			DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, 0xFFFFFF, false);
 
 			// ステージギミックの描画
-			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Draw();
-			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Draw();
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Draw();
-			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
-			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Draw();
+			if (m_stage_first[i][j] == 1) m_ObjectGoalGate[i][j].Draw();
+			if (m_stage_first[i][j] == 2) m_ObjectBlock[i][j].Draw();
+			if (m_stage_first[i][j] == 3) m_ObjectJumpRing[i][j].Draw();
+			if (m_stage_first[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
+			if (m_stage_first[i][j] == 5) m_ObjectSpike[i][j].Draw();
 		}
 	}
 }
@@ -153,7 +179,7 @@ bool Stage::CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object)
 bool Stage::IsUnder(Vec2 playerPos, float &tempPos,  int H, int W)
 {	
 	// ブロックが存在する場合
-	if(m_stage[H][W] == 2)
+	if(m_stage_first[H][W] == 2)
 	{
 		// プレイヤーの中心、ブロックの上面での判定
 		// 下にある場合、trueを返す

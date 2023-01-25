@@ -9,10 +9,12 @@
 
 class PlayerCube;
 
-namespace
+enum class StageState
 {
-
-}
+	firstStage,
+	secondStage,
+	End
+};
 
 class Stage
 {
