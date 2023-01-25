@@ -16,6 +16,7 @@ void ObjectSpike::Update()
 
 void ObjectSpike::Draw()
 {
-	DrawBox(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0x0000FF, true);
-	//DrawTriangle(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0xFF0000, true);
+	//DrawBox(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0xdcdcdc, true);
+
+	DrawTriangle(GetCenterX(), m_pos.y, m_pos.x, m_pos.y + Game::kBlockSize, GetRight(), m_pos.y + Game::kBlockSize, 0xFF0000, true);
 }

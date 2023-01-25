@@ -104,9 +104,6 @@ void SceneMain::draw()
 
 	// プレイヤーの描画
 	m_cPlayer.Draw();
-
-	// フォントサイズ設定
-	SetFontSize(Game::kFontSize);
 	
-	DrawFormatString(0, 0, 0xffffff, "Attempt : %d", m_countAttempt);
+	DrawFormatString(10, 10, 0xffffff, "Attempt : %d", m_countAttempt);
 }

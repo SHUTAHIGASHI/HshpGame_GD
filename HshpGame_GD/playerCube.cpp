@@ -14,7 +14,8 @@ namespace
     // 基本のジャンプ力
     constexpr float kJumpAcc = -14.0f;
     // オブジェクト起動時のジャンプ力
-    constexpr float kObjectJumpAcc = -20.0f;
+    constexpr float kJumpRingJumpAcc = -16.0f;
+    constexpr float kJumpPadJumpAcc = -20.0f;
 
     // 重力
     constexpr float kGravity = 1.15f;
@@ -102,13 +103,13 @@ void PlayerCube::OnHitObject(const InputState& input)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
-                        m_vec.y = kJumpAcc;	// ジャンプ開始
+                        m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
                         return;
                     }
                 }
                 else if (object == ObjectType::JumpPad)
                 {
-                    m_vec.y = kObjectJumpAcc;	// ジャンプ開始
+                    m_vec.y = kJumpPadJumpAcc;	// ジャンプ開始
                     return;
                 }
                 else if (object == ObjectType::Spike)
