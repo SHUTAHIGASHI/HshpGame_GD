@@ -151,41 +151,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjectBase.cpp" />
-    <ClCompile Include="ObjectBlock.cpp" />
-    <ClCompile Include="ObjectJumpPad.cpp" />
-    <ClCompile Include="ObjectJumpRing.cpp" />
-    <ClCompile Include="ObjectSpike.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="playerCube.cpp" />
-    <ClCompile Include="SceneBase.cpp" />
-    <ClCompile Include="SceneClear.cpp" />
-    <ClCompile Include="SceneMain.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneTitle.cpp" />
-    <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Vec2.cpp" />
+    <ClCompile Include="Player\player.cpp" />
+    <ClCompile Include="Player\playerCube.cpp" />
+    <ClCompile Include="Scene\SceneBase.cpp" />
+    <ClCompile Include="Scene\SceneClear.cpp" />
+    <ClCompile Include="Scene\SceneMain.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\SceneTitle.cpp" />
+    <ClCompile Include="StageObject\ObjectBase.cpp" />
+    <ClCompile Include="StageObject\ObjectBlock.cpp" />
+    <ClCompile Include="StageObject\ObjectJumpPad.cpp" />
+    <ClCompile Include="StageObject\ObjectJumpRing.cpp" />
+    <ClCompile Include="StageObject\ObjectSpike.cpp" />
+    <ClCompile Include="StageObject\Stage.cpp" />
+    <ClCompile Include="Util\InputState.cpp" />
+    <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
-    <ClInclude Include="InputState.h" />
-    <ClInclude Include="ObjectBase.h" />
-    <ClInclude Include="ObjectBlock.h" />
-    <ClInclude Include="ObjectJumpPad.h" />
-    <ClInclude Include="ObjectJumpRing.h" />
-    <ClInclude Include="ObjectSpike.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="playerCube.h" />
+    <ClInclude Include="Player\player.h" />
+    <ClInclude Include="Player\playerCube.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SceneBase.h" />
-    <ClInclude Include="SceneClear.h" />
-    <ClInclude Include="SceneMain.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneTitle.h" />
-    <ClInclude Include="Stage.h" />
-    <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
+    <ClInclude Include="Scene\SceneClear.h" />
+    <ClInclude Include="Scene\SceneMain.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\SceneTitle.h" />
+    <ClInclude Include="StageObject\ObjectBase.h" />
+    <ClInclude Include="StageObject\ObjectBlock.h" />
+    <ClInclude Include="StageObject\ObjectJumpPad.h" />
+    <ClInclude Include="StageObject\ObjectJumpRing.h" />
+    <ClInclude Include="StageObject\ObjectSpike.h" />
+    <ClInclude Include="StageObject\Stage.h" />
+    <ClInclude Include="Util\game.h" />
+    <ClInclude Include="Util\InputState.h" />
+    <ClInclude Include="Util\Vec2.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HshpGame_GD.rc" />
