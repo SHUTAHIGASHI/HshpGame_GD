@@ -31,6 +31,6 @@ private:
 	// プレイヤー死亡時の更新処理
 	void DeadUpdate(const InputState& input);
 
-	using UpdateFunc_t = void (PlayerCube::*) (const InputState& input);
-	UpdateFunc_t updateFunc_ = nullptr;
+	using m_tUpdateFunc = void (PlayerCube::*) (const InputState& input);
+	m_tUpdateFunc m_updateFunc = nullptr;
 };

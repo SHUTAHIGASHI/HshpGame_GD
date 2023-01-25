@@ -23,13 +23,13 @@ namespace
 
 PlayerCube::PlayerCube() :
     m_pStage(nullptr),
-    updateFunc_(&PlayerCube::NormalUpdate)
+    m_updateFunc(&PlayerCube::NormalUpdate)
 {
 }
 
 void PlayerCube::Init(int playerHandle)
 {
-    updateFunc_ = &PlayerCube::NormalUpdate;
+    m_updateFunc = &PlayerCube::NormalUpdate;
     
     m_handle = playerHandle;
 	GetGraphSizeF(m_handle, &m_width, &m_height);
@@ -48,7 +48,7 @@ void PlayerCube::Init(int playerHandle)
 
 void PlayerCube::Update(const InputState& input)
 {
-    (this->*updateFunc_)(input);
+    (this->*m_updateFunc)(input);
 }
 
 void PlayerCube::OnHitObject(const InputState& input)
@@ -142,7 +142,7 @@ void PlayerCube::NormalUpdate(const InputState& input)
 
     if (m_isDead)
     {
-        updateFunc_ = &PlayerCube::DeadUpdate;
+        m_updateFunc = &PlayerCube::DeadUpdate;
     }
 }
 
