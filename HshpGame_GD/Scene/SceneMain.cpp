@@ -10,10 +10,6 @@ namespace
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
 
-	// 制限時間表示位置
-	constexpr int kTimerPositionX = Game::kScreenWidthHalf - 30;
-	constexpr int kTimerPositionY = Game::kStageLowerLimit + 25;
-
 	// RGB初期値用
 	constexpr int kSetColor = 255;
 }

@@ -45,5 +45,5 @@ void SceneClear::draw()
 	// 背景画像の描画
 	//DrawGraph(0, 0, m_hBackgroundGraphic, true);
 
-	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "ゲームクリア", 0xffffff);
+	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "ステージクリア", 0xffffff);
 }

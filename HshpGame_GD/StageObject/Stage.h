@@ -5,6 +5,8 @@
 #include "ObjectSpike.h"
 #include "ObjectJumpRing.h"
 #include "ObjectJumpPad.h"
+#include "ObjectGravityRing.h"
+#include "ObjectGravityPad.h"
 #include "ObjectGoalGate.h"
 
 class PlayerCube;
@@ -38,6 +40,8 @@ private:
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectGravityPad m_ObjectGravityPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
 	PlayerCube* m_pCube;

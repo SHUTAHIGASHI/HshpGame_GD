@@ -13,6 +13,8 @@ enum class ObjectType
 	Spike,
 	JumpRing,
 	JumpPad,
+	GravityRing,
+	GravityPad,
 	End
 };
 

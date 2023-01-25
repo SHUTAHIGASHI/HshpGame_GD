@@ -5,8 +5,11 @@
 namespace
 {
 	//マップデータ
-	// 1 ゴール / 2 ブロック / 3 ジャンプリング / 4 ジャンプパッド / 5 スパイク / 6  / 7  / 8  /
-	int m_stage_first[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+	// 1 ゴール / 2 ブロック / 3 ジャンプリング / 4 ジャンプパッド 
+	// 5 スパイク / 6 グラビティリング / 7 グラビティパッド / 8  /
+
+	// ステージ１
+	int m_stage_s[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -29,10 +32,12 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,2,2,2,2,2,2,2,2,2,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0},
 		// ステージ地面
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 	};
 
-	int m_stage_second[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+	// ステージ２
+	int m_stage_first[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -47,15 +52,14 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		// ステージ地面
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 	};
 }
 
@@ -71,7 +75,7 @@ void Stage::Init()
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			int blockPosX, blockPosY;
+			float blockPosX, blockPosY;
 			blockPosX = j * Game::kBlockSize;
 			blockPosY = i * Game::kBlockSize;
 			
@@ -80,6 +84,8 @@ void Stage::Init()
 			if (m_stage_first[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
 			if (m_stage_first[i][j] == 4) m_ObjectJumpPad[i][j].Init(blockPosX, blockPosY);
 			if (m_stage_first[i][j] == 5) m_ObjectSpike[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 6) m_ObjectGravityRing[i][j].Init(blockPosX, blockPosY);
+			if (m_stage_first[i][j] == 7) m_ObjectGravityPad[i][j].Init(blockPosX, blockPosY);
 		}
 	}
 }
@@ -90,10 +96,8 @@ void Stage::Update()
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			m_ObjectBlock[i][j].Update();
 			m_ObjectJumpRing[i][j].Update();
-			m_ObjectJumpPad[i][j].Update();
-			m_ObjectSpike[i][j].Update();
+			m_ObjectGravityRing[i][j].Update();
 		}
 	}
 }
@@ -105,11 +109,11 @@ void Stage::Draw()
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			int drawPosX = 0, drawPosY = 0;
-			drawPosX = (j * Game::kBlockSize);
-			drawPosY = (i * Game::kBlockSize);
+			drawPosX = static_cast<int>(j * Game::kBlockSize);
+			drawPosY = static_cast<int>(i * Game::kBlockSize);
 			
 			// デバック用白線
-			DrawBox(drawPosX, drawPosY, drawPosX + Game::kBlockSize, drawPosY + Game::kBlockSize, 0xFFFFFF, false);
+			DrawBox(drawPosX, drawPosY, drawPosX + static_cast<int>(Game::kBlockSize), drawPosY + static_cast<int>(Game::kBlockSize), 0xFFFFFF, false);
 
 			// ステージギミックの描画
 			if (m_stage_first[i][j] == 1) m_ObjectGoalGate[i][j].Draw();
@@ -117,6 +121,8 @@ void Stage::Draw()
 			if (m_stage_first[i][j] == 3) m_ObjectJumpRing[i][j].Draw();
 			if (m_stage_first[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
 			if (m_stage_first[i][j] == 5) m_ObjectSpike[i][j].Draw();
+			if (m_stage_first[i][j] == 6) m_ObjectGravityRing[i][j].Draw();
+			if (m_stage_first[i][j] == 7) m_ObjectGravityPad[i][j].Draw();
 		}
 	}
 }
@@ -161,6 +167,24 @@ bool Stage::CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object)
 		object = ObjectType::Spike;
 		return true;
 	}
+	// グラビティリングの当たり判定
+	if (m_ObjectGravityRing[H][W].GetRight() >= playerPos.x &&
+		playerPos.x + Game::kBlockSize >= m_ObjectGravityRing[H][W].GetLeft() &&
+		m_ObjectGravityRing[H][W].GetBottom() >= playerPos.y &&
+		playerPos.y + Game::kBlockSize >= m_ObjectGravityRing[H][W].GetTop())
+	{
+		object = ObjectType::GravityRing;
+		return true;
+	}
+	// グラビティパッドの当たり判定
+	if (m_ObjectGravityPad[H][W].GetRight() - 5 > playerPos.x &&
+		playerPos.x + Game::kBlockSize > m_ObjectGravityPad[H][W].GetLeft() + 5 &&
+		m_ObjectGravityPad[H][W].GetBottom() > playerPos.y &&
+		playerPos.y + Game::kBlockSize > m_ObjectGravityPad[H][W].GetTop() + Game::kBlockSize - (Game::kBlockSize / 4))
+	{
+		object = ObjectType::GravityPad;
+		return true;
+	}
 	// ゴールゲートの判定
 	if (m_ObjectGoalGate[H][W].GetRight() >= playerPos.x &&
 		playerPos.x + Game::kBlockSize >= m_ObjectGoalGate[H][W].GetLeft() &&
@@ -181,13 +205,25 @@ bool Stage::IsUnder(Vec2 playerPos, float &tempPos,  int H, int W)
 	// ブロックが存在する場合
 	if(m_stage_first[H][W] == 2)
 	{
-		// プレイヤーの中心、ブロックの上面での判定
-		// 下にある場合、trueを返す
-		if (m_ObjectBlock[H][W].GetPos().y > playerPos.y + (Game::kBlockSize / 2))
+		if (!m_pCube->IsRevGravity())
 		{
-			// ブロックの座標を代入
-			tempPos = m_ObjectBlock[H][W].GetPos().y;
-			return true;
+			// プレイヤーの中心、ブロックの上面での判定
+			// 下にある場合、trueを返す
+			if (m_ObjectBlock[H][W].GetPos().y > playerPos.y + (Game::kBlockSize / 2))
+			{
+				// ブロックの座標を代入
+				tempPos = m_ObjectBlock[H][W].GetPos().y;
+				return true;
+			}
+		}
+		else
+		{
+			if (m_ObjectBlock[H][W].GetPos().y < playerPos.y + (Game::kBlockSize / 2))
+			{
+				// ブロックの座標を代入
+				tempPos = m_ObjectBlock[H][W].GetPos().y + Game::kBlockSize;
+				return true;
+			}
 		}
 	}
 	

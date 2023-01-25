@@ -44,6 +44,7 @@ void PlayerCube::Init(int playerHandle)
     m_vec.y = 0;
 
     m_isMoveRight = true;
+    m_isRevGravity = false;
 }
 
 void PlayerCube::Update(const InputState& input)
@@ -79,6 +80,20 @@ void PlayerCube::OnHitObject(const InputState& input)
                     m_isDead = true;
                     return;
                 }
+                else if (object == ObjectType::GravityRing)
+                {
+                    if (input.IsTriggered(InputType::jump))
+                    {
+                        if (!m_isRevGravity) m_isRevGravity = true;	// 重力反転
+                        else m_isRevGravity = false;
+                        return;
+                    }
+                }
+                else if (object == ObjectType::GravityPad)
+                {
+                    m_isRevGravity = true;	// 重力反転
+                    return;
+                }
                 else if (object == ObjectType::GoalGate)
                 {
                     m_isGameClear = true;
@@ -112,7 +127,8 @@ void PlayerCube::NormalUpdate(const InputState& input)
 {
     // プレイヤーの挙動の処理
     m_pos += m_vec;
-    m_vec.y += kGravity;
+    if(m_isRevGravity) m_vec.y += -kGravity;
+    else m_vec.y += kGravity;
     if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 

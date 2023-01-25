@@ -38,6 +38,8 @@ public:
 	// プレイヤーの座標取得
 	Vec2 GetPos() const { return m_pos; }
 
+	virtual bool IsRevGravity() { return m_isRevGravity; }
+
 protected:
 	// 画像データ
 	int m_handle;
@@ -51,6 +53,8 @@ protected:
 
 	// 移動方向
 	bool m_isMoveRight;
+	// 重力方向
+	bool m_isRevGravity;
 
 	// 地面との当たり判定用変数
 	bool m_isField;
