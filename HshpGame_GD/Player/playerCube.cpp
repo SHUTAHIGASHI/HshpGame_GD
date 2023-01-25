@@ -34,7 +34,7 @@ void PlayerCube::Init(int playerHandle)
 	m_isDead = false;
 
 	m_pos.x = 0;
-	m_pos.y = Game::kStageLowerLimit - (m_height / 2);
+	m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
 
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
@@ -53,12 +53,12 @@ void PlayerCube::NormalUpdate(const InputState& input)
     // 地面との当たり判定
     isField = false;
 
-    if (m_pos.y > Game::kStageLowerLimit - m_height)
+    if (m_pos.y > Game::kScreenHeight - Game::kBlockSize)
     {
         m_angle = 0;
-        m_pos.y = Game::kStageLowerLimit - m_height;
+        m_pos.y = Game::kScreenHeight - Game::kBlockSize;
 
-        m_pos.y = static_cast<float>(Game::kStageLowerLimit - m_height);    // ステージの範囲より下には行かない
+        m_pos.y = static_cast<float>(Game::kScreenHeight - Game::kBlockSize);    // ステージの範囲より下には行かない
         isField = true;
     }
 

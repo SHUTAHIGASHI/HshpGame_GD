@@ -42,7 +42,7 @@ namespace Game
 
 	// ゲームのステージサイズ
 	constexpr float kStageUpperLimit = Game::kBlockSize * 4;
-	constexpr float kStageLowerLimit = Game::kBlockSize * 18;
+	constexpr float kStageLowerLimit = Game::kBlockSize * 20;
 	// ステージ横幅
 	constexpr int kScreenWidthNum = static_cast<int>(Game::kScreenWidth / Game::kBlockSize);
 	// ステージ縦幅
