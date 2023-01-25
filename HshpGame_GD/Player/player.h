@@ -50,10 +50,10 @@ protected:
 	float m_angle;
 
 	// 移動方向
-	bool isMoveRight;
+	bool m_isMoveRight;
 
 	// 地面との当たり判定用変数
-	bool isField;
+	bool m_isField;
 
 	// 表示位置
 	Vec2 m_pos;

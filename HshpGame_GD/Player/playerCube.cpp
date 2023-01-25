@@ -43,7 +43,7 @@ void PlayerCube::Init(int playerHandle)
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
 
-    isMoveRight = true;
+    m_isMoveRight = true;
 }
 
 void PlayerCube::Update(const InputState& input)
@@ -89,7 +89,7 @@ void PlayerCube::OnHitObject(const InputState& input)
                     m_angle = 0.0f;
                     m_vec.y = 0.0f;
                     m_pos.y = tempPos - Game::kBlockSize;
-                    isField = true;
+                    m_isField = true;
                     return;
                 }
                 else
@@ -113,28 +113,28 @@ void PlayerCube::NormalUpdate(const InputState& input)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     m_vec.y += kGravity;
-    if (isMoveRight) m_angle += kRotaSpeed;
+    if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
     // 地面との当たり判定
-    isField = false;
+    m_isField = false;
 
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
-        isMoveRight = true;
+        m_isMoveRight = true;
     }
     else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
         m_vec.x *= -1;
-        isMoveRight = false;
+        m_isMoveRight = false;
     }
 
     OnHitObject(input);
 
     if (input.IsPressed(InputType::jump))
     {
-        if (isField)
+        if (m_isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
         }
