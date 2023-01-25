@@ -16,9 +16,7 @@ public:
 	void Init(int playerHandle);
 
 	// プレイヤーの更新処理
-	void NormalUpdate(const InputState& input);
-	// プレイヤー死亡時の更新処理
-	void DeadUpdate();
+	void Update(const InputState& input);
 
 	// オブジェクトと当たった時の処理
 	void OnHitObject(const InputState& input);
@@ -28,4 +26,11 @@ public:
 private:
 	// ステージのポインタ
 	Stage* m_pStage;
+
+	void NormalUpdate(const InputState& input);
+	// プレイヤー死亡時の更新処理
+	void DeadUpdate(const InputState& input);
+
+	using UpdateFunc_t = void (PlayerCube::*) (const InputState& input);
+	UpdateFunc_t updateFunc_ = nullptr;
 };

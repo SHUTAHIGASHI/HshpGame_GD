@@ -77,6 +77,11 @@ void SceneMain::update(const InputState& input)
 		m_countAttempt++;
 	}
 
+	m_Stage.Update();
+
+	// プレイヤーの更新処理
+	m_cPlayer.Update(input);
+
 	if (m_cPlayer.IsGameClear())
 	{
 		m_countAttempt = 0;
@@ -97,11 +102,6 @@ void SceneMain::update(const InputState& input)
 		m_gameOverDelay--;
 		return;
 	}
-
-	m_Stage.Update();
-
-	// プレイヤーの更新処理
-	m_cPlayer.NormalUpdate(input);
 }
 
 // 毎フレームの描画

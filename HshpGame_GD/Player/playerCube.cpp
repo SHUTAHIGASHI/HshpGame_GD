@@ -22,13 +22,16 @@ namespace
 }
 
 PlayerCube::PlayerCube() :
-    m_pStage(nullptr)
+    m_pStage(nullptr),
+    updateFunc_(&PlayerCube::NormalUpdate)
 {
 }
 
 void PlayerCube::Init(int playerHandle)
 {
-	m_handle = playerHandle;
+    updateFunc_ = &PlayerCube::NormalUpdate;
+    
+    m_handle = playerHandle;
 	GetGraphSizeF(m_handle, &m_width, &m_height);
 	
     m_isGameClear = false;
@@ -43,42 +46,9 @@ void PlayerCube::Init(int playerHandle)
     isMoveRight = true;
 }
 
-void PlayerCube::NormalUpdate(const InputState& input)
+void PlayerCube::Update(const InputState& input)
 {
-    // プレイヤーの挙動の処理
-    m_pos += m_vec;
-    m_vec.y += kGravity;
-    if(isMoveRight) m_angle += kRotaSpeed;
-    else m_angle += -kRotaSpeed;
-
-    // 地面との当たり判定
-    isField = false;
-
-    if (m_pos.x < 0)
-    {
-        m_vec.x *= -1;
-        isMoveRight = true;
-    }
-    else if (m_pos.x  + Game::kBlockSize > Game::kScreenWidth)
-    {
-        m_vec.x *= -1;
-        isMoveRight = false;
-    }
-
-    OnHitObject(input);
-
-    if (input.IsPressed(InputType::jump))
-    {
-        if (isField)
-        {
-            m_vec.y = kJumpAcc;	// ジャンプ開始
-        }
-    }
-}
-
-void PlayerCube::DeadUpdate()
-{
-
+    (this->*updateFunc_)(input);
 }
 
 void PlayerCube::OnHitObject(const InputState& input)
@@ -136,4 +106,47 @@ void PlayerCube::Draw()
 {
 	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
+}
+
+void PlayerCube::NormalUpdate(const InputState& input)
+{
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    m_vec.y += kGravity;
+    if (isMoveRight) m_angle += kRotaSpeed;
+    else m_angle += -kRotaSpeed;
+
+    // 地面との当たり判定
+    isField = false;
+
+    if (m_pos.x < 0)
+    {
+        m_vec.x *= -1;
+        isMoveRight = true;
+    }
+    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    {
+        m_vec.x *= -1;
+        isMoveRight = false;
+    }
+
+    OnHitObject(input);
+
+    if (input.IsPressed(InputType::jump))
+    {
+        if (isField)
+        {
+            m_vec.y = kJumpAcc;	// ジャンプ開始
+        }
+    }
+
+    if (m_isDead)
+    {
+        updateFunc_ = &PlayerCube::DeadUpdate;
+    }
+}
+
+void PlayerCube::DeadUpdate(const InputState& input)
+{
+    return;
 }
