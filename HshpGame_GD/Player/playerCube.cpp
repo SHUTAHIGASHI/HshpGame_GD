@@ -31,6 +31,7 @@ void PlayerCube::Init(int playerHandle)
 	m_handle = playerHandle;
 	GetGraphSizeF(m_handle, &m_width, &m_height);
 	
+    m_isGameClear = false;
 	m_isDead = false;
 
 	m_pos.x = 0;
@@ -52,15 +53,6 @@ void PlayerCube::NormalUpdate(const InputState& input)
 
     // 地面との当たり判定
     isField = false;
-
-    if (m_pos.y > Game::kScreenHeight - Game::kBlockSize)
-    {
-        m_angle = 0;
-        m_pos.y = Game::kScreenHeight - Game::kBlockSize;
-
-        m_pos.y = static_cast<float>(Game::kScreenHeight - Game::kBlockSize);    // ステージの範囲より下には行かない
-        isField = true;
-    }
 
     if (m_pos.x < 0)
     {
@@ -115,6 +107,11 @@ void PlayerCube::OnHitObject(const InputState& input)
                 else if (object == ObjectType::Spike)
                 {
                     m_isDead = true;
+                    return;
+                }
+                else if (object == ObjectType::GoalGate)
+                {
+                    m_isGameClear = true;
                     return;
                 }
                 else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)

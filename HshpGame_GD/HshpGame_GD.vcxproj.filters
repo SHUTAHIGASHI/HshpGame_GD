@@ -87,6 +87,9 @@
     <ClCompile Include="StageObject\Stage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectGoalGate.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneTitle.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGoalGate.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

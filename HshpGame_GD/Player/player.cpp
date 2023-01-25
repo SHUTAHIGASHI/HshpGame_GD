@@ -10,6 +10,7 @@ Player::Player():
 	isField(false),
 	m_pos(),
 	m_vec(),
+	m_isGameClear(false),
 	m_isDead(false)
 {
 }

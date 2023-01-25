@@ -22,6 +22,8 @@ public:
 	virtual float GetCenterX(){ return m_pos.x + (m_width / 2); }
 	virtual float GetCenterY(){ return m_pos.y + (m_height / 2); }
 
+	// m_isGameClear ‚ğæ“¾
+	virtual bool IsGameClear() { return m_isGameClear; }
 	// m_isDead ‚ğ true ‚É‚·‚é
 	virtual void SetDead() { m_isDead = true; }
 	// m_isDead ‚ğæ“¾
@@ -58,6 +60,9 @@ protected:
 
 	// ˆÚ“®—Ê
 	Vec2 m_vec;
+
+	// ƒS[ƒ‹”»’è
+	bool m_isGameClear;
 
 	// €–S”»’è
 	bool m_isDead;

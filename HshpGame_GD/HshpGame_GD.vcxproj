@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectGoalGate.cpp" />
     <ClCompile Include="Player\player.cpp" />
     <ClCompile Include="Player\playerCube.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjectGoalGate.h" />
     <ClInclude Include="Player\player.h" />
     <ClInclude Include="Player\playerCube.h" />
     <ClInclude Include="resource.h" />

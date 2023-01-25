@@ -77,6 +77,13 @@ void SceneMain::update(const InputState& input)
 		m_countAttempt++;
 	}
 
+	if (m_cPlayer.IsGameClear())
+	{
+		m_countAttempt = 0;
+		m_isGameClear = true;
+		m_isEnd = true;
+	}
+
 	// ƒvƒŒƒCƒ„[‚Ì€–S”»’è‚ª true ‚Ìê‡
 	if (m_cPlayer.IsDead())
 	{

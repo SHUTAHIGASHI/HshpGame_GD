@@ -8,6 +8,7 @@
 enum class ObjectType
 {
 	Empty,
+	GoalGate,
 	Block,
 	Spike,
 	JumpRing,
