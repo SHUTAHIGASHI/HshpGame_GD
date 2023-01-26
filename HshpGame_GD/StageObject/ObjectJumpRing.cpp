@@ -6,7 +6,13 @@ ObjectJumpRing::ObjectJumpRing() :
 {
 }
 
-void ObjectJumpRing::Init(float X, float Y)
+void ObjectJumpRing::Init()
+{
+	m_pos.x = -Game::kBlockSize;
+	m_pos.y = -Game::kBlockSize;
+}
+
+void ObjectJumpRing::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;

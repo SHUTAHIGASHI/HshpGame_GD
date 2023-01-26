@@ -4,7 +4,13 @@ ObjectJumpPad::ObjectJumpPad()
 {
 }
 
-void ObjectJumpPad::Init(float X, float Y)
+void ObjectJumpPad::Init()
+{
+	m_pos.x = -Game::kBlockSize;
+	m_pos.y = -Game::kBlockSize;
+}
+
+void ObjectJumpPad::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;

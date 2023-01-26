@@ -8,7 +8,9 @@ public:
     ObjectGoalGate();
     ~ObjectGoalGate() {}
 
-    void Init(float X, float Y);
+    void Init();
+
+    void SetPos(float X, float Y);
 
     void Update();
 

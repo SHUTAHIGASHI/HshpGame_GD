@@ -4,7 +4,13 @@ ObjectSpike::ObjectSpike()
 {
 }
 
-void ObjectSpike::Init(float X, float Y)
+void ObjectSpike::Init()
+{
+	m_pos.x = -Game::kBlockSize;
+	m_pos.y = -Game::kBlockSize;
+}
+
+void ObjectSpike::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;

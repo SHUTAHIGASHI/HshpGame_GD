@@ -76,8 +76,24 @@ void Stage::Init(StageState stage)
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			m_stage[i][j] = 0;
+			m_ObjectGoalGate[i][j].Init();
+			m_ObjectBlock[i][j].Init();
+			m_ObjectJumpRing[i][j].Init();
+			m_ObjectJumpPad[i][j].Init();
+			m_ObjectSpike[i][j].Init();
+			m_ObjectGravityRing[i][j].Init();
+		}
+	}
 
+	SetStage(stage);
+}
+
+void Stage::SetStage(StageState stage)
+{
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
+		{
 			if (stage == StageState::firstStage)
 			{
 				m_stage[i][j] = m_stage_first[i][j];
@@ -91,12 +107,12 @@ void Stage::Init(StageState stage)
 			blockPosX = j * Game::kBlockSize;
 			blockPosY = i * Game::kBlockSize;
 
-			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Init(blockPosX, blockPosY);
-			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].Init(blockPosX, blockPosY);
+			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].SetPos(blockPosX, blockPosY);
 		}
 	}
 }

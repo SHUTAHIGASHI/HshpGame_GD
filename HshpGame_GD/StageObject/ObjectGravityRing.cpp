@@ -6,7 +6,13 @@ ObjectGravityRing::ObjectGravityRing() :
 {
 }
 
-void ObjectGravityRing::Init(float X, float Y)
+void ObjectGravityRing::Init()
+{
+	m_pos.x = -Game::kBlockSize;
+	m_pos.y = -Game::kBlockSize;
+}
+
+void ObjectGravityRing::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;

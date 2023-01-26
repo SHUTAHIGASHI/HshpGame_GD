@@ -25,11 +25,13 @@ public:
 	
 	void setPlayer(PlayerCube* cube) { m_pCube = cube; }
 	
+	void Init(StageState stage);
+
+	void SetStage(StageState stage);
+
 	void Update();
 
 	void Draw();
-
-	void Init(StageState tStageState);
 
 	bool CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object);
 

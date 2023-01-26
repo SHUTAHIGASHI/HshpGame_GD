@@ -4,7 +4,13 @@ ObjectBlock::ObjectBlock()
 {
 }
 
-void ObjectBlock::Init(float X, float Y)
+void ObjectBlock::Init()
+{
+	m_pos.x = -Game::kBlockSize;
+	m_pos.y = -Game::kBlockSize;
+}
+
+void ObjectBlock::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;
