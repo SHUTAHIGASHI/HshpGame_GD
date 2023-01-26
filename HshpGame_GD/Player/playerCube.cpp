@@ -34,7 +34,7 @@ void PlayerCube::Init(int playerHandle)
     m_handle = playerHandle;
 	GetGraphSizeF(m_handle, &m_width, &m_height);
 	
-    m_isGameClear = false;
+    m_isStageClear = false;
 	m_isDead = false;
 
 	m_pos.x = 0;
@@ -84,27 +84,40 @@ void PlayerCube::OnHitObject(const InputState& input)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
-                        if (!m_isRevGravity) m_isRevGravity = true;	// 重力反転
-                        else m_isRevGravity = false;
+                        if (!m_isRevGravity)
+                        {
+                            m_isRevGravity = true;	// 重力反転
+                            m_updateFunc = &PlayerCube::RevGravityUpdate;
+                        }
+                        else
+                        {
+                            m_isRevGravity = false;
+                            m_updateFunc = &PlayerCube::NormalUpdate;
+                        }
                         return;
                     }
                 }
-                else if (object == ObjectType::GravityPad)
-                {
-                    m_isRevGravity = true;	// 重力反転
-                    return;
-                }
                 else if (object == ObjectType::GoalGate)
                 {
-                    m_isGameClear = true;
+                    m_isStageClear = true;
                     return;
                 }
                 else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
                 {
-                    m_angle = 0.0f;
-                    m_vec.y = 0.0f;
-                    m_pos.y = tempPos - Game::kBlockSize;
-                    m_isField = true;
+                    if (!m_isRevGravity)
+                    {
+                        m_angle = 0.0f;
+                        m_vec.y = 0.0f;
+                        m_pos.y = tempPos - Game::kBlockSize;
+                        m_isField = true;
+                    }
+                    else
+                    {
+                        m_angle = 0.0f;
+                        m_vec.y = 0.0f;
+                        m_pos.y = tempPos;
+                        m_isField = true;
+                    }
                     return;
                 }
                 else
@@ -127,8 +140,7 @@ void PlayerCube::NormalUpdate(const InputState& input)
 {
     // プレイヤーの挙動の処理
     m_pos += m_vec;
-    if(m_isRevGravity) m_vec.y += -kGravity;
-    else m_vec.y += kGravity;
+    m_vec.y += kGravity;
     if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
@@ -153,6 +165,44 @@ void PlayerCube::NormalUpdate(const InputState& input)
         if (m_isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
+        }
+    }
+
+    if (m_isDead)
+    {
+        m_updateFunc = &PlayerCube::DeadUpdate;
+    }
+}
+
+void PlayerCube::RevGravityUpdate(const InputState& input)
+{
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    m_vec.y += -kGravity;
+    if (m_isMoveRight) m_angle += -kRotaSpeed;
+    else m_angle += kRotaSpeed;
+
+    // 地面との当たり判定
+    m_isField = false;
+
+    if (m_pos.x < 0)
+    {
+        m_vec.x *= -1;
+        m_isMoveRight = true;
+    }
+    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    {
+        m_vec.x *= -1;
+        m_isMoveRight = false;
+    }
+
+    OnHitObject(input);
+
+    if (input.IsPressed(InputType::jump))
+    {
+        if (m_isField)
+        {
+            m_vec.y = -kJumpAcc;	// ジャンプ開始
         }
     }
 

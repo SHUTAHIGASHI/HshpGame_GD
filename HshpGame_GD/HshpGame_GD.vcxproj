@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectGoalGate.cpp" />
-    <ClCompile Include="ObjectGravityPad.cpp" />
     <ClCompile Include="ObjectGravityRing.cpp" />
     <ClCompile Include="Player\player.cpp" />
     <ClCompile Include="Player\playerCube.cpp" />
@@ -173,7 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectGoalGate.h" />
-    <ClInclude Include="ObjectGravityPad.h" />
     <ClInclude Include="ObjectGravityRing.h" />
     <ClInclude Include="Player\player.h" />
     <ClInclude Include="Player\playerCube.h" />

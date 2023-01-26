@@ -7,10 +7,11 @@ Player::Player():
 	m_width(0),
 	m_angle(0.0f),
 	m_isMoveRight(false),
+	m_isRevGravity(false),
 	m_isField(false),
 	m_pos(),
 	m_vec(),
-	m_isGameClear(false),
+	m_isStageClear(false),
 	m_isDead(false)
 {
 }

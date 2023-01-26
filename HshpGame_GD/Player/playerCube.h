@@ -27,7 +27,10 @@ private:
 	// ステージのポインタ
 	Stage* m_pStage;
 
+	// 通常時の更新処理
 	void NormalUpdate(const InputState& input);
+	// 重力反転時の更新処理
+	void RevGravityUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void DeadUpdate(const InputState& input);
 

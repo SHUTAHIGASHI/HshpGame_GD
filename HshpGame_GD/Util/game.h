@@ -14,7 +14,6 @@ enum class ObjectType
 	JumpRing,
 	JumpPad,
 	GravityRing,
-	GravityPad,
 	End
 };
 

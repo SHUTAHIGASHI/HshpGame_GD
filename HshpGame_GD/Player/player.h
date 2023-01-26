@@ -23,7 +23,7 @@ public:
 	virtual float GetCenterY(){ return m_pos.y + (m_height / 2); }
 
 	// m_isGameClear を取得
-	virtual bool IsGameClear() { return m_isGameClear; }
+	virtual bool IsStageClear() { return m_isStageClear; }
 	// m_isDead を true にする
 	virtual void SetDead() { m_isDead = true; }
 	// m_isDead を取得
@@ -59,14 +59,14 @@ protected:
 	// 地面との当たり判定用変数
 	bool m_isField;
 
-	// 表示位置
+	// プレイヤー座標
 	Vec2 m_pos;
 
 	// 移動量
 	Vec2 m_vec;
 
 	// ゴール判定
-	bool m_isGameClear;
+	bool m_isStageClear;
 
 	// 死亡判定
 	bool m_isDead;

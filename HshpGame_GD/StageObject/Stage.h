@@ -6,7 +6,6 @@
 #include "ObjectJumpRing.h"
 #include "ObjectJumpPad.h"
 #include "ObjectGravityRing.h"
-#include "ObjectGravityPad.h"
 #include "ObjectGoalGate.h"
 
 class PlayerCube;
@@ -32,18 +31,28 @@ public:
 
 	void Draw();
 
+	void SetStage();
+
 	bool CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object);
 
 	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
+
+	void SetStageState();
+	StageState GetStageState() { return m_stageState; }
+
 private:
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectGravityPad m_ObjectGravityPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
 	PlayerCube* m_pCube;
+
+	// ステージ管理用変数
+	StageState m_stageState;
+	// ステージ管理用二次元配列
+	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum];
 };
 

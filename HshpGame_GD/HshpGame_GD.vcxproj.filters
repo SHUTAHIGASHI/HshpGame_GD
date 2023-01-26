@@ -90,9 +90,6 @@
     <ClCompile Include="ObjectGoalGate.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectGravityPad.cpp">
-      <Filter>ソース ファイル\StageObject</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectGravityRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
@@ -150,9 +147,6 @@
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="ObjectGoalGate.h">
-      <Filter>ヘッダー ファイル\StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectGravityPad.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
     <ClInclude Include="ObjectGravityRing.h">

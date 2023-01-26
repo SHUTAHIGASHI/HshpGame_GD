@@ -78,11 +78,20 @@ void SceneMain::update(const InputState& input)
 	// プレイヤーの更新処理
 	m_cPlayer.Update(input);
 
-	if (m_cPlayer.IsGameClear())
+	if (m_cPlayer.IsStageClear())
 	{
-		m_countAttempt = 0;
-		m_isGameClear = true;
-		m_isEnd = true;
+		if (m_Stage.GetStageState() == StageState::firstStage)
+		{
+			m_Stage.SetStageState();
+			m_Stage.SetStage();
+			init();
+		}
+		else if (m_Stage.GetStageState() == StageState::secondStage)
+		{
+			m_countAttempt = 0;
+			m_isGameClear = true;
+			m_isEnd = true;
+		}
 	}
 
 	// プレイヤーの死亡判定が true の場合
