@@ -38,15 +38,22 @@ void PlayerCube::Init(int playerHandle)
     m_handle = playerHandle;
 	GetGraphSizeF(m_handle, &m_width, &m_height);
 	
-    m_isStageClear = false;
-	m_isDead = false;
-
-	m_pos.x = 0;
-	m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
 
+    if (m_pStage->GetStageState() == StageState::firstStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+    }
+    else if (m_pStage->GetStageState() == StageState::secondStage)
+    {
+        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+    }
+
+    m_isStageClear = false;
+	m_isDead = false;
     m_isMoveRight = true;
     m_isRevGravity = false;
 }
@@ -115,7 +122,7 @@ void PlayerCube::OnHitObject(const InputState& input)
                     {
                         m_angle = 0.0f;
                         m_vec.y = 0.0f;
-                        m_pos.y = tempPos - Game::kBlockSize;
+                        m_pos.y = tempPos;
                         m_isField = true;
                     }
                     else

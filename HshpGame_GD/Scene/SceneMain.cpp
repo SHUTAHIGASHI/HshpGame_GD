@@ -36,14 +36,17 @@ void SceneMain::init()
 	m_isGameClear = false;
 	m_isEnd = false;
 
-	m_Stage.Init();
+	// アドレスの設定
+	m_cPlayer.setStage(&m_Stage);
 	m_Stage.setPlayer(&m_cPlayer);
+
+	// ステージ初期化
+	m_Stage.Init();
 
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCubeMini.png");
 	// プレイヤー初期化 
 	m_cPlayer.Init(m_hPlayerGraphic);
-	m_cPlayer.setStage(&m_Stage);
 
 	// 各時間用変数の初期化
 	m_gameTimeRemaining = kGameMaxTime;
