@@ -83,18 +83,16 @@ void PlayerCube::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::GravityRing)
                 {
-                    if (input.IsTriggered(InputType::jump) && !m_isUnderReverse)
+                    if (input.IsTriggered(InputType::jump))
                     {
                         if (!m_isRevGravity)
                         {
                             m_isRevGravity = true;	// èdóÕîΩì]
-                            m_isUnderReverse = true;
                             m_updateFunc = &PlayerCube::RevGravityUpdate;
                         }
                         else
                         {
                             m_isRevGravity = false; // èdóÕê≥èÌ
-                            m_isUnderReverse = true;
                             m_updateFunc = &PlayerCube::NormalUpdate;
                         }
                         return;
@@ -113,7 +111,6 @@ void PlayerCube::OnHitObject(const InputState& input)
                         m_vec.y = 0.0f;
                         m_pos.y = tempPos - Game::kBlockSize;
                         m_isField = true;
-                        m_isUnderReverse = false;
                     }
                     else
                     {
@@ -121,7 +118,6 @@ void PlayerCube::OnHitObject(const InputState& input)
                         m_vec.y = 0.0f;
                         m_pos.y = tempPos;
                         m_isField = true;
-                        m_isUnderReverse = false;
                     }
                     return;
                 }
