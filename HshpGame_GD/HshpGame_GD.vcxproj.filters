@@ -93,6 +93,9 @@
     <ClCompile Include="StageObject\ObjectGravityRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="playerShip.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="StageObject\ObjectGravityRing.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="playerShip.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

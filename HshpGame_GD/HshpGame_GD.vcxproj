@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="playerShip.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
     <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
     <ClCompile Include="Player\player.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="playerShip.h" />
     <ClInclude Include="StageObject\ObjectGoalGate.h" />
     <ClInclude Include="StageObject\ObjectGravityRing.h" />
     <ClInclude Include="Player\player.h" />
