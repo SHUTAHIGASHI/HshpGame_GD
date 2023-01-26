@@ -8,6 +8,7 @@ Player::Player():
 	m_angle(0.0f),
 	m_isMoveRight(false),
 	m_isRevGravity(false),
+	m_isUnderReverse(false),
 	m_isField(false),
 	m_pos(),
 	m_vec(),

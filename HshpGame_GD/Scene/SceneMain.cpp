@@ -15,8 +15,7 @@ namespace
 }
 
 SceneMain::SceneMain() :
-	m_countAttempt(0),
-	m_stateState()
+	m_countAttempt(0)
 {
 	m_hPlayerGraphic = -1;
 
@@ -37,7 +36,7 @@ void SceneMain::init()
 	m_isGameClear = false;
 	m_isEnd = false;
 
-	m_Stage.Init(m_stateState);
+	m_Stage.Init();
 	m_Stage.setPlayer(&m_cPlayer);
 
 	// ‰æ‘œƒf[ƒ^‚Ì“Ç‚İ‚İ
@@ -81,13 +80,13 @@ void SceneMain::update(const InputState& input)
 
 	if (m_cPlayer.IsStageClear())
 	{
-		if (m_stateState == StageState::firstStage)
+		if (m_Stage.GetStageState() == StageState::firstStage)
 		{
-			m_stateState = StageState::secondStage;
-			m_Stage.Init(m_stateState);
+			m_Stage.SetSecondStage();
+			m_Stage.Init();
 			init();
 		}
-		else if (m_stateState == StageState::secondStage)
+		else if (m_Stage.GetStageState() == StageState::secondStage)
 		{
 			m_countAttempt = 0;
 			m_isGameClear = true;

@@ -20,9 +20,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	// ゲーム終了判定用の変数作成
-	int isGameMusicEnd = false;
-
 	InputState input;
 
 	SceneManager scene;

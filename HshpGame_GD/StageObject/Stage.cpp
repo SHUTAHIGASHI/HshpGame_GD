@@ -21,7 +21,7 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,2,2,2,2,2},
 		{0,0,0,0,3,0,2,2,2,2,2,2,2,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,5,5,0,0,0,5,5,5,0,5,5,5,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,0},
-		{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,4,0,0,0,0,5,0,0,0,0,4,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -65,12 +65,13 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
+	m_stageState(StageState::firstStage),
 	m_stage()
 {
 
 }
 
-void Stage::Init(StageState stage)
+void Stage::Init()
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
@@ -85,20 +86,20 @@ void Stage::Init(StageState stage)
 		}
 	}
 
-	SetStage(stage);
+	SetStage();
 }
 
-void Stage::SetStage(StageState stage)
+void Stage::SetStage()
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			if (stage == StageState::firstStage)
+			if (m_stageState == StageState::firstStage)
 			{
 				m_stage[i][j] = m_stage_first[i][j];
 			}
-			else if (stage == StageState::secondStage)
+			else if (m_stageState == StageState::secondStage)
 			{
 				m_stage[i][j] = m_stage_second[i][j];
 			}
@@ -140,7 +141,7 @@ void Stage::Draw()
 			drawPosY = static_cast<int>(i * Game::kBlockSize);
 			
 			// デバック用白線
-			DrawBox(drawPosX, drawPosY, drawPosX + static_cast<int>(Game::kBlockSize), drawPosY + static_cast<int>(Game::kBlockSize), 0xFFFFFF, false);
+			//DrawBox(drawPosX, drawPosY, drawPosX + static_cast<int>(Game::kBlockSize), drawPosY + static_cast<int>(Game::kBlockSize), 0xFFFFFF, false);
 
 			// ステージギミックの描画
 			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Draw();

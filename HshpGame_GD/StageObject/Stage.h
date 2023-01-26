@@ -14,6 +14,7 @@ enum class StageState
 {
 	firstStage,
 	secondStage,
+	thirdStage,
 	End
 };
 
@@ -25,9 +26,9 @@ public:
 	
 	void setPlayer(PlayerCube* cube) { m_pCube = cube; }
 	
-	void Init(StageState stage);
+	void Init();
 
-	void SetStage(StageState stage);
+	void SetStage();
 
 	void Update();
 
@@ -36,6 +37,13 @@ public:
 	bool CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object);
 
 	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
+
+	// 各ステージのセット
+	void SetSecondStage() { m_stageState = StageState::secondStage; }
+	void SetThirdStage() { m_stageState = StageState::thirdStage; }
+
+	//ステージの状態を確保
+	StageState GetStageState() { return m_stageState; }
 
 private:
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
@@ -47,6 +55,8 @@ private:
 
 	PlayerCube* m_pCube;
 
+	// ステージ管理用変数
+	StageState m_stageState;
 	// ステージ管理用二次元配列
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum];
 };

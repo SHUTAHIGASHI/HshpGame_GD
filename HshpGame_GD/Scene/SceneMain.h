@@ -48,8 +48,6 @@ private:
 	// シーン終了
 	bool m_isEnd;
 
-	StageState m_stateState;
-
 	// プレイヤー
 	Player m_Player;
 	PlayerCube m_cPlayer;
