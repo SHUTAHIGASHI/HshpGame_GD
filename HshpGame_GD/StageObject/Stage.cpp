@@ -65,7 +65,7 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::firstStage),
+	m_stageState(StageState::secondStage),
 	m_stage()
 {
 
@@ -141,7 +141,7 @@ void Stage::Draw()
 			drawPosY = static_cast<int>(i * Game::kBlockSize);
 			
 			// デバック用白線
-			//DrawBox(drawPosX, drawPosY, drawPosX + static_cast<int>(Game::kBlockSize), drawPosY + static_cast<int>(Game::kBlockSize), 0xFFFFFF, false);
+			DrawBox(drawPosX, drawPosY, drawPosX + static_cast<int>(Game::kBlockSize), drawPosY + static_cast<int>(Game::kBlockSize), 0xFFFFFF, false);
 
 			// ステージギミックの描画
 			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Draw();

@@ -19,6 +19,10 @@ namespace
 
     // 重力
     constexpr float kGravity = 1.15f;
+    // 重力反転時の加速度
+    constexpr float kRevGravityAcc = 2.0f;
+    // 落下の最大速度
+    constexpr float kGravityMax = 20.0f;
 }
 
 PlayerCube::PlayerCube() :
@@ -88,11 +92,13 @@ void PlayerCube::OnHitObject(const InputState& input)
                         if (!m_isRevGravity)
                         {
                             m_isRevGravity = true;	// 重力反転
+                            m_vec.y = -kRevGravityAcc;
                             m_updateFunc = &PlayerCube::RevGravityUpdate;
                         }
                         else
                         {
                             m_isRevGravity = false; // 重力正常
+                            m_vec.y = kRevGravityAcc;
                             m_updateFunc = &PlayerCube::NormalUpdate;
                         }
                         return;
@@ -159,6 +165,11 @@ void PlayerCube::NormalUpdate(const InputState& input)
         m_isMoveRight = false;
     }
 
+    if (m_vec.y > kGravityMax)
+    {
+        m_vec.y = kGravityMax;
+    }
+
     OnHitObject(input);
 
     if (input.IsPressed(InputType::jump))
@@ -195,6 +206,11 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
     {
         m_vec.x *= -1;
         m_isMoveRight = false;
+    }
+
+    if (m_vec.y < -kGravityMax)
+    {
+        m_vec.y = -kGravityMax;
     }
 
     OnHitObject(input);
