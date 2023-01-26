@@ -15,7 +15,8 @@ namespace
 }
 
 SceneMain::SceneMain() :
-	m_countAttempt(0)
+	m_countAttempt(0),
+	m_stateState()
 {
 	m_hPlayerGraphic = -1;
 
@@ -32,22 +33,22 @@ SceneMain::~SceneMain()
 // 初期化
 void SceneMain::init()
 {
+	// シーン終了、ゲームクリアを false に初期化
+	m_isGameClear = false;
+	m_isEnd = false;
+
+	m_Stage.Init(m_stateState);
+	m_Stage.setPlayer(&m_cPlayer);
+
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCubeMini.png");
 	// プレイヤー初期化 
 	m_cPlayer.Init(m_hPlayerGraphic);
 	m_cPlayer.setStage(&m_Stage);
 
-	m_Stage.Init();
-	m_Stage.setPlayer(&m_cPlayer);
-
 	// 各時間用変数の初期化
 	m_gameTimeRemaining = kGameMaxTime;
 	m_gameOverDelay = kGameOverDelay;
-
-	// シーン終了、ゲームクリアを false に初期化
-	m_isGameClear = false;
-	m_isEnd = false;
 }
 
 // 終了処理
@@ -80,13 +81,13 @@ void SceneMain::update(const InputState& input)
 
 	if (m_cPlayer.IsStageClear())
 	{
-		if (m_Stage.GetStageState() == StageState::firstStage)
+		if (m_stateState == StageState::firstStage)
 		{
-			m_Stage.SetStageState();
-			m_Stage.SetStage();
+			m_stateState = StageState::secondStage;
+			m_Stage.Init(m_stateState);
 			init();
 		}
-		else if (m_Stage.GetStageState() == StageState::secondStage)
+		else if (m_stateState == StageState::secondStage)
 		{
 			m_countAttempt = 0;
 			m_isGameClear = true;

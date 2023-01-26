@@ -87,10 +87,10 @@
     <ClCompile Include="StageObject\Stage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectGoalGate.cpp">
+    <ClCompile Include="StageObject\ObjectGoalGate.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectGravityRing.cpp">
+    <ClCompile Include="StageObject\ObjectGravityRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,10 +146,10 @@
     <ClInclude Include="Scene\SceneTitle.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectGoalGate.h">
+    <ClInclude Include="StageObject\ObjectGoalGate.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectGravityRing.h">
+    <ClInclude Include="StageObject\ObjectGravityRing.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>

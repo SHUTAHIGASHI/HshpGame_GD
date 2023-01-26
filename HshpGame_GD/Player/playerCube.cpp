@@ -62,6 +62,7 @@ void PlayerCube::OnHitObject(const InputState& input)
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
                 float tempPos = 0.0f;
+                DrawFormatString(100, 150, 0xffffff, "%d", static_cast<int>(object));
                 if (object == ObjectType::JumpRing)
                 {
                     if (input.IsTriggered(InputType::jump))

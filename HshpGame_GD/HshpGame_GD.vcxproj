@@ -152,8 +152,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjectGoalGate.cpp" />
-    <ClCompile Include="ObjectGravityRing.cpp" />
+    <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
+    <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
     <ClCompile Include="Player\player.cpp" />
     <ClCompile Include="Player\playerCube.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
@@ -171,8 +171,8 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ObjectGoalGate.h" />
-    <ClInclude Include="ObjectGravityRing.h" />
+    <ClInclude Include="StageObject\ObjectGoalGate.h" />
+    <ClInclude Include="StageObject\ObjectGravityRing.h" />
     <ClInclude Include="Player\player.h" />
     <ClInclude Include="Player\playerCube.h" />
     <ClInclude Include="resource.h" />

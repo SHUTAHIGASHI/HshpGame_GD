@@ -65,24 +65,32 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::firstStage),
 	m_stage()
 {
 
 }
 
-void Stage::Init()
-{	
+void Stage::Init(StageState stage)
+{
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
-			SetStage();
-			
+			m_stage[i][j] = 0;
+
+			if (stage == StageState::firstStage)
+			{
+				m_stage[i][j] = m_stage_first[i][j];
+			}
+			else if (stage == StageState::secondStage)
+			{
+				m_stage[i][j] = m_stage_second[i][j];
+			}
+
 			float blockPosX, blockPosY;
 			blockPosX = j * Game::kBlockSize;
 			blockPosY = i * Game::kBlockSize;
-			
+
 			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Init(blockPosX, blockPosY);
 			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Init(blockPosX, blockPosY);
 			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Init(blockPosX, blockPosY);
@@ -129,27 +137,11 @@ void Stage::Draw()
 	}
 }
 
-void Stage::SetStage()
-{
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
-	{
-		for (int j = 0; j < Game::kScreenWidthNum; j++)
-		{
-			if (m_stageState == StageState::firstStage)
-			{
-				m_stage[i][j] = m_stage_first[i][j];
-			}
-			else if (m_stageState == StageState::secondStage)
-			{
-				m_stage[i][j] = m_stage_second[i][j];
-			}
-		}
-	}
-}
-
 // プレイヤーとオブジェクトの当たり判定チェック
 bool Stage::CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object)
 {
+	if (m_stage[H][W] == 0) return false;
+
 	// 当たっている場合、trueを返す
 	// ブロックの当たり判定
 	if (m_ObjectBlock[H][W].GetRight() >= playerPos.x &&
@@ -240,9 +232,4 @@ bool Stage::IsUnder(Vec2 playerPos, float &tempPos,  int H, int W)
 	
 	// 下ではない場合、falseを返す
 	return false;
-}
-
-void Stage::SetStageState()
-{
-	m_stageState = StageState::secondStage;
 }

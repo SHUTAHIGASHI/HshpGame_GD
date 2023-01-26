@@ -10,9 +10,9 @@ enum class ObjectType
 	Empty,
 	GoalGate,
 	Block,
-	Spike,
 	JumpRing,
 	JumpPad,
+	Spike,
 	GravityRing,
 	End
 };
