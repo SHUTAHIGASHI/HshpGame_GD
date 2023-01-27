@@ -78,7 +78,8 @@ void PlayerCube::OnHitObject(const InputState& input)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
-                        m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
+                        if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
+                        else m_vec.y = -kJumpRingJumpAcc;
                         return;
                     }
                 }
@@ -116,13 +117,12 @@ void PlayerCube::OnHitObject(const InputState& input)
                     m_isStageClear = true;
                     return;
                 }
-                else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
+                else if (m_pStage->IsUnder(m_pos, i, j, tempPos) && object == ObjectType::Block)
                 {
                     m_angle = 0.0f;
                     m_vec.y = 0.0f;
                     m_pos.y = tempPos;
                     m_isField = true;
-                    return;
                 }
                 else
                 {
@@ -148,6 +148,11 @@ void PlayerCube::NormalUpdate(const InputState& input)
     if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
+    if (m_vec.y > kGravityMax)
+    {
+        m_vec.y = kGravityMax;
+    }
+
     // 地面との当たり判定
     m_isField = false;
 
@@ -162,10 +167,7 @@ void PlayerCube::NormalUpdate(const InputState& input)
         m_isMoveRight = false;
     }
 
-    if (m_vec.y > kGravityMax)
-    {
-        m_vec.y = kGravityMax;
-    }
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
     OnHitObject(input);
 
@@ -191,6 +193,11 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
     if (m_isMoveRight) m_angle += -kRotaSpeed;
     else m_angle += kRotaSpeed;
 
+    if (m_vec.y < -kGravityMax)
+    {
+        m_vec.y = -kGravityMax;
+    }
+
     // 地面との当たり判定
     m_isField = false;
 
@@ -205,10 +212,7 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
         m_isMoveRight = false;
     }
 
-    if (m_vec.y < -kGravityMax)
-    {
-        m_vec.y = -kGravityMax;
-    }
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
     OnHitObject(input);
 

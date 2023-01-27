@@ -34,16 +34,16 @@ public:
 
 	void Draw();
 
-	bool CollisionCheck(Vec2 playerPos, int H, int W, ObjectType &object);
+	bool CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &object);
 
-	bool IsUnder(Vec2 playerPos, float &tempPos, int Y, int X);
+	bool IsUnder(const Vec2 playerPos, int H, int W, float &tempPos);
 
 	// 各ステージのセット
 	void SetSecondStage() { m_stageState = StageState::secondStage; }
 	void SetThirdStage() { m_stageState = StageState::thirdStage; }
 
 	//ステージの状態を確保
-	StageState GetStageState() { return m_stageState; }
+	StageState GetStageState() const { return m_stageState; }
 
 private:
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];

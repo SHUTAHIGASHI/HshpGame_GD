@@ -25,7 +25,7 @@ void SceneManager::init(SceneKind kind)
 		m_title.init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneKindMain:
-		m_main.init();	// シーンメインの初期化
+		m_main.Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneKindClear:
 		m_clear.init();	// シーンクリアの初期化
@@ -47,7 +47,7 @@ void SceneManager::end()
 		m_title.end();	// シーンタイトルのデータ削除
 		break;
 	case SceneManager::kSceneKindMain:
-		m_main.end();	// シーンメインのデータ削除
+		m_main.End();	// シーンメインのデータ削除
 		break;
 	case SceneManager::kSceneKindClear:
 		m_clear.end();	// シーンクリアのデータ削除
@@ -71,8 +71,8 @@ void SceneManager::update(const InputState& input)
 		isEnd = m_title.isEnd();
 		break;
 	case SceneManager::kSceneKindMain:
-		m_main.update(input);	// シーンメインの更新
-		isEnd = m_main.isEnd();
+		m_main.Update(input);	// シーンメインの更新
+		isEnd = m_main.IsEnd();
 		break;
 	case SceneManager::kSceneKindClear:
 		m_clear.update();	// シーンクリアの更新
@@ -91,22 +91,22 @@ void SceneManager::update(const InputState& input)
 		{
 		case SceneManager::kSceneKindTitle:
 			m_title.end();	// シーンタイトルのデータ削除
-			m_main.init();	// シーンメインの初期化
+			m_main.Init();	// シーンメインの初期化
 			m_kind = kSceneKindMain;
 			break;
 		case SceneManager::kSceneKindMain:
 			// m_isGameClear が true の場合、ゲームクリアのシーンを初期化し選択
-			if (m_main.isGameClear())
+			if (m_main.IsGameClear())
 			{
 				m_isMusicEnd = true;
-				m_main.end();	// シーンメインのデータ削除
+				m_main.End();	// シーンメインのデータ削除
 				m_clear.init();	// シーンクリアの初期化
 				m_kind = kSceneKindClear;
 				break;
 			}
 			else // それ以外の場合、タイトルのシーンを初期化し選択
 			{
-				m_main.end();	// シーンメインのデータ削除
+				m_main.End();	// シーンメインのデータ削除
 				m_title.init();	// シーンタイトルの初期化
 				m_kind = kSceneKindTitle;
 				break;
@@ -135,7 +135,7 @@ void SceneManager::draw()
 		m_title.draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneKindMain:
-		m_main.draw();	// シーンメインの描画
+		m_main.Draw();	// シーンメインの描画
 		break;
 	case SceneManager::kSceneKindClear:
 		m_clear.draw();	// シーンクリアの描画

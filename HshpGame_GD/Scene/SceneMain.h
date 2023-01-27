@@ -12,19 +12,19 @@ public:
 	virtual ~SceneMain();
 
 	// 初期化
-	void init();
+	void Init();
 	// 終了処理
-	void end();
+	void End();
 
 	// 毎フレームの処理
-	void update(const InputState& input);
+	void Update(const InputState& input);
 	// 毎フレームの描画
-	void draw();
+	void Draw();
 
 	// m_isGameClearを取得
-	virtual bool isGameClear() { return m_isGameClear; }
+	virtual bool IsGameClear() const { return m_isGameClear; }
 	// m_isEndを取得
-	virtual bool isEnd() { return m_isEnd; }
+	virtual bool IsEnd() const { return m_isEnd; }
 
 private:
 	// 片側の敵の最大出現数

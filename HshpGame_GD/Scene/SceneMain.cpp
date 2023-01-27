@@ -30,7 +30,7 @@ SceneMain::~SceneMain()
 }
 
 // 初期化
-void SceneMain::init()
+void SceneMain::Init()
 {
 	// シーン終了、ゲームクリアを false に初期化
 	m_isGameClear = false;
@@ -54,14 +54,14 @@ void SceneMain::init()
 }
 
 // 終了処理
-void SceneMain::end()
+void SceneMain::End()
 {
 	// 画像データの削除
 	DeleteGraph(m_hPlayerGraphic);
 }
 
 // 毎フレームの処理
-void SceneMain::update(const InputState& input)
+void SceneMain::Update(const InputState& input)
 {	
 	if (input.IsTriggered(InputType::enter))
 	{
@@ -72,7 +72,7 @@ void SceneMain::update(const InputState& input)
 	// Rキーを押すとゲームリトライ
 	if (input.IsTriggered(InputType::retry))
 	{
-		init();
+		Init();
 		m_countAttempt++;
 	}
 
@@ -87,7 +87,7 @@ void SceneMain::update(const InputState& input)
 		{
 			m_Stage.SetSecondStage();
 			m_Stage.Init();
-			init();
+			Init();
 		}
 		else if (m_Stage.GetStageState() == StageState::secondStage)
 		{
@@ -102,7 +102,7 @@ void SceneMain::update(const InputState& input)
 	{
 		if (m_gameOverDelay < 0)
 		{
-			init();
+			Init();
 			m_countAttempt++;
 			return;
 		}
@@ -113,7 +113,7 @@ void SceneMain::update(const InputState& input)
 }
 
 // 毎フレームの描画
-void SceneMain::draw()
+void SceneMain::Draw()
 {
 	m_Stage.Draw();
 

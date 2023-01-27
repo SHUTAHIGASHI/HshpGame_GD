@@ -19,26 +19,26 @@ public:
 	virtual void Draw();
 	
 	// プレイヤーの中心座標取得
-	virtual float GetCenterX(){ return m_pos.x + (m_width / 2); }
-	virtual float GetCenterY(){ return m_pos.y + (m_height / 2); }
+	virtual float GetCenterX() const { return m_pos.x + (m_width / 2); }
+	virtual float GetCenterY() const { return m_pos.y + (m_height / 2); }
 
 	// m_isGameClear を取得
-	virtual bool IsStageClear() { return m_isStageClear; }
+	virtual bool IsStageClear() const { return m_isStageClear; }
 	// m_isDead を true にする
 	virtual void SetDead() { m_isDead = true; }
 	// m_isDead を取得
-	virtual bool IsDead() { return m_isDead; }
+	virtual bool IsDead() const { return m_isDead; }
 
 	// 当たり判定用に四方向の座標取得　
 	virtual float GetLeft()	const { return m_pos.x; }
-	virtual float GetRight()	const { return m_pos.x + static_cast<float>(m_width); }
-	virtual float GetTop()	const { return m_pos.y; }
+	virtual float GetRight() const { return m_pos.x + static_cast<float>(m_width); }
+	virtual float GetTop() const { return m_pos.y; }
 	virtual float GetBottom() const { return m_pos.y + static_cast<float>(m_height); }
 	
 	// プレイヤーの座標取得
 	Vec2 GetPos() const { return m_pos; }
 
-	virtual bool IsRevGravity() { return m_isRevGravity; }
+	virtual bool IsRevGravity() const { return m_isRevGravity; }
 
 protected:
 	// 画像データ

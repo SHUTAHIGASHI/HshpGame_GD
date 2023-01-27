@@ -103,22 +103,12 @@ void PlayerShip::OnHitObject(const InputState& input)
                     m_isStageClear = true;
                     return;
                 }
-                else if (m_pStage->IsUnder(m_pos, tempPos, i, j) && object == ObjectType::Block)
+                else if (m_pStage->IsUnder(m_pos, i, j, tempPos) && object == ObjectType::Block)
                 {
-                    if (!m_isRevGravity)
-                    {
-                        m_angle = 0.0f;
-                        m_vec.y = 0.0f;
-                        m_pos.y = tempPos - Game::kBlockSize;
-                        m_isField = true;
-                    }
-                    else
-                    {
-                        m_angle = 0.0f;
-                        m_vec.y = 0.0f;
-                        m_pos.y = tempPos;
-                        m_isField = true;
-                    }
+                    m_angle = 0.0f;
+                    m_vec.y = 0.0f;
+                    m_pos.y = tempPos;
+                    m_isField = true;
                     return;
                 }
                 else
