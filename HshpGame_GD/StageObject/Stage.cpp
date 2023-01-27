@@ -13,7 +13,7 @@ namespace
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{2,2,2,2,2,2,2,0,0,0,0,4,0,2,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0},
+		{2,2,2,2,2,2,2,0,0,0,0,4,0,2,0,0,0,0,0,2,2,2,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,5,5,0,2,0,0,0,0,0,2,0,0,0,0,0,0,2,2,2,0,0,0,0,0,3,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0},
@@ -72,7 +72,7 @@ Stage::Stage() :
 
 }
 
-void Stage::Init()
+void Stage::Init(int hSpike)
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
@@ -82,7 +82,7 @@ void Stage::Init()
 			m_ObjectBlock[i][j].Init();
 			m_ObjectJumpRing[i][j].Init();
 			m_ObjectJumpPad[i][j].Init();
-			m_ObjectSpike[i][j].Init();
+			m_ObjectSpike[i][j].Init(hSpike);
 			m_ObjectGravityRing[i][j].Init();
 		}
 	}
@@ -91,7 +91,7 @@ void Stage::Init()
 }
 
 void Stage::SetStage()
-{
+{	
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthNum; j++)
@@ -160,7 +160,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 {
 	if (m_stage[H][W] == 0) return false;
 
-	constexpr float kTempSize = 6.0f;
+	constexpr float kTempSize = 8.0f;
 
 	// 当たっている場合、trueを返す
 	// ブロックの当たり判定

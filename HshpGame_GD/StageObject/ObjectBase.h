@@ -33,5 +33,10 @@ protected:
 	// ブロック表示位置
 	Vec2 m_pos;
 
+	// 画像ハンドル
+	int m_hObjectImg;
+	// 画像サイズ
+	float m_height;
+	float m_width;
 };
 

@@ -34,6 +34,8 @@ private:
 	// キャラクターのグラフィックハンドル
 	int m_hPlayerGraphic;
 	int m_hPlayerDeathEffect;
+	// オブジェクトのグラフィックハンドル
+	int m_hObjectSpike;
 
 	// ゲームの制限時間
 	int m_gameTimeRemaining;

@@ -8,7 +8,7 @@ public:
     ObjectSpike();
     ~ObjectSpike() {}
 
-    void Init();
+    void Init(int hSpike);
 
     void SetPos(float X, float Y);
 

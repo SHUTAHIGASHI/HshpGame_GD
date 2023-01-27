@@ -15,9 +15,11 @@ namespace
 }
 
 SceneMain::SceneMain() :
-	m_countAttempt(0)
+	m_countAttempt(0),
+	m_hObjectSpike(-1)
 {
 	m_hPlayerGraphic = -1;
+	m_hPlayerDeathEffect = -1;
 
 	m_gameTimeRemaining = kGameMaxTime;
 	m_gameOverDelay = kGameOverDelay;
@@ -40,8 +42,10 @@ void SceneMain::Init()
 	m_cPlayer.setStage(&m_Stage);
 	m_Stage.setPlayer(&m_cPlayer);
 
+	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
+
 	// ステージ初期化
-	m_Stage.Init();
+	m_Stage.Init(m_hObjectSpike);
 
 	// 画像データの読み込み
 	m_hPlayerGraphic = LoadGraph(Game::kPlayerImg);
@@ -60,6 +64,7 @@ void SceneMain::End()
 	// 画像データの削除
 	DeleteGraph(m_hPlayerGraphic);
 	DeleteGraph(m_hPlayerDeathEffect);
+	DeleteGraph(m_hObjectSpike);
 }
 
 // 毎フレームの処理
@@ -88,7 +93,7 @@ void SceneMain::Update(const InputState& input)
 		if (m_Stage.GetStageState() == StageState::firstStage)
 		{
 			m_Stage.SetSecondStage();
-			m_Stage.Init();
+			m_Stage.Init(m_hObjectSpike);
 			Init();
 		}
 		else if (m_Stage.GetStageState() == StageState::secondStage)

@@ -35,7 +35,9 @@ namespace Game
 	
 	// 画像データ
 	const char* const kPlayerImg = "imagedata/PlayerCube.png";
-	const char* const kPlayerDeathEffectImg = "imagedata/PlayerDeathEffect.png";
+	const char* const kPlayerDeathEffectImg = "imagedata/deathEffect.png";
+
+	const char* const kObjectSpikeImg = "imagedata/ObjectSpike.png";
 
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;

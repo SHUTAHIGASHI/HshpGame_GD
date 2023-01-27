@@ -48,6 +48,11 @@ protected:
 	// 画像サイズ
 	float m_height;
 	float m_width;
+	// エフェクト画像サイズ
+	float m_effectHeight;
+	float m_effectWidth;
+	// フレーム数をカウント
+	int m_countFrame;
 
 	// 画像表示角度
 	float m_angle;

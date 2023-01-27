@@ -1,6 +1,7 @@
 #include "ObjectBase.h"
 
-ObjectBase::ObjectBase()
+ObjectBase::ObjectBase() :
+	m_hObjectImg(-1)
 {
 }
 

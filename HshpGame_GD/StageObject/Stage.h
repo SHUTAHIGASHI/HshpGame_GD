@@ -26,7 +26,7 @@ public:
 	
 	void setPlayer(PlayerCube* cube) { m_pCube = cube; }
 	
-	void Init();
+	void Init(int hSpike);
 
 	void SetStage();
 

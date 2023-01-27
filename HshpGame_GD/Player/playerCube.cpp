@@ -37,8 +37,10 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
     
     m_handle = playerHandle;
     m_deathEffectHandle = playerDeathEffect;
+    m_countFrame = 0;
 
 	GetGraphSizeF(m_handle, &m_width, &m_height);
+    GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
 	
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
@@ -138,12 +140,24 @@ void PlayerCube::OnHitObject(const InputState& input)
 
 void PlayerCube::Draw()
 {
+    float effectW = 0.0f, effectH = 0.0f;
+    effectW = static_cast<float>(m_effectWidth / 4);
+    effectH = m_effectHeight;
+
+    int effectX = 0, effectY = 0;
+    effectX = m_countFrame/4 * effectW;
+    
+    int effectScale = 20;
+
     if (m_isDead)
     {
-        //DrawRectGraph(m_pos.x, m_pos.y, );
+        DrawRectExtendGraphF(GetLeft() - effectScale, GetTop() - effectScale, 
+            GetRight() + effectScale, GetBottom() + effectScale, 
+            effectX, effectY, effectW, effectH, m_deathEffectHandle, true);
+        m_countFrame++;
     }
     
-    DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
+    if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 
