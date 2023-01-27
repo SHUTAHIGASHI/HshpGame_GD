@@ -44,9 +44,10 @@ void SceneMain::Init()
 	m_Stage.Init();
 
 	// 画像データの読み込み
-	m_hPlayerGraphic = LoadGraph("imagedata/PlayerCubeMini.png");
+	m_hPlayerGraphic = LoadGraph(Game::kPlayerImg);
+	m_hPlayerDeathEffect = LoadGraph(Game::kPlayerDeathEffectImg);
 	// プレイヤー初期化 
-	m_cPlayer.Init(m_hPlayerGraphic);
+	m_cPlayer.Init(m_hPlayerGraphic, m_hPlayerDeathEffect);
 
 	// 各時間用変数の初期化
 	m_gameTimeRemaining = kGameMaxTime;
@@ -58,6 +59,7 @@ void SceneMain::End()
 {
 	// 画像データの削除
 	DeleteGraph(m_hPlayerGraphic);
+	DeleteGraph(m_hPlayerDeathEffect);
 }
 
 // 毎フレームの処理

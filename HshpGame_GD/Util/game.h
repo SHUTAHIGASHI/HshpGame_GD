@@ -33,6 +33,10 @@ namespace Game
 	// カラーモード
 	constexpr int kColorDepth = 32;
 	
+	// 画像データ
+	const char* const kPlayerImg = "imagedata/PlayerCube.png";
+	const char* const kPlayerDeathEffectImg = "imagedata/PlayerDeathEffect.png";
+
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;
 

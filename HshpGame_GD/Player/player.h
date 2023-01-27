@@ -43,6 +43,7 @@ public:
 protected:
 	// 画像データ
 	int m_handle;
+	int m_deathEffectHandle;
 
 	// 画像サイズ
 	float m_height;

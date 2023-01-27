@@ -13,7 +13,7 @@ public:
 	void setStage(Stage* stage) { m_pStage = stage; }
 
 	// プレイヤーの初期化
-	void Init(int playerHandle);
+	void Init(int playerHandle, int playerDeathEffect);
 
 	// プレイヤーの更新処理
 	void Update(const InputState& input);

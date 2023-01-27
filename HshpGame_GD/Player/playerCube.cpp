@@ -31,11 +31,13 @@ PlayerCube::PlayerCube() :
 {
 }
 
-void PlayerCube::Init(int playerHandle)
+void PlayerCube::Init(int playerHandle, int playerDeathEffect)
 {
     m_updateFunc = &PlayerCube::NormalUpdate;
     
     m_handle = playerHandle;
+    m_deathEffectHandle = playerDeathEffect;
+
 	GetGraphSizeF(m_handle, &m_width, &m_height);
 	
     m_vec.x = Game::kMoveSpeed;
@@ -136,7 +138,12 @@ void PlayerCube::OnHitObject(const InputState& input)
 
 void PlayerCube::Draw()
 {
-	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
+    if (m_isDead)
+    {
+        //DrawRectGraph(m_pos.x, m_pos.y, );
+    }
+    
+    DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 
