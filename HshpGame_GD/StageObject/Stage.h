@@ -47,12 +47,19 @@ public:
 	StageState GetStageState() const { return m_stageState; }
 
 private:
-	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthDoubleNum];
+	
+	/*ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];*/
 
 	PlayerCube* m_pCube;
 
@@ -60,5 +67,8 @@ private:
 	StageState m_stageState;
 	// ステージ管理用二次元配列
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum];
+
+	// スクロール用変数
+	int m_scroll;
 };
 

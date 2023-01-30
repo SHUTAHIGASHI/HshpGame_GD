@@ -77,7 +77,7 @@ void PlayerCube::OnHitObject(const InputState& input)
     ObjectType object;
     for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
-        for (int j = 0; j < Game::kScreenWidthNum; j++)
+        for (int j = 0; j < Game::kScreenWidthDoubleNum; j++)
         {
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {

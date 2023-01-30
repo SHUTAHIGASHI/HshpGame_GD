@@ -20,7 +20,7 @@ void ObjectGoalGate::Update()
 {
 }
 
-void ObjectGoalGate::Draw()
+void ObjectGoalGate::Draw(int scroll)
 {
-	DrawBox(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0x00ff00, true);
+	DrawBox(m_pos.x - scroll, m_pos.y, (m_pos.x + Game::kBlockSize) - scroll, m_pos.y + Game::kBlockSize, 0x00ff00, true);
 }
