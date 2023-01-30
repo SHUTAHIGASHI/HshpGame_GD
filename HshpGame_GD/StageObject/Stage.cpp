@@ -100,7 +100,7 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::debug),
+	m_stageState(StageState::firstStage),
 	m_stage(),
 	m_scroll(0)
 {
@@ -111,7 +111,7 @@ void Stage::Init(int hSpike)
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthDoubleNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			m_ObjectGoalGate[i][j].Init();
 			m_ObjectBlock[i][j].Init();
@@ -129,7 +129,7 @@ void Stage::SetStage()
 {	
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthDoubleNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			if (m_stageState == StageState::firstStage)
 			{
@@ -160,13 +160,9 @@ void Stage::SetStage()
 
 void Stage::Update()
 {	
-	int scrollAcc = kScrollAcc;
-
-	m_scroll += scrollAcc;
-
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthDoubleNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			m_ObjectJumpRing[i][j].Update();
 			m_ObjectGravityRing[i][j].Update();
@@ -178,7 +174,7 @@ void Stage::Draw()
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthDoubleNum; j++)
+		for (int j = 0; j < Game::kScreenWidthNum; j++)
 		{
 			int drawPosX = 0, drawPosY = 0;
 			drawPosX = static_cast<int>(j * Game::kBlockSize);
