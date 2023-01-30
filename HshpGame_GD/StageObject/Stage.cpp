@@ -125,7 +125,7 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::thirdStage),
+	m_stageState(StageState::firstStage),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollAcc)
