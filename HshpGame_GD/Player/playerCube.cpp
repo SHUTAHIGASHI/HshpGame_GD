@@ -55,6 +55,11 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
         m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
     }
+    else
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+    }
 
     m_isStageClear = false;
 	m_isDead = false;
@@ -145,7 +150,7 @@ void PlayerCube::Draw()
     effectH = m_effectHeight;
 
     int effectX = 0, effectY = 0;
-    effectX = m_countFrame/4 * effectW;
+    effectX = m_countFrame / 4 * effectW;
     
     int effectScale = 20;
 
@@ -156,8 +161,8 @@ void PlayerCube::Draw()
             effectX, effectY, effectW, effectH, m_deathEffectHandle, true);
         m_countFrame++;
     }
-    
-    if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
+    else if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
+
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 

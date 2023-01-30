@@ -5,7 +5,7 @@
 namespace
 {
 	// タイトルメッセージ
-	const char* const kTitleMessage = "Zキー or Aボタンを押して";
+	const char* const kTitleMessage = "ENTERキーを押して";
 	const char* const kGameStart = "スタート";
 }
 
@@ -36,7 +36,7 @@ void SceneTitle::end()
 }
 
 // 更新処理
-void SceneTitle::update()
+void SceneTitle::update(const InputState& input)
 {	
 	// 文字の移動
 	m_TextPosY += m_TextVecY;
@@ -53,9 +53,8 @@ void SceneTitle::update()
 		m_TextVecY *= -1;
 	}
 
-	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 	// キー入力があった場合、シーン終了を true にする
-	if (padState & PAD_INPUT_1)
+	if (input.IsTriggered(InputType::enter))
 	{
 		m_isEnd = true;
 	}

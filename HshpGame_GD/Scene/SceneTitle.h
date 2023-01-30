@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "InputState.h"
 
 class SceneTitle : public SceneBase
 {
@@ -27,7 +28,7 @@ public:
 	void end();
 
 	// XVˆ—
-	virtual void update();
+	virtual void update(const InputState& input);
 	// •`‰æ
 	virtual void draw();
 

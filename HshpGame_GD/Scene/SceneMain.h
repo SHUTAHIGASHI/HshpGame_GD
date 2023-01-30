@@ -1,6 +1,5 @@
 #pragma once
 
-#include "player.h"
 #include "playerCube.h"
 #include "Stage.h"
 #include "ObjectBlock.h"
@@ -32,8 +31,8 @@ private:
 
 private:
 	// キャラクターのグラフィックハンドル
-	int m_hPlayerGraphic;
-	int m_hPlayerDeathEffect;
+	int m_playerImg;
+	int m_deathEffectImg;
 	// オブジェクトのグラフィックハンドル
 	int m_hObjectSpike;
 
@@ -52,7 +51,8 @@ private:
 	bool m_isEnd;
 
 	// プレイヤー
-	Player m_Player;
-	PlayerCube m_cPlayer;
+	PlayerCube m_Player;
+
+	// ステージ
 	Stage m_Stage;
 };

@@ -48,9 +48,6 @@
     <ClCompile Include="Util\Vec2.cpp">
       <Filter>ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Player\player.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Player\playerCube.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
@@ -93,9 +90,6 @@
     <ClCompile Include="StageObject\ObjectGravityRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="playerShip.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -128,7 +122,7 @@
     <ClInclude Include="StageObject\Stage.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="Player\player.h">
+    <ClInclude Include="Player\playerBase.h">
       <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\playerCube.h">
@@ -154,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="StageObject\ObjectGravityRing.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="playerShip.h">
-      <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

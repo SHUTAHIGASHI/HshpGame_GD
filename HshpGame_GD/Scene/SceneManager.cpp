@@ -67,7 +67,7 @@ void SceneManager::update(const InputState& input)
 	switch (m_kind)
 	{
 	case SceneManager::kSceneKindTitle:
-		m_title.update();	// シーンタイトルの更新
+		m_title.update(input);	// シーンタイトルの更新
 		isEnd = m_title.isEnd();
 		break;
 	case SceneManager::kSceneKindMain:

@@ -1,6 +1,8 @@
 #include "game.h"
 #include "SceneMain.h"
 
+#include <cassert>
+
 namespace
 {
 	// 敵出現用の遅延時間
@@ -12,14 +14,15 @@ namespace
 
 	// RGB初期値用
 	constexpr int kSetColor = 255;
+
 }
 
 SceneMain::SceneMain() :
 	m_countAttempt(0),
 	m_hObjectSpike(-1)
 {
-	m_hPlayerGraphic = -1;
-	m_hPlayerDeathEffect = -1;
+	m_playerImg = -1;
+	m_deathEffectImg = -1;
 
 	m_gameTimeRemaining = kGameMaxTime;
 	m_gameOverDelay = kGameOverDelay;
@@ -27,8 +30,10 @@ SceneMain::SceneMain() :
 	m_isGameClear = false;
 	m_isEnd = false; 
 }
+
 SceneMain::~SceneMain()
 {
+
 }
 
 // 初期化
@@ -39,19 +44,18 @@ void SceneMain::Init()
 	m_isEnd = false;
 
 	// アドレスの設定
-	m_cPlayer.setStage(&m_Stage);
-	m_Stage.setPlayer(&m_cPlayer);
-
+	m_Player.SetStage(&m_Stage);
+	m_Stage.SetPlayer(&m_Player);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
+
+	// 画像データの読み込み
+	m_playerImg = LoadGraph(Game::kPlayerImg);
+	m_deathEffectImg = LoadGraph(Game::kPlayerDeathEffectImg);
+	// プレイヤー初期化
+	m_Player.Init(m_playerImg, m_deathEffectImg);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike);
-
-	// 画像データの読み込み
-	m_hPlayerGraphic = LoadGraph(Game::kPlayerImg);
-	m_hPlayerDeathEffect = LoadGraph(Game::kPlayerDeathEffectImg);
-	// プレイヤー初期化 
-	m_cPlayer.Init(m_hPlayerGraphic, m_hPlayerDeathEffect);
 
 	// 各時間用変数の初期化
 	m_gameTimeRemaining = kGameMaxTime;
@@ -62,14 +66,14 @@ void SceneMain::Init()
 void SceneMain::End()
 {
 	// 画像データの削除
-	DeleteGraph(m_hPlayerGraphic);
-	DeleteGraph(m_hPlayerDeathEffect);
+	DeleteGraph(m_playerImg);
+	DeleteGraph(m_deathEffectImg);
 	DeleteGraph(m_hObjectSpike);
 }
 
 // 毎フレームの処理
 void SceneMain::Update(const InputState& input)
-{	
+{		
 	if (input.IsTriggered(InputType::enter))
 	{
 		m_countAttempt = 0;
@@ -85,10 +89,9 @@ void SceneMain::Update(const InputState& input)
 
 	m_Stage.Update();
 
-	// プレイヤーの更新処理
-	m_cPlayer.Update(input);
+	m_Player.Update(input);
 
-	if (m_cPlayer.IsStageClear())
+	if (m_Player.IsStageClear())
 	{
 		if (m_Stage.GetStageState() == StageState::firstStage)
 		{
@@ -105,7 +108,7 @@ void SceneMain::Update(const InputState& input)
 	}
 
 	// プレイヤーの死亡判定が true の場合
-	if (m_cPlayer.IsDead())
+	if (m_Player.IsDead())
 	{
 		if (m_gameOverDelay < 0)
 		{
@@ -125,7 +128,7 @@ void SceneMain::Draw()
 	m_Stage.Draw();
 
 	// プレイヤーの描画
-	m_cPlayer.Draw();
+	m_Player.Draw();
 	
 	DrawFormatString(10, 10, 0xffffff, "Attempt : %d", m_countAttempt);
 }

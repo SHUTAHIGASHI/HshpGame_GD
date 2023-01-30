@@ -1,16 +1,16 @@
 #include "game.h"
-#include "player.h"
+#include "playerBase.h"
 
 class Stage;
 
 class PlayerCube :
-    public Player
+    public PlayerBase
 {
 public:
 	PlayerCube();
 	virtual ~PlayerCube() {}
 
-	void setStage(Stage* stage) { m_pStage = stage; }
+	void SetStage(Stage* stage) { m_pStage = stage; }
 
 	// ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
 	void Init(int playerHandle, int playerDeathEffect);

@@ -2,22 +2,29 @@
 #include "Vec2.h"
 
 // プレイヤークラス
-class Player
+class PlayerBase
 {
 public:
-	Player();
-	virtual ~Player() {}
+	PlayerBase() :
+		m_handle(-1),
+		m_deathEffectHandle(-1),
+		m_height(0),
+		m_width(0),
+		m_effectHeight(0),
+		m_effectWidth(0),
+		m_countFrame(0),
+		m_angle(0.0f),
+		m_isMoveRight(false),
+		m_isRevGravity(false),
+		m_isField(false),
+		m_pos(),
+		m_vec(),
+		m_isStageClear(false),
+		m_isDead(false)
+	{
+	}
+	virtual ~PlayerBase() {}
 
-	// プレイヤーの初期化
-	virtual void Init();
-	// プレイヤーの画像セット
-	virtual void SetHandle(int playerHandle);
-
-	// プレイヤーの更新処理
-	virtual void Update();
-	// プレイヤーの描画処理
-	virtual void Draw();
-	
 	// プレイヤーの中心座標取得
 	virtual float GetCenterX() const { return m_pos.x + (m_width / 2); }
 	virtual float GetCenterY() const { return m_pos.y + (m_height / 2); }

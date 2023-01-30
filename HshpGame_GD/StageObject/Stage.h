@@ -12,6 +12,7 @@ class PlayerCube;
 
 enum class StageState
 {
+	debug,
 	firstStage,
 	secondStage,
 	thirdStage,
@@ -24,7 +25,7 @@ public:
 	Stage();
 	~Stage(){}
 	
-	void setPlayer(PlayerCube* cube) { m_pCube = cube; }
+	void SetPlayer(PlayerCube* cube) { m_pCube = cube; }
 	
 	void Init(int hSpike);
 
