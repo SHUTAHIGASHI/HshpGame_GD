@@ -14,5 +14,5 @@ public:
 
     void Update();
 
-    void Draw(int scroll);
+    void Draw();
 };

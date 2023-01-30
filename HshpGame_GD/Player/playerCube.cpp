@@ -33,8 +33,14 @@ PlayerCube::PlayerCube() :
 
 void PlayerCube::Init(int playerHandle, int playerDeathEffect)
 {
-    m_updateFunc = &PlayerCube::NormalUpdate;
-    
+    if (m_pStage->GetStageState() == StageState::thirdStage)
+    {
+        m_updateFunc = &PlayerCube::StageScrollUpdate;
+    }
+    else
+    {
+        m_updateFunc = &PlayerCube::NormalUpdate;
+    }
     m_handle = playerHandle;
     m_deathEffectHandle = playerDeathEffect;
     m_countFrame = 0;
@@ -55,6 +61,12 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
         m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
     }
+    else if (m_pStage->GetStageState() == StageState::thirdStage)
+    {
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_vec.x = 0;
+    }
     else
     {
         m_pos.x = 0;
@@ -63,7 +75,7 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
 
     m_isStageClear = false;
 	m_isDead = false;
-    m_isMoveRight = true;
+    //m_isRotaRight = true;
     m_isRevGravity = false;
 }
 
@@ -77,7 +89,7 @@ void PlayerCube::OnHitObject(const InputState& input)
     ObjectType object;
     for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
-        for (int j = 0; j < Game::kScreenWidthNum; j++)
+        for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
         {
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
@@ -153,7 +165,7 @@ void PlayerCube::Draw()
     effectX = m_countFrame / 4 * effectW;
     
     int effectScale = 20;
-
+    
     if (m_isDead)
     {
         DrawRectExtendGraphF(GetLeft() - effectScale, GetTop() - effectScale, 
@@ -164,6 +176,13 @@ void PlayerCube::Draw()
     else if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
+    DrawFormatString(0, 50, 0xffffff, "%f", m_pos.x + Game::kBlockSize);
+}
+
+void PlayerCube::SetPlayerVec(int scroll)
+{
+    if(scroll == 0) m_vec.x = -Game::kMoveSpeed;
+    else m_vec.x = Game::kMoveSpeed;
 }
 
 void PlayerCube::NormalUpdate(const InputState& input)
@@ -171,7 +190,7 @@ void PlayerCube::NormalUpdate(const InputState& input)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     m_vec.y += kGravity;
-    if (m_isMoveRight) m_angle += kRotaSpeed;
+    if (m_isRotaRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
     if (m_vec.y > kGravityMax)
@@ -185,12 +204,12 @@ void PlayerCube::NormalUpdate(const InputState& input)
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
-        m_isMoveRight = true;
+        m_isRotaRight = true;
     }
     else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
         m_vec.x *= -1;
-        m_isMoveRight = false;
+        m_isRotaRight = false;
     }
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
@@ -216,7 +235,7 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     m_vec.y += -kGravity;
-    if (m_isMoveRight) m_angle += -kRotaSpeed;
+    if (m_isRotaRight) m_angle += -kRotaSpeed;
     else m_angle += kRotaSpeed;
 
     if (m_vec.y < -kGravityMax)
@@ -230,12 +249,12 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
-        m_isMoveRight = true;
+        m_isRotaRight = true;
     }
     else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
         m_vec.x *= -1;
-        m_isMoveRight = false;
+        m_isRotaRight = false;
     }
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
@@ -247,6 +266,51 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
         if (m_isField)
         {
             m_vec.y = -kJumpAcc;	// ジャンプ開始
+        }
+    }
+
+    if (m_isDead)
+    {
+        m_updateFunc = &PlayerCube::DeadUpdate;
+    }
+}
+
+void PlayerCube::StageScrollUpdate(const InputState& input)
+{
+    if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    {
+        m_isRotaRight = false;
+        m_vec.x *= -1;
+    }
+    else if (m_pos.x < 0)
+    {
+        m_isRotaRight = true;
+        m_vec.x *= -1;
+    }
+        
+    // プレイヤーの挙動の処理
+    m_vec.y += kGravity;
+    m_pos += m_vec;
+    if(m_isRotaRight) m_angle += kRotaSpeed;
+    else m_angle += -kRotaSpeed;
+
+    if (m_vec.y > kGravityMax)
+    {
+        m_vec.y = kGravityMax;
+    }
+
+    // 地面との当たり判定
+    m_isField = false;
+
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+
+    OnHitObject(input);
+
+    if (input.IsPressed(InputType::jump))
+    {
+        if (m_isField)
+        {
+            m_vec.y = kJumpAcc;	// ジャンプ開始
         }
     }
 

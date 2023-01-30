@@ -23,6 +23,12 @@ public:
 	
 	// プレイヤーの描画処理
 	void Draw();
+
+	// 右回転するかどうかの設定
+	void SetRotaRight(bool isRight) { m_isRotaRight = isRight; }
+	bool IsRotaRight() const { return m_isRotaRight; }
+
+	void SetPlayerVec(int scroll);
 private:
 	// ステージのポインタ
 	Stage* m_pStage;
@@ -31,6 +37,8 @@ private:
 	void NormalUpdate(const InputState& input);
 	// 重力反転時の更新処理
 	void RevGravityUpdate(const InputState& input);
+	// ステージスクロール時の更新処理
+	void StageScrollUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void DeadUpdate(const InputState& input);
 

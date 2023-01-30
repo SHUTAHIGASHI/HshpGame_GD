@@ -21,7 +21,7 @@ void ObjectJumpPad::Update()
 
 }
 
-void ObjectJumpPad::Draw(int scroll)
+void ObjectJumpPad::Draw()
 {
-	DrawCircle(GetCenterX() - scroll, GetCenterY() + Game::kBlockSize - (Game::kBlockSize / 4), Game::kBlockSize / 2 - 2, 0xffff00, true);
+	DrawCircle(GetCenterX(), GetCenterY() + Game::kBlockSize - (Game::kBlockSize / 4), Game::kBlockSize / 2 - 2, 0xffff00, true);
 }

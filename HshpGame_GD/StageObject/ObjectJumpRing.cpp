@@ -29,8 +29,8 @@ void ObjectJumpRing::Update()
 	else if (circleSize < (Game::kBlockSize / 2) - 10) sizeAcc *= -1;
 }
 
-void ObjectJumpRing::Draw(int scroll)
+void ObjectJumpRing::Draw()
 {
-	DrawCircle(GetCenterX() - scroll, GetCenterY(), circleSize, 0xffff00, true);
-	DrawCircle(GetCenterX() - scroll, GetCenterY(), circleSize + 5, 0xffffff, false);
+	DrawCircle(GetCenterX(), GetCenterY(), circleSize, 0xffff00, true);
+	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 5, 0xffffff, false);
 }

@@ -29,8 +29,8 @@ namespace Game
 	constexpr int kScreenHeight = 1080;
 	constexpr int kScreenWidthHalf = kScreenWidth / 2;
 	constexpr int kScreenHeightHalf = kScreenHeight / 2;
-	constexpr int kScreenWidthDouble = kScreenWidth * 2;
-	constexpr int kScreenHeightDouble = kScreenHeight * 2;
+	constexpr int kScreenWidthTriple = kScreenWidth * 3;
+	constexpr int kScreenHeightTriple = kScreenHeight * 3;
 
 	// カラーモード
 	constexpr int kColorDepth = 32;
@@ -56,8 +56,8 @@ namespace Game
 	
 	// ステージ横幅数
 	constexpr int kScreenWidthNum = static_cast<int>(Game::kScreenWidth / Game::kBlockSize);
-	constexpr int kScreenWidthDoubleNum = static_cast<int>(Game::kScreenWidthDouble / Game::kBlockSize);
+	constexpr int kScreenWidthTripleNum = static_cast<int>(Game::kScreenWidthTriple / Game::kBlockSize);
 	// ステージ縦幅数
 	constexpr int kScreenHeightNum = static_cast<int>(Game::kScreenHeight / Game::kBlockSize);
-	constexpr int kScreenHeightDoubleNum = static_cast<int>(Game::kScreenHeightDouble / Game::kBlockSize);
+	constexpr int kScreenHeightTripleNum = static_cast<int>(Game::kScreenHeightTriple / Game::kBlockSize);
 }

@@ -14,7 +14,7 @@ public:
 		m_effectWidth(0),
 		m_countFrame(0),
 		m_angle(0.0f),
-		m_isMoveRight(false),
+		m_isRotaRight(true),
 		m_isRevGravity(false),
 		m_isField(false),
 		m_pos(),
@@ -64,8 +64,9 @@ protected:
 	// ‰æ‘œ•\¦Šp“x
 	float m_angle;
 
+	bool m_isPlayerMove = false;
 	// ˆÚ“®•ûŒü
-	bool m_isMoveRight;
+	bool m_isRotaRight;
 	// d—Í•ûŒü
 	bool m_isRevGravity;
 

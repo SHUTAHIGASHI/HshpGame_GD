@@ -101,6 +101,12 @@ void SceneMain::Update(const InputState& input)
 		}
 		else if (m_Stage.GetStageState() == StageState::secondStage)
 		{
+			m_Stage.SetThirdStage();
+			m_Stage.Init(m_hObjectSpike);
+			Init();
+		}
+		else if (m_Stage.GetStageState() == StageState::thirdStage)
+		{
 			m_countAttempt = 0;
 			m_isGameClear = true;
 			m_isEnd = true;
