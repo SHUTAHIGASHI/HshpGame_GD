@@ -64,7 +64,6 @@ protected:
 	// ‰æ‘œ•\¦Šp“x
 	float m_angle;
 
-	bool m_isPlayerMove = false;
 	// ˆÚ“®•ûŒü
 	bool m_isRotaRight;
 	// d—Í•ûŒü

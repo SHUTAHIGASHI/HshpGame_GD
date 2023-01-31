@@ -18,17 +18,15 @@ namespace
 }
 
 SceneMain::SceneMain() :
+	m_playerImg(-1),
+	m_deathEffectImg(-1),
+	m_hObjectSpike(-1),
+	m_gameTimeRemaining(0),
+	m_gameOverDelay(0),
 	m_countAttempt(0),
-	m_hObjectSpike(-1)
+	m_isGameClear(false),
+	m_isEnd(false)
 {
-	m_playerImg = -1;
-	m_deathEffectImg = -1;
-
-	m_gameTimeRemaining = kGameMaxTime;
-	m_gameOverDelay = kGameOverDelay;
-
-	m_isGameClear = false;
-	m_isEnd = false; 
 }
 
 SceneMain::~SceneMain()

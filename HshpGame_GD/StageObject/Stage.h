@@ -16,6 +16,13 @@ enum class StageState
 	firstStage,
 	secondStage,
 	thirdStage,
+	fourthStage,
+	fifthStage,
+	sixthStage,
+	seventhStage,
+	eighthStage,
+	ninthStage,
+	tenthStage,
 	End
 };
 
