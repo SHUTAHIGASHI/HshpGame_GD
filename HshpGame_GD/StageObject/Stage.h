@@ -46,6 +46,9 @@ public:
 
 	bool IsUnder(const Vec2 playerPos, int H, int W, float &tempPos);
 
+	//
+	void ChangeStage();
+
 	// 各ステージのセット
 	void SetSecondStage() { m_stageState = StageState::secondStage; }
 	void SetThirdStage() { m_stageState = StageState::thirdStage; }
