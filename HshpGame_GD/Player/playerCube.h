@@ -24,6 +24,10 @@ public:
 	// プレイヤーの描画処理
 	void Draw();
 
+	void ChangeUpdateType();
+
+	void SetSpawn();
+
 	// 右回転するかどうかの設定
 	void SetRotaRight(bool isRight) { m_isRotaRight = isRight; }
 	bool IsRotaRight() const { return m_isRotaRight; }

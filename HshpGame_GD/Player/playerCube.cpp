@@ -2,6 +2,8 @@
 #include "game.h"
 #include "Stage.h"
 
+#include <cassert>
+
 namespace
 {
     // ‰æ‘œ‚Ì‰ñ“]‘¬“x
@@ -32,15 +34,7 @@ PlayerCube::PlayerCube() :
 }
 
 void PlayerCube::Init(int playerHandle, int playerDeathEffect)
-{
-    if (m_pStage->GetStageState() == StageState::thirdStage)
-    {
-        m_updateFunc = &PlayerCube::StageScrollUpdate;
-    }
-    else
-    {
-        m_updateFunc = &PlayerCube::NormalUpdate;
-    }
+{    
     m_handle = playerHandle;
     m_deathEffectHandle = playerDeathEffect;
     m_countFrame = 0;
@@ -51,30 +45,8 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0;
 
-    if (m_pStage->GetStageState() == StageState::firstStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_isRotaRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::secondStage)
-    {
-        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
-        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
-        m_isRotaRight = false;
-    }
-    else if (m_pStage->GetStageState() == StageState::thirdStage)
-    {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_vec.x = 0;
-        m_isRotaRight = true;
-    }
-    else
-    {
-        m_pos.x = 0;
-        m_pos.y = 0;
-    }
+    ChangeUpdateType();
+    SetSpawn();
 
     m_isStageClear = false;
 	m_isDead = false;
@@ -181,6 +153,90 @@ void PlayerCube::Draw()
 
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
     //DrawFormatString(0, 50, 0xffffff, "%f", m_pos.x + Game::kBlockSize);
+}
+
+void PlayerCube::ChangeUpdateType()
+{
+    if (m_pStage->GetStageState() == StageState::firstStage || m_pStage->GetStageState() == StageState::secondStage ||
+        m_pStage->GetStageState() == StageState::thirdStage || m_pStage->GetStageState() == StageState::sixthStage ||
+        m_pStage->GetStageState() == StageState::eighthStage || m_pStage->GetStageState() == StageState::ninthStage)
+        m_updateFunc = &PlayerCube::NormalUpdate;
+
+    else if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage ||
+        m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
+        m_updateFunc = &PlayerCube::StageScrollUpdate;
+
+    else assert(0);
+}
+
+void PlayerCube::SetSpawn()
+{
+    if (m_pStage->GetStageState() == StageState::firstStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::secondStage)
+    {
+        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_isRotaRight = false;
+    }
+    else if (m_pStage->GetStageState() == StageState::thirdStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::fourthStage)
+    {
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_vec.x = 0;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::fifthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::sixthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::seventhStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::eighthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isRotaRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::ninthStage)
+    {
+        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_isRotaRight = false;
+    }
+    else if (m_pStage->GetStageState() == StageState::tenthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isRotaRight = true;
+    }
+    else
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+    }
 }
 
 void PlayerCube::SetPlayerVec(int scroll)

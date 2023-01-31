@@ -312,7 +312,7 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::thirdStage),
+	m_stageState(StageState::fourthStage),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollAcc),
@@ -326,6 +326,8 @@ void Stage::Init(int hSpike)
 	m_scroll = 0;
 	m_scrollAcc = kScrollAcc;
 	
+	ChangeStage();
+
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
@@ -494,9 +496,13 @@ bool Stage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
 
 void Stage::ChangeStage()
 {
-	if (m_stageState == StageState::firstStage) m_updateFunc = &Stage::NormalUpdate;
-	else if (m_stageState == StageState::secondStage) m_updateFunc = &Stage::NormalUpdate;
-	else if (m_stageState == StageState::thirdStage) m_updateFunc = &Stage::ScrollUpdate;
+	if (m_stageState == StageState::firstStage || m_stageState == StageState::secondStage ||
+		m_stageState == StageState::thirdStage || m_stageState == StageState::sixthStage ||
+		m_stageState == StageState::eighthStage || m_stageState == StageState::ninthStage) 
+		m_updateFunc = &Stage::NormalUpdate;
+	else if (m_stageState == StageState::fourthStage || m_stageState == StageState::fifthStage ||
+		m_stageState == StageState::seventhStage || m_stageState == StageState::tenthStage) 
+		m_updateFunc = &Stage::ScrollUpdate;
 	
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
@@ -516,31 +522,31 @@ void Stage::ChangeStage()
 			}
 			else if (m_stageState == StageState::fourthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_fourth[i][j];
 			}
 			else if (m_stageState == StageState::fifthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_fifth[i][j];
 			}
 			else if (m_stageState == StageState::sixthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_sixth[i][j];
 			}
 			else if (m_stageState == StageState::seventhStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_seventh[i][j];
 			}
 			else if (m_stageState == StageState::eighthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_eighth[i][j];
 			}
 			else if (m_stageState == StageState::ninthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_ninth[i][j];
 			}
 			else if (m_stageState == StageState::tenthStage)
 			{
-				m_stage[i][j] = stage_third[i][j];
+				m_stage[i][j] = stage_tenth[i][j];
 			}
 			else
 			{
