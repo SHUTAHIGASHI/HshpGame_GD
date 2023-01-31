@@ -339,10 +339,6 @@ void Stage::Init(int hSpike)
 		}
 	}
 
-	if (m_stageState == StageState::firstStage) m_updateFunc = &Stage::NormalUpdate;
-	else if (m_stageState == StageState::secondStage) m_updateFunc = &Stage::NormalUpdate;
-	else if (m_stageState == StageState::thirdStage) m_updateFunc = &Stage::ScrollUpdate;
-
 	SetStage();
 }
 
@@ -498,6 +494,10 @@ bool Stage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
 
 void Stage::ChangeStage()
 {
+	if (m_stageState == StageState::firstStage) m_updateFunc = &Stage::NormalUpdate;
+	else if (m_stageState == StageState::secondStage) m_updateFunc = &Stage::NormalUpdate;
+	else if (m_stageState == StageState::thirdStage) m_updateFunc = &Stage::ScrollUpdate;
+	
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
