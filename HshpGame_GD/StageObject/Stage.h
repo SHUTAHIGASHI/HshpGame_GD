@@ -43,6 +43,8 @@ public:
 	void SetSecondStage() { m_stageState = StageState::secondStage; }
 	void SetThirdStage() { m_stageState = StageState::thirdStage; }
 
+	bool SetCanScroll() { m_canScroll = true; }
+
 	//ステージの状態を確保
 	StageState GetStageState() const { return m_stageState; }
 
@@ -71,5 +73,14 @@ private:
 	// スクロール用変数
 	int m_scroll;
 	int m_scrollAcc;
+	bool m_canScroll;
+
+	void NormalUpdate();
+
+	void ScrollUpdate();
+
+	// メンバ関数ポインタ
+	using m_tUpdateFunc = void (Stage::*) ();
+	m_tUpdateFunc m_updateFunc = nullptr;
 };
 

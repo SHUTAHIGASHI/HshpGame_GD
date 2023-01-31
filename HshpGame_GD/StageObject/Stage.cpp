@@ -125,10 +125,12 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::firstStage),
+	m_stageState(StageState::thirdStage),
 	m_stage(),
 	m_scroll(0),
-	m_scrollAcc(kScrollAcc)
+	m_scrollAcc(kScrollAcc),
+	m_canScroll(false),
+	m_updateFunc(&Stage::NormalUpdate)
 {
 
 }
@@ -149,6 +151,10 @@ void Stage::Init(int hSpike)
 			m_ObjectGravityRing[i][j].Init();
 		}
 	}
+
+	if (m_stageState == StageState::firstStage) m_updateFunc = &Stage::NormalUpdate;
+	else if (m_stageState == StageState::secondStage) m_updateFunc = &Stage::NormalUpdate;
+	else if (m_stageState == StageState::thirdStage) m_updateFunc = &Stage::ScrollUpdate;
 
 	SetStage();
 }
@@ -192,51 +198,7 @@ void Stage::SetStage()
 
 void Stage::Update()
 {				
-	if (m_pCube->IsDead()) return;
-	
-	if (m_stageState == StageState::thirdStage)
-	{
-		if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
-		{
-			m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
-			m_scrollAcc = 0;
-			m_pCube->SetPlayerVec(m_scroll);
-		}
-		else if (m_scroll < 0)
-		{
-			m_scroll = 0;
-			m_scrollAcc = 0;
-			m_pCube->SetPlayerVec(m_scroll);
-		}
-
-		if (m_pCube->GetCenterX() < Game::kScreenWidthHalf - (Game::kBlockSize / 2))
-		{
-			m_scrollAcc = -kScrollAcc;
-		}
-
-		/*if (m_scroll + Game::kScreenWidth > Game::kScreenWidthTriple)
-		{
-			m_pCube->SetRotaRight(false);
-			m_scrollAcc *= -1;
-		}
-		else if (m_scroll < 0)
-		{
-			m_pCube->SetRotaRight(true);
-			m_scrollAcc *= -1;
-		}*/
-
-		m_scroll += m_scrollAcc;
-		SetStage();
-	}
-
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
-	{
-		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
-		{
-			m_ObjectJumpRing[i][j].Update();
-			m_ObjectGravityRing[i][j].Update();
-		}
-	}
+	(this->*m_updateFunc)();
 }
 
 void Stage::Draw()
@@ -250,7 +212,7 @@ void Stage::Draw()
 			drawPosY = static_cast<int>(i * Game::kBlockSize);
 			
 			// デバック用白線
-			DrawBox(drawPosX - m_scroll, drawPosY, (drawPosX + static_cast<int>(Game::kBlockSize)) - m_scroll, drawPosY + static_cast<int>(Game::kBlockSize), 0xc0c0c0, false);
+			//DrawBox(drawPosX - m_scroll, drawPosY, (drawPosX + static_cast<int>(Game::kBlockSize)) - m_scroll, drawPosY + static_cast<int>(Game::kBlockSize), 0xc0c0c0, false);
 
 			// ステージギミックの描画
 			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Draw();
@@ -362,4 +324,76 @@ bool Stage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
 	
 	// 下ではない場合、falseを返す
 	return false;
+}
+
+void Stage::NormalUpdate()
+{
+	if (m_pCube->IsDead()) return;
+
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
+		{
+			m_ObjectJumpRing[i][j].Update();
+			m_ObjectGravityRing[i][j].Update();
+		}
+	}
+}
+
+void Stage::ScrollUpdate()
+{
+	if (m_pCube->IsDead()) return;
+
+	if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
+	{
+		m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
+		m_scrollAcc = 0;
+		m_pCube->SetPlayerVec(m_scroll);
+	}
+	else if (m_scroll < 0)
+	{
+		m_scroll = 0;
+		m_scrollAcc = 0;
+		m_pCube->SetPlayerVec(m_scroll);
+	}
+
+	if (m_pCube->GetRight() > Game::kScreenWidth || m_pCube->GetLeft() < 0)
+	{
+		m_canScroll = true;
+	}
+
+	if (m_canScroll)
+	{
+		if (m_pCube->GetCenterX() > Game::kScreenWidthHalf - (Game::kBlockSize / 2)
+			&& m_pCube->GetCenterX() < Game::kScreenWidthHalf + (Game::kBlockSize / 2))
+		{
+			if (m_pCube->IsRotaRight()) m_scrollAcc = kScrollAcc;
+			else m_scrollAcc = -kScrollAcc;
+			m_pCube->DeleteVecX();
+			m_canScroll = false;
+		}
+	}
+
+	/*if (m_scroll + Game::kScreenWidth > Game::kScreenWidthTriple)
+		{
+			m_pCube->SetRotaRight(false);
+			m_scrollAcc *= -1;
+		}
+		else if (m_scroll < 0)
+		{
+			m_pCube->SetRotaRight(true);
+			m_scrollAcc *= -1;
+		}*/
+
+	m_scroll += m_scrollAcc;
+	SetStage();
+
+	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	{
+		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
+		{
+			m_ObjectJumpRing[i][j].Update();
+			m_ObjectGravityRing[i][j].Update();
+		}
+	}
 }

@@ -55,17 +55,20 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
     {
         m_pos.x = 0;
         m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::secondStage)
     {
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
         m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_isRotaRight = false;
     }
     else if (m_pStage->GetStageState() == StageState::thirdStage)
     {
         m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
         m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_vec.x = 0;
+        m_isRotaRight = true;
     }
     else
     {
@@ -75,7 +78,6 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
 
     m_isStageClear = false;
 	m_isDead = false;
-    //m_isRotaRight = true;
     m_isRevGravity = false;
 }
 
@@ -162,7 +164,7 @@ void PlayerCube::Draw()
     effectH = m_effectHeight;
 
     int effectX = 0, effectY = 0;
-    effectX = m_countFrame / 4 * effectW;
+    effectX = static_cast<int>(m_countFrame / 4 * effectW);
     
     int effectScale = 20;
     
@@ -170,13 +172,15 @@ void PlayerCube::Draw()
     {
         DrawRectExtendGraphF(GetLeft() - effectScale, GetTop() - effectScale, 
             GetRight() + effectScale, GetBottom() + effectScale, 
-            effectX, effectY, effectW, effectH, m_deathEffectHandle, true);
+            effectX, effectY, 
+            static_cast<int>(effectW), static_cast<int>(effectH),
+            m_deathEffectHandle, true);
         m_countFrame++;
     }
     else if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
-    DrawFormatString(0, 50, 0xffffff, "%f", m_pos.x + Game::kBlockSize);
+    //DrawFormatString(0, 50, 0xffffff, "%f", m_pos.x + Game::kBlockSize);
 }
 
 void PlayerCube::SetPlayerVec(int scroll)
@@ -287,7 +291,7 @@ void PlayerCube::StageScrollUpdate(const InputState& input)
         m_isRotaRight = true;
         m_vec.x *= -1;
     }
-        
+
     // ÉvÉåÉCÉÑÅ[ÇÃãììÆÇÃèàóù
     m_vec.y += kGravity;
     m_pos += m_vec;

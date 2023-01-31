@@ -29,6 +29,7 @@ public:
 	bool IsRotaRight() const { return m_isRotaRight; }
 
 	void SetPlayerVec(int scroll);
+	void DeleteVecX() { m_vec.x = 0.0f; }
 private:
 	// ステージのポインタ
 	Stage* m_pStage;
