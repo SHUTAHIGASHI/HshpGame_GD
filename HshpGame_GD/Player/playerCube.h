@@ -21,6 +21,8 @@ public:
 	// プレイヤーの初期化
 	void Init(int playerHandle, int playerDeathEffect);
 
+	void SetPlayerInfo();
+
 	// プレイヤーの更新処理
 	void Update(const InputState& input);
 
@@ -32,7 +34,7 @@ public:
 
 	void ChangeUpdateType();
 
-	void SetSpawn();
+	void SetSpawnPos();
 
 	// 右回転するかどうかの設定
 	void SetRotaRight(bool isRight) { m_isRotaRight = isRight; }

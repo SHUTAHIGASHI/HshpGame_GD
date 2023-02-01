@@ -43,14 +43,26 @@ void PlayerCube::Init(int playerHandle, int playerDeathEffect)
 	GetGraphSizeF(m_handle, &m_width, &m_height);
     GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
 	
-    m_vec.x = Game::kMoveSpeed;
-    m_vec.y = 0;
+    SetPlayerInfo();
+}
 
+void PlayerCube::SetPlayerInfo()
+{
     ChangeUpdateType();
-    SetSpawn();
+    SetSpawnPos();
+
+    m_vec.x = Game::kMoveSpeed;
+    m_vec.y = 0.0f;
+
+    if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
+        || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
+    {
+        m_vec.x = 0.0f;
+        m_isScroll = true;
+    }
 
     m_isStageClear = false;
-	m_isDead = false;
+    m_isDead = false;
     m_isRevGravity = false;
 }
 
@@ -62,9 +74,14 @@ void PlayerCube::Update(const InputState& input)
 void PlayerCube::OnHitObject(const InputState& input)
 {
     ObjectType object;
+
+    int widthNum = 0;
+    if(m_isScroll) widthNum = Game::kScreenWidthTripleNum;
+    else widthNum = Game::kScreenWidthNum;
+
     for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
-        for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
+        for (int j = 0; j < widthNum; j++)
         {
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
@@ -170,7 +187,7 @@ void PlayerCube::ChangeUpdateType()
     }
 }
 
-void PlayerCube::SetSpawn()
+void PlayerCube::SetSpawnPos()
 {
     if (m_pStage->GetStageState() == StageState::firstStage)
     {
@@ -194,7 +211,6 @@ void PlayerCube::SetSpawn()
     {
         m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
         m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_vec.x = 0;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::fifthStage)

@@ -19,6 +19,7 @@ public:
 		m_isField(false),
 		m_pos(),
 		m_vec(),
+		m_isScroll(false),
 		m_isStageClear(false),
 		m_isDead(false)
 	{
@@ -63,7 +64,6 @@ protected:
 
 	// 画像表示角度
 	float m_angle;
-
 	// 移動方向
 	bool m_isRotaRight;
 	// 重力方向
@@ -74,13 +74,13 @@ protected:
 
 	// プレイヤー座標
 	Vec2 m_pos;
-
 	// 移動量
 	Vec2 m_vec;
 
+	bool m_isScroll;
+
 	// ゴール判定
 	bool m_isStageClear;
-
 	// 死亡判定
 	bool m_isDead;
 };
