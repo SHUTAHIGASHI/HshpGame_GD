@@ -174,19 +174,19 @@ void PlayerCube::SetSpawn()
     if (m_pStage->GetStageState() == StageState::firstStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_pos.y = Game::kBlockSize * 5;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::secondStage)
     {
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
-        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isRotaRight = false;
     }
     else if (m_pStage->GetStageState() == StageState::thirdStage)
     {
         m_pos.x = 0;
-        m_pos.y = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::fourthStage)

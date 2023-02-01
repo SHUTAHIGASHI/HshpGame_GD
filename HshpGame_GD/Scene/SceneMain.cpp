@@ -37,27 +37,33 @@ SceneMain::~SceneMain()
 // 初期化
 void SceneMain::Init()
 {
-	// シーン終了、ゲームクリアを false に初期化
-	m_isGameClear = false;
-	m_isEnd = false;
-
 	// アドレスの設定
 	m_Player.SetStage(&m_Stage);
 	m_Stage.SetPlayer(&m_Player);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 
-	// 画像データの読み込み
+	// 画像読み込み
 	m_playerImg = LoadGraph(Game::kPlayerImg);
 	m_deathEffectImg = LoadGraph(Game::kPlayerDeathEffectImg);
+
+	GameSetting();
+}
+
+void SceneMain::GameSetting()
+{
+	// シーン終了、ゲームクリアを false に初期化
+	m_isGameClear = false;
+	m_isEnd = false;
+	
+	// 各時間用変数の初期化
+	m_gameTimeRemaining = kGameMaxTime;
+	m_gameOverDelay = kGameOverDelay;
+
 	// プレイヤー初期化
 	m_Player.Init(m_playerImg, m_deathEffectImg);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike);
-
-	// 各時間用変数の初期化
-	m_gameTimeRemaining = kGameMaxTime;
-	m_gameOverDelay = kGameOverDelay;
 }
 
 // 終了処理
@@ -89,27 +95,7 @@ void SceneMain::Update(const InputState& input)
 
 	m_Player.Update(input);
 
-	if (m_Player.IsStageClear())
-	{
-		if (m_Stage.GetStageState() == StageState::firstStage)
-		{
-			m_Stage.SetSecondStage();
-			m_Stage.Init(m_hObjectSpike);
-			Init();
-		}
-		else if (m_Stage.GetStageState() == StageState::secondStage)
-		{
-			m_Stage.SetThirdStage();
-			m_Stage.Init(m_hObjectSpike);
-			Init();
-		}
-		else if (m_Stage.GetStageState() == StageState::thirdStage)
-		{
-			m_countAttempt = 0;
-			m_isGameClear = true;
-			m_isEnd = true;
-		}
-	}
+	OnStageClear();
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_Player.IsDead())
@@ -135,4 +121,22 @@ void SceneMain::Draw()
 	m_Player.Draw();
 	
 	DrawFormatString(10, 10, 0xffffff, "Attempt : %d", m_countAttempt);
+}
+
+void SceneMain::OnStageClear()
+{
+	if (m_Player.IsStageClear())
+	{
+		if (m_Stage.GetStageState() == StageState::tenthStage)
+		{
+			m_countAttempt = 0;
+			m_isGameClear = true;
+			m_isEnd = true;
+		}
+		else
+		{
+			m_Stage.ChangeStageState();
+			GameSetting();
+		}
+	}
 }

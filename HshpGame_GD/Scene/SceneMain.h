@@ -12,6 +12,9 @@ public:
 
 	// 初期化
 	void Init();
+
+	void GameSetting();
+
 	// 終了処理
 	void End();
 
@@ -19,6 +22,9 @@ public:
 	void Update(const InputState& input);
 	// 毎フレームの描画
 	void Draw();
+
+	// ステージクリア時
+	void OnStageClear();
 
 	// m_isGameClearを取得
 	virtual bool IsGameClear() const { return m_isGameClear; }
