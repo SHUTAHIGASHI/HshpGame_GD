@@ -238,13 +238,13 @@ void PlayerCube::SetSpawnPos()
     else if (m_pStage->GetStageState() == StageState::sixthStage)
     {
         m_pos.x = 0;
-        m_pos.y = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::seventhStage)
     {
-        m_pos.x = 0;
-        m_pos.y = 0;
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::eighthStage)
