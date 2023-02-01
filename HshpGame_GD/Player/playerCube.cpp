@@ -130,15 +130,31 @@ void PlayerCube::OnHitObject(const InputState& input)
                     m_isStageClear = true;
                     return;
                 }
-                else if (m_pStage->IsUnder(m_pos, i, j, tempPos) && object == ObjectType::Block)
+                else if (object == ObjectType::Block)
                 {
-                    m_angle = 0.0f;
-                    m_vec.y = 0.0f;
-                    m_pos.y = tempPos;
-                    m_isField = true;
-                }
-                else
-                {
+                    if (!m_isRevGravity || m_playerState == PlayerState::Ship)
+                    {
+                        if (m_pStage->IsUnder(m_pos, i, j, tempPos))
+                        {
+                            m_angle = 0.0f;
+                            m_vec.y = 0.0f;
+                            m_pos.y = tempPos;
+                            m_isField = true;
+                            continue;
+                        }
+                    }
+                    if (m_isRevGravity || m_playerState == PlayerState::Ship)
+                    {
+                        if (m_pStage->IsTop(m_pos, i, j, tempPos))
+                        {
+                            m_angle = 0.0f;
+                            m_vec.y = 0.0f;
+                            m_pos.y = tempPos;
+                            m_isField = true;
+                            continue;
+                        }
+                    }
+
                     m_isDead = true;
                     return;
                 }
@@ -215,7 +231,7 @@ void PlayerCube::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::fifthStage)
     {
-        m_pos.x = 0;
+        m_pos.x = Game::kScreenWidthHalf;
         m_pos.y = Game::kScreenHeightHalf;
         m_isRotaRight = true;
     }

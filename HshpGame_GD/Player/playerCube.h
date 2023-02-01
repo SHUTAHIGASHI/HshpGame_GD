@@ -42,6 +42,8 @@ public:
 
 	void SetPlayerVec(int scroll);
 	void DeleteVecX() { m_vec.x = 0.0f; }
+
+	PlayerState GetPlayerState() const { return m_playerState; }
 private:
 	PlayerState m_playerState;
 	
