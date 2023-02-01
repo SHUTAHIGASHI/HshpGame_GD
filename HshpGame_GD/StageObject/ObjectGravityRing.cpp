@@ -10,15 +10,15 @@ void ObjectGravityRing::Init()
 {
 	m_pos.x = -Game::kBlockSize;
 	m_pos.y = -Game::kBlockSize;
+
+	circleSize = (Game::kBlockSize / 2) - 5.0f;
+	sizeAcc = 0.5f;
 }
 
 void ObjectGravityRing::SetPos(float X, float Y)
 {
 	m_pos.x = X;
 	m_pos.y = Y;
-
-	circleSize = (Game::kBlockSize / 2) - 5.0f;
-	sizeAcc = 0.5f;
 }
 
 void ObjectGravityRing::Update()

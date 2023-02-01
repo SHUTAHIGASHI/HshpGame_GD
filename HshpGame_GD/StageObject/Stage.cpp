@@ -312,7 +312,7 @@ namespace
 
 Stage::Stage() :
 	m_pCube(nullptr),
-	m_stageState(StageState::fifthStage),
+	m_stageState(StageState::fourthStage),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollAcc),
@@ -579,6 +579,8 @@ void Stage::NormalUpdate()
 
 void Stage::ScrollUpdate()
 {
+	SetStage();
+
 	if (m_pCube->IsDead()) return;
 
 	if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
@@ -611,19 +613,7 @@ void Stage::ScrollUpdate()
 		}
 	}
 
-	/*if (m_scroll + Game::kScreenWidth > Game::kScreenWidthTriple)
-		{
-			m_pCube->SetRotaRight(false);
-			m_scrollAcc *= -1;
-		}
-		else if (m_scroll < 0)
-		{
-			m_pCube->SetRotaRight(true);
-			m_scrollAcc *= -1;
-		}*/
-
 	m_scroll += m_scrollAcc;
-	SetStage();
 
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
