@@ -153,7 +153,7 @@ void PlayerCube::Draw()
     else if(!m_isDead) DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, m_angle, m_handle, true, false);
 
 	//DrawBox(m_pos.x, m_pos.y, GetRight(), GetBottom(), GetColor(255, 255, 255), false);
-    //DrawFormatString(0, 50, 0xffffff, "%f", m_pos.x + Game::kBlockSize);
+    DrawFormatString(0, 50, 0xffffff, "%f", m_vec.x);
 }
 
 void PlayerCube::ChangeUpdateType()

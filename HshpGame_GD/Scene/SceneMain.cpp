@@ -87,7 +87,7 @@ void SceneMain::Update(const InputState& input)
 	// Rキーを押すとゲームリトライ
 	if (input.IsTriggered(InputType::retry))
 	{
-		Init();
+		GameSetting();
 		m_countAttempt++;
 	}
 
@@ -102,7 +102,7 @@ void SceneMain::Update(const InputState& input)
 	{
 		if (m_gameOverDelay < 0)
 		{
-			Init();
+			GameSetting();
 			m_countAttempt++;
 			return;
 		}
@@ -127,9 +127,11 @@ void SceneMain::OnStageClear()
 {
 	if (m_Player.IsStageClear())
 	{
+		m_countAttempt = 0;
+
 		if (m_Stage.GetStageState() == StageState::tenthStage)
 		{
-			m_countAttempt = 0;
+			m_Stage.ChangeStageState();
 			m_isGameClear = true;
 			m_isEnd = true;
 		}
