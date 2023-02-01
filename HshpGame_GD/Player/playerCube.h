@@ -3,6 +3,12 @@
 
 class Stage;
 
+enum class PlayerState
+{
+	Cube,
+	Ship
+};
+
 class PlayerCube :
     public PlayerBase
 {
@@ -35,15 +41,19 @@ public:
 	void SetPlayerVec(int scroll);
 	void DeleteVecX() { m_vec.x = 0.0f; }
 private:
+	PlayerState m_playerState;
+	
 	// ステージのポインタ
 	Stage* m_pStage;
 
-	// 通常時の更新処理
-	void NormalUpdate(const InputState& input);
-	// 重力反転時の更新処理
-	void RevGravityUpdate(const InputState& input);
-	// ステージスクロール時の更新処理
-	void StageScrollUpdate(const InputState& input);
+	// キューブの通常時の更新処理
+	void CubeNormalUpdate(const InputState& input);
+	// キューブの重力反転時の更新処理
+	void CubeRevGravityUpdate(const InputState& input);
+	// シップの通常時の更新処理
+	void ShipNormalUpdate(const InputState& input);
+	// シップの重力反転時の更新処理
+	void ShipRevGravityUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void DeadUpdate(const InputState& input);
 

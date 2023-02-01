@@ -24,12 +24,13 @@ namespace
     // 重力反転時の加速度
     constexpr float kRevGravityAcc = 2.0f;
     // 落下の最大速度
-    constexpr float kGravityMax = 20.0f;
+    constexpr float kMaxSpeed = 20.0f;
 }
 
 PlayerCube::PlayerCube() :
+    m_playerState(PlayerState::Cube),
     m_pStage(nullptr),
-    m_updateFunc(&PlayerCube::NormalUpdate)
+    m_updateFunc(&PlayerCube::CubeNormalUpdate)
 {
 }
 
@@ -96,13 +97,13 @@ void PlayerCube::OnHitObject(const InputState& input)
                         {
                             m_isRevGravity = true;	// 重力反転
                             m_vec.y = -kRevGravityAcc;
-                            m_updateFunc = &PlayerCube::RevGravityUpdate;
+                            m_updateFunc = &PlayerCube::CubeRevGravityUpdate;
                         }
                         else
                         {
                             m_isRevGravity = false; // 重力正常
                             m_vec.y = kRevGravityAcc;
-                            m_updateFunc = &PlayerCube::NormalUpdate;
+                            m_updateFunc = &PlayerCube::CubeNormalUpdate;
                         }
                         return;
                     }
@@ -157,16 +158,16 @@ void PlayerCube::Draw()
 
 void PlayerCube::ChangeUpdateType()
 {
-    if (m_pStage->GetStageState() == StageState::firstStage || m_pStage->GetStageState() == StageState::secondStage ||
-        m_pStage->GetStageState() == StageState::thirdStage || m_pStage->GetStageState() == StageState::sixthStage ||
-        m_pStage->GetStageState() == StageState::eighthStage || m_pStage->GetStageState() == StageState::ninthStage)
-        m_updateFunc = &PlayerCube::NormalUpdate;
-
-    else if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage ||
-        m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
-        m_updateFunc = &PlayerCube::StageScrollUpdate;
-
-    else assert(0);
+    if (m_pStage->GetStageState() == StageState::fifthStage)
+    {
+        m_updateFunc = &PlayerCube::ShipNormalUpdate;
+        m_playerState = PlayerState::Ship;
+    }
+    else
+    {
+        m_updateFunc = &PlayerCube::CubeNormalUpdate;
+        m_playerState = PlayerState::Cube;
+    }
 }
 
 void PlayerCube::SetSpawn()
@@ -199,7 +200,7 @@ void PlayerCube::SetSpawn()
     else if (m_pStage->GetStageState() == StageState::fifthStage)
     {
         m_pos.x = 0;
-        m_pos.y = 0;
+        m_pos.y = Game::kScreenHeightHalf;
         m_isRotaRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::sixthStage)
@@ -245,22 +246,8 @@ void PlayerCube::SetPlayerVec(int scroll)
     else m_vec.x = Game::kMoveSpeed;
 }
 
-void PlayerCube::NormalUpdate(const InputState& input)
+void PlayerCube::CubeNormalUpdate(const InputState& input)
 {
-    // プレイヤーの挙動の処理
-    m_pos += m_vec;
-    m_vec.y += kGravity;
-    if (m_isRotaRight) m_angle += kRotaSpeed;
-    else m_angle += -kRotaSpeed;
-
-    if (m_vec.y > kGravityMax)
-    {
-        m_vec.y = kGravityMax;
-    }
-
-    // 地面との当たり判定
-    m_isField = false;
-
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
@@ -272,7 +259,19 @@ void PlayerCube::NormalUpdate(const InputState& input)
         m_isRotaRight = false;
     }
 
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    m_vec.y += kGravity;
+    if (m_isRotaRight) m_angle += kRotaSpeed;
+    else m_angle += -kRotaSpeed;
+
+    if (m_vec.y > kMaxSpeed)
+    {
+        m_vec.y = kMaxSpeed;
+    }
+
+    // 地面との当たり判定
+    m_isField = false;
 
     OnHitObject(input);
 
@@ -284,28 +283,16 @@ void PlayerCube::NormalUpdate(const InputState& input)
         }
     }
 
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+
     if (m_isDead)
     {
         m_updateFunc = &PlayerCube::DeadUpdate;
     }
 }
 
-void PlayerCube::RevGravityUpdate(const InputState& input)
+void PlayerCube::CubeRevGravityUpdate(const InputState& input)
 {
-    // プレイヤーの挙動の処理
-    m_pos += m_vec;
-    m_vec.y += -kGravity;
-    if (m_isRotaRight) m_angle += -kRotaSpeed;
-    else m_angle += kRotaSpeed;
-
-    if (m_vec.y < -kGravityMax)
-    {
-        m_vec.y = -kGravityMax;
-    }
-
-    // 地面との当たり判定
-    m_isField = false;
-
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
@@ -317,7 +304,19 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
         m_isRotaRight = false;
     }
 
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    m_vec.y += -kGravity;
+    if (m_isRotaRight) m_angle += -kRotaSpeed;
+    else m_angle += kRotaSpeed;
+
+    if (m_vec.y < -kMaxSpeed)
+    {
+        m_vec.y = -kMaxSpeed;
+    }
+
+    // 地面との当たり判定
+    m_isField = false;
 
     OnHitObject(input);
 
@@ -329,50 +328,93 @@ void PlayerCube::RevGravityUpdate(const InputState& input)
         }
     }
 
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+
     if (m_isDead)
     {
         m_updateFunc = &PlayerCube::DeadUpdate;
     }
 }
 
-void PlayerCube::StageScrollUpdate(const InputState& input)
+void PlayerCube::ShipNormalUpdate(const InputState& input)
 {
-    if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    if (m_pos.x < 0)
     {
-        m_isRotaRight = false;
         m_vec.x *= -1;
-    }
-    else if (m_pos.x < 0)
-    {
         m_isRotaRight = true;
-        m_vec.x *= -1;
     }
-
-    // プレイヤーの挙動の処理
-    m_vec.y += kGravity;
-    m_pos += m_vec;
-    if(m_isRotaRight) m_angle += kRotaSpeed;
-    else m_angle += -kRotaSpeed;
-
-    if (m_vec.y > kGravityMax)
+    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
-        m_vec.y = kGravityMax;
+        m_vec.x *= -1;
+        m_isRotaRight = false;
     }
-
-    // 地面との当たり判定
-    m_isField = false;
-
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
-
-    OnHitObject(input);
 
     if (input.IsPressed(InputType::jump))
     {
-        if (m_isField)
-        {
-            m_vec.y = kJumpAcc;	// ジャンプ開始
-        }
+        m_vec.y += -kGravity;
     }
+    else m_vec.y += kGravity;
+
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    if (m_isRotaRight) m_angle += kRotaSpeed;
+    else m_angle += -kRotaSpeed;
+
+    if (m_vec.y < -kMaxSpeed)
+    {
+        m_vec.y = -kMaxSpeed;
+    }
+    else if (m_vec.y > kMaxSpeed)
+    {
+        m_vec.y = kMaxSpeed;
+    }
+
+    OnHitObject(input);
+
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+
+    if (m_isDead)
+    {
+        m_updateFunc = &PlayerCube::DeadUpdate;
+    }
+}
+
+void PlayerCube::ShipRevGravityUpdate(const InputState& input)
+{
+    if (m_pos.x < 0)
+    {
+        m_vec.x *= -1;
+        m_isRotaRight = true;
+    }
+    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    {
+        m_vec.x *= -1;
+        m_isRotaRight = false;
+    }
+
+    if (input.IsPressed(InputType::jump))
+    {
+        m_vec.y += -kGravity;
+    }
+    else m_vec.y += kGravity;
+
+    // プレイヤーの挙動の処理
+    m_pos += m_vec;
+    if (m_isRotaRight) m_angle += -kRotaSpeed;
+    else m_angle += kRotaSpeed;
+
+    if (m_vec.y < -kMaxSpeed)
+    {
+        m_vec.y = -kMaxSpeed;
+    }
+    else if (m_vec.y > kMaxSpeed)
+    {
+        m_vec.y = kMaxSpeed;
+    }
+
+    OnHitObject(input);
+
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
     if (m_isDead)
     {
