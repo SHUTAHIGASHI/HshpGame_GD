@@ -8,7 +8,7 @@
 #include "ObjectGravityRing.h"
 #include "ObjectGoalGate.h"
 
-class PlayerCube;
+class Player;
 
 enum class StageState
 {
@@ -32,7 +32,7 @@ public:
 	Stage();
 	~Stage(){}
 	
-	void SetPlayer(PlayerCube* cube) { m_pCube = cube; }
+	void SetPlayer(Player* cube) { m_pCube = cube; }
 	
 	void Init(int hSpike);
 
@@ -76,7 +76,7 @@ private:
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];*/
 
-	PlayerCube* m_pCube;
+	Player* m_pCube;
 
 	// ステージ管理用変数
 	StageState m_stageState;

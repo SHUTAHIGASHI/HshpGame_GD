@@ -172,8 +172,7 @@
   <ItemGroup>
     <ClInclude Include="StageObject\ObjectGoalGate.h" />
     <ClInclude Include="StageObject\ObjectGravityRing.h" />
-    <ClInclude Include="Player\playerBase.h" />
-    <ClInclude Include="Player\playerCube.h" />
+    <ClInclude Include="Player\Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneClear.h" />

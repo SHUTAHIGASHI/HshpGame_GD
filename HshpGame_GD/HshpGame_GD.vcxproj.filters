@@ -122,10 +122,7 @@
     <ClInclude Include="StageObject\Stage.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="Player\playerBase.h">
-      <Filter>ヘッダー ファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\playerCube.h">
+    <ClInclude Include="Player\Player.h">
       <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneBase.h">

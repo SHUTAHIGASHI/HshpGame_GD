@@ -44,6 +44,4 @@ private:
 	SceneTitle	m_title;
 	SceneMain	m_main;
 	SceneClear	m_clear;
-
-	PlayerBase m_player;
 };

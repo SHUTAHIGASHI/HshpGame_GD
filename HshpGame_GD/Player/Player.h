@@ -1,0 +1,144 @@
+#include "game.h"
+
+class Stage;
+
+enum class PlayerState
+{
+	Cube,
+	Ship
+};
+
+class Player
+{
+public:
+	Player() :
+		m_playerState(PlayerState::Cube),
+		m_pStage(nullptr),
+		m_updateFunc(&Player::CubeNormalUpdate),
+		m_pos(),
+		m_vec(),
+		m_playerHandle(-1),
+		m_deathEffectHandle(-1),
+		m_effectHeight(0),
+		m_effectWidth(0),
+		m_angle(0.0f),
+		m_countFrame(0),
+		m_isMoveRight(true),
+		m_isRevGravity(false),
+		m_isField(false),
+		m_isScroll(false),
+		m_isStageClear(false),
+		m_isDead(false)
+	{}
+	virtual ~Player() {}
+
+	void SetStage(Stage* stage) { m_pStage = stage; }
+
+	// プレイヤーの初期化
+	void Init(int playerHandle, int playerDeathEffect);
+
+	// プレイヤーをスタート時の状態にセット
+	void SetStartInfo();
+	// プレイヤーのスポーン位置をセット
+	void SetSpawnPos();
+
+	// メンバ関数ポインタの中身を変更
+	void ChangeUpdateType();
+	// プレイヤーの更新処理
+	void Update(const InputState& input);
+
+	// オブジェクトと当たった時の処理
+	void OnHitObject(const InputState& input);
+	
+	// プレイヤーの描画処理
+	void Draw();
+
+	// 右移動するかどうかの設定
+	void SetMoveRight(bool isRight) { m_isMoveRight = isRight; }
+	// 右移動するかどうか取得
+	bool IsMoveRight() const { return m_isMoveRight; }
+
+	// 重力反転しているかを取得
+	bool IsRevGravity() const { return m_isRevGravity; }
+
+	// 画面スクロール時の横移動の切り替え
+	void SetPlayerVec(int scroll);
+	// 横方向のベクトル削除
+	void DeleteVecX() { m_vec.x = 0.0f; }
+
+	// プレイヤーの現在の状態を取得
+	PlayerState GetPlayerState() const { return m_playerState; }
+
+	// 四方向の取得
+	float GetLeft() const { return m_pos.x; }
+	float GetTop() const { return m_pos.y; }
+	float GetRight() const ;
+	float GetBottom() const { return m_pos.y + Game::kBlockSize; }
+
+	// プレイヤーの中心座標取得
+	float GetCubeCenterX() const { return m_pos.x + (Game::kBlockSize / 2); }	// キューブの中心
+	float GetShipCenterX() const { return m_pos.x + (Game::kShipWidth / 2); }	// シップの中心
+	float GetCenterY() const { return m_pos.y + (Game::kBlockSize / 2); }
+
+	// クリアしたかどうかを取得
+	bool IsStageClear() const { return m_isStageClear; }
+	// 死亡判定を true にする
+	void SetDead() { m_isDead = true; }
+	// 死亡判定を取得
+	bool IsDead() const { return m_isDead; }
+
+	// プレイヤーの座標取得
+	Vec2 GetPos() const { return m_pos; }
+
+private:
+	// 現在のプレイヤーの状態
+	PlayerState m_playerState;
+	
+	// ステージのポインタ
+	Stage* m_pStage;
+
+	// キューブの通常時の更新処理
+	void CubeNormalUpdate(const InputState& input);
+	// キューブの重力反転時の更新処理
+	void CubeRevGravityUpdate(const InputState& input);
+	// シップの通常時の更新処理
+	void ShipUpdate(const InputState& input);
+	// プレイヤー死亡時の更新処理
+	void DeadUpdate(const InputState& input);
+
+	using m_tUpdateFunc = void (Player::*) (const InputState& input);
+	m_tUpdateFunc m_updateFunc = nullptr;
+
+private:
+	// プレイヤー座標
+	Vec2 m_pos;
+	// 移動量
+	Vec2 m_vec;
+
+	// 画像データ
+	int m_playerHandle;
+	int m_deathEffectHandle;
+
+	// エフェクト画像サイズ
+	float m_effectHeight;
+	float m_effectWidth;
+	// 画像表示角度
+	float m_angle;
+
+	// フレーム数をカウント
+	int m_countFrame;
+
+	// 移動方向
+	bool m_isMoveRight;
+	// 重力方向
+	bool m_isRevGravity;
+	// 地面との当たり判定用変数
+	bool m_isField;
+	// スクロール中かどうか
+	bool m_isScroll;
+
+	// ゴール判定
+	bool m_isStageClear;
+	// 死亡判定
+	bool m_isDead;
+};

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "playerCube.h"
+#include "Player.h"
 #include "Stage.h"
 #include "ObjectBlock.h"
 
@@ -37,28 +37,25 @@ private:
 
 private:
 	// キャラクターのグラフィックハンドル
-	int m_playerImg;
-	int m_deathEffectImg;
+	int m_playerHandle;
+	int m_deathEffectHandle;
 	// オブジェクトのグラフィックハンドル
 	int m_hObjectSpike;
 
 	// ゲームの制限時間
-	int m_gameTimeRemaining;
+	int m_startDelay;
 	// ゲームオーバー時の遅延時間
 	int m_gameOverDelay;
-
 	// 挑戦回数
 	int m_countAttempt;
 
 	// ゲームクリア
 	bool m_isGameClear;
-
 	// シーン終了
 	bool m_isEnd;
 
 	// プレイヤー
-	PlayerCube m_Player;
-
+	Player m_Player;
 	// ステージ
 	Stage m_Stage;
 };

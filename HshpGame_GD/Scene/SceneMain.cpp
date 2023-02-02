@@ -1,27 +1,20 @@
-#include "game.h"
 #include "SceneMain.h"
-
+#include "game.h"
 #include <cassert>
 
 namespace
 {
-	// 敵出現用の遅延時間
-	constexpr int kSpawnDelay = 100;
-	// ゲームの制限時間
-	constexpr int kGameMaxTime = 1800;	
+	// スタート時の遅延時間
+	constexpr int kStartDelay = 100;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
-
-	// RGB初期値用
-	constexpr int kSetColor = 255;
-
 }
 
 SceneMain::SceneMain() :
-	m_playerImg(-1),
-	m_deathEffectImg(-1),
+	m_playerHandle(-1),
+	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
-	m_gameTimeRemaining(0),
+	m_startDelay(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
 	m_isGameClear(false),
@@ -37,30 +30,34 @@ SceneMain::~SceneMain()
 // 初期化
 void SceneMain::Init()
 {
+	// シーン終了変数を初期化
+	m_isEnd = false;
+
 	// アドレスの設定
 	m_Player.SetStage(&m_Stage);
 	m_Stage.SetPlayer(&m_Player);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 
 	// 画像読み込み
-	m_playerImg = LoadGraph(Game::kPlayerImg);
-	m_deathEffectImg = LoadGraph(Game::kPlayerDeathEffectImg);
+	m_playerHandle = LoadGraph(Game::kPlayerImg);
+	m_deathEffectHandle = LoadGraph(Game::kPlayerDeathEffectImg);
+
+	// スタート遅延の初期化
+	m_startDelay = kStartDelay;
 
 	GameSetting();
 }
 
 void SceneMain::GameSetting()
 {
-	// シーン終了、ゲームクリアを false に初期化
+	// ゲームクリアを初期化
 	m_isGameClear = false;
-	m_isEnd = false;
 	
 	// 各時間用変数の初期化
-	m_gameTimeRemaining = kGameMaxTime;
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.Init(m_playerImg, m_deathEffectImg);
+	m_Player.Init(m_playerHandle, m_deathEffectHandle);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike);
@@ -70,8 +67,8 @@ void SceneMain::GameSetting()
 void SceneMain::End()
 {
 	// 画像データの削除
-	DeleteGraph(m_playerImg);
-	DeleteGraph(m_deathEffectImg);
+	DeleteGraph(m_playerHandle);
+	DeleteGraph(m_deathEffectHandle);
 	DeleteGraph(m_hObjectSpike);
 }
 
@@ -90,6 +87,10 @@ void SceneMain::Update(const InputState& input)
 		GameSetting();
 		m_countAttempt++;
 	}
+
+	m_startDelay--;
+	if (m_startDelay > 0) return;
+	else m_startDelay = 0;
 
 	m_Stage.Update();
 
