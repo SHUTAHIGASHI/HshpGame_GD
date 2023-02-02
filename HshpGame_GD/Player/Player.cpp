@@ -25,7 +25,7 @@ namespace
     constexpr float kRevGravityAcc = 2.0f;
     // 落下の最大速度
     constexpr float kCubeMaxSpeed = 20.0f;
-    constexpr float kWaveSpeed = 16.0f;
+    constexpr float kWaveSpeed = 12.0f;
 }
 
 void Player::Init(int playerHandle, int playerDeathEffect)
@@ -51,7 +51,7 @@ void Player::SetStartInfo()
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
     m_angle = 0;
-    if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F / 5) * 4;
+    if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F * 0.2);
 
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
@@ -406,14 +406,14 @@ void Player::WaveUpdate(const InputState& input)
     if (input.IsPressed(InputType::jump))
     {
         m_vec.y = -kWaveSpeed;
-        if(m_isMoveRight) m_angle = DX_PI_F / 5;
-        else m_angle = (DX_PI_F / 5) * 4;
+        if(m_isMoveRight) m_angle = DX_PI_F * 0.2;
+        else m_angle = DX_PI_F * 1.8;
     }
     else
     {
         m_vec.y = kWaveSpeed;
-        if (m_isMoveRight) m_angle = (DX_PI_F / 5) * 4;
-        else m_angle = DX_PI_F / 5;
+        if (m_isMoveRight) m_angle = DX_PI_F * 0.8;
+        else m_angle = DX_PI_F * 1.2;
     }
 
     // プレイヤーの挙動の処理
