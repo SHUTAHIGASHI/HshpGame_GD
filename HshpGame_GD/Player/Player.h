@@ -25,6 +25,7 @@ public:
 		m_countFrame(0),
 		m_isMoveRight(true),
 		m_isRevGravity(false),
+		m_isDashRingEnabled(false),
 		m_isField(false),
 		m_isScroll(false),
 		m_isStageClear(false),
@@ -131,6 +132,8 @@ private:
 	bool m_isMoveRight;
 	// 重力方向
 	bool m_isRevGravity;
+	// ダッシュリング用の判定
+	bool m_isDashRingEnabled;
 	// 地面との当たり判定用変数
 	bool m_isField;
 	// スクロール中かどうか

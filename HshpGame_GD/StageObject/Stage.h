@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Game.h"
+#include "ObjectGoalGate.h"
 #include "ObjectBlock.h"
 #include "ObjectSpike.h"
 #include "ObjectJumpRing.h"
 #include "ObjectJumpPad.h"
 #include "ObjectGravityRing.h"
-#include "ObjectGoalGate.h"
+#include "ObjectDashRing.h"
 
 class Player;
 
@@ -62,12 +63,13 @@ public:
 	StageState GetStageState() const { return m_stageState; }
 
 private:
+	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
+	ObjectDashRing m_ObjectDashRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	
 	/*ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];

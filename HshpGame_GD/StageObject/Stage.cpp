@@ -7,7 +7,7 @@ namespace
 {
 	//マップデータ
 	// 1 ゴール / 2 ブロック / 3 ジャンプリング / 4 ジャンプパッド 
-	// 5 スパイク / 6 グラビティリング / 7  / 8  /
+	// 5 スパイク / 6 グラビティリング / 7 ダッシュリング / 8  /
 
 	//{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 	//{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -33,7 +33,7 @@ namespace
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 	};
@@ -364,7 +364,7 @@ namespace
 
 Stage::Stage() :
 	m_pPlayer(nullptr),
-	m_stageState(StageState::eighthStage),
+	m_stageState(StageState::debug),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),
@@ -390,6 +390,7 @@ void Stage::Init(int hSpike)
 			m_ObjectJumpPad[i][j].Init();
 			m_ObjectSpike[i][j].Init(hSpike);
 			m_ObjectGravityRing[i][j].Init();
+			m_ObjectDashRing[i][j].Init();
 		}
 	}
 
@@ -412,6 +413,7 @@ void Stage::SetStage()
 			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].SetPos(blockPosX, blockPosY);
 			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].SetPos(blockPosX, blockPosY);
 			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].SetPos(blockPosX, blockPosY);
 		}
 	}
 }
@@ -441,6 +443,7 @@ void Stage::Draw()
 			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
 			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Draw();
 			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].Draw();
+			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].Draw();
 		}
 	}
 
@@ -499,6 +502,15 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 		m_pPlayer->GetBottom() >= m_ObjectGravityRing[H][W].GetTop())
 	{
 		object = ObjectType::GravityRing;
+		return true;
+	}
+	// ダッシュリングの当たり判定
+	if (m_ObjectDashRing[H][W].GetRight() >= m_pPlayer->GetLeft() &&
+		m_pPlayer->GetRight() >= m_ObjectDashRing[H][W].GetLeft() &&
+		m_ObjectDashRing[H][W].GetBottom() >= m_pPlayer->GetTop() &&
+		m_pPlayer->GetBottom() >= m_ObjectDashRing[H][W].GetTop())
+	{
+		object = ObjectType::DashRing;
 		return true;
 	}
 	// ゴールゲートの判定
@@ -625,6 +637,7 @@ void Stage::NormalUpdate()
 		{
 			m_ObjectJumpRing[i][j].Update();
 			m_ObjectGravityRing[i][j].Update();
+			m_ObjectDashRing[i][j].Update();
 		}
 	}
 }
@@ -673,6 +686,7 @@ void Stage::ScrollUpdate()
 		{
 			m_ObjectJumpRing[i][j].Update();
 			m_ObjectGravityRing[i][j].Update();
+			m_ObjectDashRing[i][j].Update();
 		}
 	}
 }

@@ -82,7 +82,12 @@ void Player::OnHitObject(const InputState& input)
             {
                 float tempPos = 0.0f;
                 DrawFormatString(100, 150, 0xffffff, "%d", static_cast<int>(object));
-                if (object == ObjectType::JumpRing)
+                if (object == ObjectType::GoalGate)
+                {
+                    m_isStageClear = true;
+                    return;
+                }
+                else if (object == ObjectType::JumpRing)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
@@ -120,10 +125,14 @@ void Player::OnHitObject(const InputState& input)
                         return;
                     }
                 }
-                else if (object == ObjectType::GoalGate)
+                else if (object == ObjectType::DashRing)
                 {
-                    m_isStageClear = true;
-                    return;
+                    if (input.IsTriggered(InputType::jump))
+                    {
+                        m_vec.y = 0.0f;
+                        m_isDashRingEnabled = true;
+                        return;
+                    }
                 }
                 else if (object == ObjectType::Block)
                 {
@@ -313,7 +322,7 @@ void Player::CubeNormalUpdate(const InputState& input)
 
     // プレイヤーの挙動の処理
     m_pos += m_vec;
-    m_vec.y += kGravity;
+    if(!m_isDashRingEnabled) m_vec.y += kGravity;
     if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
@@ -329,6 +338,8 @@ void Player::CubeNormalUpdate(const InputState& input)
 
     if (input.IsPressed(InputType::jump))
     {
+        if (m_isDashRingEnabled) m_isDashRingEnabled = false;
+
         if (m_isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
@@ -371,6 +382,8 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     m_isField = false;
 
     OnHitObject(input);
+
+    if (m_isDashRingEnabled) m_isDashRingEnabled = false;
 
     if (input.IsPressed(InputType::jump))
     {
