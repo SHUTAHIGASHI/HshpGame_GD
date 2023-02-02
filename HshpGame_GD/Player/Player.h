@@ -5,7 +5,7 @@ class Stage;
 enum class PlayerState
 {
 	Cube,
-	Ship
+	Wave
 };
 
 class Player
@@ -72,12 +72,11 @@ public:
 	// 四方向の取得
 	float GetLeft() const { return m_pos.x; }
 	float GetTop() const { return m_pos.y; }
-	float GetRight() const ;
+	float GetRight() const { return m_pos.x + Game::kBlockSize; }
 	float GetBottom() const { return m_pos.y + Game::kBlockSize; }
 
 	// プレイヤーの中心座標取得
-	float GetCubeCenterX() const { return m_pos.x + (Game::kBlockSize / 2); }	// キューブの中心
-	float GetShipCenterX() const { return m_pos.x + (Game::kShipWidth / 2); }	// シップの中心
+	float GetCenterX() const { return m_pos.x + (Game::kBlockSize / 2); }	// キューブの中心
 	float GetCenterY() const { return m_pos.y + (Game::kBlockSize / 2); }
 
 	// クリアしたかどうかを取得
@@ -102,7 +101,7 @@ private:
 	// キューブの重力反転時の更新処理
 	void CubeRevGravityUpdate(const InputState& input);
 	// シップの通常時の更新処理
-	void ShipUpdate(const InputState& input);
+	void WaveUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void DeadUpdate(const InputState& input);
 

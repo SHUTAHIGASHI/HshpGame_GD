@@ -154,7 +154,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
     <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
-    <ClCompile Include="Player\playerCube.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Scene\SceneClear.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />

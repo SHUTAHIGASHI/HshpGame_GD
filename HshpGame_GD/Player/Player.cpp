@@ -24,7 +24,8 @@ namespace
     // 重力反転時の加速度
     constexpr float kRevGravityAcc = 2.0f;
     // 落下の最大速度
-    constexpr float kMaxSpeed = 20.0f;
+    constexpr float kCubeMaxSpeed = 20.0f;
+    constexpr float kWaveSpeed = 16.0f;
 }
 
 void Player::Init(int playerHandle, int playerDeathEffect)
@@ -40,11 +41,17 @@ void Player::Init(int playerHandle, int playerDeathEffect)
 
 void Player::SetStartInfo()
 {
+    m_isStageClear = false;
+    m_isDead = false;
+    m_isRevGravity = false;
+    
     ChangeUpdateType();
     SetSpawnPos();
 
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
+    m_angle = 0;
+    if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F / 5) * 4;
 
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
@@ -52,12 +59,6 @@ void Player::SetStartInfo()
         m_vec.x = 0.0f;
         m_isScroll = true;
     }
-
-    if (m_playerState == PlayerState::Ship) m_angle = 0;
-
-    m_isStageClear = false;
-    m_isDead = false;
-    m_isRevGravity = false;
 }
 
 void Player::Update(const InputState& input)
@@ -126,26 +127,29 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::Block)
                 {
-                    if (!m_isRevGravity || m_playerState == PlayerState::Ship)
+                    if (m_playerState == PlayerState::Cube)
                     {
-                        if (m_pStage->IsUnder(m_pos, i, j, tempPos))
+                        if (!m_isRevGravity)
                         {
-                            m_angle = 0.0f;
-                            m_vec.y = 0.0f;
-                            m_pos.y = tempPos;
-                            m_isField = true;
-                            continue;
+                            if (m_pStage->IsUnder(m_pos, i, j, tempPos))
+                            {
+                                m_angle = 0.0f;
+                                m_vec.y = 0.0f;
+                                m_pos.y = tempPos;
+                                m_isField = true;
+                                continue;
+                            }
                         }
-                    }
-                    if (m_isRevGravity || m_playerState == PlayerState::Ship)
-                    {
-                        if (m_pStage->IsTop(m_pos, i, j, tempPos))
+                        else if (m_isRevGravity)
                         {
-                            m_angle = 0.0f;
-                            m_vec.y = 0.0f;
-                            m_pos.y = tempPos;
-                            m_isField = true;
-                            continue;
+                            if (m_pStage->IsTop(m_pos, i, j, tempPos))
+                            {
+                                m_angle = 0.0f;
+                                m_vec.y = 0.0f;
+                                m_pos.y = tempPos;
+                                m_isField = true;
+                                continue;
+                            }
                         }
                     }
 
@@ -183,13 +187,13 @@ void Player::Draw()
         int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
         if (m_playerState == PlayerState::Cube)
         {
-            drawPosX = GetCubeCenterX(), drawPosY = GetCenterY();
+            drawPosX = GetCenterX(), drawPosY = GetCenterY();
             imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
-        else if (m_playerState == PlayerState::Ship)
+        else if (m_playerState == PlayerState::Wave)
         {
-            drawPosX = GetShipCenterX(), drawPosY = GetCenterY();
-            imgX = Game::kBlockSize, imgW = Game::kShipWidth, imgH = Game::kBlockSize;
+            drawPosX = GetCenterX(), drawPosY = GetCenterY();
+            imgX = Game::kBlockSize, imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_angle, m_playerHandle, true, !m_isMoveRight);
@@ -202,8 +206,14 @@ void Player::ChangeUpdateType()
 {
     if (m_pStage->GetStageState() == StageState::fifthStage)
     {
-        m_updateFunc = &Player::ShipUpdate;
-        m_playerState = PlayerState::Ship;
+        m_updateFunc = &Player::WaveUpdate;
+        m_playerState = PlayerState::Wave;
+    }
+    else if (m_pStage->GetStageState() == StageState::eighthStage)
+    {
+        m_updateFunc = &Player::CubeRevGravityUpdate;
+        m_playerState = PlayerState::Cube;
+        m_isRevGravity = true;
     }
     else
     {
@@ -259,7 +269,7 @@ void Player::SetSpawnPos()
     else if (m_pStage->GetStageState() == StageState::eighthStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::ninthStage)
@@ -277,7 +287,8 @@ void Player::SetSpawnPos()
     else
     {
         m_pos.x = 0;
-        m_pos.y = 0;
+        m_pos.y = Game::kBlockSize * 5;
+        m_isMoveRight = true;
     }
 }
 
@@ -285,18 +296,6 @@ void Player::SetPlayerVec(int scroll)
 {
     if(scroll == 0) m_vec.x = -Game::kMoveSpeed;
     else m_vec.x = Game::kMoveSpeed;
-}
-
-float Player::GetRight() const
-{
-    if (m_playerState == PlayerState::Cube)
-    {
-        return (m_pos.x + Game::kBlockSize);
-    }
-    else if (m_playerState == PlayerState::Ship)
-    {
-        return (m_pos.x + Game::kShipWidth);
-    }
 }
 
 void Player::CubeNormalUpdate(const InputState& input)
@@ -318,9 +317,9 @@ void Player::CubeNormalUpdate(const InputState& input)
     if (m_isMoveRight) m_angle += kRotaSpeed;
     else m_angle += -kRotaSpeed;
 
-    if (m_vec.y > kMaxSpeed)
+    if (m_vec.y > kCubeMaxSpeed)
     {
-        m_vec.y = kMaxSpeed;
+        m_vec.y = kCubeMaxSpeed;
     }
 
     // 地面との当たり判定
@@ -363,9 +362,9 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     if (m_isMoveRight) m_angle += -kRotaSpeed;
     else m_angle += kRotaSpeed;
 
-    if (m_vec.y < -kMaxSpeed)
+    if (m_vec.y < -kCubeMaxSpeed)
     {
-        m_vec.y = -kMaxSpeed;
+        m_vec.y = -kCubeMaxSpeed;
     }
 
     // 地面との当たり判定
@@ -389,7 +388,7 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     }
 }
 
-void Player::ShipUpdate(const InputState& input)
+void Player::WaveUpdate(const InputState& input)
 {
     if (m_pos.x < 0)
     {
@@ -406,31 +405,19 @@ void Player::ShipUpdate(const InputState& input)
 
     if (input.IsPressed(InputType::jump))
     {
-        m_vec.y += -kGravity;
-        if(m_isMoveRight) m_angle += -kShipRotaSpeed;
-        else m_angle += kShipRotaSpeed;
+        m_vec.y = -kWaveSpeed;
+        if(m_isMoveRight) m_angle = DX_PI_F / 5;
+        else m_angle = (DX_PI_F / 5) * 4;
     }
     else
     {
-        m_vec.y += kGravity;
-        if (m_isMoveRight) m_angle += kShipRotaSpeed;
-        else m_angle += -kShipRotaSpeed;
+        m_vec.y = kWaveSpeed;
+        if (m_isMoveRight) m_angle = (DX_PI_F / 5) * 4;
+        else m_angle = DX_PI_F / 5;
     }
-
-    if (m_angle > 1) m_angle = 1;
-    else if (m_angle < -1) m_angle = -1;
 
     // プレイヤーの挙動の処理
     m_pos += m_vec;
-
-    if (m_vec.y < -kMaxSpeed)
-    {
-        m_vec.y = -kMaxSpeed;
-    }
-    else if (m_vec.y > kMaxSpeed)
-    {
-        m_vec.y = kMaxSpeed;
-    }
 
     OnHitObject(input);
 

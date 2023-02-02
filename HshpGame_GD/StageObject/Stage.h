@@ -32,7 +32,7 @@ public:
 	Stage();
 	~Stage(){}
 	
-	void SetPlayer(Player* cube) { m_pCube = cube; }
+	void SetPlayer(Player* player) { m_pPlayer = player; }
 	
 	void Init(int hSpike);
 
@@ -76,7 +76,7 @@ private:
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
 	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];*/
 
-	Player* m_pCube;
+	Player* m_pPlayer;
 
 	// ステージ管理用変数
 	StageState m_stageState;

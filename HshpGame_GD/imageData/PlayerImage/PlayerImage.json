@@ -24,11 +24,11 @@
         "y": 0.5
       }
     },
-    "PlayerShip.png": {
+    "wave.png": {
       "frame": {
         "x": 48,
         "y": 0,
-        "w": 90,
+        "w": 48,
         "h": 48
       },
       "rotated": false,
@@ -36,11 +36,11 @@
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 90,
+        "w": 48,
         "h": 48
       },
       "sourceSize": {
-        "w": 90,
+        "w": 48,
         "h": 48
       },
       "pivot": {
@@ -55,7 +55,7 @@
     "image": "PlayerImage.png",
     "format": "RGBA8888",
     "size": {
-      "w": 138,
+      "w": 96,
       "h": 48
     },
     "scale": 1

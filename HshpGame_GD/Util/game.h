@@ -47,8 +47,6 @@ namespace Game
 	// ゲームの基本設定 //
 	// プレイヤーの基本設定
 	constexpr float kBlockSize = 48.0f;
-	// シップの横幅
-	constexpr float kShipWidth = 90.0f;
 
 	// 基本移動速度
 	constexpr float kMoveSpeed = 7.0f;
