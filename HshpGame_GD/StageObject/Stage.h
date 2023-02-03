@@ -35,7 +35,7 @@ public:
 	
 	void SetPlayer(Player* player) { m_pPlayer = player; }
 	
-	void Init(int hSpike);
+	void Init(int hSpike, int hBg);
 
 	void SetStage();
 
@@ -63,6 +63,15 @@ public:
 	StageState GetStageState() const { return m_stageState; }
 
 private:
+	void NormalUpdate();
+
+	void ScrollUpdate();
+
+	// メンバ関数ポインタ
+	using m_tUpdateFunc = void (Stage::*) ();
+	m_tUpdateFunc m_updateFunc = nullptr;
+
+private:
 	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
@@ -83,12 +92,7 @@ private:
 	int m_scrollAcc;
 	bool m_canScroll;
 
-	void NormalUpdate();
-
-	void ScrollUpdate();
-
-	// メンバ関数ポインタ
-	using m_tUpdateFunc = void (Stage::*) ();
-	m_tUpdateFunc m_updateFunc = nullptr;
+	// 背景
+	int m_hBg;
 };
 

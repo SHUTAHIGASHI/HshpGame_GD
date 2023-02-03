@@ -14,6 +14,8 @@ SceneMain::SceneMain() :
 	m_playerHandle(-1),
 	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
+	m_hBg(-1),
+	m_scroll(0),
 	m_startDelay(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
@@ -36,11 +38,14 @@ void SceneMain::Init()
 	// アドレスの設定
 	m_Player.SetStage(&m_Stage);
 	m_Stage.SetPlayer(&m_Player);
-	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 
 	// 画像読み込み
 	m_playerHandle = LoadGraph(Game::kPlayerImg);
 	m_deathEffectHandle = LoadGraph(Game::kPlayerDeathEffectImg);
+	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
+	m_hBg = LoadGraph("imagedata/bg.png");
+
+	m_Player.Init(m_playerHandle, m_deathEffectHandle);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
@@ -57,10 +62,10 @@ void SceneMain::GameSetting()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.Init(m_playerHandle, m_deathEffectHandle);
+	m_Player.SetStartInfo();
 
 	// ステージ初期化
-	m_Stage.Init(m_hObjectSpike);
+	m_Stage.Init(m_hObjectSpike, m_hBg);
 }
 
 // 終了処理
@@ -70,6 +75,7 @@ void SceneMain::End()
 	DeleteGraph(m_playerHandle);
 	DeleteGraph(m_deathEffectHandle);
 	DeleteGraph(m_hObjectSpike);
+	DeleteGraph(m_hBg);
 }
 
 // 毎フレームの処理
@@ -91,6 +97,9 @@ void SceneMain::Update(const InputState& input)
 	m_startDelay--;
 	if (m_startDelay > 0) return;
 	else m_startDelay = 0;
+
+	/*m_scroll++;
+	if (m_scroll > Game::kScreenWidth) m_scroll = 0;*/
 
 	m_Stage.Update();
 
@@ -116,6 +125,13 @@ void SceneMain::Update(const InputState& input)
 // 毎フレームの描画
 void SceneMain::Draw()
 {
+	/*int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
+	bgX -= m_scroll, bgW -= m_scroll;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
+	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
+	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);*/
+
 	m_Stage.Draw();
 
 	// プレイヤーの描画

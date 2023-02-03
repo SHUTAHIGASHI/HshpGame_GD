@@ -341,21 +341,24 @@ namespace
 }
 
 Stage::Stage() :
+	m_updateFunc(&Stage::NormalUpdate),
 	m_pPlayer(nullptr),
-	m_stageState(StageState::eighthStage),
+	m_stageState(StageState::fifthStage),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),
 	m_canScroll(false),
-	m_updateFunc(&Stage::NormalUpdate)
+	m_hBg(-1)
 {
 }
 
-void Stage::Init(int hSpike)
+void Stage::Init(int hSpike, int hBg)
 {
+	m_hBg = hBg;
+	
 	m_scroll = 0;
 	m_scrollAcc = kScrollSpeed;
-	
+
 	StageManage();
 
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
@@ -397,12 +400,19 @@ void Stage::SetStage()
 }
 
 void Stage::Update()
-{				
+{	
 	(this->*m_updateFunc)();
 }
 
 void Stage::Draw()
 {
+	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
+	bgX -= m_scroll, bgW -= m_scroll;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
+	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
+	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)

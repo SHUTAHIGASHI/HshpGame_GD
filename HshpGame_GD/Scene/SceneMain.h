@@ -41,7 +41,11 @@ private:
 	int m_deathEffectHandle;
 	// オブジェクトのグラフィックハンドル
 	int m_hObjectSpike;
+	// 背景のグラフィック
+	int m_hBg;
 
+	// スクロール用
+	int m_scroll;
 	// ゲームの制限時間
 	int m_startDelay;
 	// ゲームオーバー時の遅延時間
