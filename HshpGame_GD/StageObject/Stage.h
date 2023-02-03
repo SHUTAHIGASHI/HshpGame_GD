@@ -70,13 +70,6 @@ private:
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectDashRing m_ObjectDashRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	
-	/*ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthNum];*/
 
 	Player* m_pPlayer;
 

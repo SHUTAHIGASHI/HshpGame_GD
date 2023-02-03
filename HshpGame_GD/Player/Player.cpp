@@ -172,7 +172,6 @@ void Player::OnHitObject(const InputState& input)
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
                 float tempPos = 0.0f;
-                DrawFormatString(100, 150, 0xffffff, "%d", static_cast<int>(object));
                 if (object == ObjectType::GoalGate)
                 {
                     m_isStageClear = true;
@@ -303,7 +302,6 @@ void Player::Draw()
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_angle, m_playerHandle, true, !m_isMoveRight);
     }
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
-    //DrawFormatString(0, 50, 0xffffff, "%f", m_vec.x);
 }
 
 void Player::SetPlayerVec(int scroll)

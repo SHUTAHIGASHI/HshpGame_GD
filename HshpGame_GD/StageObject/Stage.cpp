@@ -424,8 +424,6 @@ void Stage::Draw()
 			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].Draw();
 		}
 	}
-
-	DrawFormatString(0, 0, 0xff0000, "%d", m_scroll);
 }
 
 // プレイヤーとオブジェクトの当たり判定チェック
