@@ -44,6 +44,7 @@ void Player::SetStartInfo()
     m_isStageClear = false;
     m_isDead = false;
     m_isRevGravity = false;
+    m_isDashRingEnabled = false;
     
     ChangeUpdateType();
     SetSpawnPos();
@@ -91,6 +92,7 @@ void Player::OnHitObject(const InputState& input)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
+                        m_isDashRingEnabled = false;
                         if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
                         else m_vec.y = -kJumpRingJumpAcc;
                         return;
@@ -98,6 +100,7 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::JumpPad)
                 {
+                    m_isDashRingEnabled = false;
                     m_vec.y = kJumpPadJumpAcc;	// ジャンプ開始
                     return;
                 }
@@ -110,6 +113,7 @@ void Player::OnHitObject(const InputState& input)
                 {
                     if (input.IsTriggered(InputType::jump))
                     {
+                        m_isDashRingEnabled = false;
                         if (!m_isRevGravity)
                         {
                             m_isRevGravity = true;	// 重力反転
@@ -213,7 +217,7 @@ void Player::Draw()
 
 void Player::ChangeUpdateType()
 {
-    if (m_pStage->GetStageState() == StageState::fifthStage)
+    if (m_pStage->GetStageState() == StageState::seventhStage)
     {
         m_updateFunc = &Player::WaveUpdate;
         m_playerState = PlayerState::Wave;
@@ -259,8 +263,8 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::fifthStage)
     {
-        m_pos.x = Game::kScreenWidthHalf;
-        m_pos.y = Game::kScreenHeightHalf;
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::sixthStage)
@@ -271,8 +275,8 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::seventhStage)
     {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_pos.x = Game::kScreenWidthHalf;
+        m_pos.y = Game::kScreenHeightHalf;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::eighthStage)
@@ -334,12 +338,12 @@ void Player::CubeNormalUpdate(const InputState& input)
     // 地面との当たり判定
     m_isField = false;
 
+    if (input.IsTriggered(InputType::jump)) m_isDashRingEnabled = false;
+
     OnHitObject(input);
 
     if (input.IsPressed(InputType::jump))
     {
-        if (m_isDashRingEnabled) m_isDashRingEnabled = false;
-
         if (m_isField)
         {
             m_vec.y = kJumpAcc;	// ジャンプ開始
