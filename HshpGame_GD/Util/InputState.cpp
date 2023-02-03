@@ -8,6 +8,11 @@ void InputState::Update()
 	{
 		lastKeyState[i] = keyState[i];
 	}
+	for (int i = 0; i < _countof(lastKeyMouseState); ++i)
+	{
+		lastKeyMouseState[i] = keyMouseState[i];
+		keyMouseState[i] = GetMouseInput();
+	}
 
 	GetHitKeyStateAll(keyState);
 }
@@ -54,7 +59,9 @@ bool InputState::IsTriggered(InputType type)const
 		return !lastKeyState[KEY_INPUT_SPACE] &&
 			keyState[KEY_INPUT_SPACE] ||
 			!lastKeyState[KEY_INPUT_UP] &&
-			keyState[KEY_INPUT_UP];
+			keyState[KEY_INPUT_UP] ||
+			!lastKeyMouseState[MOUSE_INPUT_LEFT] &&
+			keyMouseState[MOUSE_INPUT_LEFT];
 	}
 	else if (type == InputType::retry)
 	{
@@ -74,7 +81,8 @@ bool InputState::IsPressed(InputType type)const
 	else if (type == InputType::jump)
 	{
 		return keyState[KEY_INPUT_SPACE] ||
-			keyState[KEY_INPUT_UP];
+			keyState[KEY_INPUT_UP] ||
+			keyMouseState[MOUSE_INPUT_LEFT];
 	}
 	return false;
 }
