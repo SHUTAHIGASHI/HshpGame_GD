@@ -142,6 +142,7 @@ void Player::OnHitObject(const InputState& input)
                 {
                     if (m_playerState == PlayerState::Cube)
                     {
+                        m_isDashRingEnabled = false;
                         if (!m_isRevGravity)
                         {
                             if (m_pStage->IsUnder(m_pos, i, j, tempPos))
@@ -373,7 +374,7 @@ void Player::CubeRevGravityUpdate(const InputState& input)
 
     // プレイヤーの挙動の処理
     m_pos += m_vec;
-    m_vec.y += -kGravity;
+    if (!m_isDashRingEnabled) m_vec.y += -kGravity;
     if (m_isMoveRight) m_angle += -kRotaSpeed;
     else m_angle += kRotaSpeed;
 
@@ -385,9 +386,9 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     // 地面との当たり判定
     m_isField = false;
 
-    OnHitObject(input);
+    if (input.IsTriggered(InputType::jump)) m_isDashRingEnabled = false;
 
-    if (m_isDashRingEnabled) m_isDashRingEnabled = false;
+    OnHitObject(input);
 
     if (input.IsPressed(InputType::jump))
     {
