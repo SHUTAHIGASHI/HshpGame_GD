@@ -62,6 +62,96 @@ void Player::SetStartInfo()
     }
 }
 
+void Player::SetSpawnPos()
+{
+    if (m_pStage->GetStageState() == StageState::firstStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kBlockSize * 5;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::secondStage)
+    {
+        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isMoveRight = false;
+    }
+    else if (m_pStage->GetStageState() == StageState::thirdStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::fourthStage)
+    {
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::fifthStage)
+    {
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::sixthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::seventhStage)
+    {
+        m_pos.x = Game::kScreenWidthHalf;
+        m_pos.y = Game::kScreenHeightHalf;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::eighthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_isMoveRight = true;
+    }
+    else if (m_pStage->GetStageState() == StageState::ninthStage)
+    {
+        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_isMoveRight = false;
+    }
+    else if (m_pStage->GetStageState() == StageState::tenthStage)
+    {
+        m_pos.x = 0;
+        m_pos.y = 0;
+        m_isMoveRight = true;
+    }
+    else
+    {
+        m_pos.x = 0;
+        m_pos.y = Game::kBlockSize * 5;
+        m_isMoveRight = true;
+    }
+}
+
+void Player::ChangeUpdateType()
+{
+    if (m_pStage->GetStageState() == StageState::seventhStage)
+    {
+        m_updateFunc = &Player::WaveUpdate;
+        m_playerState = PlayerState::Wave;
+    }
+    else if (m_pStage->GetStageState() == StageState::eighthStage)
+    {
+        m_updateFunc = &Player::CubeRevGravityUpdate;
+        m_playerState = PlayerState::Cube;
+        m_isRevGravity = true;
+    }
+    else
+    {
+        m_updateFunc = &Player::CubeNormalUpdate;
+        m_playerState = PlayerState::Cube;
+    }
+}
+
 void Player::Update(const InputState& input)
 {
     (this->*m_updateFunc)(input);
@@ -214,96 +304,6 @@ void Player::Draw()
     }
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
     //DrawFormatString(0, 50, 0xffffff, "%f", m_vec.x);
-}
-
-void Player::ChangeUpdateType()
-{
-    if (m_pStage->GetStageState() == StageState::seventhStage)
-    {
-        m_updateFunc = &Player::WaveUpdate;
-        m_playerState = PlayerState::Wave;
-    }
-    else if (m_pStage->GetStageState() == StageState::eighthStage)
-    {
-        m_updateFunc = &Player::CubeRevGravityUpdate;
-        m_playerState = PlayerState::Cube;
-        m_isRevGravity = true;
-    }
-    else
-    {
-        m_updateFunc = &Player::CubeNormalUpdate;
-        m_playerState = PlayerState::Cube;
-    }
-}
-
-void Player::SetSpawnPos()
-{
-    if (m_pStage->GetStageState() == StageState::firstStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kBlockSize * 5;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::secondStage)
-    {
-        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_isMoveRight = false;
-    }
-    else if (m_pStage->GetStageState() == StageState::thirdStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::fourthStage)
-    {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::fifthStage)
-    {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::sixthStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::seventhStage)
-    {
-        m_pos.x = Game::kScreenWidthHalf;
-        m_pos.y = Game::kScreenHeightHalf;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::eighthStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
-        m_isMoveRight = true;
-    }
-    else if (m_pStage->GetStageState() == StageState::ninthStage)
-    {
-        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
-        m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
-        m_isMoveRight = false;
-    }
-    else if (m_pStage->GetStageState() == StageState::tenthStage)
-    {
-        m_pos.x = 0;
-        m_pos.y = 0;
-        m_isMoveRight = true;
-    }
-    else
-    {
-        m_pos.x = 0;
-        m_pos.y = Game::kBlockSize * 5;
-        m_isMoveRight = true;
-    }
 }
 
 void Player::SetPlayerVec(int scroll)
