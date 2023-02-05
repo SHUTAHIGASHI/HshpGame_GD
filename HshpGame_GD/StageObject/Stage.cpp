@@ -343,7 +343,7 @@ namespace
 Stage::Stage() :
 	m_updateFunc(&Stage::NormalUpdate),
 	m_pPlayer(nullptr),
-	m_stageState(StageState::fifthStage),
+	m_stageState(StageState::firstStage),
 	m_stage(),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),

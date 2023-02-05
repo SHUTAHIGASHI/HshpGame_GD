@@ -15,6 +15,7 @@ SceneMain::SceneMain() :
 	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
 	m_hBg(-1),
+	m_hBgm(-1),
 	m_scroll(0),
 	m_startDelay(0),
 	m_gameOverDelay(0),
@@ -45,7 +46,8 @@ void SceneMain::Init()
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 	m_hBg = LoadGraph("imagedata/bg.png");
 
-	m_Player.Init(m_playerHandle, m_deathEffectHandle);
+	m_hBgm = LoadSoundMem("soundData/Cycles.mp3");
+	PlaySoundMem(m_hBgm, DX_PLAYTYPE_BACK);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
@@ -76,6 +78,8 @@ void SceneMain::End()
 	DeleteGraph(m_deathEffectHandle);
 	DeleteGraph(m_hObjectSpike);
 	DeleteGraph(m_hBg);
+
+	DeleteSoundMem(m_hBgm);
 }
 
 // 毎フレームの処理

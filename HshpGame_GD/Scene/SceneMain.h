@@ -44,6 +44,8 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 
+	int m_hBgm;
+
 	// スクロール用
 	int m_scroll;
 	// ゲームの制限時間
