@@ -62,7 +62,7 @@ void SceneMain::GameSetting()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.SetStartInfo();
+	m_Player.Init(m_playerHandle, m_deathEffectHandle);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike, m_hBg);

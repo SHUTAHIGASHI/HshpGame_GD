@@ -38,8 +38,6 @@ public:
 	// プレイヤーの初期化
 	void Init(int playerHandle, int playerDeathEffect);
 
-	// プレイヤーをスタート時の状態にセット
-	void SetStartInfo();
 	// プレイヤーのスポーン位置をセット
 	void SetSpawnPos();
 

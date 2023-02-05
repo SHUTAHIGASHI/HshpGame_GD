@@ -30,29 +30,23 @@ namespace
 
 void Player::Init(int playerHandle, int playerDeathEffect)
 {    
-    m_playerHandle = playerHandle;
-    m_deathEffectHandle = playerDeathEffect;
-    m_countFrame = 0;
-
-    GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
-	
-    SetStartInfo();
-}
-
-void Player::SetStartInfo()
-{
     m_isStageClear = false;
     m_isDead = false;
     m_isRevGravity = false;
     m_isDashRingEnabled = false;
-    
-    ChangeUpdateType();
-    SetSpawnPos();
 
+    m_playerHandle = playerHandle;
+    m_deathEffectHandle = playerDeathEffect;
+    m_countFrame = 0;
+    GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
+	
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
     m_angle = 0;
     if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F * 0.2);
+
+    ChangeUpdateType();
+    SetSpawnPos();
 
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
