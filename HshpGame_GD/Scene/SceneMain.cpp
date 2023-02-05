@@ -46,8 +46,8 @@ void SceneMain::Init()
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 	m_hBg = LoadGraph("imagedata/bg.png");
 
-	m_hBgm = LoadSoundMem("soundData/Cycles.mp3");
-	PlaySoundMem(m_hBgm, DX_PLAYTYPE_BACK);
+	m_hBgm = LoadSoundMem("soundData/BACK ON TRACK_full.mp3");
+	//PlaySoundMem(m_hBgm, DX_PLAYTYPE_BACK);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;

@@ -54,8 +54,6 @@ public:
 
 	// 各ステージのセット
 	void ChangeStageState();
-	void SetSecondStage() { m_stageState = StageState::secondStage; }
-	void SetThirdStage() { m_stageState = StageState::thirdStage; }
 
 	bool SetCanScroll() { m_canScroll = true; }
 
