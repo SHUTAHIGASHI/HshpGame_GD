@@ -34,6 +34,7 @@ void Player::Init(int playerHandle, int playerDeathEffect)
     m_isDead = false;
     m_isRevGravity = false;
     m_isDashRingEnabled = false;
+    m_isScroll = false;
 
     m_playerHandle = playerHandle;
     m_deathEffectHandle = playerDeathEffect;
