@@ -45,15 +45,15 @@ void Player::Init(int playerHandle, int playerDeathEffect)
     m_angle = 0;
     if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F * 0.2);
 
-    ChangeUpdateType();
-    SetSpawnPos();
-
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
     {
         m_vec.x = 0.0f;
         m_isScroll = true;
     }
+
+    ChangeUpdateType();
+    SetSpawnPos();
 }
 
 void Player::SetSpawnPos()
@@ -110,13 +110,15 @@ void Player::SetSpawnPos()
     {
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
         m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
+        m_vec.x = -Game::kMoveSpeed;
         m_isMoveRight = false;
     }
     else if (m_pStage->GetStageState() == StageState::tenthStage)
     {
-        m_pos.x = 0;
-        m_pos.y = 0;
-        m_isMoveRight = true;
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kBlockSize * 9;
+        m_vec.x = -Game::kMoveSpeed;
+        m_isMoveRight = false;
     }
     else
     {
@@ -218,6 +220,17 @@ void Player::OnHitObject(const InputState& input)
                     {
                         m_vec.y = 0.0f;
                         m_isDashRingEnabled = true;
+                        return;
+                    }
+                }
+                else if (object == ObjectType::ReverseRing)
+                {
+                    if (input.IsTriggered(InputType::jump))
+                    {
+                        m_vec.x *= -1;
+                        if (m_isMoveRight) m_isMoveRight = false;
+                        else m_isMoveRight = true;
+                        m_pStage->ChangeScroll();
                         return;
                     }
                 }

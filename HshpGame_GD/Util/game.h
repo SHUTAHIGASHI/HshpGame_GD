@@ -15,6 +15,7 @@ enum class ObjectType
 	Spike,
 	GravityRing,
 	DashRing,
+	ReverseRing,
 	End
 };
 

@@ -15,6 +15,8 @@ public:
 
 	void GameSetting();
 
+	void PlayGameSound();
+
 	// 終了処理
 	void End();
 
@@ -44,7 +46,10 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 
-	int m_hBgm;
+	// 音楽用
+	int m_hPracBgm;
+	int m_hChallengeBgm;
+	int m_hPlayBgm;
 
 	// スクロール用
 	int m_scroll;
@@ -54,6 +59,9 @@ private:
 	int m_gameOverDelay;
 	// 挑戦回数
 	int m_countAttempt;
+
+	// ゲームモード
+	bool m_isPracticeMode;
 
 	// ゲームクリア
 	bool m_isGameClear;

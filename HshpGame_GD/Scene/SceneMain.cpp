@@ -15,11 +15,14 @@ SceneMain::SceneMain() :
 	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
 	m_hBg(-1),
-	m_hBgm(-1),
+	m_hPracBgm(-1),
+	m_hChallengeBgm(-1),
+	m_hPlayBgm(-1),
 	m_scroll(0),
 	m_startDelay(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
+	m_isPracticeMode(true),
 	m_isGameClear(false),
 	m_isEnd(false)
 {
@@ -44,10 +47,13 @@ void SceneMain::Init()
 	m_playerHandle = LoadGraph(Game::kPlayerImg);
 	m_deathEffectHandle = LoadGraph(Game::kPlayerDeathEffectImg);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
-	m_hBg = LoadGraph("imagedata/bg.png");
+	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
-	m_hBgm = LoadSoundMem("soundData/BACK ON TRACK_full.mp3");
-	//PlaySoundMem(m_hBgm, DX_PLAYTYPE_BACK);
+	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
+	m_hChallengeBgm = LoadSoundMem("soundData/Electroman.mp3");
+
+	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
+	else m_hPlayBgm = m_hChallengeBgm;
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
@@ -57,6 +63,8 @@ void SceneMain::Init()
 
 void SceneMain::GameSetting()
 {
+	//PlayGameSound();
+
 	// ゲームクリアを初期化
 	m_isGameClear = false;
 	
@@ -70,6 +78,11 @@ void SceneMain::GameSetting()
 	m_Stage.Init(m_hObjectSpike, m_hBg);
 }
 
+void SceneMain::PlayGameSound()
+{
+	if(!CheckSoundMem(m_hPlayBgm)) PlaySoundMem(m_hPlayBgm, DX_PLAYTYPE_BACK);
+}
+
 // 終了処理
 void SceneMain::End()
 {
@@ -79,7 +92,7 @@ void SceneMain::End()
 	DeleteGraph(m_hObjectSpike);
 	DeleteGraph(m_hBg);
 
-	DeleteSoundMem(m_hBgm);
+	DeleteSoundMem(m_hPracBgm);
 }
 
 // 毎フレームの処理
@@ -102,8 +115,7 @@ void SceneMain::Update(const InputState& input)
 	if (m_startDelay > 0) return;
 	else m_startDelay = 0;
 
-	/*m_scroll++;
-	if (m_scroll > Game::kScreenWidth) m_scroll = 0;*/
+	PlayGameSound();
 
 	m_Stage.Update();
 
@@ -114,8 +126,11 @@ void SceneMain::Update(const InputState& input)
 	// プレイヤーの死亡判定が true の場合
 	if (m_Player.IsDead())
 	{
+		if(!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+		
 		if (m_gameOverDelay < 0)
 		{
+			if(!m_isPracticeMode) m_Stage.SetFirstStage();
 			GameSetting();
 			m_countAttempt++;
 			return;
@@ -129,13 +144,6 @@ void SceneMain::Update(const InputState& input)
 // 毎フレームの描画
 void SceneMain::Draw()
 {
-	/*int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
-	bgX -= m_scroll, bgW -= m_scroll;
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
-	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
-	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);*/
-
 	m_Stage.Draw();
 
 	// プレイヤーの描画
@@ -150,15 +158,15 @@ void SceneMain::OnStageClear()
 	{
 		m_countAttempt = 0;
 
-		if (m_Stage.GetStageState() == StageState::tenthStage)
+		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
-			m_Stage.ChangeStageState();
+			m_Stage.SetNextStageState();
 			m_isGameClear = true;
 			m_isEnd = true;
 		}
 		else
 		{
-			m_Stage.ChangeStageState();
+			m_Stage.SetNextStageState();
 			GameSetting();
 		}
 	}

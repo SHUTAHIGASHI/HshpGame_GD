@@ -8,6 +8,7 @@
 #include "ObjectJumpPad.h"
 #include "ObjectGravityRing.h"
 #include "ObjectDashRing.h"
+#include "ObjectReverseRing.h"
 
 class Player;
 
@@ -53,9 +54,13 @@ public:
 	void StageManage();
 
 	// 各ステージのセット
-	void ChangeStageState();
+	void SetNextStageState();
+	// ステージを一番最初にセット
+	void SetFirstStage() { m_stageState = StageState::firstStage; }
 
+	// スクロール処理に関して
 	bool SetCanScroll() { m_canScroll = true; }
+	void ChangeScroll() { m_scrollAcc *= -1; }
 
 	//ステージの状態を確保
 	StageState GetStageState() const { return m_stageState; }
@@ -77,6 +82,7 @@ private:
 	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 	ObjectDashRing m_ObjectDashRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
+	ObjectReverseRing m_ObjectReverseRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 
 	Player* m_pPlayer;
 
