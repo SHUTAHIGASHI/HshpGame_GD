@@ -13,6 +13,8 @@ namespace
     constexpr float kPlayerDrawPosX = 16.0f;
     constexpr float kPlayerDrawPosY = 34.0f;
 
+    constexpr float kPlayerInitPos = 0 - Game::kBlockSize;
+
     // 基本のジャンプ力
     constexpr float kJumpAcc = -14.0f;
     // オブジェクト起動時のジャンプ力
@@ -38,9 +40,10 @@ void Player::Init(int playerHandle, int playerDeathEffect)
 
     m_playerHandle = playerHandle;
     m_deathEffectHandle = playerDeathEffect;
-    m_countFrame = 0;
+    m_deathCountFrame = 0;
     GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
 	
+    m_countFrame = 0;
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
     m_angle = 0;
@@ -51,6 +54,13 @@ void Player::Init(int playerHandle, int playerDeathEffect)
     {
         m_vec.x = 0.0f;
         m_isScroll = true;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        m_lastPos[i].x = kPlayerInitPos;
+        m_lastPos[i].y = kPlayerInitPos;
+        m_lastAngle[i] = 0.0f;
     }
 
     ChangeUpdateType();
@@ -279,7 +289,7 @@ void Player::Draw()
     effectH = m_effectHeight;
 
     int effectX = 0, effectY = 0;
-    effectX = static_cast<int>(m_countFrame / 4 * effectW);
+    effectX = static_cast<int>(m_deathCountFrame / 4 * effectW);
     
     int effectScale = 20;
     
@@ -290,12 +300,15 @@ void Player::Draw()
             effectX, effectY, 
             static_cast<int>(effectW), static_cast<int>(effectH),
             m_deathEffectHandle, true);
-        m_countFrame++;
+        m_deathCountFrame++;
     }
     else if (!m_isDead)
     {
+        DrawMoveEffect();
+        
         float drawPosX = 0.0f, drawPosY = 0.0f;
         int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
+
         if (m_playerState == PlayerState::Cube)
         {
             drawPosX = GetCenterX(), drawPosY = GetCenterY();
@@ -310,6 +323,40 @@ void Player::Draw()
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_angle, m_playerHandle, true, !m_isMoveRight);
     }
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
+}
+
+void Player::DrawMoveEffect()
+{
+    float drawPosX = 0.0f, drawPosY = 0.0f;
+    int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
+    
+    if (m_playerState == PlayerState::Cube)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (!m_isScroll)
+            {
+                drawPosX = m_lastPos[i].x + (Game::kBlockSize / 2);
+                drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
+                imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+
+                SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+                DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
+                SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+            }
+            else
+            {
+                if(m_isMoveRight) drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - (Game::kMoveSpeed * i);
+                else drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) + (Game::kMoveSpeed * i);
+                drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
+                imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+
+                SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+                DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
+                SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+            }
+        }
+    }
 }
 
 void Player::SetPlayerVec(int scroll)
@@ -363,6 +410,11 @@ void Player::CubeNormalUpdate(const InputState& input)
     {
         m_updateFunc = &Player::DeadUpdate;
     }
+
+    m_lastPos[m_countFrame] = m_pos;
+    m_lastAngle[m_countFrame] = m_angle;
+    m_countFrame++;
+    if (m_countFrame > 4) m_countFrame = 0;
 }
 
 void Player::CubeRevGravityUpdate(const InputState& input)
@@ -410,6 +462,11 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     {
         m_updateFunc = &Player::DeadUpdate;
     }
+
+    m_lastPos[m_countFrame] = m_pos;
+    m_lastAngle[m_countFrame] = m_angle;
+    m_countFrame++;
+    if (m_countFrame > 4) m_countFrame = 0;
 }
 
 void Player::WaveUpdate(const InputState& input)

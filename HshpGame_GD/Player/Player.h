@@ -17,12 +17,15 @@ public:
 		m_updateFunc(&Player::CubeNormalUpdate),
 		m_pos(),
 		m_vec(),
+		m_lastPos(),
 		m_playerHandle(-1),
 		m_deathEffectHandle(-1),
 		m_effectHeight(0),
 		m_effectWidth(0),
 		m_angle(0.0f),
+		m_lastAngle(),
 		m_countFrame(0),
+		m_deathCountFrame(0),
 		m_isMoveRight(true),
 		m_isRevGravity(false),
 		m_isDashRingEnabled(false),
@@ -51,6 +54,9 @@ public:
 	
 	// プレイヤーの描画処理
 	void Draw();
+
+	// プレイヤーの移動時のエフェクト
+	void DrawMoveEffect();
 
 	// 右移動するかどうかの設定
 	void SetMoveRight(bool isRight) { m_isMoveRight = isRight; }
@@ -113,6 +119,8 @@ private:
 	// 移動量
 	Vec2 m_vec;
 
+	Vec2 m_lastPos[5];
+
 	// 画像データ
 	int m_playerHandle;
 	int m_deathEffectHandle;
@@ -122,9 +130,11 @@ private:
 	float m_effectWidth;
 	// 画像表示角度
 	float m_angle;
+	float m_lastAngle[5];
 
 	// フレーム数をカウント
 	int m_countFrame;
+	int m_deathCountFrame;
 
 	// 移動方向
 	bool m_isMoveRight;

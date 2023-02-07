@@ -8,11 +8,14 @@ public:
     ObjectBlock();
     ~ObjectBlock(){}
 
-    void Init();
+    void Init(int hBlock);
 
     void SetPos(float X, float Y);
 
     void Update();
 
     void Draw();
+
+private:
+    int m_hBlock;
 };

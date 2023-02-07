@@ -28,7 +28,7 @@ public:
 	void end();
 
 	// XV
-	void update(const InputState& input);
+	void update(const InputState& input, bool &isGameEnd);
 	// •`‰æ
 	void draw();
 

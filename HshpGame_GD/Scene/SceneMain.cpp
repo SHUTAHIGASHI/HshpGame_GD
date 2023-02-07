@@ -14,6 +14,8 @@ SceneMain::SceneMain() :
 	m_playerHandle(-1),
 	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
+	m_hPortal(-1),
+	m_hBlock(-1),
 	m_hBg(-1),
 	m_hPracBgm(-1),
 	m_hChallengeBgm(-1),
@@ -47,6 +49,8 @@ void SceneMain::Init()
 	m_playerHandle = LoadGraph(Game::kPlayerImg);
 	m_deathEffectHandle = LoadGraph(Game::kPlayerDeathEffectImg);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
+	m_hPortal = LoadGraph("imagedata/OrangePortal.png");
+	m_hBlock = LoadGraph("imagedata/Tileset.png");
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
@@ -75,7 +79,7 @@ void SceneMain::GameSetting()
 	m_Player.Init(m_playerHandle, m_deathEffectHandle);
 
 	// ステージ初期化
-	m_Stage.Init(m_hObjectSpike, m_hBg);
+	m_Stage.Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
 }
 
 void SceneMain::PlayGameSound()
@@ -90,6 +94,8 @@ void SceneMain::End()
 	DeleteGraph(m_playerHandle);
 	DeleteGraph(m_deathEffectHandle);
 	DeleteGraph(m_hObjectSpike);
+	DeleteGraph(m_hPortal);
+	DeleteGraph(m_hBlock);
 	DeleteGraph(m_hBg);
 
 	DeleteSoundMem(m_hPracBgm);
@@ -149,7 +155,7 @@ void SceneMain::Draw()
 	// プレイヤーの描画
 	m_Player.Draw();
 	
-	DrawFormatString(10, 10, 0xffffff, "Attempt : %d", m_countAttempt);
+	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
 }
 
 void SceneMain::OnStageClear()

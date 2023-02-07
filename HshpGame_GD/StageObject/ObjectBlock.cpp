@@ -1,13 +1,16 @@
 #include "ObjectBlock.h"
 
-ObjectBlock::ObjectBlock()
+ObjectBlock::ObjectBlock():
+	m_hBlock(-1)
 {
 }
 
-void ObjectBlock::Init()
+void ObjectBlock::Init(int hBlock)
 {
 	m_pos.x = -Game::kBlockSize;
 	m_pos.y = -Game::kBlockSize;
+
+	m_hBlock = hBlock;
 }
 
 void ObjectBlock::SetPos(float X, float Y)
@@ -22,6 +25,9 @@ void ObjectBlock::Update()
 
 void ObjectBlock::Draw()
 {
-	DrawBox(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0x4169e1, true);
-	//DrawTriangle(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0xFF0000, true);
+	int imgX, imgY, imgW, imgH;
+	imgX = 1, imgY = 1, imgW = 14, imgH = 14;
+
+	DrawRectExtendGraphF(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 
+		imgX, imgY, imgW, imgH, m_hBlock, true);
 }

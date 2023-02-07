@@ -8,11 +8,19 @@ public:
     ObjectGoalGate();
     ~ObjectGoalGate() {}
 
-    void Init();
+    void Init(int hPortal);
 
     void SetPos(float X, float Y);
 
     void Update();
 
     void Draw();
+private:
+    int m_countFrame;
+    int m_drawFrame = 0;
+    
+    int m_hPortal;
+
+    float m_imgX;
+    float m_imgY;
 };

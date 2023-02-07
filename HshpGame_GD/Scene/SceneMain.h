@@ -43,6 +43,8 @@ private:
 	int m_deathEffectHandle;
 	// オブジェクトのグラフィックハンドル
 	int m_hObjectSpike;
+	int m_hPortal;
+	int m_hBlock;
 	// 背景のグラフィック
 	int m_hBg;
 

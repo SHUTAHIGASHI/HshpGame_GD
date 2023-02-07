@@ -60,14 +60,14 @@ void SceneManager::end()
 }
 
 // 更新
-void SceneManager::update(const InputState& input)
+void SceneManager::update(const InputState& input, bool &isGameEnd)
 {
 	// 現在のシーンの更新処理を実行する
 	bool isEnd = false;
 	switch (m_kind)
 	{
 	case SceneManager::kSceneKindTitle:
-		m_title.update(input);	// シーンタイトルの更新
+		m_title.update(input, isGameEnd);	// シーンタイトルの更新
 		isEnd = m_title.isEnd();
 		break;
 	case SceneManager::kSceneKindMain:

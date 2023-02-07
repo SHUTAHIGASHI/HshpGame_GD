@@ -14,7 +14,6 @@ class Player;
 
 enum class StageState
 {
-	debug,
 	firstStage,
 	secondStage,
 	thirdStage,
@@ -36,7 +35,7 @@ public:
 	
 	void SetPlayer(Player* player) { m_pPlayer = player; }
 	
-	void Init(int hSpike, int hBg);
+	void Init(int hSpike, int hBg, int hPortal, int hIcon);
 
 	void SetStage();
 
@@ -98,5 +97,6 @@ private:
 
 	// îwåi
 	int m_hBg;
+	int m_hBlock;
 };
 

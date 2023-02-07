@@ -20,12 +20,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	ChangeFont("QuinqueFive");
+
 	InputState input;
 
 	SceneManager scene;
 
 	// 画像のロード
 	scene.init();
+
+	bool isGameEnd = false;
 
 	while (ProcessMessage() == 0)
 	{
@@ -37,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		input.Update();
 
 		// 現在のシーンの更新
-		scene.update(input);
+		scene.update(input, isGameEnd);
 
 		// 現在のシーンの描画
 		scene.draw();
@@ -45,7 +49,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 裏画面を表画面と入れ替える
 		ScreenFlip();
 
-		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
+		if (CheckHitKey(KEY_INPUT_ESCAPE)) isGameEnd = true;
+			
+		if(isGameEnd) break;
 
 		while (GetNowHiPerformanceCount() - time < 16667)
 		{
