@@ -88,42 +88,6 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	// isEnd が true のとき、各シーンの初期化とデータ削除を行う
 	if (isEnd)
 	{
-		//switch (m_kind)
-		//{
-		//case SceneManager::kSceneTitle:
-		//	m_title.end();	// シーンタイトルのデータ削除
-		//	m_main.Init();	// シーンメインの初期化
-		//	m_kind = kSceneMain;
-		//	break;
-		//case SceneManager::kSceneMain:
-		//	// m_isGameClear が true の場合、ゲームクリアのシーンを初期化し選択
-		//	if (m_main.IsGameClear())
-		//	{
-		//		m_isMusicEnd = true;
-		//		m_main.End();	// シーンメインのデータ削除
-		//		m_clear.init();	// シーンクリアの初期化
-		//		m_kind = kSceneClear;
-		//		break;
-		//	}
-		//	else // それ以外の場合、タイトルのシーンを初期化し選択
-		//	{
-		//		m_main.End();	// シーンメインのデータ削除
-		//		m_title.init();	// シーンタイトルの初期化
-		//		m_kind = kSceneTitle;
-		//		break;
-		//	}
-		//case SceneManager::kSceneClear:	// シーンがゲームクリアの場合、ゲーム終了
-		//	m_isMusicEnd = false;
-		//	m_clear.end();	// シーンクリアのデータ削除
-		//	m_title.init();	// シーンタイトルの初期化
-		//	m_kind = kSceneTitle;
-		//	break;
-		//case SceneManager::kSceneKindNum:
-		//default:
-		//	assert(false);
-		//	break;
-		//}
-
 		switch (m_nextScene)
 		{
 		case NextSceneState::nextGameMain:

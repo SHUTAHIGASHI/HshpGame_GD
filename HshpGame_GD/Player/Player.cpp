@@ -42,6 +42,8 @@ void Player::Init(int playerHandle, int playerDeathEffect)
     m_deathEffectHandle = playerDeathEffect;
     m_deathCountFrame = 0;
     GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
+
+    m_playerScale = 1.0;
 	
     m_countFrame = 0;
     m_vec.x = Game::kMoveSpeed;
@@ -161,6 +163,8 @@ void Player::ChangeUpdateType()
 
 void Player::Update(const InputState& input)
 {
+    if (m_isDead) return;
+
     (this->*m_updateFunc)(input);
 }
 
@@ -181,7 +185,7 @@ void Player::OnHitObject(const InputState& input)
                 float tempPos = 0.0f;
                 if (object == ObjectType::GoalGate)
                 {
-                    m_isStageClear = true;
+                    m_updateFunc = &Player::GoalUpdate;
                     return;
                 }
                 else if (object == ObjectType::JumpRing)
@@ -320,7 +324,7 @@ void Player::Draw()
             imgX = Game::kBlockSize, imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
 
-        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_angle, m_playerHandle, true, !m_isMoveRight);
+        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_playerHandle, true, !m_isMoveRight);
     }
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
@@ -339,10 +343,6 @@ void Player::DrawMoveEffect()
                 drawPosX = m_lastPos[i].x + (Game::kBlockSize / 2);
                 drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
                 imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-
-                SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-                DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
-                SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
             }
             else
             {
@@ -350,13 +350,18 @@ void Player::DrawMoveEffect()
                 else drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) + (Game::kMoveSpeed * i);
                 drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
                 imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-
-                SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-                DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
-                SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
             }
+            
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+            DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
+            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
         }
     }
+    else if (m_playerState == PlayerState::Wave)
+    {
+        
+    }
+        
 }
 
 void Player::SetPlayerVec(int scroll)
@@ -406,11 +411,6 @@ void Player::CubeNormalUpdate(const InputState& input)
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
-    if (m_isDead)
-    {
-        m_updateFunc = &Player::DeadUpdate;
-    }
-
     m_lastPos[m_countFrame] = m_pos;
     m_lastAngle[m_countFrame] = m_angle;
     m_countFrame++;
@@ -458,11 +458,6 @@ void Player::CubeRevGravityUpdate(const InputState& input)
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
-    if (m_isDead)
-    {
-        m_updateFunc = &Player::DeadUpdate;
-    }
-
     m_lastPos[m_countFrame] = m_pos;
     m_lastAngle[m_countFrame] = m_angle;
     m_countFrame++;
@@ -504,13 +499,16 @@ void Player::WaveUpdate(const InputState& input)
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
-    if (m_isDead)
-    {
-        m_updateFunc = &Player::DeadUpdate;
-    }
+    m_lastPos[m_countFrame] = m_pos;
+    m_lastAngle[m_countFrame] = m_angle;
+    m_countFrame++;
+    if (m_countFrame > 4) m_countFrame = 0;
 }
 
-void Player::DeadUpdate(const InputState& input)
+void Player::GoalUpdate(const InputState& input)
 {
+    m_playerScale -= 0.1;
+    if (m_playerScale < 0) m_isStageClear = true;;
+
     return;
 }

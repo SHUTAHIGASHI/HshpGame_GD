@@ -54,7 +54,7 @@ void SceneMain::Init()
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
-	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");
+	m_hChallengeBgm = LoadSoundMem("soundData/Electroman Adventures.mp3");
 
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;
@@ -170,10 +170,9 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
 	if (m_Player.IsStageClear())
 	{
-		m_countAttempt = 0;
-
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
+			m_countAttempt = 0;
 			StopSoundMem(m_hPlayBgm);
 			m_Stage.SetNextStageState();
 			nextScene = NextSceneState::nextClear;

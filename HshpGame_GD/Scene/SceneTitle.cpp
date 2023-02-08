@@ -56,22 +56,24 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
-		m_isEnd = true;
-
 		switch (m_selectPos)
 		{		
 		case 0:
+			m_isEnd = true;
 			nextScene = NextSceneState::nextGameMain;
 			isPrac = false;
 			return;
 		case 1:
+			m_isEnd = true;
 			nextScene = NextSceneState::nextGameMain;
 			isPrac = true;
 			return;
 		case 2:
+			m_isEnd = true;
 			nextScene = NextSceneState::nextHelp;
 			return;
 		case 3:
+			m_isEnd = true;
 			nextScene = NextSceneState::nextRanking;
 			return;
 		case 4:

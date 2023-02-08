@@ -20,6 +20,7 @@ public:
 		m_lastPos(),
 		m_playerHandle(-1),
 		m_deathEffectHandle(-1),
+		m_playerScale(0.0),
 		m_effectHeight(0),
 		m_effectWidth(0),
 		m_angle(0.0f),
@@ -108,7 +109,7 @@ private:
 	// シップの通常時の更新処理
 	void WaveUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
-	void DeadUpdate(const InputState& input);
+	void GoalUpdate(const InputState& input);
 
 	using m_tUpdateFunc = void (Player::*) (const InputState& input);
 	m_tUpdateFunc m_updateFunc = nullptr;
@@ -121,9 +122,14 @@ private:
 
 	Vec2 m_lastPos[5];
 
+	Vec2 m_WaveRevPoint;
+
 	// 画像データ
 	int m_playerHandle;
 	int m_deathEffectHandle;
+
+	// プレイヤーのサイズ
+	double m_playerScale;
 
 	// エフェクト画像サイズ
 	float m_effectHeight;
