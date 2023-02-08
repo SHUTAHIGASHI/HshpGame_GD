@@ -54,7 +54,7 @@ void SceneMain::Init()
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
-	m_hChallengeBgm = LoadSoundMem("soundData/Electroman.mp3");
+	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");
 
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;
@@ -90,6 +90,9 @@ void SceneMain::PlayGameSound()
 // 終了処理
 void SceneMain::End()
 {
+	m_countAttempt = 0;
+	StopSoundMem(m_hPlayBgm);
+
 	// 画像データの削除
 	DeleteGraph(m_playerHandle);
 	DeleteGraph(m_deathEffectHandle);
@@ -106,7 +109,6 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
 	if (input.IsTriggered(InputType::enter))
 	{
-		m_countAttempt = 0;
 		nextScene = NextSceneState::nextMenu;
 		m_isEnd = true;
 	}
@@ -114,8 +116,12 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	// Rキーを押すとゲームリトライ
 	if (input.IsTriggered(InputType::retry))
 	{
+		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+
+		if (!m_isPracticeMode) m_Stage.SetFirstStage();
 		GameSetting();
 		m_countAttempt++;
+		return;
 	}
 
 	m_startDelay--;
@@ -168,6 +174,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
+			StopSoundMem(m_hPlayBgm);
 			m_Stage.SetNextStageState();
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;

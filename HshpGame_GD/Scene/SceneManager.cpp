@@ -64,6 +64,7 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 {
 	// 現在のシーンの更新処理を実行する
 	bool isEnd = false;
+
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
@@ -138,7 +139,6 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 			m_kind = kSceneClear;
 			break;
 		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
-			m_isMusicEnd = false;
 			End();	// シーンクリアのデータ削除
 			m_title.Init();	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
