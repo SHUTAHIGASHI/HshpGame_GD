@@ -24,15 +24,15 @@ SceneMain::SceneMain() :
 	m_startDelay(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
-	m_isPracticeMode(true),
+	m_isPracticeMode(false),
 	m_isGameClear(false),
-	m_isEnd(false)
+	m_isEnd(false),
+	m_pManager(nullptr)
 {
 }
 
 SceneMain::~SceneMain()
 {
-
 }
 
 // 初期化
@@ -59,6 +59,8 @@ void SceneMain::Init()
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;
 
+	if (!m_isPracticeMode) m_Stage.SetFirstStage();
+
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
 
@@ -67,8 +69,6 @@ void SceneMain::Init()
 
 void SceneMain::GameSetting()
 {
-	//PlayGameSound();
-
 	// ゲームクリアを初期化
 	m_isGameClear = false;
 	
@@ -102,11 +102,12 @@ void SceneMain::End()
 }
 
 // 毎フレームの処理
-void SceneMain::Update(const InputState& input)
+void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
 	if (input.IsTriggered(InputType::enter))
 	{
 		m_countAttempt = 0;
+		nextScene = NextSceneState::nextMenu;
 		m_isEnd = true;
 	}
 	
@@ -127,7 +128,7 @@ void SceneMain::Update(const InputState& input)
 
 	m_Player.Update(input);
 
-	OnStageClear();
+	OnStageClear(nextScene);
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_Player.IsDead())
@@ -156,9 +157,10 @@ void SceneMain::Draw()
 	m_Player.Draw();
 	
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
+	if(m_isPracticeMode) DrawString(10, 150, "pracmode", 0xff0000);
 }
 
-void SceneMain::OnStageClear()
+void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
 	if (m_Player.IsStageClear())
 	{
@@ -167,7 +169,7 @@ void SceneMain::OnStageClear()
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
 			m_Stage.SetNextStageState();
-			m_isGameClear = true;
+			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;
 		}
 		else

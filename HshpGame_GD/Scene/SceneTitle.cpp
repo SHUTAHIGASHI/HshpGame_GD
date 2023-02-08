@@ -1,11 +1,13 @@
 #include "SceneTitle.h"
-#include "DxLib.h"
+#include <DxLib.h>
 #include "game.h"
+#include "SceneManager.h"
+#include "SceneMain.h"
 
 namespace
 {
 	// タイトルメッセージ
-	const char* const kGameTitle = "GxxxxxxyDxxh";
+	const char* const kGameTitle = "SquareJumper";
 	const char* const kTitleMessage = "ENTER to Start";
 
 	// メニューメッセージ
@@ -15,7 +17,7 @@ namespace
 	const char* const kGameEndText = "Exit";
 
 	// メニューの選択項目の数
-	constexpr int kMenuMax = 4;
+	constexpr int kMenuMax = 5;
 
 	// メニューのサイズ
 	constexpr int kMenuX = Game::kScreenWidthHalf - 200;
@@ -47,17 +49,35 @@ void SceneTitle::end()
 }
 
 // 更新処理
-void SceneTitle::update(const InputState& input, bool &isGameEnd)
+void SceneTitle::update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
-		if (m_selectPos == 3)
-		{
+		m_isEnd = true;
+
+		switch (m_selectPos)
+		{		
+		case 0:
+			nextScene = NextSceneState::nextGameMain;
+			isPrac = false;
+			return;
+		case 1:
+			nextScene = NextSceneState::nextGameMain;
+			isPrac = true;
+			return;
+		case 2:
+			nextScene = NextSceneState::nextHelp;
+			return;
+		case 3:
+			nextScene = NextSceneState::nextRanking;
+			return;
+		case 4:
 			isGameEnd = true;
 			return;
+		default:
+			break;
 		}
-		m_isEnd = true;
 	}
 
 	if (input.IsTriggered(InputType::down))
@@ -69,8 +89,8 @@ void SceneTitle::update(const InputState& input, bool &isGameEnd)
 		m_selectPos--;
 	}
 	
-	if (m_selectPos > 3) m_selectPos = 0;
-	if (m_selectPos < 0) m_selectPos = 3;
+	if (m_selectPos > 4) m_selectPos = 0;
+	if (m_selectPos < 0) m_selectPos = 4;
 }
 
 // 描画処理
@@ -82,9 +102,9 @@ void SceneTitle::draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
-	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xffffff);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xffffff);
 	SetFontSize(59);
-	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
 	SetFontSize(30);

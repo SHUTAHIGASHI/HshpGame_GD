@@ -29,13 +29,14 @@ void SceneClear::end()
 }
 
 // 更新
-void SceneClear::update()
+void SceneClear::update(NextSceneState& nextScene)
 {
 	// 1フレームごとに残り遅延時間を減らす
 	titleDelay--;
 	// 0になったらシーン終了
 	if (!titleDelay)
 	{
+		nextScene = NextSceneState::nextMenu;
 		m_isEnd = true;
 	}
 }

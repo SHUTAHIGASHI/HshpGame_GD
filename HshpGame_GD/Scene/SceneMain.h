@@ -3,12 +3,17 @@
 #include "Player.h"
 #include "Stage.h"
 #include "ObjectBlock.h"
+#include "game.h"
+
+class SceneManager;
 
 class SceneMain
 {
 public:
 	SceneMain();
 	virtual ~SceneMain();
+
+	void SetManager(SceneManager* manager) { m_pManager = manager; }
 
 	// 初期化
 	void Init();
@@ -21,17 +26,20 @@ public:
 	void End();
 
 	// 毎フレームの処理
-	void Update(const InputState& input);
+	void Update(const InputState& input, NextSceneState& nextScene);
 	// 毎フレームの描画
 	void Draw();
 
 	// ステージクリア時
-	void OnStageClear();
+	void OnStageClear(NextSceneState& nextScene);
 
 	// m_isGameClearを取得
 	virtual bool IsGameClear() const { return m_isGameClear; }
 	// m_isEndを取得
 	virtual bool IsEnd() const { return m_isEnd; }
+
+	// チャレンジモードにセット
+	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
 
 private:
 	// 片側の敵の最大出現数
@@ -74,4 +82,6 @@ private:
 	Player m_Player;
 	// ステージ
 	Stage m_Stage;
+
+	SceneManager* m_pManager;
 };

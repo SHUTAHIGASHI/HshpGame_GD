@@ -5,6 +5,17 @@
 #include "Vec2.h"
 #include <vector>
 
+enum class NextSceneState
+{
+	Empty,
+	nextMenu,
+	nextHelp,
+	nextRanking,
+	nextStageSelect,
+	nextGameMain,
+	nextClear
+};
+
 enum class ObjectType
 {
 	Empty,
@@ -25,7 +36,7 @@ namespace Game
 	// ウィンドウモード設定
 	constexpr bool kWindowMode = true;
 	// ウィンドウ名
-	const char* const kTitleText = "GxxxxxxyDxxh";
+	const char* const kTitleText = "SquareJumper";
 	// ウィンドウサイズ
 	constexpr int kScreenWidth = 1920;
 	constexpr int kScreenHeight = 1080;

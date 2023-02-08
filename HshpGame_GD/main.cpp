@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager scene;
 
 	// 画像のロード
-	scene.init();
+	scene.Init();
 
 	bool isGameEnd = false;
 
@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		scene.update(input, isGameEnd);
 
 		// 現在のシーンの描画
-		scene.draw();
+		scene.Draw();
 
 		// 裏画面を表画面と入れ替える
 		ScreenFlip();
@@ -60,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// 画像のアンロード
-	scene.end();
+	scene.End();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

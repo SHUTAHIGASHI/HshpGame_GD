@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneBase.h"
+#include "game.h"
 
 class SceneClear : public SceneBase
 {
@@ -21,7 +22,7 @@ public:
 	// I—¹ˆ—
 	void end();
 	// XV
-	virtual void update();
+	virtual void update(NextSceneState& nextScene);
 	// •`‰æ
 	virtual void draw();
 

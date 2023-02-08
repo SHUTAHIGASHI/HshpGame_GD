@@ -1,13 +1,12 @@
 #include "SceneManager.h"
 #include <cassert>
 
-SceneManager::SceneManager()
+SceneManager::SceneManager():
+	m_isMusicEnd(false),
+	m_isPrac(false),
+	m_kind(kSceneTitle),
+	m_nextScene (NextSceneState::nextGameMain)
 {
-	// タイトルのシーンから表示
-	m_kind = kSceneKindTitle;
-
-	// ゲーム終了
-	m_isMusicEnd = false;
 }
 SceneManager::~SceneManager()
 {
@@ -15,19 +14,20 @@ SceneManager::~SceneManager()
 }
 
 // 初期化
-void SceneManager::init(SceneKind kind)
+void SceneManager::Init(SceneKind kind)
 {	
 	// 各シーンの初期化
 	m_kind = kind;
 	switch (m_kind)
 	{
-	case SceneManager::kSceneKindTitle:
+	case SceneManager::kSceneTitle:
 		m_title.init();	// シーンタイトルの初期化
 		break;
-	case SceneManager::kSceneKindMain:
+	case SceneManager::kSceneMain:
+		m_main.SetManager(this);
 		m_main.Init();	// シーンメインの初期化
 		break;
-	case SceneManager::kSceneKindClear:
+	case SceneManager::kSceneClear:
 		m_clear.init();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
@@ -38,18 +38,18 @@ void SceneManager::init(SceneKind kind)
 }
 
 // 削除
-void SceneManager::end()
+void SceneManager::End()
 {
 	// 各シーンのデータ削除
 	switch (m_kind)
 	{
-	case SceneManager::kSceneKindTitle:
+	case SceneManager::kSceneTitle:
 		m_title.end();	// シーンタイトルのデータ削除
 		break;
-	case SceneManager::kSceneKindMain:
+	case SceneManager::kSceneMain:
 		m_main.End();	// シーンメインのデータ削除
 		break;
-	case SceneManager::kSceneKindClear:
+	case SceneManager::kSceneClear:
 		m_clear.end();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneKindNum:
@@ -66,16 +66,16 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	bool isEnd = false;
 	switch (m_kind)
 	{
-	case SceneManager::kSceneKindTitle:
-		m_title.update(input, isGameEnd);	// シーンタイトルの更新
+	case SceneManager::kSceneTitle:
+		m_title.update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンタイトルの更新
 		isEnd = m_title.isEnd();
 		break;
-	case SceneManager::kSceneKindMain:
-		m_main.Update(input);	// シーンメインの更新
+	case SceneManager::kSceneMain:
+		m_main.Update(input, m_nextScene);	// シーンメインの更新
 		isEnd = m_main.IsEnd();
 		break;
-	case SceneManager::kSceneKindClear:
-		m_clear.update();	// シーンクリアの更新
+	case SceneManager::kSceneClear:
+		m_clear.update(m_nextScene);	// シーンクリアの更新
 		isEnd = m_clear.isEnd();
 		break;
 	case SceneManager::kSceneKindNum:
@@ -87,37 +87,63 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	// isEnd が true のとき、各シーンの初期化とデータ削除を行う
 	if (isEnd)
 	{
-		switch (m_kind)
+		//switch (m_kind)
+		//{
+		//case SceneManager::kSceneTitle:
+		//	m_title.end();	// シーンタイトルのデータ削除
+		//	m_main.Init();	// シーンメインの初期化
+		//	m_kind = kSceneMain;
+		//	break;
+		//case SceneManager::kSceneMain:
+		//	// m_isGameClear が true の場合、ゲームクリアのシーンを初期化し選択
+		//	if (m_main.IsGameClear())
+		//	{
+		//		m_isMusicEnd = true;
+		//		m_main.End();	// シーンメインのデータ削除
+		//		m_clear.init();	// シーンクリアの初期化
+		//		m_kind = kSceneClear;
+		//		break;
+		//	}
+		//	else // それ以外の場合、タイトルのシーンを初期化し選択
+		//	{
+		//		m_main.End();	// シーンメインのデータ削除
+		//		m_title.init();	// シーンタイトルの初期化
+		//		m_kind = kSceneTitle;
+		//		break;
+		//	}
+		//case SceneManager::kSceneClear:	// シーンがゲームクリアの場合、ゲーム終了
+		//	m_isMusicEnd = false;
+		//	m_clear.end();	// シーンクリアのデータ削除
+		//	m_title.init();	// シーンタイトルの初期化
+		//	m_kind = kSceneTitle;
+		//	break;
+		//case SceneManager::kSceneKindNum:
+		//default:
+		//	assert(false);
+		//	break;
+		//}
+
+		switch (m_nextScene)
 		{
-		case SceneManager::kSceneKindTitle:
-			m_title.end();	// シーンタイトルのデータ削除
+		case NextSceneState::nextGameMain:
+			End();	// シーンタイトルのデータ削除
+			m_main.SetPracticeMode(m_isPrac);
 			m_main.Init();	// シーンメインの初期化
-			m_kind = kSceneKindMain;
+			m_kind = kSceneMain;
 			break;
-		case SceneManager::kSceneKindMain:
-			// m_isGameClear が true の場合、ゲームクリアのシーンを初期化し選択
-			if (m_main.IsGameClear())
-			{
-				m_isMusicEnd = true;
-				m_main.End();	// シーンメインのデータ削除
-				m_clear.init();	// シーンクリアの初期化
-				m_kind = kSceneKindClear;
-				break;
-			}
-			else // それ以外の場合、タイトルのシーンを初期化し選択
-			{
-				m_main.End();	// シーンメインのデータ削除
-				m_title.init();	// シーンタイトルの初期化
-				m_kind = kSceneKindTitle;
-				break;
-			}
-		case SceneManager::kSceneKindClear:	// シーンがゲームクリアの場合、ゲーム終了
+		case NextSceneState::nextClear:
+			m_isMusicEnd = true;
+			End();	// シーンメインのデータ削除
+			m_clear.init();	// シーンクリアの初期化
+			m_kind = kSceneClear;
+			break;
+		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
 			m_isMusicEnd = false;
-			m_clear.end();	// シーンクリアのデータ削除
+			End();	// シーンクリアのデータ削除
 			m_title.init();	// シーンタイトルの初期化
-			m_kind = kSceneKindTitle;
+			m_kind = kSceneTitle;
 			break;
-		case SceneManager::kSceneKindNum:
+		case NextSceneState::nextStageSelect:
 		default:
 			assert(false);
 			break;
@@ -126,18 +152,18 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 }
 
 // 描画
-void SceneManager::draw()
+void SceneManager::Draw()
 {
 	// 現在のシーンの描画処理を行う
 	switch (m_kind)
 	{
-	case SceneManager::kSceneKindTitle:
+	case SceneManager::kSceneTitle:
 		m_title.draw();	// シーンタイトルの描画
 		break;
-	case SceneManager::kSceneKindMain:
+	case SceneManager::kSceneMain:
 		m_main.Draw();	// シーンメインの描画
 		break;
-	case SceneManager::kSceneKindClear:
+	case SceneManager::kSceneClear:
 		m_clear.draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneKindNum:

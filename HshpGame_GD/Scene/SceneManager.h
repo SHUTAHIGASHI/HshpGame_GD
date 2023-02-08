@@ -11,9 +11,11 @@ public:
 	// シーンの種類定義
 	typedef enum SceneKind
 	{
-		kSceneKindTitle,
-		kSceneKindMain,
-		kSceneKindClear,
+		kSceneTitle,
+		kSceneHelp,
+		kSceneStageSelect,
+		kSceneMain,
+		kSceneClear,
 
 		kSceneKindNum
 	}SceneKind;
@@ -23,23 +25,27 @@ public:
 	virtual ~SceneManager();
 
 	// 初期化
-	void init(SceneKind kind = kSceneKindTitle);
+	void Init(SceneKind kind = kSceneTitle);
 	// 削除
-	void end();
+	void End();
 
 	// 更新
 	void update(const InputState& input, bool &isGameEnd);
 	// 描画
-	void draw();
+	void Draw();
 
 	// m_isMusicEnd を取得
-	bool isGameMusicEnd() { return m_isMusicEnd; }
+	bool IsGameMusicEnd() { return m_isMusicEnd; }
 
 private:
 	// ゲーム終了
 	bool m_isMusicEnd;
+
+	// 練習モード
+	bool m_isPrac;
 	
 	SceneKind	m_kind;
+	NextSceneState m_nextScene;
 
 	SceneTitle	m_title;
 	SceneMain	m_main;
