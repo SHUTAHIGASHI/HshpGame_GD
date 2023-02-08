@@ -9,7 +9,7 @@ namespace
 }
 
 // 初期化
-void SceneClear::init()
+void SceneClear::Init()
 {
 	// 遅延時間初期化
 	titleDelay = kTitleDelayMax;
@@ -29,7 +29,7 @@ void SceneClear::end()
 }
 
 // 更新
-void SceneClear::update(NextSceneState& nextScene)
+void SceneClear::Update(NextSceneState& nextScene)
 {
 	// 1フレームごとに残り遅延時間を減らす
 	titleDelay--;
@@ -41,10 +41,10 @@ void SceneClear::update(NextSceneState& nextScene)
 	}
 }
 
-void SceneClear::draw()
+void SceneClear::Draw()
 {
 	// 背景画像の描画
 	//DrawGraph(0, 0, m_hBackgroundGraphic, true);
 
-	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "ステージクリア", 0xffffff);
+	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "stage clear", 0xffffff);
 }

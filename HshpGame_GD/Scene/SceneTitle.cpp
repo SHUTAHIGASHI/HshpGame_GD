@@ -30,7 +30,7 @@ namespace
 }
 
 // 初期化
-void SceneTitle::init()
+void SceneTitle::Init()
 {
 	// 画像データの読み込み
 	// ゲームタイトル
@@ -45,13 +45,13 @@ void SceneTitle::init()
 }
 
 // 終了処理
-void SceneTitle::end()
+void SceneTitle::End()
 {
 	DeleteGraph(m_hBackgroundGraphic);
 }
 
 // 更新処理
-void SceneTitle::update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
+void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
@@ -96,7 +96,7 @@ void SceneTitle::update(const InputState& input, bool &isGameEnd, NextSceneState
 }
 
 // 描画処理
-void SceneTitle::draw()
+void SceneTitle::Draw()
 {
 	// 背景画像を読み込んで表示
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);

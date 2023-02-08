@@ -21,14 +21,14 @@ void SceneManager::Init(SceneKind kind)
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.init();	// シーンタイトルの初期化
+		m_title.Init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneMain:
 		m_main.SetManager(this);
 		m_main.Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.init();	// シーンクリアの初期化
+		m_clear.Init();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -44,7 +44,7 @@ void SceneManager::End()
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.end();	// シーンタイトルのデータ削除
+		m_title.End();	// シーンタイトルのデータ削除
 		break;
 	case SceneManager::kSceneMain:
 		m_main.End();	// シーンメインのデータ削除
@@ -67,16 +67,16 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンタイトルの更新
-		isEnd = m_title.isEnd();
+		m_title.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンタイトルの更新
+		isEnd = m_title.IsEnd();
 		break;
 	case SceneManager::kSceneMain:
 		m_main.Update(input, m_nextScene);	// シーンメインの更新
 		isEnd = m_main.IsEnd();
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.update(m_nextScene);	// シーンクリアの更新
-		isEnd = m_clear.isEnd();
+		m_clear.Update(m_nextScene);	// シーンクリアの更新
+		isEnd = m_clear.IsEnd();
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -134,13 +134,13 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 		case NextSceneState::nextClear:
 			m_isMusicEnd = true;
 			End();	// シーンメインのデータ削除
-			m_clear.init();	// シーンクリアの初期化
+			m_clear.Init();	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
 		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
 			m_isMusicEnd = false;
 			End();	// シーンクリアのデータ削除
-			m_title.init();	// シーンタイトルの初期化
+			m_title.Init();	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextStageSelect:
@@ -158,13 +158,13 @@ void SceneManager::Draw()
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.draw();	// シーンタイトルの描画
+		m_title.Draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneMain:
 		m_main.Draw();	// シーンメインの描画
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.draw();	// シーンクリアの描画
+		m_clear.Draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneKindNum:
 	default:

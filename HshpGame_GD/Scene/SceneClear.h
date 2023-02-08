@@ -17,17 +17,17 @@ public:
 	virtual ~SceneClear() {}
 
 	// 初期化
-	virtual void init();
+	virtual void Init();
 	
 	// 終了処理
 	void end();
 	// 更新
-	virtual void update(NextSceneState& nextScene);
+	virtual void Update(NextSceneState& nextScene);
 	// 描画
-	virtual void draw();
+	virtual void Draw();
 
 	// m_isEnd を取得
-	virtual bool isEnd() { return m_isEnd; }
+	virtual bool IsEnd() { return m_isEnd; }
 private:
 	// タイトル表示までの遅延用変数
 	int titleDelay;

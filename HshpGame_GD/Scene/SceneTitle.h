@@ -19,18 +19,18 @@ public:
 	virtual ~SceneTitle() {}
 
 	// 初期化
-	virtual void init();
+	virtual void Init();
 	
 	// 終了処理
-	void end();
+	void End();
 
 	// 更新処理
-	void update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool &isPrac);
+	void Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool &isPrac);
 	// 描画
-	void draw();
+	void Draw();
 
 	// m_isEnd を取得
-	bool isEnd() const { return m_isEnd; }
+	bool IsEnd() const { return m_isEnd; }
 private:	
 	// メニュー選択
 	int m_selectPos;
