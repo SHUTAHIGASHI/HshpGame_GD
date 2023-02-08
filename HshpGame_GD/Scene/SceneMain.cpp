@@ -157,7 +157,7 @@ void SceneMain::Draw()
 	m_Player.Draw();
 	
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
-	if(m_isPracticeMode) DrawString(10, 150, "pracmode", 0xff0000);
+	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
 }
 
 void SceneMain::OnStageClear(NextSceneState& nextScene)

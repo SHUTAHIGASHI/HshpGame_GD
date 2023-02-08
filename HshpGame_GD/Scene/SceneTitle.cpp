@@ -3,17 +3,19 @@
 #include "game.h"
 #include "SceneManager.h"
 #include "SceneMain.h"
+#include <string>
 
 namespace
 {
 	// タイトルメッセージ
 	const char* const kGameTitle = "SquareJumper";
-	const char* const kTitleMessage = "ENTER to Start";
+	const char* const kTitleMessage = "ENTER to Select";
 
 	// メニューメッセージ
 	const char* const kStageSelectText = "StageSelect";
 	const char* const kChallengeModeText = "ChallengeMode";
-	const char* const kHelpText = "Help";
+	const char* const kHelpText = "How to Play";
+	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
 
 	// メニューの選択項目の数
@@ -115,8 +117,21 @@ void SceneTitle::draw()
 	
 	for (int i = 0; i < kMenuMax; i++)
 	{
-		DrawBox(menuX, menuY + (kMenuH * i)+ 10 , menuW, menuH + (kMenuH * i), 0xffffff, false);
+		menuY = kMenuY + (kMenuH * i) + 10;
+		DrawBox(menuX, menuY, menuW, menuH + (kMenuH * i), 0xffffff, false);
+
+		// フォントサイズの設定
+		SetFontSize(20);
+
+		menuY = menuY + (kMenuH / 2) - 15;
+
+		if (i == 0) DrawString(menuX + 20, menuY, kChallengeModeText, 0xffffff);
+		if (i == 1) DrawString(menuX + 20, menuY, kStageSelectText, 0xffffff);
+		if (i == 2) DrawString(menuX + 20, menuY, kHelpText, 0xffffff);
+		if (i == 3) DrawString(menuX + 20, menuY, kRankText, 0xffffff);
+		if (i == 4) DrawString(menuX + 20, menuY, kGameEndText, 0xffffff);
 	}
 
-	DrawBox(menuX, menuY + (kMenuH * m_selectPos) + 10, menuW, menuH + (kMenuH * m_selectPos), 0xff0000, false);
+	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
+	DrawBox(menuX, menuY, menuW, menuH + (kMenuH * m_selectPos), 0xff0000, false);
 }
