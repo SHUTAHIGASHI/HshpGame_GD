@@ -122,8 +122,6 @@ private:
 
 	Vec2 m_lastPos[5];
 
-	Vec2 m_WaveRevPoint;
-
 	// ‰æ‘œƒf[ƒ^
 	int m_playerHandle;
 	int m_deathEffectHandle;
