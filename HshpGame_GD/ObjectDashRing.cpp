@@ -31,6 +31,6 @@ void ObjectDashRing::Update()
 
 void ObjectDashRing::Draw()
 {
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize, 0xdc143c, true);
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 5, 0xffffff, false);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), 0xdc143c, true);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }

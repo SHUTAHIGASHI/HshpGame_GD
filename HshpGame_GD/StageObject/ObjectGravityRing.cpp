@@ -31,6 +31,6 @@ void ObjectGravityRing::Update()
 
 void ObjectGravityRing::Draw()
 {
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize, 0x00bfff, true);
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 5, 0xffffff, false);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), 0x00bfff, true);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }

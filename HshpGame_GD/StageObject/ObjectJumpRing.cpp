@@ -31,6 +31,6 @@ void ObjectJumpRing::Update()
 
 void ObjectJumpRing::Draw()
 {
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize, 0xffff00, true);
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 5, 0xffffff, false);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), 0xffff00, true);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }

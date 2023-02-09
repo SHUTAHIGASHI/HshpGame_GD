@@ -31,7 +31,7 @@ void ObjectReverseRing::Update()
 
 void ObjectReverseRing::Draw()
 {
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize, 0x8a2be2, true);
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 2, 0xffff00, false);
-	DrawCircle(GetCenterX(), GetCenterY(), circleSize + 5, 0xffffff, false);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), 0x8a2be2, true);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 2, 0xffff00, false);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }
