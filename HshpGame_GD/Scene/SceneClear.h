@@ -5,14 +5,13 @@
 class SceneClear : public SceneBase
 {
 public:
-	SceneClear()
+	SceneClear():
+		m_selectPos(0),
+		m_sceneChangeDelay(0),
+		m_textScale(0),
+		m_textScaleAcc(0),
+		m_isEnd(false)
 	{
-		sceneChangeDelay = 0;
-		
-		m_isEnd = false;
-
-		m_width = 0;
-		m_height = 0;
 	}
 	virtual ~SceneClear() {}
 
@@ -22,20 +21,22 @@ public:
 	// 終了処理
 	void End();
 	// 更新
-	virtual void Update(NextSceneState& nextScene, const bool isPrac);
+	virtual void Update(const InputState& input, NextSceneState& nextScene, const bool isPrac);
 	// 描画
 	virtual void Draw();
 
 	// m_isEnd を取得
 	virtual bool IsEnd() { return m_isEnd; }
 private:
-	// タイトル表示までの遅延用変数
-	int sceneChangeDelay;
+	// メニュー選択
+	int m_selectPos;
 	
+	// タイトル表示までの遅延用変数
+	int m_sceneChangeDelay;
+	
+	int m_textScale;
+	int m_textScaleAcc;
+
 	// シーン終了
 	bool m_isEnd;
-
-	// 画像サイズ
-	int m_width;
-	int m_height;
 };

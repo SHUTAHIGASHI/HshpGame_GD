@@ -33,8 +33,6 @@ public:
 	// ステージクリア時
 	void OnStageClear(NextSceneState& nextScene);
 
-	// m_isGameClearを取得
-	virtual bool IsGameClear() const { return m_isGameClear; }
 	// m_isEndを取得
 	virtual bool IsEnd() const { return m_isEnd; }
 
@@ -77,8 +75,6 @@ private:
 	// ゲームモード
 	bool m_isPracticeMode;
 
-	// ゲームクリア
-	bool m_isGameClear;
 	// シーン終了
 	bool m_isEnd;
 

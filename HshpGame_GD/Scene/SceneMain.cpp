@@ -26,7 +26,6 @@ SceneMain::SceneMain() :
 	m_gameOverDelay(0),
 	m_countAttempt(0),
 	m_isPracticeMode(false),
-	m_isGameClear(false),
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr)
@@ -73,10 +72,7 @@ void SceneMain::Init()
 }
 
 void SceneMain::GameSetting()
-{
-	// ゲームクリアを初期化
-	m_isGameClear = false;
-	
+{	
 	// 各時間用変数の初期化
 	m_gameOverDelay = kGameOverDelay;
 
@@ -165,6 +161,8 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 void SceneMain::Draw()
 {
 	m_Stage.Draw();
+
+	if (m_Player.IsStageClear()) return;
 
 	// プレイヤーの描画
 	m_Player.Draw();

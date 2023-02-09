@@ -87,7 +87,7 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 		isEnd = m_main.IsEnd();
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.Update(m_nextScene, m_isPrac);	// シーンクリアの更新
+		m_clear.Update(input, m_nextScene, m_isPrac);	// シーンクリアの更新
 		isEnd = m_clear.IsEnd();
 		break;
 	case SceneManager::kSceneKindNum:

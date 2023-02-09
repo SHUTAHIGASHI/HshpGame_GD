@@ -38,6 +38,7 @@ void SceneTitle::Init()
 	// ƒV[ƒ“I—¹‚É false ‚ğ‘ã“ü
 	m_isEnd = false;
 
+	m_selectPos = 0;
 	m_scrollAcc = 7;
 }
 
