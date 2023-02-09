@@ -314,7 +314,6 @@ void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock)
 	m_scrollAcc = kScrollSpeed;
 	if(m_stageState == StageState::tenthStage) m_scrollAcc = -kScrollSpeed;
 
-
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
