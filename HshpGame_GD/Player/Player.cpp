@@ -165,11 +165,6 @@ void Player::ChangeUpdateType()
 
 void Player::Update(const InputState& input)
 {
-    if (input.IsTriggered(InputType::right))
-    {
-        m_isStageClear = true;
-    }
-    
     if (m_isDead) return;
 
     (this->*m_updateFunc)(input);
@@ -213,6 +208,7 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::Spike)
                 {
+                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
                     m_isDead = true;
                     return;
                 }
@@ -417,7 +413,11 @@ void Player::CubeNormalUpdate(const InputState& input)
         }
     }
 
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight)
+    {
+        PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
+        m_isDead = true;
+    }
 
     m_lastPos[m_countFrame] = m_pos;
     m_lastAngle[m_countFrame] = m_angle;
@@ -464,7 +464,11 @@ void Player::CubeRevGravityUpdate(const InputState& input)
         }
     }
 
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
+    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight)
+    {
+        PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
+        m_isDead = true;
+    }
 
     m_lastPos[m_countFrame] = m_pos;
     m_lastAngle[m_countFrame] = m_angle;
