@@ -22,6 +22,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ChangeFont("QuinqueFive");
 
+	SetMouseDispFlag(false);
+
 	InputState input;
 
 	SceneManager scene;
@@ -34,6 +36,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (ProcessMessage() == 0)
 	{
 		LONGLONG time = GetNowHiPerformanceCount();
+		SetMousePoint(static_cast<int>(Game::kScreenWidthHalf), static_cast<int>(Game::kScreenHeightHalf));
 
 		// 画面のクリア
 		ClearDrawScreen();
@@ -58,6 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		}
 	}
+
+	SetMouseDispFlag(true);
 
 	// 画像のアンロード
 	scene.End();

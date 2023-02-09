@@ -32,7 +32,7 @@ void ObjectGoalGate::Draw()
 	m_drawFrame += m_countFrame % 2;
 	if (m_drawFrame > 8) m_drawFrame = 0;
 	
-	m_imgX = m_drawFrame * Game::kBlockSize;
+	m_imgX = static_cast<int>(m_drawFrame * Game::kBlockSize);
 	m_imgY = 0;
 	int imgW = 0, imgH = 0;
 	imgW = Game::kBlockSize;

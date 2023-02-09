@@ -55,7 +55,7 @@ void SceneMain::Init()
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
-	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");
+	m_hChallengeBgm = LoadSoundMem("soundData/syukuhuku.mp3");
 
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;
@@ -109,7 +109,7 @@ void SceneMain::End()
 // –ˆƒtƒŒ[ƒ€‚Ìˆ—
 void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
-	if (input.IsTriggered(InputType::enter))
+	if (input.IsTriggered(InputType::escape))
 	{
 		if(m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
 		else nextScene = NextSceneState::nextMenu;

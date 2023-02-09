@@ -21,6 +21,6 @@ private:
     
     int m_hPortal;
 
-    float m_imgX;
-    float m_imgY;
+    int m_imgX;
+    int m_imgY;
 };

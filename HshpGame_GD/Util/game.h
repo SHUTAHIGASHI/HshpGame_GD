@@ -55,7 +55,7 @@ namespace Game
 	constexpr bool kWindowMode = true;
 #else
 	constexpr bool kWindowMode = false;
-#endif // _DEBUG
+#endif
 
 	// ウィンドウ名
 	const char* const kTitleText = "SquareJumper";

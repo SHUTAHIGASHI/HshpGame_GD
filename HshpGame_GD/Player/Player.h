@@ -134,7 +134,7 @@ private:
 	float m_effectWidth;
 	// 画像表示角度
 	double m_angle;
-	float m_lastAngle[5];
+	double m_lastAngle[5];
 
 	// フレーム数をカウント
 	int m_countFrame;
