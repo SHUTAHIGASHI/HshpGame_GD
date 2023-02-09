@@ -49,7 +49,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// — ‰æ–Ê‚ð•\‰æ–Ê‚Æ“ü‚ê‘Ö‚¦‚é
 		ScreenFlip();
 
-		if (CheckHitKey(KEY_INPUT_ESCAPE)) isGameEnd = true;
+		//if (CheckHitKey(KEY_INPUT_ESCAPE)) isGameEnd = true;
 			
 		if(isGameEnd) break;
 

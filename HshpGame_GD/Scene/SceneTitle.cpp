@@ -3,7 +3,6 @@
 #include "game.h"
 #include "SceneManager.h"
 #include "SceneMain.h"
-#include <string>
 
 namespace
 {
@@ -22,7 +21,7 @@ namespace
 	constexpr int kMenuMax = 5;
 
 	// メニューのサイズ
-	constexpr int kMenuX = Game::kScreenWidthHalf - 200;
+	constexpr int kLeftMenuX = Game::kScreenWidthHalf - 200;
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
 
 	constexpr int kMenuW = 400;
@@ -65,7 +64,7 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 			return;
 		case 1:
 			m_isEnd = true;
-			nextScene = NextSceneState::nextGameMain;
+			nextScene = NextSceneState::nextStageSelect;
 			isPrac = true;
 			return;
 		case 2:
@@ -115,7 +114,7 @@ void SceneTitle::Draw()
 	// タイトルのテキストを表示
 	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7), Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
 
-	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
+	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
 	
 	for (int i = 0; i < kMenuMax; i++)
 	{

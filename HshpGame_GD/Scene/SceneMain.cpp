@@ -27,6 +27,7 @@ SceneMain::SceneMain() :
 	m_isPracticeMode(false),
 	m_isGameClear(false),
 	m_isEnd(false),
+	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr)
 {
 }
@@ -60,6 +61,7 @@ void SceneMain::Init()
 	else m_hPlayBgm = m_hChallengeBgm;
 
 	if (!m_isPracticeMode) m_Stage.SetFirstStage();
+	else m_Stage.SetSelectedStage(m_selectedStage);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
@@ -109,7 +111,8 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
 	if (input.IsTriggered(InputType::enter))
 	{
-		nextScene = NextSceneState::nextMenu;
+		if(m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
+		else nextScene = NextSceneState::nextMenu;
 		m_isEnd = true;
 	}
 	

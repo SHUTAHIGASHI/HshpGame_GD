@@ -4,6 +4,7 @@
 #include "SceneTitle.h"
 #include "SceneMain.h"
 #include "SceneClear.h"
+#include "SceneStageSelect.h"
 
 class SceneManager
 {
@@ -48,6 +49,7 @@ private:
 	NextSceneState m_nextScene;
 
 	SceneTitle	m_title;
+	SceneStageSelect m_stageSelect;
 	SceneMain	m_main;
 	SceneClear	m_clear;
 };

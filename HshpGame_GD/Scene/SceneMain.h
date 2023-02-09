@@ -40,6 +40,8 @@ public:
 
 	// チャレンジモードにセット
 	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
+	// 選んだステージをセット
+	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
 
 private:
 	// 片側の敵の最大出現数
@@ -77,6 +79,9 @@ private:
 	bool m_isGameClear;
 	// シーン終了
 	bool m_isEnd;
+
+	// 選ばれたステージ
+	StageState m_selectedStage;
 
 	// プレイヤー
 	Player m_Player;

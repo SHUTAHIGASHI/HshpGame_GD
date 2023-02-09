@@ -2,6 +2,7 @@
 
 enum class InputType
 {
+	escape,
 	enter, // 次へ行くボタン
 	space,
 	pause, // ポーズボタン

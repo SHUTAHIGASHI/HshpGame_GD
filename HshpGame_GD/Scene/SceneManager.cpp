@@ -23,6 +23,10 @@ void SceneManager::Init(SceneKind kind)
 	case SceneManager::kSceneTitle:
 		m_title.Init();	// シーンタイトルの初期化
 		break;
+	case SceneManager::kSceneStageSelect:
+		m_stageSelect.SetMain(&m_main);
+		m_stageSelect.Init();	// シーンの初期化
+		break;
 	case SceneManager::kSceneMain:
 		m_main.SetManager(this);
 		m_main.Init();	// シーンメインの初期化
@@ -45,6 +49,9 @@ void SceneManager::End()
 	{
 	case SceneManager::kSceneTitle:
 		m_title.End();	// シーンタイトルのデータ削除
+		break;
+	case SceneManager::kSceneStageSelect:
+		m_stageSelect.end();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneMain:
 		m_main.End();	// シーンメインのデータ削除
@@ -71,6 +78,10 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 		m_title.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンタイトルの更新
 		isEnd = m_title.IsEnd();
 		break;
+	case SceneManager::kSceneStageSelect:
+		m_stageSelect.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
+		isEnd = m_stageSelect.IsEnd();
+		break;
 	case SceneManager::kSceneMain:
 		m_main.Update(input, m_nextScene);	// シーンメインの更新
 		isEnd = m_main.IsEnd();
@@ -90,6 +101,17 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	{
 		switch (m_nextScene)
 		{
+		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
+			End();	// シーンクリアのデータ削除
+			m_title.Init();	// シーンタイトルの初期化
+			m_kind = kSceneTitle;
+			break;
+		case NextSceneState::nextStageSelect:
+			End();	// シーンタイトルのデータ削除
+			m_stageSelect.SetMain(&m_main);
+			m_stageSelect.Init();	// シーンメインの初期化
+			m_kind = kSceneStageSelect;
+			break;
 		case NextSceneState::nextGameMain:
 			End();	// シーンタイトルのデータ削除
 			m_main.SetPracticeMode(m_isPrac);
@@ -102,12 +124,6 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 			m_clear.Init();	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
-		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
-			End();	// シーンクリアのデータ削除
-			m_title.Init();	// シーンタイトルの初期化
-			m_kind = kSceneTitle;
-			break;
-		case NextSceneState::nextStageSelect:
 		default:
 			assert(false);
 			break;
@@ -123,6 +139,9 @@ void SceneManager::Draw()
 	{
 	case SceneManager::kSceneTitle:
 		m_title.Draw();	// シーンタイトルの描画
+		break;
+	case SceneManager::kSceneStageSelect:
+		m_stageSelect.Draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneMain:
 		m_main.Draw();	// シーンメインの描画

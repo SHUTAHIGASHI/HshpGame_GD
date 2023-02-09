@@ -12,20 +12,20 @@
 
 class Player;
 
-enum class StageState
-{
-	firstStage,
-	secondStage,
-	thirdStage,
-	fourthStage,
-	fifthStage,
-	sixthStage,
-	seventhStage,
-	eighthStage,
-	ninthStage,
-	tenthStage,
-	End
-};
+//enum class StageState
+//{
+//	firstStage,
+//	secondStage,
+//	thirdStage,
+//	fourthStage,
+//	fifthStage,
+//	sixthStage,
+//	seventhStage,
+//	eighthStage,
+//	ninthStage,
+//	tenthStage,
+//	End
+//};
 
 class Stage
 {
@@ -52,6 +52,8 @@ public:
 	// ステージ情報の変更
 	void StageManage();
 
+	// 選んだステージをセット
+	void SetSelectedStage(StageState stage) { m_stageState = stage; }
 	// 各ステージのセット
 	void SetNextStageState();
 	// ステージを一番最初にセット

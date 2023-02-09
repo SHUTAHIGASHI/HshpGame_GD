@@ -19,7 +19,12 @@ void InputState::Update()
 
 bool InputState::IsTriggered(InputType type)const
 {
-	if (type == InputType::enter)
+	if (type == InputType::escape)
+	{
+		return !lastKeyState[KEY_INPUT_ESCAPE] &&
+			keyState[KEY_INPUT_ESCAPE];
+	}
+	else if (type == InputType::enter)
 	{
 		return !lastKeyState[KEY_INPUT_RETURN] &&
 			keyState[KEY_INPUT_RETURN];
