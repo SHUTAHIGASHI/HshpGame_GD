@@ -33,25 +33,30 @@ void SceneTitle::Init()
 {
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBackgroundGraphic = LoadGraph("imagedata/GDbg.jpg");
-
-	// テキスト座標を初期化
-	m_TextPosY = 0;
-	m_TextVecY = 4;
+	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	// シーン終了に false を代入
 	m_isEnd = false;
+
+	m_scrollAcc = 7;
 }
 
 // 終了処理
 void SceneTitle::End()
 {
-	DeleteGraph(m_hBackgroundGraphic);
+	DeleteGraph(m_hBg);
 }
 
 // 更新処理
 void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
+	if (m_scroll > Game::kScreenWidth)
+	{
+		m_scroll = 0;
+	}
+
+	m_scroll += m_scrollAcc;
+
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
@@ -99,9 +104,11 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 // 描画処理
 void SceneTitle::Draw()
 {
-	// 背景画像を読み込んで表示
+	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
+	bgX -= m_scroll, bgW -= m_scroll;
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
-	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_hBackgroundGraphic, true);
+	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
+	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);

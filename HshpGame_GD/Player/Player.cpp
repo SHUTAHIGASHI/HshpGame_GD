@@ -258,9 +258,9 @@ void Player::OnHitObject(const InputState& input)
                         {
                             if (m_pStage->IsUnder(m_pos, i, j, tempPos))
                             {
+                                m_pos.y = tempPos;
                                 m_angle = 0.0f;
                                 m_vec.y = 0.0f;
-                                m_pos.y = tempPos;
                                 m_isField = true;
                                 continue;
                             }
@@ -269,9 +269,9 @@ void Player::OnHitObject(const InputState& input)
                         {
                             if (m_pStage->IsTop(m_pos, i, j, tempPos))
                             {
+                                m_pos.y = tempPos;
                                 m_angle = 0.0f;
                                 m_vec.y = 0.0f;
-                                m_pos.y = tempPos;
                                 m_isField = true;
                                 continue;
                             }

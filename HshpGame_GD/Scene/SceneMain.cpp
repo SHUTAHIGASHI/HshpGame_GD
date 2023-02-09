@@ -55,7 +55,7 @@ void SceneMain::Init()
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
-	m_hChallengeBgm = LoadSoundMem("soundData/syukuhuku.mp3");
+	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");
 
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;

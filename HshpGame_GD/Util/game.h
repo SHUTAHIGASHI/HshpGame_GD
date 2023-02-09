@@ -45,8 +45,6 @@ enum class ObjectType
 	End
 };
 
-#define _DEBUG
-
 namespace Game
 {
 	// システム基本設定 //

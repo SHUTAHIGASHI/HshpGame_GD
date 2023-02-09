@@ -10,10 +10,10 @@ class SceneStageSelect : public SceneBase
 public:
 	SceneStageSelect() :
 		m_selectPos(0),
-		m_TextPosY(0),
-		m_TextVecY(0),
 		m_isEnd(false),
-		m_hBackgroundGraphic(-1),
+		m_hBg(-1),
+		m_scroll(0),
+		m_scrollAcc(0),
 		m_pMain(nullptr)
 	{
 	}
@@ -38,15 +38,14 @@ private:
 	// メニュー選択
 	int m_selectPos;
 
-	// テキスト表示位置変更
-	int m_TextPosY;
-	int m_TextVecY;
-
 	// タイトル表示を終えるかどうか
 	bool m_isEnd;
 
 	// 画像データ
-	int m_hBackgroundGraphic;
+	int m_hBg;
+
+	int m_scroll;
+	int m_scrollAcc;
 
 	SceneMain* m_pMain;
 };

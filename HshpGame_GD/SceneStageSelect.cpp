@@ -27,21 +27,30 @@ void SceneStageSelect::Init()
 {
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBackgroundGraphic = LoadGraph("imagedata/GDbg.jpg");
+	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
 	// シーン終了に false を代入
 	m_isEnd = false;
+
+	m_scrollAcc = -7;
 }
 
 // 終了処理
 void SceneStageSelect::End()
 {
-	DeleteGraph(m_hBackgroundGraphic);
+	DeleteGraph(m_hBg);
 }
 
 // 更新処理
 void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
+	if (m_scroll < 0)
+	{
+		m_scroll = Game::kScreenWidth;
+	}
+
+	m_scroll += m_scrollAcc;
+
 	if (input.IsTriggered(InputType::escape))
 	{
 		m_isEnd = true;
@@ -135,9 +144,11 @@ void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextScen
 // 描画処理
 void SceneStageSelect::Draw()
 {
-	// 背景画像を読み込んで表示
+	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
+	bgX -= m_scroll, bgW -= m_scroll;
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
-	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_hBackgroundGraphic, true);
+	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
+	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
