@@ -35,13 +35,7 @@ public:
 	// •`‰æ
 	void Draw();
 
-	// m_isMusicEnd ‚ğæ“¾
-	bool IsGameMusicEnd() { return m_isMusicEnd; }
-
 private:
-	// ƒQ[ƒ€I—¹
-	bool m_isMusicEnd;
-
 	// —ûKƒ‚[ƒh
 	bool m_isPrac;
 	

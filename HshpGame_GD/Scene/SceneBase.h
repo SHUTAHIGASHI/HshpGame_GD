@@ -8,14 +8,14 @@ public:
 	virtual ~SceneBase() {}
 
 	// 初期化
-	virtual void init() {}
+	virtual void Init() {}
 	// 削除
-	virtual void end() {}
+	virtual void End() {}
 	// 更新
-	virtual void update() {}
+	virtual void Update() {}
 	// 描画
-	virtual void draw() {}
+	virtual void Draw() {}
 
 	// シーン終了
-	virtual bool isEnd() { return false; }
+	virtual bool IsEnd() { return false; }
 };

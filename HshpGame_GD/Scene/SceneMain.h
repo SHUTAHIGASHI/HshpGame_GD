@@ -58,6 +58,8 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 
+	// 効果音
+	int m_hDeathSound;
 	// 音楽用
 	int m_hPracBgm;
 	int m_hChallengeBgm;

@@ -30,7 +30,7 @@ namespace
     constexpr float kWaveSpeed = 12.0f;
 }
 
-void Player::Init(int playerHandle, int playerDeathEffect)
+void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
 {    
     m_isStageClear = false;
     m_isDead = false;
@@ -42,6 +42,8 @@ void Player::Init(int playerHandle, int playerDeathEffect)
     m_deathEffectHandle = playerDeathEffect;
     m_deathCountFrame = 0;
     GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
+
+    m_hDeathSound = hDeathSound;
 
     m_playerScale = 1.0;
 	
@@ -163,6 +165,11 @@ void Player::ChangeUpdateType()
 
 void Player::Update(const InputState& input)
 {
+    if (input.IsTriggered(InputType::right))
+    {
+        m_isStageClear = true;
+    }
+    
     if (m_isDead) return;
 
     (this->*m_updateFunc)(input);
@@ -279,6 +286,7 @@ void Player::OnHitObject(const InputState& input)
                     }
 
                     m_isDead = true;
+                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
                     return;
                 }
             }
@@ -508,7 +516,7 @@ void Player::WaveUpdate(const InputState& input)
 void Player::GoalUpdate(const InputState& input)
 {
     m_playerScale -= 0.1;
-    if (m_playerScale < 0) m_isStageClear = true;;
+    if (m_playerScale < 0) m_isStageClear = true;
 
     return;
 }

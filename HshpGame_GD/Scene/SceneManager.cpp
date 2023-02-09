@@ -2,7 +2,6 @@
 #include <cassert>
 
 SceneManager::SceneManager():
-	m_isMusicEnd(false),
 	m_isPrac(false),
 	m_kind(kSceneTitle),
 	m_nextScene (NextSceneState::nextGameMain)
@@ -51,13 +50,14 @@ void SceneManager::End()
 		m_title.End();	// シーンタイトルのデータ削除
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_stageSelect.end();	// シーンクリアのデータ削除
+		m_stageSelect.End();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneMain:
 		m_main.End();	// シーンメインのデータ削除
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.end();	// シーンクリアのデータ削除
+		m_main.End();	// シーンメインのデータ削除
+		m_clear.End();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -87,7 +87,7 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 		isEnd = m_main.IsEnd();
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.Update(m_nextScene);	// シーンクリアの更新
+		m_clear.Update(m_nextScene, m_isPrac);	// シーンクリアの更新
 		isEnd = m_clear.IsEnd();
 		break;
 	case SceneManager::kSceneKindNum:
@@ -119,8 +119,6 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:
-			m_isMusicEnd = true;
-			End();	// シーンメインのデータ削除
 			m_clear.Init();	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
@@ -147,6 +145,7 @@ void SceneManager::Draw()
 		m_main.Draw();	// シーンメインの描画
 		break;
 	case SceneManager::kSceneClear:
+		m_main.Draw();	// シーンメインの描画
 		m_clear.Draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneKindNum:

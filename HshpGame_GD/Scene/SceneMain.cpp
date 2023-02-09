@@ -16,7 +16,8 @@ SceneMain::SceneMain() :
 	m_hObjectSpike(-1),
 	m_hPortal(-1),
 	m_hBlock(-1),
-	m_hBg(-1),
+	m_hBg(-1), 
+	m_hDeathSound(-1),
 	m_hPracBgm(-1),
 	m_hChallengeBgm(-1),
 	m_hPlayBgm(-1),
@@ -54,6 +55,8 @@ void SceneMain::Init()
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
+	// 音データの読み込み
+	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");
 	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
 	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");
 
@@ -78,7 +81,7 @@ void SceneMain::GameSetting()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.Init(m_playerHandle, m_deathEffectHandle);
+	m_Player.Init(m_playerHandle, m_deathEffectHandle, m_hDeathSound);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
@@ -103,6 +106,7 @@ void SceneMain::End()
 	DeleteGraph(m_hBlock);
 	DeleteGraph(m_hBg);
 
+	DeleteSoundMem(m_hDeathSound);
 	DeleteSoundMem(m_hPracBgm);
 }
 
@@ -176,7 +180,6 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
 			m_countAttempt = 0;
-			StopSoundMem(m_hPlayBgm);
 			m_Stage.SetNextStageState();
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;

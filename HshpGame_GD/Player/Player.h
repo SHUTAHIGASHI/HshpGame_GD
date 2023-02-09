@@ -20,6 +20,7 @@ public:
 		m_lastPos(),
 		m_playerHandle(-1),
 		m_deathEffectHandle(-1),
+		m_hDeathSound(-1),
 		m_playerScale(0.0),
 		m_effectHeight(0),
 		m_effectWidth(0),
@@ -40,7 +41,7 @@ public:
 	void SetStage(Stage* stage) { m_pStage = stage; }
 
 	// プレイヤーの初期化
-	void Init(int playerHandle, int playerDeathEffect);
+	void Init(int playerHandle, int playerDeathEffect, int hDeathSound);
 
 	// プレイヤーのスポーン位置をセット
 	void SetSpawnPos();
@@ -125,6 +126,9 @@ private:
 	// 画像データ
 	int m_playerHandle;
 	int m_deathEffectHandle;
+
+	// 音データ
+	int m_hDeathSound;
 
 	// プレイヤーのサイズ
 	double m_playerScale;

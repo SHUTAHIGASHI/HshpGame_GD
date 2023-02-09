@@ -7,7 +7,7 @@ class SceneClear : public SceneBase
 public:
 	SceneClear()
 	{
-		titleDelay = 0;
+		sceneChangeDelay = 0;
 		
 		m_isEnd = false;
 
@@ -20,9 +20,9 @@ public:
 	virtual void Init();
 	
 	// 終了処理
-	void end();
+	void End();
 	// 更新
-	virtual void Update(NextSceneState& nextScene);
+	virtual void Update(NextSceneState& nextScene, const bool isPrac);
 	// 描画
 	virtual void Draw();
 
@@ -30,7 +30,7 @@ public:
 	virtual bool IsEnd() { return m_isEnd; }
 private:
 	// タイトル表示までの遅延用変数
-	int titleDelay;
+	int sceneChangeDelay;
 	
 	// シーン終了
 	bool m_isEnd;

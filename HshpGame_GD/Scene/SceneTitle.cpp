@@ -112,9 +112,9 @@ void SceneTitle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xffffff);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6), Game::kScreenHeight / 4, kGameTitle, 0xffffff);
 	SetFontSize(59);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6), Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6), Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
 	SetFontSize(30);

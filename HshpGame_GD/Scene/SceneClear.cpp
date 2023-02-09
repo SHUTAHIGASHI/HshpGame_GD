@@ -6,45 +6,54 @@ namespace
 {
 	// タイトル表示までの遅延時間 (2秒)
 	constexpr int kTitleDelayMax = 120;
+
+	// テキスト
+	const char* const kGameClear = "Game Clear";
 }
 
 // 初期化
 void SceneClear::Init()
 {
 	// 遅延時間初期化
-	titleDelay = kTitleDelayMax;
+	sceneChangeDelay = kTitleDelayMax;
 	
 	m_isEnd = false;
-
-	// 画像サイズの取得
-	//GetGraphSize(m_hClearTextGraphic, &m_width, &m_height);
 }
 
 // 終了処理
-void SceneClear::end()
+void SceneClear::End()
 {
-	// 画像データの削除
-	//DeleteGraph(m_hClearTextGraphic);
-	//DeleteGraph(m_hBackgroundGraphic);
 }
 
 // 更新
-void SceneClear::Update(NextSceneState& nextScene)
+void SceneClear::Update(NextSceneState& nextScene, const bool isPrac)
 {
 	// 1フレームごとに残り遅延時間を減らす
-	titleDelay--;
+	sceneChangeDelay--;
 	// 0になったらシーン終了
-	if (!titleDelay)
+	if (!sceneChangeDelay)
 	{
-		nextScene = NextSceneState::nextMenu;
-		m_isEnd = true;
+		if (isPrac)
+		{
+			nextScene = NextSceneState::nextStageSelect;
+			m_isEnd = true;
+		}
+		else
+		{
+			nextScene = NextSceneState::nextMenu;
+			m_isEnd = true;
+		}
 	}
 }
 
 void SceneClear::Draw()
 {
-	// 背景画像の描画
-	//DrawGraph(0, 0, m_hBackgroundGraphic, true);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "stage clear", 0xffffff);
+	SetFontSize(60);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 5), Game::kScreenHeight / 4, kGameClear, 0xffffff);
+	SetFontSize(59);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 5), Game::kScreenHeight / 4, kGameClear, 0xff4500);
 }
