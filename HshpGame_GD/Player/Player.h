@@ -133,7 +133,7 @@ private:
 	float m_effectHeight;
 	float m_effectWidth;
 	// 画像表示角度
-	float m_angle;
+	double m_angle;
 	float m_lastAngle[5];
 
 	// フレーム数をカウント

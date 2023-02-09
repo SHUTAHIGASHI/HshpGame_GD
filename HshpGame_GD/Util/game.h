@@ -30,11 +30,18 @@ enum class ObjectType
 	End
 };
 
+#define _DEBUG
+
 namespace Game
 {
 	// システム基本設定 //
+#ifdef _DEBUG
 	// ウィンドウモード設定
 	constexpr bool kWindowMode = true;
+#else
+	constexpr bool kWindowMode = false;
+#endif // _DEBUG
+
 	// ウィンドウ名
 	const char* const kTitleText = "SquareJumper";
 	// ウィンドウサイズ
