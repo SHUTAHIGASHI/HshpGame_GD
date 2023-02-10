@@ -83,6 +83,7 @@ void Player::SetSpawnPos()
     {
         m_pos.x = Game::kScreenWidth - Game::kBlockSize;
         m_pos.y = Game::kStageLowerLimit;
+        m_vec.x = -Game::kMoveSpeed;
         m_isMoveRight = false;
     }
     else if (m_pStage->GetStageState() == StageState::thirdStage)
@@ -520,7 +521,9 @@ void Player::WaveUpdate(const InputState& input)
 void Player::GoalUpdate(const InputState& input)
 {
     m_playerScale -= 0.05;
-    if (m_playerScale < 0) m_isStageClear = true;
+    if (m_playerScale < 0) 
+        
+    m_isStageClear = true;
 
     return;
 }

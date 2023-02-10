@@ -11,6 +11,7 @@ namespace
 }
 
 SceneMain::SceneMain() :
+	m_updateFunc(&SceneMain::SceneStartUpdate),
 	m_playerHandle(-1),
 	m_deathEffectHandle(-1),
 	m_hObjectSpike(-1),
@@ -21,6 +22,7 @@ SceneMain::SceneMain() :
 	m_hPracBgm(-1),
 	m_hChallengeBgm(-1),
 	m_hPlayBgm(-1),
+	m_fadeCount(0),
 	m_scroll(0),
 	m_startDelay(0),
 	m_gameOverDelay(0),
@@ -41,6 +43,8 @@ void SceneMain::Init()
 {
 	// シーン終了変数を初期化
 	m_isEnd = false;
+	m_fadeCount = 255;
+	m_updateFunc = &SceneMain::SceneStartUpdate;
 
 	// アドレスの設定
 	m_Player.SetStage(&m_Stage);
@@ -109,13 +113,55 @@ void SceneMain::End()
 // 毎フレームの処理
 void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
+	(this->*m_updateFunc)(input, nextScene);
+}
+
+// 毎フレームの描画
+void SceneMain::Draw()
+{
+	m_Stage.Draw();
+
+	if (m_Player.IsStageClear()) return;
+
+	// プレイヤーの描画
+	m_Player.Draw();
+	
+	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
+	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneMain::OnStageClear(NextSceneState& nextScene)
+{
+	if (m_Player.IsStageClear())
+	{
+		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
+		{
+			m_countAttempt = 0;
+			m_Stage.SetNextStageState();
+			nextScene = NextSceneState::nextClear;
+			m_isEnd = true;
+		}
+		else
+		{
+			m_Stage.SetNextStageState();
+			GameSetting();
+		}
+	}
+}
+
+void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
+{
 	if (input.IsTriggered(InputType::escape))
 	{
-		if(m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
+		if (m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
 		else nextScene = NextSceneState::nextMenu;
 		m_isEnd = true;
 	}
-	
+
 	// Rキーを押すとゲームリトライ
 	if (input.IsTriggered(InputType::retry))
 	{
@@ -142,11 +188,11 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	// プレイヤーの死亡判定が true の場合
 	if (m_Player.IsDead())
 	{
-		if(!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
-		
+		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+
 		if (m_gameOverDelay < 0)
 		{
-			if(!m_isPracticeMode) m_Stage.SetFirstStage();
+			if (!m_isPracticeMode) m_Stage.SetFirstStage();
 			GameSetting();
 			m_countAttempt++;
 			return;
@@ -157,35 +203,13 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	}
 }
 
-// 毎フレームの描画
-void SceneMain::Draw()
+void SceneMain::SceneStartUpdate(const InputState& input, NextSceneState& nextScene)
 {
-	m_Stage.Draw();
-
-	if (m_Player.IsStageClear()) return;
-
-	// プレイヤーの描画
-	m_Player.Draw();
+	m_fadeCount -= 5;
 	
-	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
-	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
-}
-
-void SceneMain::OnStageClear(NextSceneState& nextScene)
-{
-	if (m_Player.IsStageClear())
+	if (m_fadeCount < 0)
 	{
-		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
-		{
-			m_countAttempt = 0;
-			m_Stage.SetNextStageState();
-			nextScene = NextSceneState::nextClear;
-			m_isEnd = true;
-		}
-		else
-		{
-			m_Stage.SetNextStageState();
-			GameSetting();
-		}
+		m_fadeCount = 0;
+		m_updateFunc = &SceneMain::NormalUpdate;
 	}
 }

@@ -42,8 +42,12 @@ public:
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
 
 private:
-	// 片側の敵の最大出現数
-	static constexpr int kEnemyMax = 10;
+	using m_tUpdateFunc = void (SceneMain::*) (const InputState& input, NextSceneState& nextScene);
+	m_tUpdateFunc m_updateFunc = nullptr;
+
+	void NormalUpdate(const InputState& input, NextSceneState& nextScene);
+
+	void SceneStartUpdate(const InputState& input, NextSceneState& nextScene);
 
 private:
 	// キャラクターのグラフィックハンドル
@@ -62,6 +66,8 @@ private:
 	int m_hPracBgm;
 	int m_hChallengeBgm;
 	int m_hPlayBgm;
+
+	int m_fadeCount;
 
 	// スクロール用
 	int m_scroll;

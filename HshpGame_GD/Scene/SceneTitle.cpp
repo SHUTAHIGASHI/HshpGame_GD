@@ -35,8 +35,13 @@ void SceneTitle::Init()
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
+	m_fadeCount = 255;
+	m_updateFunc = &SceneTitle::SceneStartUpdate;
+
 	// シーン終了に false を代入
 	m_isEnd = false;
+
+	m_textScroll = 0;
 
 	m_selectPos = 0;
 	m_scrollAcc = 7;
@@ -51,6 +56,58 @@ void SceneTitle::End()
 // 更新処理
 void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
+	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
+}
+
+// 描画処理
+void SceneTitle::Draw()
+{
+	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
+	bgX -= m_scroll, bgW -= m_scroll;
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
+	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
+	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	SetFontSize(60);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xffffff);
+	SetFontSize(59);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+
+	// フォントサイズの設定
+	SetFontSize(30);
+	// タイトルのテキストを表示
+	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7) + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+
+	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
+	
+	for (int i = 0; i < kMenuMax; i++)
+	{
+		menuY = kMenuY + (kMenuH * i) + 10;
+		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * i), 0xffffff, false);
+
+		// フォントサイズの設定
+		SetFontSize(20);
+
+		menuY = menuY + (kMenuH / 2) - 15;
+
+		if (i == 0) DrawString(menuX + 20 + m_textScroll, menuY, kChallengeModeText, 0xffffff);
+		if (i == 1) DrawString(menuX + 20 + m_textScroll, menuY, kStageSelectText, 0xffffff);
+		if (i == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHelpText, 0xffffff);
+		if (i == 3) DrawString(menuX + 20 + m_textScroll, menuY, kRankText, 0xffffff);
+		if (i == 4) DrawString(menuX + 20 + m_textScroll, menuY, kGameEndText, 0xffffff);
+	}
+
+	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
+	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0xff0000, false);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+{
 	if (m_scroll > Game::kScreenWidth)
 	{
 		m_scroll = 0;
@@ -68,23 +125,23 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 	if (input.IsTriggered(InputType::enter))
 	{
 		switch (m_selectPos)
-		{		
+		{
 		case 0:
-			m_isEnd = true;
+			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextGameMain;
 			isPrac = false;
 			return;
 		case 1:
-			m_isEnd = true;
+			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextStageSelect;
 			isPrac = true;
 			return;
 		case 2:
-			m_isEnd = true;
+			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextHelp;
 			return;
 		case 3:
-			m_isEnd = true;
+			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextRanking;
 			return;
 		case 4:
@@ -103,50 +160,55 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 	{
 		m_selectPos--;
 	}
-	
+
 	if (m_selectPos > 4) m_selectPos = 0;
 	if (m_selectPos < 0) m_selectPos = 4;
 }
 
-// 描画処理
-void SceneTitle::Draw()
+void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
-	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
-	bgX -= m_scroll, bgW -= m_scroll;
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
-	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
-	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6), Game::kScreenHeight / 4, kGameTitle, 0xffffff);
-	SetFontSize(59);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6), Game::kScreenHeight / 4, kGameTitle, 0xff4500);
-
-	// フォントサイズの設定
-	SetFontSize(30);
-	// タイトルのテキストを表示
-	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7), Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
-
-	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
-	
-	for (int i = 0; i < kMenuMax; i++)
+	if (m_scroll > Game::kScreenWidth)
 	{
-		menuY = kMenuY + (kMenuH * i) + 10;
-		DrawBox(menuX, menuY, menuW, menuH + (kMenuH * i), 0xffffff, false);
-
-		// フォントサイズの設定
-		SetFontSize(20);
-
-		menuY = menuY + (kMenuH / 2) - 15;
-
-		if (i == 0) DrawString(menuX + 20, menuY, kChallengeModeText, 0xffffff);
-		if (i == 1) DrawString(menuX + 20, menuY, kStageSelectText, 0xffffff);
-		if (i == 2) DrawString(menuX + 20, menuY, kHelpText, 0xffffff);
-		if (i == 3) DrawString(menuX + 20, menuY, kRankText, 0xffffff);
-		if (i == 4) DrawString(menuX + 20, menuY, kGameEndText, 0xffffff);
+		m_scroll = 0;
 	}
 
-	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
-	DrawBox(menuX, menuY, menuW, menuH + (kMenuH * m_selectPos), 0xff0000, false);
+	m_scroll += m_scrollAcc;
+	
+	m_fadeCount -= 5;
+
+	if (m_fadeCount < 0)
+	{
+		m_fadeCount = 0;
+		m_updateFunc = &SceneTitle::NormalUpdate;
+	}
+}
+
+void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+{
+	if (m_scroll > Game::kScreenWidth)
+	{
+		m_scroll = 0;
+	}
+
+	if (nextScene == NextSceneState::nextStageSelect)
+	{
+		m_scrollAcc = -7;
+		m_textScroll -= 100;
+
+		if (m_textScroll < -Game::kScreenWidth)
+		{
+			m_isEnd = true;
+		}
+	}
+	else
+	{
+		m_fadeCount += 5;
+
+		if (m_fadeCount > 255)
+		{
+			m_isEnd = true;
+		}
+	}
+
+	m_scroll += m_scrollAcc;
 }

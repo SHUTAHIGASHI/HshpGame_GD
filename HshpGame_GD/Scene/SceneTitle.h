@@ -9,9 +9,12 @@ class SceneTitle : public SceneBase
 {
 public:
 	SceneTitle():
+		m_updateFunc(&SceneTitle::SceneStartUpdate),
 		m_selectPos(0),
+		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(-1),
+		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0)
 	{
@@ -31,15 +34,27 @@ public:
 
 	// m_isEnd を取得
 	bool IsEnd() const { return m_isEnd; }
+private:
+	using m_tUpdateFunc = void (SceneTitle::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+	m_tUpdateFunc m_updateFunc = nullptr;
+
+	void NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+
+	void SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+
+	void SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
 private:	
 	// メニュー選択
 	int m_selectPos;
 
+	int m_fadeCount;
 	// タイトル表示を終えるかどうか
 	bool m_isEnd;
 
 	// 画像データ
 	int m_hBg;
+
+	int m_textScroll;
 
 	int m_scroll;
 	int m_scrollAcc;
