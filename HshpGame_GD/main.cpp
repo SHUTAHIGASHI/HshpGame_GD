@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		input.Update();
 
 		// 現在のシーンの更新
-		scene.update(input, isGameEnd);
+		scene.Update(input, isGameEnd);
 
 		// 現在のシーンの描画
 		scene.Draw();

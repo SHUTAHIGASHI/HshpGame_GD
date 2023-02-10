@@ -4,6 +4,7 @@
 #include "game.h"
 
 class SceneMain;
+class SceneManager;
 
 class SceneTitle : public SceneBase
 {
@@ -16,10 +17,13 @@ public:
 		m_hBg(-1),
 		m_textScroll(0),
 		m_scroll(0),
-		m_scrollAcc(0)
+		m_scrollAcc(0),
+		m_pManager(nullptr)
 	{
 	}
 	virtual ~SceneTitle() {}
+
+	void SetManager(SceneManager* manager) { m_pManager = manager; }
 
 	// ‰Šú‰»
 	virtual void Init();
@@ -58,4 +62,6 @@ private:
 
 	int m_scroll;
 	int m_scrollAcc;
+
+	SceneManager* m_pManager;
 };

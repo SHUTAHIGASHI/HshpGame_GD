@@ -31,9 +31,11 @@ public:
 	void End();
 
 	// 更新
-	void update(const InputState& input, bool &isGameEnd);
+	void Update(const InputState& input, bool &isGameEnd);
 	// 描画
 	void Draw();
+
+	SceneKind GetLastScene() { return m_lastScene; }
 
 private:
 	// 練習モード
@@ -41,6 +43,7 @@ private:
 	
 	SceneKind	m_kind;
 	NextSceneState m_nextScene;
+	SceneKind m_lastScene;
 
 	SceneTitle	m_title;
 	SceneStageSelect m_stageSelect;

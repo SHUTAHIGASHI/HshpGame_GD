@@ -4,7 +4,8 @@
 SceneManager::SceneManager():
 	m_isPrac(false),
 	m_kind(kSceneTitle),
-	m_nextScene (NextSceneState::nextGameMain)
+	m_nextScene (NextSceneState::nextGameMain),
+	m_lastScene()
 {
 }
 SceneManager::~SceneManager()
@@ -20,9 +21,11 @@ void SceneManager::Init(SceneKind kind)
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
+		m_title.SetManager(this);
 		m_title.Init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
+		m_stageSelect.SetManager(this);
 		m_stageSelect.SetMain(&m_main);
 		m_stageSelect.Init();	// シーンの初期化
 		break;
@@ -67,7 +70,7 @@ void SceneManager::End()
 }
 
 // 更新
-void SceneManager::update(const InputState& input, bool &isGameEnd)
+void SceneManager::Update(const InputState& input, bool &isGameEnd)
 {
 	// 現在のシーンの更新処理を実行する
 	bool isEnd = false;
@@ -99,16 +102,20 @@ void SceneManager::update(const InputState& input, bool &isGameEnd)
 	// isEnd が true のとき、各シーンの初期化とデータ削除を行う
 	if (isEnd)
 	{
+		m_lastScene = m_kind;
+
 		switch (m_nextScene)
 		{
 		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンクリアのデータ削除
+			m_title.SetManager(this);
 			m_title.Init();	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextStageSelect:
 			End();	// シーンタイトルのデータ削除
 			m_stageSelect.SetMain(&m_main);
+			m_stageSelect.SetManager(this);
 			m_stageSelect.Init();	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;

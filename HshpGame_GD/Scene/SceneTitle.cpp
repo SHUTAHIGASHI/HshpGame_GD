@@ -35,16 +35,21 @@ void SceneTitle::Init()
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 
-	m_fadeCount = 255;
-	m_updateFunc = &SceneTitle::SceneStartUpdate;
-
 	// シーン終了に false を代入
 	m_isEnd = false;
 
-	m_textScroll = 0;
-
+	m_textScroll = -Game::kScreenWidth;
 	m_selectPos = 0;
+	m_scroll = 0;
 	m_scrollAcc = 7;
+	m_fadeCount = 0;
+
+	m_updateFunc = &SceneTitle::SceneStartUpdate;
+	if (m_pManager->GetLastScene() != SceneManager::kSceneStageSelect)
+	{
+		m_fadeCount = 255;
+		m_textScroll = 0;
+	}
 }
 
 // 終了処理
@@ -174,12 +179,25 @@ void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, Next
 
 	m_scroll += m_scrollAcc;
 	
-	m_fadeCount -= 5;
-
-	if (m_fadeCount < 0)
+	if (m_pManager->GetLastScene() == SceneManager::kSceneStageSelect)
 	{
-		m_fadeCount = 0;
-		m_updateFunc = &SceneTitle::NormalUpdate;
+		m_textScroll += 100;
+
+		if (m_textScroll > 0)
+		{
+			m_textScroll = 0;
+			m_updateFunc = &SceneTitle::NormalUpdate;
+		}
+	}
+	else
+	{
+		m_fadeCount -= 5;
+
+		if (m_fadeCount < 0)
+		{
+			m_fadeCount = 0;
+			m_updateFunc = &SceneTitle::NormalUpdate;
+		}
 	}
 }
 
@@ -192,7 +210,6 @@ void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSc
 
 	if (nextScene == NextSceneState::nextStageSelect)
 	{
-		m_scrollAcc = -7;
 		m_textScroll -= 100;
 
 		if (m_textScroll < -Game::kScreenWidth)
