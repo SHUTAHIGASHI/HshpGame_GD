@@ -5,21 +5,6 @@
 #include "Vec2.h"
 #include <vector>
 
-enum class StageState
-{
-	firstStage,
-	secondStage,
-	thirdStage,
-	fourthStage,
-	fifthStage,
-	sixthStage,
-	seventhStage,
-	eighthStage,
-	ninthStage,
-	tenthStage,
-	End
-};
-
 enum class NextSceneState
 {
 	Empty,

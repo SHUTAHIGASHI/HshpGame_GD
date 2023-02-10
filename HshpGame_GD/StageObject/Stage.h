@@ -12,20 +12,20 @@
 
 class Player;
 
-//enum class StageState
-//{
-//	firstStage,
-//	secondStage,
-//	thirdStage,
-//	fourthStage,
-//	fifthStage,
-//	sixthStage,
-//	seventhStage,
-//	eighthStage,
-//	ninthStage,
-//	tenthStage,
-//	End
-//};
+enum class StageState
+{
+	firstStage,
+	secondStage,
+	thirdStage,
+	fourthStage,
+	fifthStage,
+	sixthStage,
+	seventhStage,
+	eighthStage,
+	ninthStage,
+	tenthStage,
+	End
+};
 
 class Stage
 {
