@@ -119,12 +119,12 @@ void Player::SetSpawnPos()
     else if (m_pStage->GetStageState() == StageState::eighthStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageUpperLimit - (Game::kBlockSize * 2);
+        m_pos.y = Game::kStageUpperLimit - (Game::kBlockSize * 3);
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::ninthStage)
     {
-        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.x = Game::kScreenWidth - (Game::kBlockSize * 2);
         m_pos.y = Game::kStageUpperLimit - Game::kBlockSize;
         m_vec.x = -Game::kMoveSpeed;
         m_isMoveRight = false;

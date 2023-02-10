@@ -12,8 +12,10 @@ public:
 	SceneStageSelect() :
 		m_updateFunc(&SceneStageSelect::SceneStartUpdate),
 		m_selectPos(0),
+		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(-1),
+		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0),
 		m_pMain(nullptr),
