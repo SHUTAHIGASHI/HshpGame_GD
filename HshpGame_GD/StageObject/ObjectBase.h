@@ -35,8 +35,7 @@ protected:
 
 	// 画像ハンドル
 	int m_hObjectImg;
-	// 画像サイズ
-	float m_height;
-	float m_width;
+	
+	bool m_IsExist;
 };
 

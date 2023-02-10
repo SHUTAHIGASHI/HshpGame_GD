@@ -58,6 +58,12 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 
 	m_scroll += m_scrollAcc;
 
+	if (input.IsTriggered(InputType::escape))
+	{
+		isGameEnd = true;
+		return;
+	}
+
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{

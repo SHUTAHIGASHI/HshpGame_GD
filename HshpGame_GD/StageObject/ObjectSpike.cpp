@@ -6,6 +6,8 @@ ObjectSpike::ObjectSpike()
 
 void ObjectSpike::Init(int hSpike)
 {
+	m_IsExist = false;
+	
 	m_hObjectImg = hSpike;
 
 	m_pos.x = -Game::kBlockSize;
@@ -14,6 +16,8 @@ void ObjectSpike::Init(int hSpike)
 
 void ObjectSpike::SetPos(float X, float Y)
 {
+	m_IsExist = true;
+
 	m_pos.x = X;
 	m_pos.y = Y;
 }
@@ -24,8 +28,7 @@ void ObjectSpike::Update()
 
 void ObjectSpike::Draw()
 {
-	//DrawBox(m_pos.x, m_pos.y, m_pos.x + Game::kBlockSize, m_pos.y + Game::kBlockSize, 0xff0000, true);
-	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, 0, m_hObjectImg, true, false);
+	if (!m_IsExist) return;
 
-	//DrawTriangle(GetCenterX(), m_pos.y, m_pos.x, m_pos.y + Game::kBlockSize, GetRight(), m_pos.y + Game::kBlockSize, 0xFF0000, true);
+	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, 0, m_hObjectImg, true, false);
 }

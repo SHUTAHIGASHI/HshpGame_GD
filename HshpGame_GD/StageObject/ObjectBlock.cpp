@@ -7,6 +7,8 @@ ObjectBlock::ObjectBlock():
 
 void ObjectBlock::Init(int hBlock)
 {
+	m_IsExist = false;
+
 	m_pos.x = -Game::kBlockSize;
 	m_pos.y = -Game::kBlockSize;
 
@@ -15,6 +17,8 @@ void ObjectBlock::Init(int hBlock)
 
 void ObjectBlock::SetPos(float X, float Y)
 {
+	m_IsExist = true;
+
 	m_pos.x = X;
 	m_pos.y = Y;
 }
@@ -25,6 +29,8 @@ void ObjectBlock::Update()
 
 void ObjectBlock::Draw()
 {
+	if (!m_IsExist) return;
+
 	int imgX, imgY, imgW, imgH;
 	imgX = 1, imgY = 1, imgW = 14, imgH = 14;
 

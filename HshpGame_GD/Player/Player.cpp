@@ -519,7 +519,7 @@ void Player::WaveUpdate(const InputState& input)
 
 void Player::GoalUpdate(const InputState& input)
 {
-    m_playerScale -= 0.1;
+    m_playerScale -= 0.05;
     if (m_playerScale < 0) m_isStageClear = true;
 
     return;
