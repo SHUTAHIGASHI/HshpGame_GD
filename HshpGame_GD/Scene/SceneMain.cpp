@@ -5,7 +5,7 @@
 namespace
 {
 	// ƒXƒ^[ƒgŽž‚Ì’x‰„ŽžŠÔ
-	constexpr int kStartDelay = 100;
+	constexpr int kStartDelay = 300;
 	// Ž€–SŽž‚Ì’x‰„
 	constexpr int kGameOverDelay = 30;
 }
@@ -130,6 +130,11 @@ void SceneMain::Draw()
 	
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
 	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
+
+	if (m_startDelay > 0)
+	{
+		DrawFormatString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, 0xff2222, "% d", m_startDelay / 60, 0xffffff);
+	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
