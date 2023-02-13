@@ -5,6 +5,7 @@
 
 class SceneMain;
 class SceneManager;
+class SceneTitle;
 
 class SceneStageSelect : public SceneBase
 {
@@ -12,6 +13,7 @@ public:
 	SceneStageSelect() :
 		m_updateFunc(&SceneStageSelect::SceneStartUpdate),
 		m_selectPos(0),
+		m_textTimer(0),
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(-1),
@@ -19,13 +21,15 @@ public:
 		m_scroll(0),
 		m_scrollAcc(0),
 		m_pMain(nullptr),
-		m_pManager(nullptr)
+		m_pManager(nullptr),
+		m_pTitle(nullptr)
 	{
 	}
 	virtual ~SceneStageSelect() {}
 
 	void SetMain(SceneMain* main) { m_pMain = main; }
 	void SetManager(SceneManager* manager) { m_pManager = manager; }
+	void SetTitle(SceneTitle* title) { m_pTitle = title; }
 
 	// 初期化
 	virtual void Init();
@@ -41,6 +45,8 @@ public:
 	// m_isEnd を取得
 	bool IsEnd() const { return m_isEnd; }
 
+	int GetScroll()const { return m_scroll; }
+
 private:
 	using m_tUpdateFunc = void (SceneStageSelect::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
 	m_tUpdateFunc m_updateFunc = nullptr;
@@ -53,6 +59,8 @@ private:
 private:
 	// メニュー選択
 	int m_selectPos;
+
+	int m_textTimer;
 
 	int m_fadeCount;
 	// タイトル表示を終えるかどうか
@@ -68,4 +76,5 @@ private:
 
 	SceneMain* m_pMain;
 	SceneManager* m_pManager;
+	SceneTitle* m_pTitle;
 };

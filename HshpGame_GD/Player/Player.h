@@ -18,8 +18,9 @@ public:
 		m_pos(),
 		m_vec(),
 		m_lastPos(),
-		m_playerHandle(-1),
-		m_deathEffectHandle(-1),
+		m_hPlayer(-1),
+		m_hWaveBurner(-1),
+		m_hDeathEffect(-1),
 		m_hDeathSound(-1),
 		m_playerScale(0.0),
 		m_effectHeight(0),
@@ -41,7 +42,7 @@ public:
 	void SetStage(Stage* stage) { m_pStage = stage; }
 
 	// プレイヤーの初期化
-	void Init(int playerHandle, int playerDeathEffect, int hDeathSound);
+	void Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound);
 
 	// プレイヤーのスポーン位置をセット
 	void SetSpawnPos();
@@ -124,8 +125,9 @@ private:
 	Vec2 m_lastPos[5];
 
 	// 画像データ
-	int m_playerHandle;
-	int m_deathEffectHandle;
+	int m_hPlayer;
+	int m_hWaveBurner;
+	int m_hDeathEffect;
 
 	// 音データ
 	int m_hDeathSound;

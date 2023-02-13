@@ -30,7 +30,7 @@ namespace
     constexpr float kWaveSpeed = 12.0f;
 }
 
-void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
+void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound)
 {    
     m_isStageClear = false;
     m_isDead = false;
@@ -38,10 +38,11 @@ void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
     m_isDashRingEnabled = false;
     m_isScroll = false;
 
-    m_playerHandle = playerHandle;
-    m_deathEffectHandle = playerDeathEffect;
+    m_hPlayer = playerHandle;
+    m_hWaveBurner = waveBurner;
+    m_hDeathEffect = playerDeathEffect;
     m_deathCountFrame = 0;
-    GetGraphSizeF(m_deathEffectHandle, &m_effectWidth, &m_effectHeight);
+    GetGraphSizeF(m_hDeathEffect, &m_effectWidth, &m_effectHeight);
 
     m_hDeathSound = hDeathSound;
 
@@ -308,7 +309,7 @@ void Player::Draw()
             (m_pos.x + Game::kBlockSize) + effectScale, (m_pos.y + Game::kBlockSize) + effectScale,
             effectX, effectY, 
             static_cast<int>(effectW), static_cast<int>(effectH),
-            m_deathEffectHandle, true);
+            m_hDeathEffect, true);
         m_deathCountFrame++;
     }
     else if (!m_isDead)
@@ -329,7 +330,7 @@ void Player::Draw()
             imgX = Game::kBlockSize, imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
 
-        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_playerHandle, true, !m_isMoveRight);
+        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
@@ -357,16 +358,58 @@ void Player::DrawMoveEffect()
                 imgW = Game::kBlockSize, imgH = Game::kBlockSize;
             }
             
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
-            DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_playerHandle, true, !m_isMoveRight);
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
+            DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
             SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
         }
     }
     else if (m_playerState == PlayerState::Wave)
-    {
-        
+    {        
+        int effectW = 0, effectH = 0;
+        effectW = 540 / 2;
+        effectH = 84;
+
+        int effectX = 0, effectY = 0;
+        effectX = static_cast<int>(m_countFrame % 2 * effectW);
+        bool tempRev = false;
+
+        float drawPosX = 0.0f, drawPosY = 0.0f;
+
+        if (m_isMoveRight)
+        {
+            if (m_vec.y > 0)
+            {
+                drawPosX = GetCenterX() - 35;
+                drawPosY = GetCenterY() - 30;
+                tempRev = true;
+            }
+            else
+            {
+                drawPosX = GetCenterX() - 35;
+                drawPosY = GetCenterY() + 30;
+                tempRev = false;
+            }
+        }
+        else
+        {
+            if (m_vec.y < 0)
+            {
+                drawPosX = GetCenterX() + 35;
+                drawPosY = GetCenterY() + 30;
+                tempRev = true;
+            }
+            else
+            {
+                drawPosX = GetCenterX() + 35;
+                drawPosY = GetCenterY() - 30;
+                tempRev = false;
+            }
+        }
+
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+        DrawRectRotaGraphF(drawPosX, drawPosY, effectX, effectY, effectW, effectH, (0.3) * m_playerScale, m_angle * -1, m_hWaveBurner, true, tempRev);
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
-        
 }
 
 void Player::SetPlayerVec(int scroll)

@@ -22,11 +22,13 @@ void SceneManager::Init(SceneKind kind)
 	{
 	case SceneManager::kSceneTitle:
 		m_title.SetManager(this);
+		m_title.SetStageSelect(&m_stageSelect);
 		m_title.Init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.SetManager(this);
 		m_stageSelect.SetMain(&m_main);
+		m_stageSelect.SetTitle(&m_title);
 		m_stageSelect.Init();	// シーンの初期化
 		break;
 	case SceneManager::kSceneMain:
@@ -109,6 +111,7 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンクリアのデータ削除
 			m_title.SetManager(this);
+			m_title.SetStageSelect(&m_stageSelect);
 			m_title.Init();	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
@@ -116,6 +119,7 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 			End();	// シーンタイトルのデータ削除
 			m_stageSelect.SetMain(&m_main);
 			m_stageSelect.SetManager(this);
+			m_stageSelect.SetTitle(&m_title);
 			m_stageSelect.Init();	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;

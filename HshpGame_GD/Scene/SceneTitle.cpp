@@ -11,8 +11,8 @@ namespace
 	const char* const kTitleMessage = "ENTER to Select";
 
 	// メニューメッセージ
+	const char* const kChallengeModeText = "WtfChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
-	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kHelpText = "How to Play";
 	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
@@ -40,9 +40,12 @@ void SceneTitle::Init()
 
 	m_textScroll = -Game::kScreenWidth;
 	m_selectPos = 0;
+	m_textTimer = 10;
 	m_scroll = 0;
 	m_scrollAcc = 7;
 	m_fadeCount = 0;
+
+	m_scroll = m_pStageSelect->GetScroll();
 
 	m_updateFunc = &SceneTitle::SceneStartUpdate;
 	if (m_pManager->GetLastScene() != SceneManager::kSceneStageSelect)
@@ -61,6 +64,8 @@ void SceneTitle::End()
 // 更新処理
 void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
+	if (m_textTimer > 1000) m_textTimer = 10;
+
 	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
 }
 
@@ -75,14 +80,20 @@ void SceneTitle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xffffff);
-	SetFontSize(59);
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
 	SetFontSize(30);
-	// タイトルのテキストを表示
-	DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7) + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+	if (m_textTimer > 0)
+	{		
+		if ((m_textTimer / 10) % 4 != 0)
+		{
+			// タイトルのテキストを表示
+			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7) + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+		}
+
+		m_textTimer++;
+	}
 
 	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
 	

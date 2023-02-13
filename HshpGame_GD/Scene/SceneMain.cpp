@@ -12,8 +12,9 @@ namespace
 
 SceneMain::SceneMain() :
 	m_updateFunc(&SceneMain::SceneStartUpdate),
-	m_playerHandle(-1),
-	m_deathEffectHandle(-1),
+	m_hPlayer(-1),
+	m_hPlayerWaveBurner(-1),
+	m_hDeathEffect(-1),
 	m_hObjectSpike(-1),
 	m_hPortal(-1),
 	m_hBlock(-1),
@@ -51,8 +52,9 @@ void SceneMain::Init()
 	m_Stage.SetPlayer(&m_Player);
 
 	// 画像読み込み
-	m_playerHandle = LoadGraph(Game::kPlayerImg);
-	m_deathEffectHandle = LoadGraph(Game::kPlayerDeathEffectImg);
+	m_hPlayer = LoadGraph(Game::kPlayerImg);
+	m_hPlayerWaveBurner = LoadGraph("imageData/AfterBurner.png");
+	m_hDeathEffect = LoadGraph(Game::kPlayerDeathEffectImg);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 	m_hPortal = LoadGraph("imagedata/OrangePortal.png");
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
@@ -81,7 +83,7 @@ void SceneMain::GameSetting()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.Init(m_playerHandle, m_deathEffectHandle, m_hDeathSound);
+	m_Player.Init(m_hPlayer, m_hPlayerWaveBurner,  m_hDeathEffect, m_hDeathSound);
 
 	// ステージ初期化
 	m_Stage.Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
@@ -99,8 +101,8 @@ void SceneMain::End()
 	StopSoundMem(m_hPlayBgm);
 
 	// 画像データの削除
-	DeleteGraph(m_playerHandle);
-	DeleteGraph(m_deathEffectHandle);
+	DeleteGraph(m_hPlayer);
+	DeleteGraph(m_hDeathEffect);
 	DeleteGraph(m_hObjectSpike);
 	DeleteGraph(m_hPortal);
 	DeleteGraph(m_hBlock);

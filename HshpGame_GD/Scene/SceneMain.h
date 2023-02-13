@@ -51,8 +51,9 @@ private:
 
 private:
 	// キャラクターのグラフィックハンドル
-	int m_playerHandle;
-	int m_deathEffectHandle;
+	int m_hPlayer;
+	int m_hPlayerWaveBurner;
+	int m_hDeathEffect;
 	// オブジェクトのグラフィックハンドル
 	int m_hObjectSpike;
 	int m_hPortal;

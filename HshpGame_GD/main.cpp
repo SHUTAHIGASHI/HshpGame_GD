@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	ChangeFont("QuinqueFive");
+	ChangeFont("Courier");
 
 	SetMouseDispFlag(false);
 
