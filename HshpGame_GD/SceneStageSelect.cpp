@@ -78,7 +78,7 @@ void SceneStageSelect::Draw()
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
-	SetFontSize(30);
+	SetFontSize(20);
 	if (m_textTimer > 0)
 	{
 		if ((m_textTimer / 10) % 5 != 0)
