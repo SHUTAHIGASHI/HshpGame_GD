@@ -13,7 +13,7 @@ namespace
 	// メニューメッセージ
 	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
-	const char* const kHelpText = "How to Play";
+	const char* const kHowToPlayText = "How to Play";
 	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
 
@@ -34,7 +34,6 @@ void SceneTitle::Init()
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
-
 	// シーン終了に false を代入
 	m_isEnd = false;
 
@@ -109,7 +108,7 @@ void SceneTitle::Draw()
 
 		if (i == 0) DrawString(menuX + 20 + m_textScroll, menuY, kChallengeModeText, 0xffffff);
 		if (i == 1) DrawString(menuX + 20 + m_textScroll, menuY, kStageSelectText, 0xffffff);
-		if (i == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHelpText, 0xffffff);
+		if (i == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHowToPlayText, 0xffffff);
 		if (i == 3) DrawString(menuX + 20 + m_textScroll, menuY, kRankText, 0xffffff);
 		if (i == 4) DrawString(menuX + 20 + m_textScroll, menuY, kGameEndText, 0xffffff);
 	}

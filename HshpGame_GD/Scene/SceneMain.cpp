@@ -77,6 +77,7 @@ void SceneMain::Init()
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
+	m_startTextSize = 60;
 
 	GameSetting();
 }
@@ -137,15 +138,24 @@ void SceneMain::Draw()
 
 	if (m_startDelay > 0)
 	{
-		//SetFontSize(m_startTextSize);
-		if (m_startDelay / 60 == 0)
+		if (m_startDelay % 60 == 0) m_startTextSize = 60;
+		m_startTextSize--;
+		if (m_startTextSize < 20) m_startTextSize = 20;
+		
+		SetFontSize(m_startTextSize);
+
+		if (m_startDelay / 60 == 5)
 		{
-			DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "GO!", 0xff2222);
+		}
+		else if (m_startDelay / 60 == 0)
+		{
+			DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
 		}
 		else
 		{
-			DrawFormatString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, 0xff2222, "% d", m_startDelay / 60);
+			DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
 		}
+		SetFontSize(20);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
@@ -192,11 +202,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 
 	m_startDelay--;
-	if (m_startDelay > 0)
-	{
-		m_startTextSize--;
-		return;
-	}
+	if (m_startDelay > 0) return;
 	else m_startDelay = 0;
 
 	PlayGameSound();
