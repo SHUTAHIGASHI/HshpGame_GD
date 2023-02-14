@@ -1,5 +1,6 @@
 #include "SceneMain.h"
 #include "game.h"
+#include "SceneClear.h"
 #include <cassert>
 
 namespace
@@ -32,7 +33,8 @@ SceneMain::SceneMain() :
 	m_isPracticeMode(false),
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
-	m_pManager(nullptr)
+	m_pManager(nullptr),
+	m_pClear(nullptr)
 {
 }
 
@@ -70,6 +72,7 @@ void SceneMain::Init()
 	else m_hPlayBgm = m_hChallengeBgm;
 
 	if (!m_isPracticeMode) m_Stage.SetFirstStage();
+	else if (m_pClear->IsNextStage()) m_Stage.SetNextStageState();
 	else m_Stage.SetSelectedStage(m_selectedStage);
 
 	// スタート遅延の初期化
@@ -157,7 +160,6 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
 			m_countAttempt = 0;
-			m_Stage.SetNextStageState();
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;
 		}

@@ -6,6 +6,7 @@
 #include "game.h"
 
 class SceneManager;
+class SceneClear;
 
 class SceneMain
 {
@@ -14,6 +15,7 @@ public:
 	virtual ~SceneMain();
 
 	void SetManager(SceneManager* manager) { m_pManager = manager; }
+	void SetClear(SceneClear* clear) { m_pClear = clear; }
 
 	// ‰Šú‰»
 	void Init();
@@ -96,4 +98,5 @@ private:
 	Stage m_Stage;
 
 	SceneManager* m_pManager;
+	SceneClear* m_pClear;
 };

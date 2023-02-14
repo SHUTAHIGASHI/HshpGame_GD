@@ -10,6 +10,7 @@ public:
 		m_sceneChangeDelay(0),
 		m_textScale(0),
 		m_textScaleAcc(0),
+		m_isNextStage(false),
 		m_isEnd(false)
 	{
 	}
@@ -25,6 +26,8 @@ public:
 	// 描画
 	virtual void Draw();
 
+	bool IsNextStage() const { return m_isNextStage; }
+
 	// m_isEnd を取得
 	virtual bool IsEnd() { return m_isEnd; }
 private:
@@ -37,6 +40,8 @@ private:
 	int m_textScale;
 	int m_textScaleAcc;
 
+	// 次のステージ
+	bool m_isNextStage;
 	// シーン終了
 	bool m_isEnd;
 };

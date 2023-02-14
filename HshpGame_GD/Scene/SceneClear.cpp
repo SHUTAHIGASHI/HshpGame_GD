@@ -15,7 +15,7 @@ namespace
 	const char* const kGameClear = "Game Clear";
 
 	// メニューメッセージ
-	const char* const kRetryText = "Retry";
+	const char* const kNextText = "NextStage";
 	const char* const kBackStageSelectText = "StageSelect";
 	const char* const kBackTitleText = "TitleMenu";
 
@@ -39,6 +39,7 @@ void SceneClear::Init()
 	m_textScaleAcc = 1;
 	
 	m_isEnd = false;
+	m_isNextStage = false;
 }
 
 // 終了処理
@@ -60,6 +61,7 @@ void SceneClear::Update(const InputState& input, NextSceneState& nextScene, cons
 		{
 		case 0:
 			m_isEnd = true;
+			m_isNextStage = true;
 			nextScene = NextSceneState::nextGameMain;
 			return;
 		case 1:
@@ -115,7 +117,7 @@ void SceneClear::Draw()
 
 		menuY = menuY + (kMenuH / 2) - 15;
 
-		if (i == 0) DrawString(menuX + 20, menuY, kRetryText, 0xffffff);
+		if (i == 0) DrawString(menuX + 20, menuY, kNextText, 0xffffff);
 		if (i == 1) DrawString(menuX + 20, menuY, kBackStageSelectText, 0xffffff);
 		if (i == 2) DrawString(menuX + 20, menuY, kBackTitleText, 0xffffff);
 	}

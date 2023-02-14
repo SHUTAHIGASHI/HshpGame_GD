@@ -29,6 +29,7 @@ public:
 		m_lastAngle(),
 		m_countFrame(0),
 		m_deathCountFrame(0),
+		m_waveDelay(0),
 		m_isMoveRight(true),
 		m_isRevGravity(false),
 		m_isDashRingEnabled(false),
@@ -145,6 +146,7 @@ private:
 	// フレーム数をカウント
 	int m_countFrame;
 	int m_deathCountFrame;
+	int m_waveDelay;
 
 	// 移動方向
 	bool m_isMoveRight;

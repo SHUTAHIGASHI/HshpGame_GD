@@ -48,11 +48,15 @@ void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int h
 
     m_playerScale = 1.0;
 	
+    m_waveDelay = 90;
     m_countFrame = 0;
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
     m_angle = 0;
-    if (m_playerState == PlayerState::Wave) m_angle = (DX_PI_F * 0.2);
+    if (m_playerState == PlayerState::Wave) 
+    {
+        m_angle = (DX_PI_F * 0.2);
+    }
 
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
@@ -375,10 +379,17 @@ void Player::DrawMoveEffect()
         int effectX = 0, effectY = 0;
         effectX = static_cast<int>(m_countFrame % 2 * effectW);
         bool tempRev = false;
+        double angle = m_angle * -1;
 
         float drawPosX = 0.0f, drawPosY = 0.0f;
 
-        if (m_isMoveRight)
+        if (m_waveDelay > 0)
+        {
+            drawPosX = m_pos.x - 25;
+            drawPosY = m_pos.y + 25;
+            angle = 0;
+        }
+        else if (m_isMoveRight)
         {
             if (m_vec.y > 0)
             {
@@ -410,7 +421,7 @@ void Player::DrawMoveEffect()
         }
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-        DrawRectRotaGraphF(drawPosX, drawPosY, effectX, effectY, effectW, effectH, (0.3) * m_playerScale, m_angle * -1, m_hWaveBurner, true, tempRev);
+        DrawRectRotaGraphF(drawPosX, drawPosY, effectX, effectY, effectW, effectH, (0.3) * m_playerScale, angle, m_hWaveBurner, true, tempRev);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
 }
@@ -538,7 +549,12 @@ void Player::WaveUpdate(const InputState& input)
         m_isMoveRight = false;
     }
 
-    if (input.IsPressed(InputType::jump))
+    if (m_waveDelay > 0)
+    {
+        m_angle = DX_PI_F * 0.5;
+        m_waveDelay--;
+    }
+    else if (input.IsPressed(InputType::jump))
     {
         m_vec.y = -kWaveSpeed;
         if(m_isMoveRight) m_angle = DX_PI_F * 0.2;

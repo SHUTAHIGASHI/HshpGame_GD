@@ -32,6 +32,7 @@ void SceneManager::Init(SceneKind kind)
 		m_stageSelect.Init();	// シーンの初期化
 		break;
 	case SceneManager::kSceneMain:
+		m_main.SetClear(&m_clear);
 		m_main.SetManager(this);
 		m_main.Init();	// シーンメインの初期化
 		break;
@@ -125,6 +126,7 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 			break;
 		case NextSceneState::nextGameMain:
 			End();	// シーンタイトルのデータ削除
+			m_main.SetClear(&m_clear);
 			m_main.SetPracticeMode(m_isPrac);
 			m_main.Init();	// シーンメインの初期化
 			m_kind = kSceneMain;
