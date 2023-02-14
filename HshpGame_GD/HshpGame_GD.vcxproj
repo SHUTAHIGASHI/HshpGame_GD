@@ -154,6 +154,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectDashRing.cpp" />
     <ClCompile Include="ObjectReverseRing.cpp" />
+    <ClCompile Include="SceneRanking.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
     <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="ObjectDashRing.h" />
     <ClInclude Include="ObjectReverseRing.h" />
+    <ClInclude Include="SceneRanking.h" />
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="StageObject\ObjectGoalGate.h" />
     <ClInclude Include="StageObject\ObjectGravityRing.h" />

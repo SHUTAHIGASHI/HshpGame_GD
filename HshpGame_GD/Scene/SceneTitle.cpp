@@ -114,7 +114,14 @@ void SceneTitle::Draw()
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
-	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0xff0000, false);
+	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0xff4500, true);
+
+	menuY = menuY + (kMenuH / 2) - 15;
+	if (m_selectPos == 0) DrawString(menuX + 20 + m_textScroll, menuY, kChallengeModeText, 0xffffff);
+	else if (m_selectPos == 1) DrawString(menuX + 20 + m_textScroll, menuY, kStageSelectText, 0xffffff);
+	else if (m_selectPos == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHowToPlayText, 0xffffff);
+	else if (m_selectPos == 3) DrawString(menuX + 20 + m_textScroll, menuY, kRankText, 0xffffff);
+	else if (m_selectPos == 4) DrawString(menuX + 20 + m_textScroll, menuY, kGameEndText, 0xffffff);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);

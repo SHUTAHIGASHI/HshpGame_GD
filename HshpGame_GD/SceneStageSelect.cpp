@@ -120,7 +120,10 @@ void SceneStageSelect::Draw()
 		menuY = kMenuY + (kMenuH * (m_selectPos - 5)) + 10;
 	}
 	
-	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xff0000, false);
+	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xff4500, true);
+
+	menuY = menuY + (kMenuH / 2) - 15;
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", m_selectPos + 1);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
