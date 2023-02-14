@@ -11,7 +11,7 @@ namespace
 	const char* const kTitleMessage = "ENTER to Select";
 
 	// メニューメッセージ
-	const char* const kChallengeModeText = "WtfChallengeMode";
+	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
 	const char* const kHelpText = "How to Play";
 	const char* const kRankText = "Ranking";
@@ -83,7 +83,7 @@ void SceneTitle::Draw()
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameTitle, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
-	SetFontSize(30);
+	SetFontSize(20);
 	if (m_textTimer > 0)
 	{		
 		if ((m_textTimer / 10) % 4 != 0)

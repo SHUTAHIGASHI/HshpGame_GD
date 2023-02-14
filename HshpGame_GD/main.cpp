@@ -17,10 +17,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
+	// リソースの読み込み
+	LPCSTR font_path = "fontData/QuinqueFive.otf";	// 読み込むフォントファイルのパス
+	if (AddFontResourceEx(font_path, FR_PRIVATE, NULL) > 0) {
+
+	}
+	else {
+		// フォント読み込みエラー処理
+		MessageBox(NULL, "フォント読み込み失敗", "", MB_OK);
+	}
+
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	ChangeFont("Courier");
+	ChangeFont("QuinqueFive");
 
 	SetMouseDispFlag(false);
 
