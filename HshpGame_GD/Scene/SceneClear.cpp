@@ -8,7 +8,7 @@ namespace
 	constexpr int kTitleDelayMax = 120;
 
 	// テキストサイズ
-	constexpr int kTextSizeMin = 50;
+	constexpr int kTextSizeMin = 30;
 	constexpr int kTextSizeMax = 70;
 
 	// テキスト
@@ -25,7 +25,6 @@ namespace
 	// メニューのサイズ
 	constexpr int kLeftMenuX = Game::kScreenWidthHalf - 200;
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
-
 	constexpr int kMenuW = 400;
 	constexpr int kMenuH = 60;
 }
@@ -50,8 +49,7 @@ void SceneClear::End()
 // 更新
 void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
-	if (m_textScale < kTextSizeMin) m_textScaleAcc *= -1;
-	else if(m_textScale > kTextSizeMax) m_textScaleAcc *= -1;
+	if(m_textScale > kTextSizeMax) m_textScaleAcc = 0;
 
 	m_textScale += m_textScaleAcc;
 
@@ -96,6 +94,11 @@ void SceneClear::Draw()
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	SetFontSize(m_textScale + 1);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 5), Game::kScreenHeight / 4, kGameClear, 0xc0c0c0);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	
 	SetFontSize(m_textScale);
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 5), Game::kScreenHeight / 4, kGameClear, 0xffd700);
 	SetFontSize(20);

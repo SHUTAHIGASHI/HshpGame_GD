@@ -74,6 +74,8 @@ private:
 	int m_scroll;
 	// ゲームの制限時間
 	int m_startDelay;
+	// スタート遅延時のテキストサイズ
+	int m_startTextSize;
 	// ゲームオーバー時の遅延時間
 	int m_gameOverDelay;
 	// 挑戦回数

@@ -25,7 +25,8 @@ SceneMain::SceneMain() :
 	m_hPlayBgm(-1),
 	m_fadeCount(0),
 	m_scroll(0),
-	m_startDelay(0),
+	m_startDelay(0), 
+	m_startTextSize(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
 	m_isPracticeMode(false),
@@ -133,7 +134,15 @@ void SceneMain::Draw()
 
 	if (m_startDelay > 0)
 	{
-		DrawFormatString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, 0xff2222, "% d", m_startDelay / 60, 0xffffff);
+		//SetFontSize(m_startTextSize);
+		if (m_startDelay / 60 == 0)
+		{
+			DrawString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, "GO!", 0xff2222);
+		}
+		else
+		{
+			DrawFormatString(Game::kScreenWidthHalf, Game::kScreenHeightHalf, 0xff2222, "% d", m_startDelay / 60);
+		}
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
@@ -181,7 +190,11 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 
 	m_startDelay--;
-	if (m_startDelay > 0) return;
+	if (m_startDelay > 0)
+	{
+		m_startTextSize--;
+		return;
+	}
 	else m_startDelay = 0;
 
 	PlayGameSound();
