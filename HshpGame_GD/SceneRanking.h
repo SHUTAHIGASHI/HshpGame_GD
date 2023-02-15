@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneBase.h"
 #include "InputState.h"
+#include "Stage.h"
 #include "game.h"
 
 class SceneMain;
@@ -12,6 +13,7 @@ public:
 		m_updateFunc(&SceneRanking::SceneStartUpdate),
 		m_ranking(),
 		m_savedAttempt(),
+		m_stageState(StageState::firstStage),
 		m_selectPos(0),
 		m_textTimer(0),
 		m_fadeCount(0),
@@ -19,10 +21,6 @@ public:
 		m_hBg(-1),
 		m_pMain(nullptr)
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			m_savedAttempt[i] = i + 1 * 10;
-		}
 	}
 	virtual ~SceneRanking() {}
 
@@ -39,7 +37,11 @@ public:
 	// •`‰æ
 	void Draw();
 
-	void SetRanking(int attempt);
+	void SetRanking(int attempt, StageState stage);
+
+	void SaveRankingData();
+
+	void LoadRankingData();
 
 	// m_isEnd ‚ðŽæ“¾
 	bool IsEnd() const { return m_isEnd; }
@@ -57,6 +59,8 @@ private:
 	int m_ranking[10];
 	int m_savedAttempt[10];
 	
+	StageState m_stageState;
+
 	// ƒƒjƒ…[‘I‘ð
 	int m_selectPos;
 

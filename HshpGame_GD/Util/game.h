@@ -54,7 +54,7 @@ namespace Game
 	constexpr int kColorDepth = 32;
 	
 	// ‰æ‘œƒf[ƒ^
-	const char* const kPlayerImg = "imagedata/PlayerImg.png";
+	const char* const kPlayerImg = "imagedata/PlayerImage.png";
 	const char* const kPlayerDeathEffectImg = "imagedata/deathEffect.png";
 
 	const char* const kObjectSpikeImg = "imagedata/ObjectSpike.png";

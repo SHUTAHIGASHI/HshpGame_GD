@@ -171,7 +171,11 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 	{
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
-			m_pRanking->SetRanking(m_countAttempt);
+			if (!m_isPracticeMode)
+			{
+				m_pRanking->LoadRankingData();
+				m_pRanking->SetRanking(m_countAttempt, m_Stage.GetStageState());
+			}
 			m_countAttempt = 0;
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;

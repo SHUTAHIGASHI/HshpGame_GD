@@ -63,6 +63,8 @@ public:
 	bool SetCanScroll() { m_canScroll = true; }
 	void ChangeScroll() { m_scrollAcc *= -1; }
 
+	int GetScroll() const { return m_scroll; }
+
 	//ステージの状態を確保
 	StageState GetStageState() const { return m_stageState; }
 
