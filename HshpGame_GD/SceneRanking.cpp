@@ -7,7 +7,7 @@ namespace
 {
 	// タイトルメッセージ
 	const char* const kTextTitle = "Ranking";
-	const char* const kTitleMessage = "ENTER to Select";
+	const char* const kTitleMessage = "Escape";
 
 	// メニューメッセージ
 	const char* const kGameEndText = "Exit";
@@ -75,7 +75,7 @@ void SceneRanking::Draw()
 		if ((m_textTimer / 10) % 4 != 0)
 		{
 			// タイトルのテキストを表示
-			//DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+			DrawString(50, Game::kScreenHeight - 50, kTitleMessage, 0xffffff);
 		}
 
 		m_textTimer++;
