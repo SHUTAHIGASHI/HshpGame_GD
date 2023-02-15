@@ -1,6 +1,7 @@
 #include "SceneMain.h"
 #include "game.h"
 #include "SceneClear.h"
+#include "SceneRanking.h"
 #include <cassert>
 
 namespace
@@ -34,7 +35,8 @@ SceneMain::SceneMain() :
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr),
-	m_pClear(nullptr)
+	m_pClear(nullptr),
+	m_pRanking(nullptr)
 {
 }
 
@@ -169,6 +171,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 	{
 		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
+			m_pRanking->SetRanking(m_countAttempt);
 			m_countAttempt = 0;
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;

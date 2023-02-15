@@ -23,7 +23,7 @@ namespace
 	constexpr int kMenuMax = 3;
 
 	// メニューのサイズ
-	constexpr int kLeftMenuX = Game::kScreenWidthHalf - 200;
+	constexpr int kMenuX = Game::kScreenWidthHalf - 200;
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
 	constexpr int kMenuW = 400;
 	constexpr int kMenuH = 60;
@@ -105,7 +105,7 @@ void SceneClear::Draw()
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 5), Game::kScreenHeight / 4, kGameClear, 0xffd700);
 	SetFontSize(20);
 
-	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
+	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
 
 	for (int i = 0; i < kMenuMax; i++)
 	{

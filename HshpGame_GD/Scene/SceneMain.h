@@ -7,6 +7,7 @@
 
 class SceneManager;
 class SceneClear;
+class SceneRanking;
 
 class SceneMain
 {
@@ -16,6 +17,8 @@ public:
 
 	void SetManager(SceneManager* manager) { m_pManager = manager; }
 	void SetClear(SceneClear* clear) { m_pClear = clear; }
+	void SetRanking(SceneRanking* rank) { m_pRanking = rank; }
+
 
 	// 初期化
 	void Init();
@@ -42,6 +45,8 @@ public:
 	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
+
+	int GetAttempt() const { return m_countAttempt; }
 
 private:
 	using m_tUpdateFunc = void (SceneMain::*) (const InputState& input, NextSceneState& nextScene);
@@ -99,4 +104,5 @@ private:
 
 	SceneManager* m_pManager;
 	SceneClear* m_pClear;
+	SceneRanking* m_pRanking;
 };

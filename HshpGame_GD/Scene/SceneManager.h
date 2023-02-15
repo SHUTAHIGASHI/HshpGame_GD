@@ -5,6 +5,7 @@
 #include "SceneMain.h"
 #include "SceneClear.h"
 #include "SceneStageSelect.h"
+#include "SceneRanking.h"
 
 class SceneManager
 {
@@ -14,6 +15,7 @@ public:
 	{
 		kSceneTitle,
 		kSceneHelp,
+		kSceneRanking,
 		kSceneStageSelect,
 		kSceneMain,
 		kSceneClear,
@@ -41,12 +43,13 @@ private:
 	// ó˚èKÉÇÅ[Éh
 	bool m_isPrac;
 	
-	SceneKind	m_kind;
-	NextSceneState m_nextScene;
+	SceneKind m_kind;
 	SceneKind m_lastScene;
+	NextSceneState m_nextScene;
 
 	SceneTitle	m_title;
 	SceneStageSelect m_stageSelect;
+	SceneRanking m_ranking;
 	SceneMain	m_main;
 	SceneClear	m_clear;
 };

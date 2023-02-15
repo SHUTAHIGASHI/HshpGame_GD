@@ -14,7 +14,7 @@ namespace
 	constexpr int kMenuMax = 10;
 
 	// メニューのサイズ
-	constexpr int kLeftMenuX = Game::kScreenWidthHalf - 450;
+	constexpr int kMenuX = Game::kScreenWidthHalf - 450;
 	constexpr int kRightMenuX = Game::kScreenWidthHalf + 50;
 
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
@@ -75,7 +75,7 @@ void SceneStageSelect::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kTitleMessage, 6) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
 	// フォントサイズの設定
 	SetFontSize(20);
@@ -84,13 +84,13 @@ void SceneStageSelect::Draw()
 		if ((m_textTimer / 10) % 5 != 0)
 		{
 			// タイトルのテキストを表示
-			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 7) + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
 		}
 
 		m_textTimer++;
 	}
 
-	int menuX = kLeftMenuX, menuY = kMenuY, menuW = kLeftMenuX + kMenuW, menuH = kMenuY + kMenuH;
+	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
 
 	for (int i = 0; i < kMenuMax; i++)
 	{
@@ -112,7 +112,7 @@ void SceneStageSelect::Draw()
 		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", i + 1);
 	}
 
-	menuX = kLeftMenuX, menuW = kLeftMenuX + kMenuW;
+	menuX = kMenuX, menuW = kMenuX + kMenuW;
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
 	if (m_selectPos > 4)
 	{

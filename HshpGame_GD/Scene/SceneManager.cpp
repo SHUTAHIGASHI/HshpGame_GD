@@ -31,9 +31,13 @@ void SceneManager::Init(SceneKind kind)
 		m_stageSelect.SetTitle(&m_title);
 		m_stageSelect.Init();	// シーンの初期化
 		break;
+	case SceneManager::kSceneRanking:
+		m_ranking.Init();	// シーンクリアの初期化
+		break;
 	case SceneManager::kSceneMain:
-		m_main.SetClear(&m_clear);
 		m_main.SetManager(this);
+		m_main.SetClear(&m_clear);
+		m_main.SetRanking(&m_ranking);
 		m_main.Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
@@ -57,6 +61,9 @@ void SceneManager::End()
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.End();	// シーンクリアのデータ削除
+		break;
+	case SceneManager::kSceneRanking:
+		m_ranking.End();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneMain:
 		m_main.End();	// シーンメインのデータ削除
@@ -87,6 +94,10 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
 		isEnd = m_stageSelect.IsEnd();
+		break;
+	case SceneManager::kSceneRanking:
+		m_ranking.Update(input, isGameEnd, m_nextScene);	// シーンクリアの初期化
+		isEnd = m_ranking.IsEnd();
 		break;
 	case SceneManager::kSceneMain:
 		m_main.Update(input, m_nextScene);	// シーンメインの更新
@@ -124,9 +135,16 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 			m_stageSelect.Init();	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
+		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
+			End();	// シーンクリアのデータ削除
+			m_ranking.SetMain(&m_main);
+			m_ranking.Init();	// シーンタイトルの初期化
+			m_kind = kSceneRanking;
+			break;
 		case NextSceneState::nextGameMain:
 			End();	// シーンタイトルのデータ削除
 			m_main.SetClear(&m_clear);
+			m_main.SetRanking(&m_ranking);
 			m_main.SetPracticeMode(m_isPrac);
 			m_main.Init();	// シーンメインの初期化
 			m_kind = kSceneMain;
@@ -153,6 +171,9 @@ void SceneManager::Draw()
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.Draw();	// シーンクリアの描画
+		break;
+	case SceneManager::kSceneRanking:
+		m_ranking.Draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneMain:
 		m_main.Draw();	// シーンメインの描画
