@@ -18,9 +18,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// リソースの読み込み
-	LPCSTR font_path = "fontData/QuinqueFive.otf";	// 読み込むフォントファイルのパス
-	if (AddFontResourceEx(font_path, FR_PRIVATE, NULL) > 0) {
+	LPCSTR font1 = "fontData/QuinqueFive.otf";	// 読み込むフォントファイルのパス
+	if (AddFontResourceEx(font1, FR_PRIVATE, NULL) > 0) {
+	}
+	else {
+		// フォント読み込みエラー処理
+		MessageBox(NULL, "フォント読み込み失敗", "", MB_OK);
+	}
 
+	LPCSTR font2 = "fontData/misaki_gothic.ttf";	// 読み込むフォントファイルのパス
+	if (AddFontResourceEx(font2, FR_PRIVATE, NULL) > 0) {
 	}
 	else {
 		// フォント読み込みエラー処理
@@ -31,6 +38,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	ChangeFont("QuinqueFive");
+	int MisakiG = CreateFontToHandle("美咲ゴシック", 24, -1, -1);
 
 	SetMouseDispFlag(false);
 
@@ -39,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager scene;
 
 	// 画像のロード
-	scene.Init();
+	scene.Init(MisakiG);
 
 	bool isGameEnd = false;
 
@@ -54,7 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		input.Update();
 
 		// 現在のシーンの更新
-		scene.Update(input, isGameEnd);
+		scene.Update(input, MisakiG, isGameEnd);
 
 		// 現在のシーンの描画
 		scene.Draw();

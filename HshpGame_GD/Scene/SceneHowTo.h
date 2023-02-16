@@ -17,7 +17,7 @@ public:
 	void SetClear(SceneClear* clear) { m_pClear = clear; }
 
 	// 初期化
-	void Init();
+	void Init(int font);
 
 	void GameSetting();
 
@@ -56,6 +56,8 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 
+	int m_hFont;
+
 	// 効果音
 	int m_hDeathSound;
 	// 音楽用
@@ -63,6 +65,7 @@ private:
 
 	int m_fadeCount;
 
+	int m_countFrame;
 	// ゲームの制限時間
 	int m_startDelay;
 	// スタート遅延時のテキストサイズ

@@ -81,6 +81,8 @@ void SceneMain::Init()
 	m_startDelay = kStartDelay;
 	m_startTextSize = 60;
 
+	m_countAttempt = 1;
+
 	GameSetting();
 }
 
@@ -176,7 +178,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 				m_pRanking->LoadRankingData();
 				m_pRanking->SetRanking(m_countAttempt, m_Stage.GetStageState());
 			}
-			m_countAttempt = 0;
+			m_countAttempt = 1;
 			nextScene = NextSceneState::nextClear;
 			m_isEnd = true;
 		}

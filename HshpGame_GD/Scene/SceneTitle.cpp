@@ -13,7 +13,7 @@ namespace
 	// メニューメッセージ
 	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
-	const char* const kHowToPlayText = "How to Play";
+	const char* const kHowToPlayText = "Tutorial";
 	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
 

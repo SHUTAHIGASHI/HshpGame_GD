@@ -95,12 +95,12 @@ void SceneRanking::Draw()
 		if (m_savedAttempt[i] == NULL)
 		{
 			textColor = 0xff0000;
-			DrawFormatString(menuX + 20, menuY, textColor, "%d . NoData", i + 1);
+			DrawFormatString(menuX + 20, menuY, textColor, "%02d . NoData", i + 1);
 		}
 		else
 		{
 			textColor = 0xffffff;
-			DrawFormatString(menuX + 20, menuY, textColor, "%d . attempt:%d", i + 1, m_savedAttempt[i]);
+			DrawFormatString(menuX + 20, menuY, textColor, "%02d . attempt:%d", i + 1, m_savedAttempt[i]);
 		}
 	}
 

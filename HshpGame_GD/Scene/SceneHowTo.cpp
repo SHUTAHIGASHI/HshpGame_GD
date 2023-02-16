@@ -25,9 +25,11 @@ SceneHowTo::SceneHowTo() :
 	m_hPortal(-1),
 	m_hBlock(-1),
 	m_hBg(-1),
+	m_hFont(-1),
 	m_hDeathSound(-1),
 	m_hPracBgm(-1),
 	m_fadeCount(0),
+	m_countFrame(0),
 	m_startDelay(0),
 	m_startTextSize(0),
 	m_gameOverDelay(0),
@@ -42,8 +44,10 @@ SceneHowTo::~SceneHowTo()
 }
 
 // 初期化
-void SceneHowTo::Init()
+void SceneHowTo::Init(int font)
 {
+	m_hFont = font;
+	
 	// シーン終了変数を初期化
 	m_isEnd = false;
 	m_fadeCount = 255;
@@ -114,6 +118,8 @@ void SceneHowTo::End()
 // 毎フレームの処理
 void SceneHowTo::Update(const InputState& input, NextSceneState& nextScene)
 {
+	m_countFrame++;
+
 	(this->*m_updateFunc)(input, nextScene);
 }
 
@@ -138,16 +144,28 @@ void SceneHowTo::DrawHowTo()
 {
 	DrawBox(0, Game::kBlockSize * 11, Game::kScreenWidth, Game::kBlockSize * 13, 0x000000, true);
 	
+	int textDrawY = Game::kScreenHeightHalf + 24;
+
+	if (m_countFrame > 900)
+	{
+		if ((m_countFrame / 10) % 4 != 0)
+		{
+			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次へ進もう", 0xffff00, m_hFont);
+		}
+		textDrawY -= 12;
+	}
+
+	DrawStringToHandle(1100, textDrawY, "SPACE or UP or 左クリックでジャンプ", 0xffffff, m_hFont);
+
 	m_startTextSize--;
 	if (m_startTextSize < 60) m_startTextSize = 60;
-
 	SetFontSize(m_startTextSize);
 
-	if (m_pHStage->GetStageState() == HowToStageState::CubeTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("Cube",4) / 2), Game::kScreenHeightHalf, "Cube", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::JumpRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("JumpRing", 8) / 2), Game::kScreenHeightHalf, "JumpRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::GravityRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("GravityRing", 11) / 2), Game::kScreenHeightHalf, "GravityRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::DashRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("DashRing", 8) / 2), Game::kScreenHeightHalf, "DashRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::RevRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("ReverseRing", 12) / 2), Game::kScreenHeightHalf, "ReverseRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::CubeTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("Cube",4) / 2), Game::kScreenHeightHalf, "Cube", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::JumpRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("JumpRing", 8) / 2), Game::kScreenHeightHalf, "JumpRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::GravityRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("GravityRing", 11) / 2), Game::kScreenHeightHalf, "GravityRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::DashRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("DashRing", 8) / 2), Game::kScreenHeightHalf, "DashRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::RevRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("ReverseRing", 12) / 2), Game::kScreenHeightHalf, "ReverseRing", 0xff2222);
 
 	SetFontSize(20);
 }
@@ -173,6 +191,8 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 
 	if (input.IsTriggered(InputType::enter))
 	{
+		m_countFrame = 0;
+		
 		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest)
 		{
 			nextScene = NextSceneState::nextMenu;
