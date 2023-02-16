@@ -150,7 +150,14 @@ void SceneHowTo::DrawHowTo()
 	{
 		if ((m_countFrame / 10) % 4 != 0)
 		{
-			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次へ進もう", 0xffff00, m_hFont);
+			if (m_isPrac)
+			{
+				DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して模擬ステージをプレイ", 0xffff00, m_hFont);
+			}
+			else
+			{
+				DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次のギミックへ進もう", 0xffff00, m_hFont);
+			}
 		}
 		textDrawY -= 12;
 	}
