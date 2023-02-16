@@ -90,25 +90,25 @@
     <ClCompile Include="StageObject\ObjectGravityRing.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectDashRing.cpp">
-      <Filter>ソース ファイル\StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectReverseRing.cpp">
-      <Filter>ソース ファイル\StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneStageSelect.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneRanking.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneHowTo.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="HowToPlayer.cpp">
+    <ClCompile Include="Player\HowToPlayer.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="HowToStage.cpp">
+    <ClCompile Include="StageObject\ObjectDashRing.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="StageObject\ObjectReverseRing.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneHowTo.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneRanking.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneStageSelect.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="StageObject\HowToStage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,26 +167,26 @@
     <ClInclude Include="StageObject\ObjectGravityRing.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectDashRing.h">
+    <ClInclude Include="StageObject\HowToStage.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectReverseRing.h">
-      <Filter>ヘッダー ファイル\StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneStageSelect.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneRanking.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneHowTo.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="HowToPlayer.h">
+    <ClInclude Include="Player\HowToPlayer.h">
       <Filter>ヘッダー ファイル\Player</Filter>
     </ClInclude>
-    <ClInclude Include="HowToStage.h">
+    <ClInclude Include="StageObject\ObjectDashRing.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="StageObject\ObjectReverseRing.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneHowTo.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneRanking.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneStageSelect.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

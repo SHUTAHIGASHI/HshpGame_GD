@@ -151,14 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HowToPlayer.cpp" />
-    <ClCompile Include="HowToStage.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjectDashRing.cpp" />
-    <ClCompile Include="ObjectReverseRing.cpp" />
-    <ClCompile Include="SceneHowTo.cpp" />
-    <ClCompile Include="SceneRanking.cpp" />
-    <ClCompile Include="SceneStageSelect.cpp" />
+    <ClCompile Include="Player\HowToPlayer.cpp" />
+    <ClCompile Include="Scene\SceneHowTo.cpp" />
+    <ClCompile Include="Scene\SceneRanking.cpp" />
+    <ClCompile Include="Scene\SceneStageSelect.cpp" />
+    <ClCompile Include="StageObject\HowToStage.cpp" />
+    <ClCompile Include="StageObject\ObjectDashRing.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
     <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
     <ClCompile Include="Player\Player.cpp" />
@@ -171,19 +170,19 @@
     <ClCompile Include="StageObject\ObjectBlock.cpp" />
     <ClCompile Include="StageObject\ObjectJumpPad.cpp" />
     <ClCompile Include="StageObject\ObjectJumpRing.cpp" />
+    <ClCompile Include="StageObject\ObjectReverseRing.cpp" />
     <ClCompile Include="StageObject\ObjectSpike.cpp" />
     <ClCompile Include="StageObject\Stage.cpp" />
     <ClCompile Include="Util\InputState.cpp" />
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HowToPlayer.h" />
-    <ClInclude Include="HowToStage.h" />
-    <ClInclude Include="ObjectDashRing.h" />
-    <ClInclude Include="ObjectReverseRing.h" />
-    <ClInclude Include="SceneHowTo.h" />
-    <ClInclude Include="SceneRanking.h" />
-    <ClInclude Include="SceneStageSelect.h" />
+    <ClInclude Include="Player\HowToPlayer.h" />
+    <ClInclude Include="Scene\SceneHowTo.h" />
+    <ClInclude Include="Scene\SceneRanking.h" />
+    <ClInclude Include="Scene\SceneStageSelect.h" />
+    <ClInclude Include="StageObject\HowToStage.h" />
+    <ClInclude Include="StageObject\ObjectDashRing.h" />
     <ClInclude Include="StageObject\ObjectGoalGate.h" />
     <ClInclude Include="StageObject\ObjectGravityRing.h" />
     <ClInclude Include="Player\Player.h" />
@@ -197,6 +196,7 @@
     <ClInclude Include="StageObject\ObjectBlock.h" />
     <ClInclude Include="StageObject\ObjectJumpPad.h" />
     <ClInclude Include="StageObject\ObjectJumpRing.h" />
+    <ClInclude Include="StageObject\ObjectReverseRing.h" />
     <ClInclude Include="StageObject\ObjectSpike.h" />
     <ClInclude Include="StageObject\Stage.h" />
     <ClInclude Include="Util\game.h" />
