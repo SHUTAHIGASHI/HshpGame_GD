@@ -9,7 +9,7 @@
 namespace
 {
 	// スタート時の遅延時間
-	constexpr int kStartDelay = 300;
+	constexpr int kStartDelay = 150;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
 }
@@ -68,7 +68,9 @@ void SceneHowTo::Init()
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
-	m_startTextSize = 60;
+	m_startTextSize = 100;
+
+	m_pHStage->SetFirstStage();
 
 	GameSetting();
 
@@ -125,48 +127,29 @@ void SceneHowTo::Draw()
 	// プレイヤーの描画
 	m_pHPlayer->Draw();
 
-	if (m_startDelay > 0)
-	{
-		if (m_startDelay % 60 == 0) m_startTextSize = 60;
-		m_startTextSize--;
-		if (m_startTextSize < 20) m_startTextSize = 20;
-
-		SetFontSize(m_startTextSize);
-
-		if (m_startDelay / 60 == 5)
-		{
-		}
-		else if (m_startDelay / 60 == 0)
-		{
-			DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
-		}
-		else
-		{
-			DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
-		}
-		SetFontSize(20);
-	}
+	DrawHowTo();
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void SceneHowTo::OnStageClear(NextSceneState& nextScene)
+void SceneHowTo::DrawHowTo()
 {
-	if (m_pHPlayer->IsStageClear())
-	{
-		if (m_pHStage->GetStageState() == HowToStageState::WaveTest)
-		{
-			nextScene = NextSceneState::nextClear;
-			m_isEnd = true;
-		}
-		else
-		{
-			m_pHStage->SetNextStageState();
-			GameSetting();
-		}
-	}
+	DrawBox(0, Game::kBlockSize * 11, Game::kScreenWidth, Game::kBlockSize * 13, 0x000000, true);
+	
+	m_startTextSize--;
+	if (m_startTextSize < 60) m_startTextSize = 60;
+
+	SetFontSize(m_startTextSize);
+
+	if (m_pHStage->GetStageState() == HowToStageState::CubeTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("Cube",4) / 2), Game::kScreenHeightHalf, "Cube", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::JumpRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("JumpRing", 8) / 2), Game::kScreenHeightHalf, "JumpRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::GravityRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("GravityRing", 11) / 2), Game::kScreenHeightHalf, "GravityRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::DashRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("DashRing", 8) / 2), Game::kScreenHeightHalf, "DashRing", 0xff2222);
+	if (m_pHStage->GetStageState() == HowToStageState::RevRingTest) DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth("ReverseRing", 12) / 2), Game::kScreenHeightHalf, "ReverseRing", 0xff2222);
+
+	SetFontSize(20);
 }
 
 void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene)
@@ -184,8 +167,18 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 		return;
 	}
 
+	m_startDelay--;
+	if (m_startDelay > 0) return;
+	else m_startDelay = 0;
+
 	if (input.IsTriggered(InputType::enter))
 	{
+		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest)
+		{
+			nextScene = NextSceneState::nextMenu;
+			m_isEnd = true;
+		}
+		
 		if (m_isPrac)
 		{
 			m_isPrac = false;
@@ -205,8 +198,6 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	m_pHStage->Update();
 
 	m_pHPlayer->Update(input);
-
-	OnStageClear(nextScene);
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_pHPlayer->IsDead())

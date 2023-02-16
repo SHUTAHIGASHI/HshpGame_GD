@@ -18,6 +18,8 @@ enum class InputType
 class InputState
 {
 private:
+	char keyPadState[256];
+	char lastKeyPadState[256];
 	char keyMouseState[256];
 	char lastKeyMouseState[256];
 	char keyState[256];

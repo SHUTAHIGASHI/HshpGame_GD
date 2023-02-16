@@ -31,8 +31,7 @@ public:
 	// 毎フレームの描画
 	void Draw();
 
-	// ステージクリア時
-	void OnStageClear(NextSceneState& nextScene);
+	void DrawHowTo();
 
 	// m_isEndを取得
 	virtual bool IsEnd() const { return m_isEnd; }

@@ -48,15 +48,10 @@ void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int h
 
     m_playerScale = 1.0;
 	
-    m_waveDelay = 90;
     m_countFrame = 0;
     m_vec.x = Game::kMoveSpeed;
     m_vec.y = 0.0f;
     m_angle = 0;
-    if (m_playerState == PlayerState::Wave) 
-    {
-        m_angle = (DX_PI_F * 0.2);
-    }
 
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
@@ -117,8 +112,8 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::seventhStage)
     {
-        m_pos.x = Game::kScreenWidthHalf;
-        m_pos.y = Game::kScreenHeightHalf;
+        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::eighthStage)
@@ -151,12 +146,7 @@ void Player::SetSpawnPos()
 
 void Player::ChangeUpdateType()
 {
-    if (m_pStage->GetStageState() == StageState::seventhStage)
-    {
-        m_updateFunc = &Player::WaveUpdate;
-        m_playerState = PlayerState::Wave;
-    }
-    else if (m_pStage->GetStageState() == StageState::eighthStage)
+    if (m_pStage->GetStageState() == StageState::eighthStage)
     {
         m_updateFunc = &Player::CubeRevGravityUpdate;
         m_playerState = PlayerState::Cube;
@@ -326,16 +316,8 @@ void Player::Draw()
         float drawPosX = 0.0f, drawPosY = 0.0f;
         int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 
-        if (m_playerState == PlayerState::Cube)
-        {
-            drawPosX = GetCenterX(), drawPosY = GetCenterY();
-            imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-        }
-        else if (m_playerState == PlayerState::Wave)
-        {
-            drawPosX = GetCenterX(), drawPosY = GetCenterY();
-            imgX = Game::kBlockSize, imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-        }
+        drawPosX = GetCenterX(), drawPosY = GetCenterY();
+        imgW = Game::kBlockSize, imgH = Game::kBlockSize;
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
@@ -347,81 +329,24 @@ void Player::DrawMoveEffect()
     float drawPosX = 0.0f, drawPosY = 0.0f;
     int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
     
-    if (m_playerState == PlayerState::Cube)
+    for (int i = 0; i < 5; i++)
     {
-        for (int i = 0; i < 5; i++)
+        if (!m_isScroll)
         {
-            if (!m_isScroll)
-            {
-                drawPosX = m_lastPos[i].x + (Game::kBlockSize / 2);
-                drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
-                imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-            }
-            else
-            {
-                if(m_isMoveRight) drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - (Game::kMoveSpeed * i);
-                else drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) + (Game::kMoveSpeed * i);
-                drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
-                imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-            }
-            
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
-            DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
-            SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-        }
-    }
-    else if (m_playerState == PlayerState::Wave)
-    {        
-        int effectW = 0, effectH = 0;
-        effectW = 540 / 2;
-        effectH = 84;
-
-        int effectX = 0, effectY = 0;
-        effectX = static_cast<int>(m_countFrame % 2 * effectW);
-        bool tempRev = false;
-        double angle = m_angle * -1;
-
-        float drawPosX = 0.0f, drawPosY = 0.0f;
-
-        if (m_waveDelay > 0)
-        {
-            drawPosX = m_pos.x - 25;
-            drawPosY = m_pos.y + 25;
-            angle = 0;
-        }
-        else if (m_isMoveRight)
-        {
-            if (m_vec.y > 0)
-            {
-                drawPosX = GetCenterX() - 35;
-                drawPosY = GetCenterY() - 30;
-                tempRev = true;
-            }
-            else
-            {
-                drawPosX = GetCenterX() - 35;
-                drawPosY = GetCenterY() + 30;
-                tempRev = false;
-            }
+            drawPosX = m_lastPos[i].x + (Game::kBlockSize / 2);
+            drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
+            imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
         else
         {
-            if (m_vec.y < 0)
-            {
-                drawPosX = GetCenterX() + 35;
-                drawPosY = GetCenterY() + 30;
-                tempRev = true;
-            }
-            else
-            {
-                drawPosX = GetCenterX() + 35;
-                drawPosY = GetCenterY() - 30;
-                tempRev = false;
-            }
+            if (m_isMoveRight) drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - (Game::kMoveSpeed * i);
+            else drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) + (Game::kMoveSpeed * i);
+            drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
+            imgW = Game::kBlockSize, imgH = Game::kBlockSize;
         }
 
-        SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-        DrawRectRotaGraphF(drawPosX, drawPosY, effectX, effectY, effectW, effectH, (0.3) * m_playerScale, angle, m_hWaveBurner, true, tempRev);
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
+        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
 }
@@ -527,52 +452,6 @@ void Player::CubeRevGravityUpdate(const InputState& input)
         PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
         m_isDead = true;
     }
-
-    m_lastPos[m_countFrame] = m_pos;
-    m_lastAngle[m_countFrame] = m_angle;
-    m_countFrame++;
-    if (m_countFrame > 4) m_countFrame = 0;
-}
-
-void Player::WaveUpdate(const InputState& input)
-{
-    if (m_pos.x < 0)
-    {
-        m_vec.x *= -1;
-        m_angle *= -1;
-        m_isMoveRight = true;
-    }
-    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
-    {
-        m_vec.x *= -1;
-        m_angle *= -1;
-        m_isMoveRight = false;
-    }
-
-    if (m_waveDelay > 0)
-    {
-        m_angle = DX_PI_F * 0.5;
-        m_waveDelay--;
-    }
-    else if (input.IsPressed(InputType::jump))
-    {
-        m_vec.y = -kWaveSpeed;
-        if(m_isMoveRight) m_angle = DX_PI_F * 0.2;
-        else m_angle = DX_PI_F * 1.8;
-    }
-    else
-    {
-        m_vec.y = kWaveSpeed;
-        if (m_isMoveRight) m_angle = DX_PI_F * 0.8;
-        else m_angle = DX_PI_F * 1.2;
-    }
-
-    // ÉvÉåÉCÉÑÅ[ÇÃãììÆÇÃèàóù
-    m_pos += m_vec;
-
-    OnHitObject(input);
-
-    if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight) m_isDead = true;
 
     m_lastPos[m_countFrame] = m_pos;
     m_lastAngle[m_countFrame] = m_angle;

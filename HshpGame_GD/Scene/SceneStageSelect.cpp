@@ -53,6 +53,7 @@ void SceneStageSelect::Init()
 // I—¹ˆ—
 void SceneStageSelect::End()
 {
+	m_pTitle->StopMusic();
 	DeleteGraph(m_hBg);
 }
 

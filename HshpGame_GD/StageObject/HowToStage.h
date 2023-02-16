@@ -19,7 +19,6 @@ enum class HowToStageState
 	GravityRingTest,
 	DashRingTest,
 	RevRingTest,
-	WaveTest,
 	End
 };
 

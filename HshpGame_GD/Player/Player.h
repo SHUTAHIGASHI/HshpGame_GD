@@ -5,7 +5,6 @@ class Stage;
 enum class PlayerState
 {
 	Cube,
-	Wave
 };
 
 class Player
@@ -29,7 +28,6 @@ public:
 		m_lastAngle(),
 		m_countFrame(0),
 		m_deathCountFrame(0),
-		m_waveDelay(0),
 		m_isMoveRight(true),
 		m_isRevGravity(false),
 		m_isDashRingEnabled(false),
@@ -109,8 +107,6 @@ private:
 	void CubeNormalUpdate(const InputState& input);
 	// キューブの重力反転時の更新処理
 	void CubeRevGravityUpdate(const InputState& input);
-	// シップの通常時の更新処理
-	void WaveUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void GoalUpdate(const InputState& input);
 
@@ -146,7 +142,6 @@ private:
 	// フレーム数をカウント
 	int m_countFrame;
 	int m_deathCountFrame;
-	int m_waveDelay;
 
 	// 移動方向
 	bool m_isMoveRight;

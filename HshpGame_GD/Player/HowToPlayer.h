@@ -5,7 +5,6 @@ class HowToStage;
 enum class PlayerState
 {
 	Cube,
-	Wave
 };
 
 class HowToPlayer
@@ -108,8 +107,6 @@ private:
 	void CubeNormalUpdate(const InputState& input);
 	// キューブの重力反転時の更新処理
 	void CubeRevGravityUpdate(const InputState& input);
-	// シップの通常時の更新処理
-	void WaveUpdate(const InputState& input);
 	// プレイヤー死亡時の更新処理
 	void GoalUpdate(const InputState& input);
 

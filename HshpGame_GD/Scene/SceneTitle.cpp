@@ -31,9 +31,6 @@ namespace
 // 初期化
 void SceneTitle::Init()
 {
-	// 画像データの読み込み
-	// ゲームタイトル
-	m_hBg = LoadGraph("imagedata/GDbg.jpg");
 	// シーン終了に false を代入
 	m_isEnd = false;
 
@@ -57,12 +54,17 @@ void SceneTitle::Init()
 // 終了処理
 void SceneTitle::End()
 {
-	DeleteGraph(m_hBg);
+	StopMusic();
 }
 
 // 更新処理
 void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
 {	
+	if (!CheckSoundMem(m_hLoopBgm))
+	{
+		PlaySoundMem(m_hLoopBgm, DX_PLAYTYPE_BACK);
+	}
+
 	if (m_textTimer > 1000) m_textTimer = 10;
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
@@ -126,6 +128,14 @@ void SceneTitle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneTitle::StopMusic()
+{
+	if (m_pManager->GetNextScene() != NextSceneState::nextStageSelect)
+	{
+		StopSoundMem(m_hLoopBgm);
+	}
 }
 
 void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
