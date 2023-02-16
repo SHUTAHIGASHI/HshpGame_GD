@@ -102,6 +102,15 @@
     <ClCompile Include="SceneRanking.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SceneHowTo.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="HowToPlayer.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="HowToStage.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -169,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="SceneRanking.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneHowTo.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToPlayer.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="HowToStage.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

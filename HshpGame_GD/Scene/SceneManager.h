@@ -6,6 +6,7 @@
 #include "SceneClear.h"
 #include "SceneStageSelect.h"
 #include "SceneRanking.h"
+#include "SceneHowTo.h"
 
 class SceneManager
 {
@@ -14,7 +15,7 @@ public:
 	typedef enum SceneKind
 	{
 		kSceneTitle,
-		kSceneHelp,
+		kSceneHowTo,
 		kSceneRanking,
 		kSceneStageSelect,
 		kSceneMain,
@@ -49,6 +50,7 @@ private:
 
 	SceneTitle	m_title;
 	SceneStageSelect m_stageSelect;
+	SceneHowTo m_howTo;
 	SceneRanking m_ranking;
 	SceneMain	m_main;
 	SceneClear	m_clear;

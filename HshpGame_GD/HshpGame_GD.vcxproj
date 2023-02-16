@@ -151,9 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HowToPlayer.cpp" />
+    <ClCompile Include="HowToStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectDashRing.cpp" />
     <ClCompile Include="ObjectReverseRing.cpp" />
+    <ClCompile Include="SceneHowTo.cpp" />
     <ClCompile Include="SceneRanking.cpp" />
     <ClCompile Include="SceneStageSelect.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
@@ -174,8 +177,11 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HowToPlayer.h" />
+    <ClInclude Include="HowToStage.h" />
     <ClInclude Include="ObjectDashRing.h" />
     <ClInclude Include="ObjectReverseRing.h" />
+    <ClInclude Include="SceneHowTo.h" />
     <ClInclude Include="SceneRanking.h" />
     <ClInclude Include="SceneStageSelect.h" />
     <ClInclude Include="StageObject\ObjectGoalGate.h" />

@@ -31,6 +31,10 @@ void SceneManager::Init(SceneKind kind)
 		m_stageSelect.SetTitle(&m_title);
 		m_stageSelect.Init();	// シーンの初期化
 		break;
+	case SceneManager::kSceneHowTo:
+		m_howTo.SetClear(&m_clear);
+		m_howTo.Init();	// シーンクリアの初期化
+		break;
 	case SceneManager::kSceneRanking:
 		m_ranking.Init();	// シーンクリアの初期化
 		break;
@@ -61,6 +65,9 @@ void SceneManager::End()
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.End();	// シーンクリアのデータ削除
+		break;
+	case SceneManager::kSceneHowTo:
+		m_howTo.End();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneRanking:
 		m_ranking.End();	// シーンクリアの初期化
@@ -94,6 +101,10 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
 		isEnd = m_stageSelect.IsEnd();
+		break;
+	case SceneManager::kSceneHowTo:
+		m_howTo.Update(input, m_nextScene);
+		isEnd = m_howTo.IsEnd();
 		break;
 	case SceneManager::kSceneRanking:
 		m_ranking.Update(input, isGameEnd, m_nextScene);	// シーンクリアの初期化
@@ -135,6 +146,12 @@ void SceneManager::Update(const InputState& input, bool &isGameEnd)
 			m_stageSelect.Init();	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
+		case NextSceneState::nextHowTo:
+			End();
+			m_howTo.SetClear(&m_clear);
+			m_howTo.Init();	// シーンクリアの初期化
+			m_kind = kSceneHowTo;
+			break;
 		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンクリアのデータ削除
 			m_ranking.SetMain(&m_main);
@@ -171,6 +188,9 @@ void SceneManager::Draw()
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.Draw();	// シーンクリアの描画
+		break;
+	case SceneManager::kSceneHowTo:
+		m_howTo.Draw();
 		break;
 	case SceneManager::kSceneRanking:
 		m_ranking.Draw();	// シーンタイトルの描画

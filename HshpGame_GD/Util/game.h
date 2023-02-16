@@ -9,7 +9,7 @@ enum class NextSceneState
 {
 	Empty,
 	nextMenu,
-	nextHelp,
+	nextHowTo,
 	nextRanking,
 	nextStageSelect,
 	nextGameMain,

@@ -67,6 +67,7 @@ void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextScen
 // 描画処理
 void SceneStageSelect::Draw()
 {
+	// 背景描画処理
 	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
 	bgX -= m_scroll, bgW -= m_scroll;
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
@@ -74,11 +75,12 @@ void SceneStageSelect::Draw()
 	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	// シーン名描画
 	SetFontSize(60);
 	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
 
-	// フォントサイズの設定
-	SetFontSize(20);
+	// ボタン用メッセージ
+	SetFontSize(20);	// フォントサイズの設定
 	if (m_textTimer > 0)
 	{
 		if ((m_textTimer / 10) % 5 != 0)
@@ -90,28 +92,31 @@ void SceneStageSelect::Draw()
 		m_textTimer++;
 	}
 
+	// 選択枠の描画
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
-
 	for (int i = 0; i < kMenuMax; i++)
 	{
 		menuY = kMenuY + (kMenuH * i) + 10;
 
+		// 右側にずらす処理
 		if (i > 4)
 		{
 			menuX = kRightMenuX, menuW = kRightMenuX + kMenuW;
 			menuY = kMenuY + (kMenuH * (i - 5)) + 10;
 		}
 
+		// 枠の描画
 		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xffffff, false);
 
 		// フォントサイズの設定
 		SetFontSize(20);
 
+		// 枠内の文字描画
 		menuY = menuY + (kMenuH / 2) - 15;
-
 		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", i + 1);
 	}
 
+	// 現在選択中の枠の描画
 	menuX = kMenuX, menuW = kMenuX + kMenuW;
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
 	if (m_selectPos > 4)
@@ -120,11 +125,14 @@ void SceneStageSelect::Draw()
 		menuY = kMenuY + (kMenuH * (m_selectPos - 5)) + 10;
 	}
 	
+	// 選択中の枠の描画
 	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xff4500, true);
 
+	// 選択中の枠内の文字描画
 	menuY = menuY + (kMenuH / 2) - 15;
 	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", m_selectPos + 1);
 
+	// フェード処理用
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

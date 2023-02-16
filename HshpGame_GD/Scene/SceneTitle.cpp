@@ -160,7 +160,7 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 			return;
 		case 2:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
-			nextScene = NextSceneState::nextHelp;
+			nextScene = NextSceneState::nextHowTo;
 			return;
 		case 3:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
