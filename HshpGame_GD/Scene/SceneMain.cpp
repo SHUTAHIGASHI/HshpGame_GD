@@ -11,6 +11,8 @@ namespace
 {
 	// スタート時の遅延時間
 	constexpr int kStartDelay = 300;
+	// スタートカウントダウンの文字サイズ
+	constexpr int kStartTextSizeMax = 100;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
 }
@@ -84,7 +86,7 @@ void SceneMain::Init()
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
-	m_startTextSize = 60;
+	m_startTextSize = kStartTextSizeMax;
 
 	m_countAttempt = 1;
 
@@ -147,21 +149,21 @@ void SceneMain::Draw()
 
 	if (m_startDelay > 0)
 	{
-		if (m_startDelay % 60 == 0) m_startTextSize = 60;
+		if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
 		m_startTextSize--;
-		if (m_startTextSize < 20) m_startTextSize = 20;
-		
-		SetFontSize(m_startTextSize);
+		if (m_startTextSize < 60) m_startTextSize = 60;
 
 		if (m_startDelay / 60 == 5)
 		{
 		}
 		else if (m_startDelay / 60 == 0)
 		{
+			SetFontSize(m_startTextSize);
 			DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
 		}
 		else
 		{
+			SetFontSize(m_startTextSize);
 			DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
 		}
 		SetFontSize(20);
