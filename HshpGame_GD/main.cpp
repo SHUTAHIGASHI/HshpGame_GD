@@ -67,10 +67,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Œ»İ‚ÌƒV[ƒ“‚Ì•`‰æ
 		scene.Draw();
 
+#ifdef _DEBUG
+		auto drawcall = GetDrawCallCount();
+		DrawFormatStringToHandle(10, 100, 0xffffff, MisakiG, "DC = %d", drawcall);		
+#endif
+
 		// — ‰æ–Ê‚ğ•\‰æ–Ê‚Æ“ü‚ê‘Ö‚¦‚é
 		ScreenFlip();
-
-		//if (CheckHitKey(KEY_INPUT_ESCAPE)) isGameEnd = true;
 			
 		if(isGameEnd) break;
 

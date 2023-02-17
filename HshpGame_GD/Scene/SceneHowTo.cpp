@@ -20,6 +20,10 @@ namespace
 	const char* const kGravityRingText = "GravityRing";
 	const char* const kDashRingText = "DashRing";
 	const char* const kRevRingText = "ReverseRing";
+	const char* const kNextStageText = "→慣れてきたらENTERを押して模擬ステージをプレイ";
+	const char* const kNextGimmickText = "→慣れてきたらENTERを押して次のギミックへ進もう";
+	const char* const kJumpText = "SPACE or UP or 左クリックでジャンプ";
+	const char* const kGimmickText = "重なったときにSPACE or UP or 左クリックでギミックを使用";
 }
 
 SceneHowTo::SceneHowTo() :
@@ -152,35 +156,40 @@ void SceneHowTo::DrawHowTo()
 {
 	DrawBox(0, static_cast<int>(Game::kBlockSize * 11), Game::kScreenWidth, static_cast<int>(Game::kBlockSize * 13), 0x000000, true);
 	
-	int textDrawY = Game::kScreenHeightHalf + 12;
+	int textDrawX = 1100, textDrawY = Game::kScreenHeightHalf + 40;
+	std::string drawTextMessage;
 
+	if (m_isPrac)
+	{
+		drawTextMessage = kNextStageText;
+	}
+	else
+	{
+		drawTextMessage = kNextGimmickText;
+	}
+	
 	if (m_countFrame > 900)
 	{
 		if ((m_countFrame / 10) % 4 != 0)
 		{
-			if (m_isPrac)
-			{
-				DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して模擬ステージをプレイ", 0xffff00, m_hFont);
-			}
-			else
-			{
-				DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次のギミックへ進もう", 0xffff00, m_hFont);
-			}
+			DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFont, "%s", drawTextMessage.c_str());
 		}
 	}
 	else
 	{
-		if (m_isPrac)
-		{
-			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して模擬ステージをプレイ", 0xffffff, m_hFont);
-		}
-		else
-		{
-			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次のギミックへ進もう", 0xffffff, m_hFont);
-		}
+		DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFont, "%s", drawTextMessage.c_str());
 	}
 
-	DrawStringToHandle(1100, textDrawY, "SPACE or UP or 左クリックでジャンプ", 0xffffff, m_hFont);
+	textDrawY = Game::kScreenHeightHalf + 12;
+	if (m_pHStage->GetStageState() == HowToStageState::CubeTest)
+	{
+		drawTextMessage = kJumpText;
+	}
+	else
+	{
+		drawTextMessage = kGimmickText;
+	}
+	DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFont, "%s", drawTextMessage.c_str());
 
 	m_startTextSize--;
 	if (m_startTextSize < 60) m_startTextSize = 60;
