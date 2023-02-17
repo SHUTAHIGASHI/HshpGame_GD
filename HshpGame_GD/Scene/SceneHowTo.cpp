@@ -5,6 +5,7 @@
 #include "HowToPlayer.h"
 #include <cassert>
 #include <memory>
+#include <string>
 
 namespace
 {
@@ -12,6 +13,13 @@ namespace
 	constexpr int kStartDelay = 150;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
+
+	// オブジェクト名
+	const char* const kCubeText = "Cube";
+	const char* const kJumpRingText = "JumpRing";
+	const char* const kGravityRingText = "GravityRing";
+	const char* const kDashRingText = "DashRing";
+	const char* const kRevRingText = "ReverseRing";
 }
 
 SceneHowTo::SceneHowTo() :
@@ -142,9 +150,9 @@ void SceneHowTo::Draw()
 
 void SceneHowTo::DrawHowTo()
 {
-	DrawBox(0, Game::kBlockSize * 11, Game::kScreenWidth, Game::kBlockSize * 13, 0x000000, true);
+	DrawBox(0, static_cast<int>(Game::kBlockSize * 11), Game::kScreenWidth, static_cast<int>(Game::kBlockSize * 13), 0x000000, true);
 	
-	int textDrawY = Game::kScreenHeightHalf + 24;
+	int textDrawY = Game::kScreenHeightHalf + 12;
 
 	if (m_countFrame > 900)
 	{
@@ -159,7 +167,17 @@ void SceneHowTo::DrawHowTo()
 				DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次のギミックへ進もう", 0xffff00, m_hFont);
 			}
 		}
-		textDrawY -= 12;
+	}
+	else
+	{
+		if (m_isPrac)
+		{
+			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して模擬ステージをプレイ", 0xffffff, m_hFont);
+		}
+		else
+		{
+			DrawStringToHandle(1100, Game::kScreenHeightHalf + 40, "→慣れてきたらENTERを押して次のギミックへ進もう", 0xffffff, m_hFont);
+		}
 	}
 
 	DrawStringToHandle(1100, textDrawY, "SPACE or UP or 左クリックでジャンプ", 0xffffff, m_hFont);
@@ -168,11 +186,15 @@ void SceneHowTo::DrawHowTo()
 	if (m_startTextSize < 60) m_startTextSize = 60;
 	SetFontSize(m_startTextSize);
 
-	if (m_pHStage->GetStageState() == HowToStageState::CubeTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("Cube",4) / 2), Game::kScreenHeightHalf, "Cube", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::JumpRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("JumpRing", 8) / 2), Game::kScreenHeightHalf, "JumpRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::GravityRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("GravityRing", 11) / 2), Game::kScreenHeightHalf, "GravityRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::DashRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("DashRing", 8) / 2), Game::kScreenHeightHalf, "DashRing", 0xff2222);
-	if (m_pHStage->GetStageState() == HowToStageState::RevRingTest) DrawString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth("ReverseRing", 12) / 2), Game::kScreenHeightHalf, "ReverseRing", 0xff2222);
+	std::string drawText;
+
+	if (m_pHStage->GetStageState() == HowToStageState::CubeTest) drawText = kCubeText;
+	else if (m_pHStage->GetStageState() == HowToStageState::JumpRingTest) drawText = kJumpRingText;
+	else if (m_pHStage->GetStageState() == HowToStageState::GravityRingTest) drawText = kGravityRingText;
+	else if (m_pHStage->GetStageState() == HowToStageState::DashRingTest) drawText = kDashRingText;
+	else if (m_pHStage->GetStageState() == HowToStageState::RevRingTest) drawText = kRevRingText;
+
+	DrawFormatString(Game::kScreenWidthHalf - 400 - (GetDrawStringWidth(drawText.c_str(), static_cast<int>(drawText.size())) / 2), Game::kScreenHeightHalf, 0xff2222, "%s", drawText.c_str());
 
 	SetFontSize(20);
 }

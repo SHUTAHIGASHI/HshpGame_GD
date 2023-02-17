@@ -1,5 +1,6 @@
 #include "SceneTitle.h"
 #include <DxLib.h>
+#include <string>
 #include "game.h"
 #include "SceneManager.h"
 #include "SceneMain.h"
@@ -13,7 +14,7 @@ namespace
 	// メニューメッセージ
 	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
-	const char* const kHowToPlayText = "Tutorial";
+	const char* const kTutorialText = "Tutorial";
 	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
 
@@ -97,7 +98,8 @@ void SceneTitle::Draw()
 	}
 
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
-	
+	std::string drawText;
+
 	for (int i = 0; i < kMenuMax; i++)
 	{
 		menuY = kMenuY + (kMenuH * i) + 10;
@@ -108,22 +110,26 @@ void SceneTitle::Draw()
 
 		menuY = menuY + (kMenuH / 2) - 15;
 
-		if (i == 0) DrawString(menuX + 20 + m_textScroll, menuY, kChallengeModeText, 0xffffff);
-		if (i == 1) DrawString(menuX + 20 + m_textScroll, menuY, kStageSelectText, 0xffffff);
-		if (i == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHowToPlayText, 0xffffff);
-		if (i == 3) DrawString(menuX + 20 + m_textScroll, menuY, kRankText, 0xffffff);
-		if (i == 4) DrawString(menuX + 20 + m_textScroll, menuY, kGameEndText, 0xffffff);
+		if (i == 0) drawText = kChallengeModeText;
+		else if (i == 1) drawText = kStageSelectText;
+		else if (i == 2) drawText = kTutorialText;
+		else if (i == 3) drawText = kRankText;
+		else if (i == 4) drawText = kGameEndText;
+
+		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
 	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0xff4500, true);
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	if (m_selectPos == 0) DrawString(menuX + 20 + m_textScroll, menuY, kChallengeModeText, 0xffffff);
-	else if (m_selectPos == 1) DrawString(menuX + 20 + m_textScroll, menuY, kStageSelectText, 0xffffff);
-	else if (m_selectPos == 2) DrawString(menuX + 20 + m_textScroll, menuY, kHowToPlayText, 0xffffff);
-	else if (m_selectPos == 3) DrawString(menuX + 20 + m_textScroll, menuY, kRankText, 0xffffff);
-	else if (m_selectPos == 4) DrawString(menuX + 20 + m_textScroll, menuY, kGameEndText, 0xffffff);
+	if (m_selectPos == 0) drawText = kChallengeModeText;
+	else if (m_selectPos == 1) drawText = kStageSelectText;
+	else if (m_selectPos == 2) drawText = kTutorialText;
+	else if (m_selectPos == 3) drawText = kRankText;
+	else if (m_selectPos == 4) drawText = kGameEndText;
+
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "%s", drawText.c_str());
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
