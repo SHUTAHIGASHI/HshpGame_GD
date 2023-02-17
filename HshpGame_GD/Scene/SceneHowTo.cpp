@@ -231,7 +231,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	{
 		m_countFrame = 0;
 		
-		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest)
+		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest && !m_isPrac)
 		{
 			nextScene = NextSceneState::nextMenu;
 			m_isEnd = true;
@@ -255,7 +255,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 
 	m_pHStage->Update();
 
-	m_pHPlayer->Update(input);
+	m_pHPlayer->Update(input, m_isPrac);
 
 	// ƒvƒŒƒCƒ„[‚ÌŽ€–S”»’è‚ª true ‚Ìê‡
 	if (m_pHPlayer->IsDead())

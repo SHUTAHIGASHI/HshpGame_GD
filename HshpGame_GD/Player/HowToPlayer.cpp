@@ -86,14 +86,14 @@ void HowToPlayer::ChangeUpdateType()
     m_playerState = PlayerState::Cube;
 }
 
-void HowToPlayer::Update(const InputState& input)
+void HowToPlayer::Update(const InputState& input, bool isPrac)
 {
 #ifdef _DEBUG
     if (input.IsTriggered(InputType::right)) m_isStageClear = true;
 #endif
     if (m_isDead) return;
 
-    (this->*m_updateFunc)(input);
+    (this->*m_updateFunc)(input, isPrac);
 }
 
 void HowToPlayer::OnHitObject(const InputState& input)
@@ -270,17 +270,29 @@ void HowToPlayer::SetPlayerVec(int scroll)
     else m_vec.x = Game::kMoveSpeed;
 }
 
-void HowToPlayer::CubeNormalUpdate(const InputState& input)
+void HowToPlayer::CubeNormalUpdate(const InputState& input, bool isPrac)
 {
     if (m_pos.x < 0)
     {
+        if (m_pHStage->GetStageState() == HowToStageState::RevRingTest && !isPrac)
+        {
+            SetSpawnPos(isPrac);
+        }
+
         m_vec.x *= -1;
         m_isMoveRight = true;
     }
     else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
-        m_vec.x *= -1;
-        m_isMoveRight = false;
+        if (m_pHStage->GetStageState() == HowToStageState::DashRingTest && !isPrac)
+        {
+            SetSpawnPos(isPrac);
+        }
+        else
+        {
+            m_vec.x *= -1;
+            m_isMoveRight = false;
+        }
     }
 
     // プレイヤーの挙動の処理
@@ -321,17 +333,31 @@ void HowToPlayer::CubeNormalUpdate(const InputState& input)
     if (m_countFrame > 4) m_countFrame = 0;
 }
 
-void HowToPlayer::CubeRevGravityUpdate(const InputState& input)
+void HowToPlayer::CubeRevGravityUpdate(const InputState& input, bool isPrac)
 {
     if (m_pos.x < 0)
     {
-        m_vec.x *= -1;
-        m_isMoveRight = true;
+        if(m_pHStage->GetStageState() == HowToStageState::RevRingTest && !isPrac)
+        {
+            SetSpawnPos(isPrac);
+        }
+        else
+        {
+            m_vec.x *= -1;
+            m_isMoveRight = true;
+        }
     }
     else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
     {
-        m_vec.x *= -1;
-        m_isMoveRight = false;
+        if (m_pHStage->GetStageState() == HowToStageState::DashRingTest && !isPrac)
+        {
+            SetSpawnPos(isPrac);
+        }
+        else
+        {
+            m_vec.x *= -1;
+            m_isMoveRight = false;
+        }
     }
 
     // プレイヤーの挙動の処理
@@ -372,7 +398,7 @@ void HowToPlayer::CubeRevGravityUpdate(const InputState& input)
     if (m_countFrame > 4) m_countFrame = 0;
 }
 
-void HowToPlayer::GoalUpdate(const InputState& input)
+void HowToPlayer::GoalUpdate(const InputState& input, bool isPrac)
 {
     m_playerScale -= 0.05;
     if (m_playerScale < 0)

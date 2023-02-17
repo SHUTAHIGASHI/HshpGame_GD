@@ -49,7 +49,7 @@ public:
 	// メンバ関数ポインタの中身を変更
 	void ChangeUpdateType();
 	// プレイヤーの更新処理
-	void Update(const InputState& input);
+	void Update(const InputState& input, bool isPrac);
 
 	// オブジェクトと当たった時の処理
 	void OnHitObject(const InputState& input);
@@ -104,13 +104,13 @@ private:
 	HowToStage* m_pHStage;
 
 	// キューブの通常時の更新処理
-	void CubeNormalUpdate(const InputState& input);
+	void CubeNormalUpdate(const InputState& input, bool isPrac);
 	// キューブの重力反転時の更新処理
-	void CubeRevGravityUpdate(const InputState& input);
+	void CubeRevGravityUpdate(const InputState& input, bool isPrac);
 	// プレイヤー死亡時の更新処理
-	void GoalUpdate(const InputState& input);
+	void GoalUpdate(const InputState& input, bool isPrac);
 
-	using m_tUpdateFunc = void (HowToPlayer::*) (const InputState& input);
+	using m_tUpdateFunc = void (HowToPlayer::*) (const InputState& input, bool isPrac);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
 private:
