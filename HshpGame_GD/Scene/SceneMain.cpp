@@ -1,8 +1,11 @@
 #include "SceneMain.h"
+#include "Player.h"
+#include "Stage.h"
 #include "game.h"
 #include "SceneClear.h"
 #include "SceneRanking.h"
 #include <cassert>
+#include <memory>
 
 namespace
 {
@@ -13,6 +16,8 @@ namespace
 }
 
 SceneMain::SceneMain() :
+	m_pPlayer(std::make_shared<Player>()),
+	m_pStage(std::make_shared<Stage>()),
 	m_updateFunc(&SceneMain::SceneStartUpdate),
 	m_hPlayer(-1),
 	m_hPlayerWaveBurner(-1),
@@ -53,8 +58,8 @@ void SceneMain::Init()
 	m_updateFunc = &SceneMain::SceneStartUpdate;
 
 	// アドレスの設定
-	m_Player.SetStage(&m_Stage);
-	m_Stage.SetPlayer(&m_Player);
+	m_pPlayer->SetStage(m_pStage.get());
+	m_pStage->SetPlayer(m_pPlayer.get());
 
 	// 画像読み込み
 	m_hPlayer = LoadGraph(Game::kPlayerImg);
@@ -73,9 +78,9 @@ void SceneMain::Init()
 	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
 	else m_hPlayBgm = m_hChallengeBgm;
 
-	if (!m_isPracticeMode) m_Stage.SetFirstStage();
-	else if (m_pClear->IsNextStage()) m_Stage.SetNextStageState();
-	else m_Stage.SetSelectedStage(m_selectedStage);
+	if (!m_isPracticeMode) m_pStage->SetFirstStage();
+	else if (m_pClear->IsNextStage()) m_pStage->SetNextStageState();
+	else m_pStage->SetSelectedStage(m_selectedStage);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;
@@ -92,10 +97,10 @@ void SceneMain::GameSetting()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_Player.Init(m_hPlayer, m_hPlayerWaveBurner,  m_hDeathEffect, m_hDeathSound);
+	m_pPlayer->Init(m_hPlayer, m_hPlayerWaveBurner,  m_hDeathEffect, m_hDeathSound);
 
 	// ステージ初期化
-	m_Stage.Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
+	m_pStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
 }
 
 void SceneMain::PlayGameSound()
@@ -130,12 +135,12 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 // 毎フレームの描画
 void SceneMain::Draw()
 {
-	m_Stage.Draw();
+	m_pStage->Draw();
 
-	if (m_Player.IsStageClear()) return;
+	if (m_pPlayer->IsStageClear()) return;
 
 	// プレイヤーの描画
-	m_Player.Draw();
+	m_pPlayer->Draw();
 	
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
 	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
@@ -169,14 +174,14 @@ void SceneMain::Draw()
 
 void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
-	if (m_Player.IsStageClear())
+	if (m_pPlayer->IsStageClear())
 	{
-		if (m_Stage.GetStageState() == StageState::tenthStage || m_isPracticeMode)
+		if (m_pStage->GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
 			if (!m_isPracticeMode)
 			{
 				m_pRanking->LoadRankingData();
-				m_pRanking->SetRanking(m_countAttempt, m_Stage.GetStageState());
+				m_pRanking->SetRanking(m_countAttempt, m_pStage->GetStageState());
 			}
 			m_countAttempt = 1;
 			nextScene = NextSceneState::nextClear;
@@ -184,7 +189,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		}
 		else
 		{
-			m_Stage.SetNextStageState();
+			m_pStage->SetNextStageState();
 			GameSetting();
 		}
 	}
@@ -204,7 +209,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	{
 		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
 
-		if (!m_isPracticeMode) m_Stage.SetFirstStage();
+		if (!m_isPracticeMode) m_pStage->SetFirstStage();
 		GameSetting();
 		m_countAttempt++;
 		return;
@@ -216,20 +221,20 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 
 	PlayGameSound();
 
-	m_Stage.Update();
+	m_pStage->Update();
 
-	m_Player.Update(input);
+	m_pPlayer->Update(input);
 
 	OnStageClear(nextScene);
 
 	// プレイヤーの死亡判定が true の場合
-	if (m_Player.IsDead())
+	if (m_pPlayer->IsDead())
 	{
 		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
 
 		if (m_gameOverDelay < 0)
 		{
-			if (!m_isPracticeMode) m_Stage.SetFirstStage();
+			if (!m_isPracticeMode) m_pStage->SetFirstStage();
 			GameSetting();
 			m_countAttempt++;
 			return;

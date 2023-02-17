@@ -1,10 +1,10 @@
 #pragma once
-
-#include "Player.h"
-#include "Stage.h"
-#include "ObjectBlock.h"
 #include "game.h"
+#include "Stage.h"
+#include <memory>
 
+class Player;
+class Stage;
 class SceneManager;
 class SceneClear;
 class SceneRanking;
@@ -98,9 +98,9 @@ private:
 	StageState m_selectedStage;
 
 	// プレイヤー
-	Player m_Player;
+	std::shared_ptr<Player> m_pPlayer;
 	// ステージ
-	Stage m_Stage;
+	std::shared_ptr<Stage> m_pStage;
 
 	SceneManager* m_pManager;
 	SceneClear* m_pClear;
