@@ -19,7 +19,6 @@ public:
 	void SetClear(SceneClear* clear) { m_pClear = clear; }
 	void SetRanking(SceneRanking* rank) { m_pRanking = rank; }
 
-
 	// 初期化
 	void Init();
 
@@ -34,6 +33,8 @@ public:
 	void Update(const InputState& input, NextSceneState& nextScene);
 	// 毎フレームの描画
 	void Draw();
+
+	void DrawStartCount();
 
 	// ステージクリア時
 	void OnStageClear(NextSceneState& nextScene);

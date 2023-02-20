@@ -24,7 +24,7 @@ namespace
 }
 
 // 初期化
-void SceneRanking::Init()
+void SceneRanking::Init(int font)
 {	
 	for (int i = 0; i < 10; i++) m_savedAttempt[i] = NULL;
 
@@ -33,6 +33,7 @@ void SceneRanking::Init()
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/GDbg.jpg");
+	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;
 	m_textTimer = 10;
@@ -104,6 +105,8 @@ void SceneRanking::Draw()
 		}
 	}
 
+	DrawFormatStringToHandle(menuX + 20, menuY, 0xffffff, m_hFont, "%s", m_playerName[1].c_str());
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -116,6 +119,7 @@ void SceneRanking::SetRanking(int attempt, StageState stage)
 		if (m_savedAttempt[i] == NULL)
 		{
 			m_savedAttempt[i] = attempt;
+			m_isRankIn = true;
 			SaveRankingData();
 			return;
 		}
@@ -128,6 +132,7 @@ void SceneRanking::SetRanking(int attempt, StageState stage)
 			}
 			m_savedAttempt[i] = attempt;
 
+			m_isRankIn = true;
 			SaveRankingData();
 			return;
 		}

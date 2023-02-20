@@ -149,29 +149,34 @@ void SceneMain::Draw()
 
 	if (m_startDelay > 0)
 	{
-		if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
-		m_startTextSize--;
-		if (m_startTextSize < 60) m_startTextSize = 60;
-
-		if (m_startDelay / 60 == 5)
-		{
-		}
-		else if (m_startDelay / 60 == 0)
-		{
-			SetFontSize(m_startTextSize);
-			DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
-		}
-		else
-		{
-			SetFontSize(m_startTextSize);
-			DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
-		}
-		SetFontSize(20);
+		DrawStartCount();
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneMain::DrawStartCount()
+{
+	if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
+	m_startTextSize--;
+	if (m_startTextSize < 60) m_startTextSize = 60;
+
+	if (m_startDelay / 60 == 5)
+	{
+	}
+	else if (m_startDelay / 60 == 0)
+	{
+		SetFontSize(m_startTextSize);
+		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
+	}
+	else
+	{
+		SetFontSize(m_startTextSize);
+		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
+	}
+	SetFontSize(20);
 }
 
 void SceneMain::OnStageClear(NextSceneState& nextScene)

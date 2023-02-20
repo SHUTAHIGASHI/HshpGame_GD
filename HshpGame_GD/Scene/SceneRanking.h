@@ -3,6 +3,7 @@
 #include "InputState.h"
 #include "Stage.h"
 #include "game.h"
+#include <string>
 
 class SceneMain;
 
@@ -17,8 +18,10 @@ public:
 		m_selectPos(0),
 		m_textTimer(0),
 		m_fadeCount(0),
+		m_isRankIn(false),
 		m_isEnd(false),
 		m_hBg(-1),
+		m_hFont(-1),
 		m_pMain(nullptr)
 	{
 	}
@@ -27,7 +30,7 @@ public:
 	void SetMain(SceneMain* main) { m_pMain = main; }
 
 	// 初期化
-	virtual void Init();
+	virtual void Init(int font);
 
 	// 終了処理
 	void End();
@@ -45,6 +48,11 @@ public:
 
 	// m_isEnd を取得
 	bool IsEnd() const { return m_isEnd; }
+
+	bool IsRankIn() const { return m_isRankIn; }
+	void ResetRankIn() { m_isRankIn = false; }
+	void SetPlayerName(std::string name) { m_playerName[1] = name; }
+
 private:
 	using m_tUpdateFunc = void (SceneRanking::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
@@ -59,6 +67,8 @@ private:
 	int m_ranking[10];
 	int m_savedAttempt[10];
 	
+	std::string m_playerName[10];
+	
 	StageState m_stageState;
 
 	// メニュー選択
@@ -67,11 +77,15 @@ private:
 	int m_textTimer;
 
 	int m_fadeCount;
+	
+	bool m_isRankIn;
 	// タイトル表示を終えるかどうか
 	bool m_isEnd;
 
 	// 画像データ
 	int m_hBg;
+	// 文字データ
+	int m_hFont;
 
 	SceneMain* m_pMain;
 };
