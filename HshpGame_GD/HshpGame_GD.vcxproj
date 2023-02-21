@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectRingBase.cpp" />
     <ClCompile Include="Player\HowToPlayer.cpp" />
     <ClCompile Include="Scene\SceneHowTo.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ObjectRingBase.h" />
     <ClInclude Include="Player\HowToPlayer.h" />
     <ClInclude Include="Scene\SceneHowTo.h" />
     <ClInclude Include="Scene\SceneRanking.h" />

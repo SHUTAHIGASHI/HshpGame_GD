@@ -1,7 +1,8 @@
 #include "ObjectBase.h"
 
 ObjectBase::ObjectBase() :
-	m_hObjectImg(-1)
+	m_hObjectImg(-1),
+	m_IsExist(false)
 {
 }
 

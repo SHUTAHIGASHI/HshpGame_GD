@@ -111,6 +111,9 @@
     <ClCompile Include="StageObject\HowToStage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectRingBase.cpp">
+      <Filter>ソース ファイル\StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="Scene\SceneStageSelect.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectRingBase.h">
+      <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
