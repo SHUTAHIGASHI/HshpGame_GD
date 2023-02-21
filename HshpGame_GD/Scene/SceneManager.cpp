@@ -45,7 +45,6 @@ void SceneManager::Init(int font)
 		m_main.Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.SetRanking(&m_ranking);
 		m_clear.Init(font);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
@@ -168,7 +167,6 @@ void SceneManager::Update(const InputState& input, int font, bool &isGameEnd)
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:
-			m_clear.SetRanking(&m_ranking);
 			m_clear.Init(font);	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;

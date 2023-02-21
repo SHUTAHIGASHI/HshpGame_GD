@@ -17,13 +17,10 @@ public:
 		m_textScaleAcc(0),
 		m_name(),
 		m_isNextStage(false),
-		m_isEnd(false),
-		m_pRanking(nullptr)
+		m_isEnd(false)
 	{
 	}
 	virtual ~SceneClear() {}
-
-	void SetRanking(SceneRanking* rank) { m_pRanking = rank; }
 
 	// èâä˙âª
 	virtual void Init(int font);
@@ -48,14 +45,12 @@ private:
 	m_tUpdateFunc m_updateFunc = nullptr;
 
 	void NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
-	void RankInUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
 
 	// Draw
 	using m_tDrawFunc = void (SceneClear::*) ();
 	m_tDrawFunc m_drawFunc = nullptr;
 
 	void NormalDraw();
-	void RankInDraw();
 private:
 	int m_hFont;
 

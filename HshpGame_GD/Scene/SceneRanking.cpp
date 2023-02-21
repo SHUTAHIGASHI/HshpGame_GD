@@ -105,8 +105,6 @@ void SceneRanking::Draw()
 		}
 	}
 
-	DrawFormatStringToHandle(menuX + 20, menuY, 0xffffff, m_hFont, "%s", m_playerName[1].c_str());
-
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -119,7 +117,6 @@ void SceneRanking::SetRanking(int attempt, StageState stage)
 		if (m_savedAttempt[i] == NULL)
 		{
 			m_savedAttempt[i] = attempt;
-			m_isRankIn = true;
 			SaveRankingData();
 			return;
 		}
@@ -132,7 +129,6 @@ void SceneRanking::SetRanking(int attempt, StageState stage)
 			}
 			m_savedAttempt[i] = attempt;
 
-			m_isRankIn = true;
 			SaveRankingData();
 			return;
 		}
