@@ -20,10 +20,10 @@ namespace
 	const char* const kGravityRingText = "GravityRing";
 	const char* const kDashRingText = "DashRing";
 	const char* const kRevRingText = "ReverseRing";
-	const char* const kNextStageText = "→慣れてきたらENTERを押して模擬ステージをプレイ";
-	const char* const kNextGimmickText = "→慣れてきたらENTERを押して次のギミックへ進もう";
+	const char* const kNextStageText = "→ ENTER で下へ";
+	const char* const kNextGimmickText = "→ ENTER で次へ";
 	const char* const kJumpText = "SPACE or UP or 左クリックでジャンプ";
-	const char* const kGimmickText = "重なったときにSPACE or UP or 左クリックでギミックを使用";
+	const char* const kGimmickText = "重なったときにSPACE or UP or 左クリックでギミック作動";
 }
 
 SceneHowTo::SceneHowTo() :
