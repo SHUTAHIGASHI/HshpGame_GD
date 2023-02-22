@@ -45,7 +45,8 @@ void SceneClear::Init(int font)
 
 	m_textScale = kTextSizeMin;
 	m_textScaleAcc = 1;
-	
+	m_selectPos = 0;
+
 	m_isEnd = false;
 	m_isNextStage = false;
 }

@@ -29,14 +29,14 @@ void ObjectJumpPad::Draw()
 {
 	if (!m_IsExist) return;
 
-	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY() + Game::kBlockSize - (Game::kBlockSize / 4)), static_cast<int>(Game::kBlockSize / 2 - 2), 0xffff00, true);
+	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY() + Game::kBlockSize - (Game::kBlockSize / 4)), static_cast<int>(Game::kBlockSize / 2 - 2), 0xFFD700, true);
 }
 
 bool ObjectJumpPad::CollisionCheck(Vec2 player, int resizeScale)
 {
 	if (!m_IsExist) return false;
 
-	// スパイクの当たり判定
+	// 当たり判定
 	if (GetRight() - 5> player.x &&
 		player.x + Game::kBlockSize > GetLeft() + 5 &&
 		GetBottom() > player.y &&

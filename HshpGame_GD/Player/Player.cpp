@@ -260,7 +260,7 @@ void Player::OnHitObject(const InputState& input)
                             m_vec.y = 0.0f;
                             m_angle = 0.0f;
                             m_pos.y = tempPos;
-                            return;
+                            continue;
                         }
                     }
                     else if (m_isRevGravity)
@@ -271,7 +271,7 @@ void Player::OnHitObject(const InputState& input)
                             m_angle = 0.0f;
                             m_vec.y = 0.0f;
                             m_isField = true;
-                            return;
+                            continue;
                         }
                     }
 

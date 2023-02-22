@@ -288,7 +288,7 @@ namespace
 	constexpr int kScrollSpeed = 7;
 
 	// サイズ調整用定数
-	constexpr int kResizeScale = 8.0f;
+	constexpr int kResizeScale = 8;
 }
 
 Stage::Stage() :
@@ -407,7 +407,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 		return true;
 	}
 	// ジャンプパッドの当たり判定
-	if (m_ObjectJumpPad[H][W].CollisionCheck(m_pPlayer->GetPos(), Game::kBlockSize - (Game::kBlockSize / 4)))
+	if (m_ObjectJumpPad[H][W].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize - (Game::kBlockSize / 4))))
 	{
 		object = ObjectType::JumpPad;
 		return true;

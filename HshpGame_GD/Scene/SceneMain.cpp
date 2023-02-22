@@ -81,11 +81,12 @@ void SceneMain::Init()
 	else m_hPlayBgm = m_hChallengeBgm;
 
 	if (!m_isPracticeMode) m_pStage->SetFirstStage();
+	else if (m_selectedStage != StageState::End) m_pStage->SetSelectedStage(m_selectedStage);
 	else if (m_pClear->IsNextStage()) m_pStage->SetNextStageState();
-	else m_pStage->SetSelectedStage(m_selectedStage);
+	else assert(0);
 
 	// スタート遅延の初期化
-	m_startDelay = 0;// kStartDelay;
+	m_startDelay = kStartDelay;
 	m_startTextSize = kStartTextSizeMax;
 
 	m_countAttempt = 1;
@@ -113,6 +114,8 @@ void SceneMain::PlayGameSound()
 // 終了処理
 void SceneMain::End()
 {
+	m_selectedStage = StageState::End;
+
 	m_countAttempt = 0;
 	StopSoundMem(m_hPlayBgm);
 
@@ -168,11 +171,15 @@ void SceneMain::DrawStartCount()
 	}
 	else if (m_startDelay / 60 == 0)
 	{
+		SetFontSize(m_startTextSize + 5);
+		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xe9e9e9);
 		SetFontSize(m_startTextSize);
 		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
 	}
 	else
 	{
+		SetFontSize(m_startTextSize + 5);
+		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xe9e9e9, "%d", m_startDelay / 60);
 		SetFontSize(m_startTextSize);
 		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
 	}
