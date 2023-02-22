@@ -78,7 +78,7 @@ void SceneStageSelect::Draw()
 
 	// シーン名描画
 	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
 
 	// ボタン用メッセージ
 	SetFontSize(20);	// フォントサイズの設定
@@ -87,7 +87,7 @@ void SceneStageSelect::Draw()
 		if ((m_textTimer / 10) % 5 != 0)
 		{
 			// タイトルのテキストを表示
-			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xe9e9e9);
 		}
 
 		m_textTimer++;
@@ -107,14 +107,14 @@ void SceneStageSelect::Draw()
 		}
 
 		// 枠の描画
-		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xffffff, false);
+		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xe9e9e9, false);
 
 		// フォントサイズの設定
 		SetFontSize(20);
 
 		// 枠内の文字描画
 		menuY = menuY + (kMenuH / 2) - 15;
-		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", i + 1);
+		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xe9e9e9, "Stage %d", i + 1);
 	}
 
 	// 現在選択中の枠の描画
@@ -127,11 +127,11 @@ void SceneStageSelect::Draw()
 	}
 	
 	// 選択中の枠の描画
-	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0xff4500, true);
+	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuY + kMenuH - 10, 0x60CAAD, true);
 
 	// 選択中の枠内の文字描画
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "Stage %d", m_selectPos + 1);
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0x333333, "Stage %d", m_selectPos + 1);
 
 	// フェード処理用
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);

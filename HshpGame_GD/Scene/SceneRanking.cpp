@@ -7,7 +7,7 @@ namespace
 {
 	// タイトルメッセージ
 	const char* const kTextTitle = "Ranking";
-	const char* const kTitleMessage = "Escape";
+	const char* const kTitleMessage = "Back";
 
 	// メニューメッセージ
 	const char* const kGameEndText = "Exit";
@@ -67,7 +67,7 @@ void SceneRanking::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(50);
-	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextTitle, 7) / 2), Game::kScreenHeight / 6, kTextTitle, 0xff4500);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextTitle, 7) / 2), Game::kScreenHeight / 6, kTextTitle, 0x60CAAD);
 
 	// フォントサイズの設定
 	SetFontSize(20);
@@ -76,7 +76,7 @@ void SceneRanking::Draw()
 		if ((m_textTimer / 10) % 4 != 0)
 		{
 			// タイトルのテキストを表示
-			DrawString(50, Game::kScreenHeight - 50, kTitleMessage, 0xffffff);
+			DrawString(50, Game::kScreenHeight - 50, kTitleMessage, 0xe9e9e9);
 		}
 
 		m_textTimer++;
@@ -84,7 +84,7 @@ void SceneRanking::Draw()
 
 	int menuX = kMenuX, menuY = kMenuY - 35, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
 
-	DrawBox(menuX, menuY, menuW, menuH, 0xffffff, false);
+	DrawBox(menuX, menuY, menuW, menuH, 0xe9e9e9, false);
 
 	for (int i = 0; i < kMenuMax; i++)
 	{

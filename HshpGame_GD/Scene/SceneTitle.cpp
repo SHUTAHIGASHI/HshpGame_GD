@@ -82,7 +82,7 @@ void SceneTitle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(60);
-	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0xff4500);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
 
 	// フォントサイズの設定
 	SetFontSize(20);
@@ -91,7 +91,7 @@ void SceneTitle::Draw()
 		if ((m_textTimer / 10) % 4 != 0)
 		{
 			// タイトルのテキストを表示
-			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xffffff);
+			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xE9E9E9);
 		}
 
 		m_textTimer++;
@@ -103,7 +103,7 @@ void SceneTitle::Draw()
 	for (int i = 0; i < kMenuMax; i++)
 	{
 		menuY = kMenuY + (kMenuH * i) + 10;
-		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * i), 0xffffff, false);
+		DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * i), 0xE9E9E9, false);
 
 		// フォントサイズの設定
 		SetFontSize(20);
@@ -116,11 +116,11 @@ void SceneTitle::Draw()
 		else if (i == 3) drawText = kRankText;
 		else if (i == 4) drawText = kGameEndText;
 
-		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "%s", drawText.c_str());
+		DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xE9E9E9, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
-	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0xff4500, true);
+	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0x60CAAD, true);
 
 	menuY = menuY + (kMenuH / 2) - 15;
 	if (m_selectPos == 0) drawText = kChallengeModeText;
@@ -129,7 +129,7 @@ void SceneTitle::Draw()
 	else if (m_selectPos == 3) drawText = kRankText;
 	else if (m_selectPos == 4) drawText = kGameEndText;
 
-	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xffffff, "%s", drawText.c_str());
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0x333333, "%s", drawText.c_str());
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);

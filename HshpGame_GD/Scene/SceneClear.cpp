@@ -126,7 +126,7 @@ void SceneClear::NormalDraw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(m_textScale);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd700);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd733);
 	SetFontSize(20);
 
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
@@ -135,20 +135,26 @@ void SceneClear::NormalDraw()
 	for (int i = 0; i < kMenuMax; i++)
 	{
 		menuY = kMenuY + (kMenuH * i) + 10;
-		DrawBox(menuX, menuY, menuW, menuH + (kMenuH * i), 0xffffff, false);
+		DrawBox(menuX, menuY, menuW, menuH + (kMenuH * i), 0xe9e9e9, false);
 
 		// フォントサイズの設定
 		SetFontSize(20);
-
-		menuY = menuY + (kMenuH / 2) - 15;
 
 		if (i == 0) drawText = kNextText;
 		if (i == 1) drawText = kBackStageSelectText;
 		if (i == 2) drawText = kBackTitleText;
 
-		DrawFormatString(menuX + 20, menuY, 0xffffff, "%s", drawText.c_str());
+		menuY = menuY + (kMenuH / 2) - 15;
+		DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
-	DrawBox(menuX, menuY, menuW, menuH + (kMenuH * m_selectPos), 0xff0000, false);
+	DrawBox(menuX, menuY, menuW, menuH + (kMenuH * m_selectPos), 0x60CAAD, true);
+
+	if (m_selectPos == 0) drawText = kNextText;
+	if (m_selectPos == 1) drawText = kBackStageSelectText;
+	if (m_selectPos == 2) drawText = kBackTitleText;
+
+	menuY = menuY + (kMenuH / 2) - 15;
+	DrawFormatString(menuX + 20, menuY, 0x333333, "%s", drawText.c_str());
 }
