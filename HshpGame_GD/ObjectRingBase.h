@@ -6,7 +6,7 @@ class ObjectRingBase :
 {
 public:
     ObjectRingBase();
-    ~ObjectRingBase() {}
+    virtual ~ObjectRingBase() {}
 
     virtual void Init();
 

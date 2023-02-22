@@ -6,7 +6,7 @@ class ObjectBase
 {
 public:
 	ObjectBase();
-	~ObjectBase() {}
+	virtual ~ObjectBase() {}
 
 	virtual void Init();
 

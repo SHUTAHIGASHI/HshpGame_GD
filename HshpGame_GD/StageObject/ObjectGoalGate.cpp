@@ -51,3 +51,19 @@ void ObjectGoalGate::Draw()
 		m_imgX, m_imgY, imgW, imgH, 
 		m_hPortal, true);
 }
+
+bool ObjectGoalGate::CollisionCheck(Vec2 player, int resizeScale)
+{
+	if (!m_IsExist) return false;
+
+	// スパイクの当たり判定
+	if (GetRight() > player.x &&
+		player.x + Game::kBlockSize > GetLeft() &&
+		GetBottom() + resizeScale > player.y &&
+		player.y + Game::kBlockSize > GetTop())
+	{
+		return true;
+	}
+
+	return false;
+}

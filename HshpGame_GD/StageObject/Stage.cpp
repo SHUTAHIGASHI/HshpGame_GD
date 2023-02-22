@@ -288,7 +288,7 @@ namespace
 	constexpr int kScrollSpeed = 7;
 
 	// サイズ調整用定数
-	constexpr float kResizeScale = 8.0f;
+	constexpr int kResizeScale = 8.0f;
 }
 
 Stage::Stage() :
@@ -391,7 +391,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 {
 	if (m_stage[H][W] == 0) return false;
 
-	float playerScale = 0.0f;
+	int playerScale = 1;
 
 	// 当たっている場合、trueを返す
 	// ブロックの当たり判定
@@ -407,10 +407,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 		return true;
 	}
 	// ジャンプパッドの当たり判定
-	if (m_ObjectJumpPad[H][W].GetRight() - 5 > m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() > m_ObjectJumpPad[H][W].GetLeft() + 5 &&
-		m_ObjectJumpPad[H][W].GetBottom() > m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom()> m_ObjectJumpPad[H][W].GetTop() + Game::kBlockSize - (Game::kBlockSize / 4))
+	if (m_ObjectJumpPad[H][W].CollisionCheck(m_pPlayer->GetPos(), Game::kBlockSize - (Game::kBlockSize / 4)))
 	{
 		object = ObjectType::JumpPad;
 		return true;
@@ -439,10 +436,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 		return true;
 	}
 	// ゴールゲートの判定
-	if (m_ObjectGoalGate[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectGoalGate[H][W].GetLeft() &&
-		m_ObjectGoalGate[H][W].GetBottom() + (Game::kBlockSize * 2)>= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectGoalGate[H][W].GetTop())
+	if (m_ObjectGoalGate[H][W].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize * 2)))
 	{
 		object = ObjectType::GoalGate;
 		return true;

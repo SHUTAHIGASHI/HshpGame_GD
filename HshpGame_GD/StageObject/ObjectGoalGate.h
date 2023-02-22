@@ -15,6 +15,8 @@ public:
     void Update();
 
     void Draw();
+
+    bool CollisionCheck(Vec2 player, int resizeScale);
 private:
     int m_countFrame;
     int m_drawFrame = 0;
