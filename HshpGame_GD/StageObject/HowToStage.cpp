@@ -246,19 +246,13 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& 
 
 	// 当たっている場合、trueを返す
 	// ブロックの当たり判定
-	if (m_ObjectBlock[H][W].GetRight() >= m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() >= m_ObjectBlock[H][W].GetLeft() &&
-		m_ObjectBlock[H][W].GetBottom() >= m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() >= m_ObjectBlock[H][W].GetTop())
+	if (m_ObjectBlock[H][W].CollisionCheck(m_pHPlayer->GetPos()))
 	{
 		object = ObjectType::Block;
 		return true;
 	}
 	// ジャンプリングの当たり判定
-	if (m_ObjectJumpRing[H][W].GetRight() >= m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() >= m_ObjectJumpRing[H][W].GetLeft() &&
-		m_ObjectJumpRing[H][W].GetBottom() >= m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() >= m_ObjectJumpRing[H][W].GetTop())
+	if (m_ObjectJumpRing[H][W].CollisionCheck(m_pHPlayer->GetPos()))
 	{
 		object = ObjectType::JumpRing;
 		return true;
@@ -273,36 +267,25 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& 
 		return true;
 	}
 	// スパイクの当たり判定
-	if (m_ObjectSpike[H][W].GetRight() - kResizeScale > m_pHPlayer->GetLeft() + playerScale &&
-		m_pHPlayer->GetRight() - playerScale > m_ObjectSpike[H][W].GetLeft() + kResizeScale &&
-		m_ObjectSpike[H][W].GetBottom() - kResizeScale > m_pHPlayer->GetTop() + playerScale &&
-		m_pHPlayer->GetBottom() - playerScale > m_ObjectSpike[H][W].GetTop() + kResizeScale)
+	if (m_ObjectSpike[H][W].CollisionCheck(m_pHPlayer->GetPos(), kResizeScale, playerScale))
 	{
 		object = ObjectType::Spike;
 		return true;
 	}
 	// グラビティリングの当たり判定
-	if (m_ObjectGravityRing[H][W].GetRight() >= m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() >= m_ObjectGravityRing[H][W].GetLeft() &&
-		m_ObjectGravityRing[H][W].GetBottom() >= m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() >= m_ObjectGravityRing[H][W].GetTop())
+	if (m_ObjectGravityRing[H][W].CollisionCheck(m_pHPlayer->GetPos()))
 	{
 		object = ObjectType::GravityRing;
 		return true;
 	}
 	// ダッシュリングの当たり判定
-	if (m_ObjectDashRing[H][W].GetRight() >= m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() >= m_ObjectDashRing[H][W].GetLeft() &&
-		m_ObjectDashRing[H][W].GetBottom() >= m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() >= m_ObjectDashRing[H][W].GetTop())
+	if (m_ObjectDashRing[H][W].CollisionCheck(m_pHPlayer->GetPos()))
 	{
 		object = ObjectType::DashRing;
 		return true;
 	}
-	if (m_ObjectReverseRing[H][W].GetRight() >= m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() >= m_ObjectReverseRing[H][W].GetLeft() &&
-		m_ObjectReverseRing[H][W].GetBottom() >= m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() >= m_ObjectReverseRing[H][W].GetTop())
+	// リバースリング
+	if (m_ObjectReverseRing[H][W].CollisionCheck(m_pHPlayer->GetPos()))
 	{
 		object = ObjectType::ReverseRing;
 		return true;

@@ -45,9 +45,9 @@ public:
 
 	bool CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &object);
 
-	bool IsUnder(const Vec2 playerPos, int H, int W, float &tempPos);
+	bool IsUnder(int H, int W, float &tempPos);
 
-	bool IsTop(const Vec2 playerPos, int H, int W, float& tempPos);
+	bool IsTop(int H, int W, float& tempPos);
 
 	// ステージ情報の変更
 	void StageManage();

@@ -2,16 +2,10 @@
 
 class Stage;
 
-enum class PlayerState
-{
-	Cube,
-};
-
 class Player
 {
 public:
 	Player() :
-		m_playerState(PlayerState::Cube),
 		m_pStage(nullptr),
 		m_updateFunc(&Player::CubeNormalUpdate),
 		m_pos(),
@@ -73,9 +67,6 @@ public:
 	// 横方向のベクトル削除
 	void DeleteVecX() { m_vec.x = 0.0f; }
 
-	// プレイヤーの現在の状態を取得
-	PlayerState GetPlayerState() const { return m_playerState; }
-
 	// 四方向の取得
 	float GetLeft() const { return m_pos.x; }
 	float GetTop() const { return m_pos.y; }
@@ -97,8 +88,6 @@ public:
 	Vec2 GetPos() const { return m_pos; }
 
 private:
-	// 現在のプレイヤーの状態
-	PlayerState m_playerState;
 	
 	// ステージのポインタ
 	Stage* m_pStage;

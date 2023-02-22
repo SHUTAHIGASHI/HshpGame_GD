@@ -85,7 +85,7 @@ void SceneMain::Init()
 	else m_pStage->SetSelectedStage(m_selectedStage);
 
 	// スタート遅延の初期化
-	m_startDelay = kStartDelay;
+	m_startDelay = 0;// kStartDelay;
 	m_startTextSize = kStartTextSizeMax;
 
 	m_countAttempt = 1;

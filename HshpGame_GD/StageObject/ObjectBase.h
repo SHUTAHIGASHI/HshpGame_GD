@@ -16,7 +16,8 @@ public:
 
 	virtual void Draw();
 
-	virtual bool CollisionCheck(float X, float Y);
+	virtual bool CollisionCheck(Vec2 player, int resizeScale, int playerScale);
+	virtual bool CollisionCheck(Vec2 player);
 
 	// プレイヤーの中心座標取得
 	virtual float GetCenterX() { return m_pos.x + (Game::kBlockSize / 2); }

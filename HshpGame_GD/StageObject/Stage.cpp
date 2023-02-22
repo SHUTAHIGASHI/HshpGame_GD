@@ -395,19 +395,13 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 
 	// 当たっている場合、trueを返す
 	// ブロックの当たり判定
-	if (m_ObjectBlock[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectBlock[H][W].GetLeft() &&
-		m_ObjectBlock[H][W].GetBottom() >= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectBlock[H][W].GetTop())
+	if (m_ObjectBlock[H][W].CollisionCheck(m_pPlayer->GetPos()))
 	{
 		object = ObjectType::Block;
 		return true;
 	}
 	// ジャンプリングの当たり判定
-	if (m_ObjectJumpRing[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectJumpRing[H][W].GetLeft() &&
-		m_ObjectJumpRing[H][W].GetBottom() >= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectJumpRing[H][W].GetTop())
+	if (m_ObjectJumpRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
 	{
 		object = ObjectType::JumpRing;
 		return true;
@@ -422,36 +416,24 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 		return true;
 	}
 	// スパイクの当たり判定
-	if (m_ObjectSpike[H][W].GetRight() - kResizeScale > m_pPlayer->GetLeft() + playerScale&&
-		m_pPlayer->GetRight() - playerScale > m_ObjectSpike[H][W].GetLeft() + kResizeScale &&
-		m_ObjectSpike[H][W].GetBottom() - kResizeScale > m_pPlayer->GetTop() + playerScale &&
-		m_pPlayer->GetBottom() - playerScale > m_ObjectSpike[H][W].GetTop() + kResizeScale)
+	if (m_ObjectSpike[H][W].CollisionCheck(m_pPlayer->GetPos(), kResizeScale, playerScale))
 	{
 		object = ObjectType::Spike;
 		return true;
 	}
 	// グラビティリングの当たり判定
-	if (m_ObjectGravityRing[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectGravityRing[H][W].GetLeft() &&
-		m_ObjectGravityRing[H][W].GetBottom() >= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectGravityRing[H][W].GetTop())
+	if (m_ObjectGravityRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
 	{
 		object = ObjectType::GravityRing;
 		return true;
 	}
 	// ダッシュリングの当たり判定
-	if (m_ObjectDashRing[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectDashRing[H][W].GetLeft() &&
-		m_ObjectDashRing[H][W].GetBottom() >= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectDashRing[H][W].GetTop())
+	if (m_ObjectDashRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
 	{
 		object = ObjectType::DashRing;
 		return true;
 	}
-	if (m_ObjectReverseRing[H][W].GetRight() >= m_pPlayer->GetLeft() &&
-		m_pPlayer->GetRight() >= m_ObjectReverseRing[H][W].GetLeft() &&
-		m_ObjectReverseRing[H][W].GetBottom() >= m_pPlayer->GetTop() &&
-		m_pPlayer->GetBottom() >= m_ObjectReverseRing[H][W].GetTop())
+	if (m_ObjectReverseRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
 	{
 		object = ObjectType::ReverseRing;
 		return true;
@@ -471,12 +453,12 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 }
 
 // オブジェクトがプレイヤーの下にあるかどうか
-bool Stage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
+bool Stage::IsUnder(int H, int W, float& tempPos)
 {	
-	if (m_ObjectBlock[H][W].GetPos().y > m_pPlayer->GetCenterY())
+	if (m_ObjectBlock[H][W].GetTop() > m_pPlayer->GetCenterY())
 	{
 		// ブロックの座標を代入
-		tempPos = m_ObjectBlock[H][W].GetPos().y - Game::kBlockSize;
+		tempPos = m_ObjectBlock[H][W].GetTop() - Game::kBlockSize;
 		return true;
 	}
 	
@@ -484,12 +466,12 @@ bool Stage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
 	return false;
 }
 
-bool Stage::IsTop(const Vec2 playerPos, int H, int W, float& tempPos)
+bool Stage::IsTop(int H, int W, float& tempPos)
 {
-	if (m_ObjectBlock[H][W].GetPos().y + Game::kBlockSize < m_pPlayer->GetCenterY())
+	if (m_ObjectBlock[H][W].GetTop() + Game::kBlockSize < m_pPlayer->GetCenterY())
 	{
 		// ブロックの座標を代入
-		tempPos = m_ObjectBlock[H][W].GetPos().y + Game::kBlockSize;
+		tempPos = m_ObjectBlock[H][W].GetTop() + Game::kBlockSize;
 		return true;
 	}
 

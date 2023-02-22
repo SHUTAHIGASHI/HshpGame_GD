@@ -17,7 +17,8 @@ public:
 		m_textScaleAcc(0),
 		m_name(),
 		m_isNextStage(false),
-		m_isEnd(false)
+		m_isEnd(false),
+		m_pRanking(nullptr)
 	{
 	}
 	virtual ~SceneClear() {}

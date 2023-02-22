@@ -149,13 +149,11 @@ void Player::ChangeUpdateType()
     if (m_pStage->GetStageState() == StageState::eighthStage)
     {
         m_updateFunc = &Player::CubeRevGravityUpdate;
-        m_playerState = PlayerState::Cube;
         m_isRevGravity = true;
     }
     else
     {
         m_updateFunc = &Player::CubeNormalUpdate;
-        m_playerState = PlayerState::Cube;
     }
 }
 
@@ -176,6 +174,7 @@ void Player::OnHitObject(const InputState& input)
     int widthNum = 0;
     if(m_isScroll) widthNum = Game::kScreenWidthTripleNum;
     else widthNum = Game::kScreenWidthNum;
+    float tempPos = 0.0f;
 
     for (int i = 0; i < Game::kScreenHeightNum; i++)
     {
@@ -183,7 +182,6 @@ void Player::OnHitObject(const InputState& input)
         {
             if (m_pStage->CollisionCheck(m_pos, i, j, object))
             {
-                float tempPos = 0.0f;
                 if (object == ObjectType::GoalGate)
                 {
                     m_updateFunc = &Player::GoalUpdate;
@@ -253,30 +251,27 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else if (object == ObjectType::Block)
                 {
-                    if (m_playerState == PlayerState::Cube)
+                    m_isDashRingEnabled = false;
+                    if (!m_isRevGravity)
                     {
-                        m_isDashRingEnabled = false;
-                        if (!m_isRevGravity)
+                        if (m_pStage->IsUnder(i, j, tempPos))
                         {
-                            if (m_pStage->IsUnder(m_pos, i, j, tempPos))
-                            {
-                                m_pos.y = tempPos;
-                                m_angle = 0.0f;
-                                m_vec.y = 0.0f;
-                                m_isField = true;
-                                continue;
-                            }
+                            m_isField = true;
+                            m_vec.y = 0.0f;
+                            m_angle = 0.0f;
+                            m_pos.y = tempPos;
+                            return;
                         }
-                        else if (m_isRevGravity)
+                    }
+                    else if (m_isRevGravity)
+                    {
+                        if (m_pStage->IsTop(i, j, tempPos))
                         {
-                            if (m_pStage->IsTop(m_pos, i, j, tempPos))
-                            {
-                                m_pos.y = tempPos;
-                                m_angle = 0.0f;
-                                m_vec.y = 0.0f;
-                                m_isField = true;
-                                continue;
-                            }
+                            m_pos.y = tempPos;
+                            m_angle = 0.0f;
+                            m_vec.y = 0.0f;
+                            m_isField = true;
+                            return;
                         }
                     }
 
@@ -373,8 +368,8 @@ void Player::CubeNormalUpdate(const InputState& input)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if(!m_isDashRingEnabled) m_vec.y += kGravity;
-    if (m_isMoveRight) m_angle += kRotaSpeed;
-    else m_angle += -kRotaSpeed;
+    if (m_isMoveRight && !m_isField) m_angle += kRotaSpeed;
+    else if(!m_isMoveRight && !m_isField) m_angle += -kRotaSpeed;
 
     if (m_vec.y > kCubeMaxSpeed)
     {
@@ -424,8 +419,8 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if (!m_isDashRingEnabled) m_vec.y += -kGravity;
-    if (m_isMoveRight) m_angle += -kRotaSpeed;
-    else m_angle += kRotaSpeed;
+    if (m_isMoveRight && !m_isField) m_angle += -kRotaSpeed;
+    else if(!m_isMoveRight && !m_isField)m_angle += kRotaSpeed;
 
     if (m_vec.y < -kCubeMaxSpeed)
     {
