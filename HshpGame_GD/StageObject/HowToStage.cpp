@@ -227,12 +227,12 @@ void HowToStage::Draw()
 		{
 			// ステージギミックの描画
 			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Draw();
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Draw(0xffff00);
+			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Draw(0xFFD700);
 			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
 			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Draw();
-			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].Draw(0x4169e1);
+			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].Draw(0x00bfff);
 			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].Draw(0xdc143c);
-			if (m_stage[i][j] == 8) m_ObjectReverseRing[i][j].Draw(0x9400d3);
+			if (m_stage[i][j] == 8) m_ObjectReverseRing[i][j].Draw(0x9932cc);
 		}
 	}
 }
