@@ -258,10 +258,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& 
 		return true;
 	}
 	// ジャンプパッドの当たり判定
-	if (m_ObjectJumpPad[H][W].GetRight() - 5 > m_pHPlayer->GetLeft() &&
-		m_pHPlayer->GetRight() > m_ObjectJumpPad[H][W].GetLeft() + 5 &&
-		m_ObjectJumpPad[H][W].GetBottom() > m_pHPlayer->GetTop() &&
-		m_pHPlayer->GetBottom() > m_ObjectJumpPad[H][W].GetTop() + Game::kBlockSize - (Game::kBlockSize / 4))
+	if (m_ObjectJumpPad[H][W].CollisionCheck(m_pHPlayer->GetPos(), static_cast<int>(Game::kBlockSize - (Game::kBlockSize / 4))))
 	{
 		object = ObjectType::JumpPad;
 		return true;

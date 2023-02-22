@@ -298,8 +298,8 @@ void HowToPlayer::CubeNormalUpdate(const InputState& input, bool isPrac)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if (!m_isDashRingEnabled) m_vec.y += kGravity;
-    if (m_isMoveRight) m_angle += kRotaSpeed;
-    else m_angle += -kRotaSpeed;
+    if (m_isMoveRight && !m_isField) m_angle += kRotaSpeed;
+    else if (!m_isMoveRight && !m_isField) m_angle += -kRotaSpeed;
 
     if (m_vec.y > kCubeMaxSpeed)
     {
@@ -363,8 +363,8 @@ void HowToPlayer::CubeRevGravityUpdate(const InputState& input, bool isPrac)
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if (!m_isDashRingEnabled) m_vec.y += -kGravity;
-    if (m_isMoveRight) m_angle += -kRotaSpeed;
-    else m_angle += kRotaSpeed;
+    if (m_isMoveRight && !m_isField) m_angle += -kRotaSpeed;
+    else if (!m_isMoveRight && !m_isField)m_angle += kRotaSpeed;
 
     if (m_vec.y < -kCubeMaxSpeed)
     {
