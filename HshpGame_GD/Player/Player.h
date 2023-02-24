@@ -12,7 +12,6 @@ public:
 		m_vec(),
 		m_lastPos(),
 		m_hPlayer(-1),
-		m_hWaveBurner(-1),
 		m_hDeathEffect(-1),
 		m_hDeathSound(-1),
 		m_playerScale(0.0),
@@ -35,7 +34,7 @@ public:
 	void SetStage(Stage* stage) { m_pStage = stage; }
 
 	// プレイヤーの初期化
-	void Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound);
+	void Init(int playerHandle, int playerDeathEffect, int hDeathSound);
 
 	void End();
 
@@ -116,7 +115,6 @@ private:
 
 	// 画像データ
 	int m_hPlayer;
-	int m_hWaveBurner;
 	int m_hDeathEffect;
 
 	// 音データ

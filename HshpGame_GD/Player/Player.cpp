@@ -30,7 +30,7 @@ namespace
     constexpr float kWaveSpeed = 12.0f;
 }
 
-void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound)
+void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
 {    
     m_isStageClear = false;
     m_isDead = false;
@@ -39,7 +39,6 @@ void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int h
     m_isScroll = false;
 
     m_hPlayer = playerHandle;
-    m_hWaveBurner = waveBurner;
     m_hDeathEffect = playerDeathEffect;
     m_deathCountFrame = 0;
     GetGraphSizeF(m_hDeathEffect, &m_effectWidth, &m_effectHeight);
