@@ -18,5 +18,6 @@ public:
 
     bool CollisionCheck(Vec2 player, int resizeScale);
 private:
+    int countFrame;
 };
 

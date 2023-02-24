@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EffectRing.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ObjectRingBase.cpp" />
     <ClCompile Include="Player\HowToPlayer.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EffectRing.h" />
     <ClInclude Include="ObjectRingBase.h" />
     <ClInclude Include="Player\HowToPlayer.h" />
     <ClInclude Include="Scene\SceneHowTo.h" />

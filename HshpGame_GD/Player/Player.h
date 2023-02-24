@@ -1,6 +1,8 @@
 #include "game.h"
+#include <memory>
 
 class Stage;
+class EffectRing;
 
 class Player
 {
@@ -91,7 +93,8 @@ public:
 	Vec2 GetPos() const { return m_pos; }
 
 private:
-	
+	std::shared_ptr<EffectRing> m_pEffectRing;
+
 	// ステージのポインタ
 	Stage* m_pStage;
 

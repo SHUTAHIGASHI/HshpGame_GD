@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "game.h"
 #include "Stage.h"
+#include "EffectRing.h"
 #include <cassert>
 
 namespace
@@ -32,6 +33,9 @@ namespace
 
 void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
 {    
+    m_pEffectRing = std::make_shared<EffectRing>();
+    m_pEffectRing->Init();
+
     m_isStageClear = false;
     m_isDead = false;
     m_isRevGravity = false;
@@ -167,6 +171,8 @@ void Player::Update(const InputState& input)
 #endif
     if (m_isDead) return;
 
+    m_pEffectRing->Update();
+
     (this->*m_updateFunc)(input);
 }
 
@@ -187,6 +193,7 @@ void Player::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_isDashRingEnabled = false;
                 if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
                 else m_vec.y = -kJumpRingJumpAcc;
@@ -211,6 +218,7 @@ void Player::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_isDashRingEnabled = false;
                 if (!m_isRevGravity)
                 {
@@ -232,6 +240,7 @@ void Player::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_vec.y = 0.0f;
                 m_isDashRingEnabled = true;
             }
@@ -242,6 +251,7 @@ void Player::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_vec.x *= -1;
                 if (m_isMoveRight) m_isMoveRight = false;
                 else m_isMoveRight = true;
@@ -289,6 +299,8 @@ void Player::OnHitObject(const InputState& input)
 
 void Player::OnDead()
 {
+    m_pEffectRing->End();
+
     m_isDead = true;
     PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
 }
@@ -325,6 +337,8 @@ void Player::Draw()
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
+
+    m_pEffectRing->Draw(m_pos);
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 

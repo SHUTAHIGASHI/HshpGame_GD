@@ -749,6 +749,11 @@ void Stage::NormalUpdate()
 		m_ObjectJumpRing[i].Update();
 	}
 
+	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
+	{
+		m_ObjectJumpPad[i].Update();
+	}
+
 	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
 	{
 		m_ObjectGravityRing[i].Update();
