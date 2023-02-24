@@ -217,7 +217,7 @@ namespace
 		{0,0,0,0,0,5,0,0,0,5,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,5,0,0,0,5,0,0,0,0,0,5,5,5,5,5,5,5,0,0,0,0,5,0,0,0,5,0,0,0,0,5,0,0,0,0},
+		{0,0,0,0,0,5,0,0,0,5,0,0,0,0,0,5,5,5,5,5,5,5,0,0,0,0,0,0,0,5,0,0,0,0,0,5,0,0,0,0},
 		{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -499,8 +499,6 @@ void Stage::Draw()
 	DrawExtendGraph(bgX + (Game::kScreenWidth) * 2, bgY, bgW + (Game::kScreenWidth) * 2, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DrawRevEffect();
-
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
 		m_ObjectGoalGate[i].Draw();
@@ -540,14 +538,6 @@ void Stage::Draw()
 	{
 		m_ObjectBlock[i].Draw();
 	}
-}
-
-void Stage::DrawRevEffect()
-{
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	DrawBox(0, 0, 5, Game::kScreenHeight, 0x0000ff, true);
-	DrawBox(Game::kScreenWidth - 5, 0, Game::kScreenWidth, Game::kScreenHeight, 0x0000ff, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 // プレイヤーとオブジェクトの当たり判定チェック

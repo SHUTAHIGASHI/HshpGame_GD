@@ -364,7 +364,7 @@ void Player::DrawMoveEffect()
         }
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
-        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, 1, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
+        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
 }
