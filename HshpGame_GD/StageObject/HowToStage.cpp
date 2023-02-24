@@ -150,7 +150,7 @@ namespace
 	constexpr int kScrollSpeed = 7;
 
 	// サイズ調整用定数
-	constexpr float kResizeScale = 8.0f;
+	constexpr int kResizeScale = 8;
 }
 
 HowToStage::HowToStage() :
@@ -281,43 +281,43 @@ void HowToStage::SetStage()
 			{
 				m_ObjectBlock[countBlock].SetPos(blockPosX, blockPosY);
 				countBlock++;
-				if (countBlock > m_ObjectBlock.size()) countBlock = m_ObjectBlock.size();
+				if (countBlock > m_ObjectBlock.size()) countBlock = static_cast<int>(m_ObjectBlock.size());
 			}
 			if (m_stage[i][j] == 3)
 			{
 				m_ObjectJumpRing[countJumpRing].SetPos(blockPosX, blockPosY);
 				countJumpRing++;
-				if (countJumpRing > m_ObjectJumpRing.size()) countJumpRing = m_ObjectJumpRing.size();
+				if (countJumpRing > m_ObjectJumpRing.size()) countJumpRing = static_cast<int>(m_ObjectJumpRing.size());
 			}
 			if (m_stage[i][j] == 4)
 			{
 				m_ObjectJumpPad[countJumpPad].SetPos(blockPosX, blockPosY);
 				countJumpPad++;
-				if (countJumpPad > m_ObjectJumpPad.size()) countJumpPad = m_ObjectJumpPad.size();
+				if (countJumpPad > m_ObjectJumpPad.size()) countJumpPad = static_cast<int>(m_ObjectJumpPad.size());
 			}
 			if (m_stage[i][j] == 5)
 			{
 				m_ObjectSpike[countSpike].SetPos(blockPosX, blockPosY);
 				countSpike++;
-				if (countSpike > m_ObjectSpike.size()) countSpike = m_ObjectSpike.size();
+				if (countSpike > m_ObjectSpike.size()) countSpike = static_cast<int>(m_ObjectSpike.size());
 			}
 			if (m_stage[i][j] == 6)
 			{
 				m_ObjectGravityRing[countGravRing].SetPos(blockPosX, blockPosY);
 				countGravRing++;
-				if (countGravRing > m_ObjectGravityRing.size()) countGravRing = m_ObjectGravityRing.size();
+				if (countGravRing > m_ObjectGravityRing.size()) countGravRing = static_cast<int>(m_ObjectGravityRing.size());
 			}
 			if (m_stage[i][j] == 7)
 			{
 				m_ObjectDashRing[countDashRing].SetPos(blockPosX, blockPosY);
 				countDashRing++;
-				if (countDashRing > m_ObjectDashRing.size()) countDashRing = m_ObjectDashRing.size();
+				if (countDashRing > m_ObjectDashRing.size()) countDashRing = static_cast<int>(m_ObjectDashRing.size());
 			}
 			if (m_stage[i][j] == 8)
 			{
 				m_ObjectReverseRing[countRevRing].SetPos(blockPosX, blockPosY);
 				countRevRing++;
-				if (countRevRing > m_ObjectReverseRing.size()) countRevRing = m_ObjectReverseRing.size();
+				if (countRevRing > m_ObjectReverseRing.size()) countRevRing = static_cast<int>(m_ObjectReverseRing.size());
 			}
 		}
 	}
