@@ -168,7 +168,6 @@ void SceneMain::Draw()
 	
 	// ’§í‰ñ”‚Ì•`‰æ
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
-
 	// Œ»İ‚Ìƒ‚[ƒh‚Ì•`‰æ
 	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
 
