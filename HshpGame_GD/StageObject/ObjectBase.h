@@ -36,7 +36,5 @@ protected:
 
 	// ‰æ‘œƒnƒ“ƒhƒ‹
 	int m_hObjectImg;
-	
-	bool m_IsExist;
 };
 

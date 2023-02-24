@@ -1,8 +1,7 @@
 #include "ObjectBase.h"
 
 ObjectBase::ObjectBase() :
-	m_hObjectImg(-1),
-	m_IsExist(false)
+	m_hObjectImg(-1)
 {
 }
 
@@ -24,8 +23,6 @@ void ObjectBase::Draw()
 
 bool ObjectBase::CollisionCheck(Vec2 player, int resizeScale, int playerScale)
 {
-	if (!m_IsExist) return false;
-
 	// オブジェクトの当たり判定
 	if (GetRight() - resizeScale > player.x + playerScale &&
 		(player.x + Game::kBlockSize) - playerScale > GetLeft() + resizeScale &&
@@ -40,8 +37,6 @@ bool ObjectBase::CollisionCheck(Vec2 player, int resizeScale, int playerScale)
 
 bool ObjectBase::CollisionCheck(Vec2 player)
 {
-	if (!m_IsExist) return false;
-
 	// オブジェクトの当たり判定
 	if (GetRight() > player.x &&
 		player.x + Game::kBlockSize > GetLeft()&&

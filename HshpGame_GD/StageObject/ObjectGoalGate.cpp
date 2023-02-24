@@ -10,33 +10,25 @@ ObjectGoalGate::ObjectGoalGate() :
 
 void ObjectGoalGate::Init(int hPortal)
 {
-	m_IsExist = false;
-
 	m_hPortal = hPortal;
 	
-	m_pos.x = -Game::kBlockSize;
-	m_pos.y = -Game::kBlockSize * 3;
+	m_pos.x = 0;
+	m_pos.y = 0;
 }
 
 void ObjectGoalGate::SetPos(float X, float Y)
 {
-	m_IsExist = true;
-
 	m_pos.x = X;
 	m_pos.y = Y;
 }
 
 void ObjectGoalGate::Update()
 {
-	if (!m_IsExist) return;
-
 	m_countFrame++;
 }
 
 void ObjectGoalGate::Draw()
 {
-	if (!m_IsExist) return;
-
 	m_drawFrame += m_countFrame % 2;
 	if (m_drawFrame > 8) m_drawFrame = 0;
 	
@@ -54,8 +46,6 @@ void ObjectGoalGate::Draw()
 
 bool ObjectGoalGate::CollisionCheck(Vec2 player, int resizeScale)
 {
-	if (!m_IsExist) return false;
-
 	// スパイクの当たり判定
 	if (GetRight() > player.x &&
 		player.x + Game::kBlockSize > GetLeft() &&

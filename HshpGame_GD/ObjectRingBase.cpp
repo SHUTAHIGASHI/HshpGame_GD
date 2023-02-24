@@ -8,10 +8,8 @@ ObjectRingBase::ObjectRingBase() :
 
 void ObjectRingBase::Init()
 {
-	m_IsExist = false;
-
-	m_pos.x = -Game::kBlockSize;
-	m_pos.y = -Game::kBlockSize;
+	m_pos.x = 0;
+	m_pos.y = 0;
 
 	circleSize = (Game::kBlockSize / 2) - 5.0f;
 	sizeAcc = 0.5f;
@@ -19,16 +17,12 @@ void ObjectRingBase::Init()
 
 void ObjectRingBase::SetPos(float X, float Y)
 {
-	m_IsExist = true;
-
 	m_pos.x = X;
 	m_pos.y = Y;
 }
 
 void ObjectRingBase::Update()
 {
-	if (!m_IsExist) return;
-
 	circleSize += sizeAcc;
 
 	if (circleSize > (Game::kBlockSize / 2) - 5) sizeAcc *= -1;
@@ -37,8 +31,6 @@ void ObjectRingBase::Update()
 
 void ObjectRingBase::Draw(int color)
 {
-	if (!m_IsExist) return;
-
 	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), color, true);
 	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }
