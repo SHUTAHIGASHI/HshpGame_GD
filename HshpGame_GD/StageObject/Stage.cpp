@@ -316,7 +316,6 @@ void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock)
 	if(m_stageState == StageState::tenthStage) m_scrollAcc = -kScrollSpeed;
 
 	InitStage(hSpike, hPortal, hBlock);
-
 	SetStage();
 }
 
@@ -675,7 +674,8 @@ void Stage::StageManage()
 		m_updateFunc = &Stage::ScrollUpdate;
 		stageWidthNum = Game::kScreenWidthTripleNum;
 	}
-	
+
+	ResetStage();
 
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
@@ -732,7 +732,6 @@ void Stage::StageManage()
 void Stage::SetNextStageState()
 {
 	m_stageState = static_cast<StageState>(static_cast<int>(m_stageState) + 1);
-
 	if (m_stageState == StageState::End) m_stageState = StageState::firstStage;
 }
 

@@ -42,11 +42,11 @@ public:
 
 	void Draw();
 
-	bool CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& object);
+	bool CollisionCheck(const Vec2 playerPos, ObjectType& object);
 
-	bool IsUnder(const Vec2 playerPos, int H, int W, float& tempPos);
+	bool IsUnder(float& tempPos);
 
-	bool IsTop(const Vec2 playerPos, int H, int W, float& tempPos);
+	bool IsTop(float& tempPos);
 
 	// ステージ情報の変更
 	void StageManage();

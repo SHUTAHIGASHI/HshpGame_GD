@@ -100,110 +100,112 @@ void HowToPlayer::OnHitObject(const InputState& input)
 {
     ObjectType object;
 
-    int widthNum = Game::kScreenWidthNum;
-
-    for (int i = 0; i < Game::kScreenHeightNum; i++)
+    while(m_pHStage->CollisionCheck(m_pos, object))
     {
-        for (int j = 0; j < widthNum; j++)
+        float tempPos = 0.0f;
+        if (object == ObjectType::GoalGate)
         {
-            if (m_pHStage->CollisionCheck(m_pos, i, j, object))
+            m_updateFunc = &HowToPlayer::GoalUpdate;
+            return;
+        }
+        
+        if (object == ObjectType::JumpRing)
+        {
+            if (input.IsTriggered(InputType::jump))
             {
-                float tempPos = 0.0f;
-                if (object == ObjectType::GoalGate)
+                m_isDashRingEnabled = false;
+                if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
+                else m_vec.y = -kJumpRingJumpAcc;
+            }
+            return;
+        }
+        
+        if (object == ObjectType::JumpPad)
+        {
+            m_isDashRingEnabled = false;
+            m_vec.y = kJumpPadJumpAcc;	// ジャンプ開始
+            return;
+        }
+        
+        if (object == ObjectType::Spike)
+        {
+            PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
+            m_isDead = true;
+            return;
+        }
+        
+        if (object == ObjectType::GravityRing)
+        {
+            if (input.IsTriggered(InputType::jump))
+            {
+                m_isDashRingEnabled = false;
+                if (!m_isRevGravity)
                 {
-                    m_updateFunc = &HowToPlayer::GoalUpdate;
-                    return;
+                    m_isRevGravity = true;	// 重力反転
+                    m_vec.y = -kRevGravityAcc;
+                    m_updateFunc = &HowToPlayer::CubeRevGravityUpdate;
                 }
-                else if (object == ObjectType::JumpRing)
+                else
                 {
-                    if (input.IsTriggered(InputType::jump))
-                    {
-                        m_isDashRingEnabled = false;
-                        if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
-                        else m_vec.y = -kJumpRingJumpAcc;
-                        return;
-                    }
+                    m_isRevGravity = false; // 重力正常
+                    m_vec.y = kRevGravityAcc;
+                    m_updateFunc = &HowToPlayer::CubeNormalUpdate;
                 }
-                else if (object == ObjectType::JumpPad)
+            }
+            return;
+        }
+        
+        if (object == ObjectType::DashRing)
+        {
+            if (input.IsTriggered(InputType::jump))
+            {
+                m_vec.y = 0.0f;
+                m_isDashRingEnabled = true;
+            }
+            return;
+        }
+        
+        if (object == ObjectType::ReverseRing)
+        {
+            if (input.IsTriggered(InputType::jump))
+            {
+                m_vec.x *= -1;
+                if (m_isMoveRight) m_isMoveRight = false;
+                else m_isMoveRight = true;
+            }
+            return;
+        }
+        
+        if (object == ObjectType::Block)
+        {
+            m_isDashRingEnabled = false;
+            if (!m_isRevGravity)
+            {
+                if (m_pHStage->IsUnder(tempPos))
                 {
-                    m_isDashRingEnabled = false;
-                    m_vec.y = kJumpPadJumpAcc;	// ジャンプ開始
-                    return;
+                    m_isField = true;
+                    m_vec.y = 0.0f;
+                    m_angle = 0.0f;
+                    m_pos.y = tempPos;
                 }
-                else if (object == ObjectType::Spike)
+                else
                 {
-                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
                     m_isDead = true;
+                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
                     return;
                 }
-                else if (object == ObjectType::GravityRing)
+            }
+            else if (m_isRevGravity)
+            {
+                if (m_pHStage->IsTop(tempPos))
                 {
-                    if (input.IsTriggered(InputType::jump))
-                    {
-                        m_isDashRingEnabled = false;
-                        if (!m_isRevGravity)
-                        {
-                            m_isRevGravity = true;	// 重力反転
-                            m_vec.y = -kRevGravityAcc;
-                            m_updateFunc = &HowToPlayer::CubeRevGravityUpdate;
-                        }
-                        else
-                        {
-                            m_isRevGravity = false; // 重力正常
-                            m_vec.y = kRevGravityAcc;
-                            m_updateFunc = &HowToPlayer::CubeNormalUpdate;
-                        }
-                        return;
-                    }
+                    m_isField = true;
+                    m_vec.y = 0.0f;
+                    m_angle = 0.0f;
+                    m_pos.y = tempPos;
                 }
-                else if (object == ObjectType::DashRing)
+                else
                 {
-                    if (input.IsTriggered(InputType::jump))
-                    {
-                        m_vec.y = 0.0f;
-                        m_isDashRingEnabled = true;
-                        return;
-                    }
-                }
-                else if (object == ObjectType::ReverseRing)
-                {
-                    if (input.IsTriggered(InputType::jump))
-                    {
-                        m_vec.x *= -1;
-                        if (m_isMoveRight) m_isMoveRight = false;
-                        else m_isMoveRight = true;
-                        return;
-                    }
-                }
-                else if (object == ObjectType::Block)
-                {
-                    if (m_playerState == PlayerState::Cube)
-                    {
-                        m_isDashRingEnabled = false;
-                        if (!m_isRevGravity)
-                        {
-                            if (m_pHStage->IsUnder(m_pos, i, j, tempPos))
-                            {
-                                m_pos.y = tempPos;
-                                m_angle = 0.0f;
-                                m_vec.y = 0.0f;
-                                m_isField = true;
-                                continue;
-                            }
-                        }
-                        else if (m_isRevGravity)
-                        {
-                            if (m_pHStage->IsTop(m_pos, i, j, tempPos))
-                            {
-                                m_pos.y = tempPos;
-                                m_angle = 0.0f;
-                                m_vec.y = 0.0f;
-                                m_isField = true;
-                                continue;
-                            }
-                        }
-                    }
-
                     m_isDead = true;
                     PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
                     return;

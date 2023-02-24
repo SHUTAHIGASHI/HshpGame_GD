@@ -204,8 +204,7 @@ void Player::OnHitObject(const InputState& input)
         
         if (object == ObjectType::Spike)
         {
-            PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
-            m_isDead = true;
+            OnDead();
             return;
         }
         
@@ -266,8 +265,7 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else
                 {
-                    m_isDead = true;
-                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
+                    OnDead();
                     return;
                 }
             }
@@ -282,13 +280,18 @@ void Player::OnHitObject(const InputState& input)
                 }
                 else
                 {
-                    m_isDead = true;
-                    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
+                    OnDead();
                     return;
                 }
             }
         }
     }
+}
+
+void Player::OnDead()
+{
+    m_isDead = true;
+    PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
 }
 
 void Player::Draw()
@@ -400,8 +403,7 @@ void Player::CubeNormalUpdate(const InputState& input)
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight)
     {
-        PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
-        m_isDead = true;
+        OnDead();
     }
 
     m_lastPos[m_countFrame] = m_pos;
@@ -451,8 +453,7 @@ void Player::CubeRevGravityUpdate(const InputState& input)
 
     if (m_pos.y + Game::kBlockSize < 0 || m_pos.y > Game::kScreenHeight)
     {
-        PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
-        m_isDead = true;
+        OnDead();
     }
 
     m_lastPos[m_countFrame] = m_pos;

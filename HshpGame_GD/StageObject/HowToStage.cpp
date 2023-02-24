@@ -171,7 +171,6 @@ void HowToStage::Init(int hSpike, int hBg, int hPortal, int hBlock)
 	m_hBg = hBg;
 
 	InitStage(hSpike, hPortal, hBlock);
-
 	SetStage();
 }
 
@@ -375,10 +374,8 @@ void HowToStage::Draw()
 }
 
 // プレイヤーとオブジェクトの当たり判定チェック
-bool HowToStage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& object)
+bool HowToStage::CollisionCheck(const Vec2 playerPos, ObjectType& object)
 {
-	if (m_stage[H][W] == 0) return false;
-
 	int playerScale = 1;
 
 	for (int i = 0; i < m_ObjectBlock.size(); i++)
@@ -450,7 +447,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType& 
 }
 
 // オブジェクトがプレイヤーの下にあるかどうか
-bool HowToStage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
+bool HowToStage::IsUnder(float& tempPos)
 {
 	if (m_ObjectBlock[m_tempNum].GetTop() > m_pHPlayer->GetCenterY())
 	{
@@ -463,7 +460,7 @@ bool HowToStage::IsUnder(const Vec2 playerPos, int H, int W, float& tempPos)
 	return false;
 }
 
-bool HowToStage::IsTop(const Vec2 playerPos, int H, int W, float& tempPos)
+bool HowToStage::IsTop(float& tempPos)
 {
 	if (m_ObjectBlock[m_tempNum].GetTop() + Game::kBlockSize < m_pHPlayer->GetCenterY())
 	{

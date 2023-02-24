@@ -50,6 +50,8 @@ public:
 	// オブジェクトと当たった時の処理
 	void OnHitObject(const InputState& input);
 	
+	void OnDead();
+
 	// プレイヤーの描画処理
 	void Draw();
 
