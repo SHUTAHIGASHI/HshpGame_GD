@@ -83,12 +83,12 @@ void SceneHowTo::Init(int font)
 
 	m_pHStage->SetFirstStage();
 
-	GameSetting();
+	OnGameStart();
 
 	m_pHPlayer->SetSpawnPos(m_isPrac);
 }
 
-void SceneHowTo::GameSetting()
+void SceneHowTo::OnGameStart()
 {
 	// 各時間用変数の初期化
 	m_gameOverDelay = kGameOverDelay;
@@ -203,7 +203,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	// Rキーを押すとゲームリトライ
 	if (input.IsTriggered(InputType::retry))
 	{
-		GameSetting();
+		OnGameStart();
 		return;
 	}
 
@@ -231,7 +231,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 			m_pHStage->SetNextStageState();
 		}
 
-		GameSetting();
+		OnGameStart();
 		return;
 	}
 
@@ -246,7 +246,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	{
 		if (m_gameOverDelay < 0)
 		{
-			GameSetting();
+			OnGameStart();
 			return;
 		}
 		// ゲームオーバー遅延を1フレームごとに減少させる

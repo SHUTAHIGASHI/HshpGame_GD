@@ -9,8 +9,8 @@ void ObjectBlock::Init(int hBlock)
 {
 	m_IsExist = false;
 
-	m_pos.x = -Game::kBlockSize;
-	m_pos.y = -Game::kBlockSize;
+	m_pos.x = 0;
+	m_pos.y = 0;
 
 	m_hBlock = hBlock;
 }

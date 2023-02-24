@@ -91,10 +91,10 @@ void SceneMain::Init()
 
 	m_countAttempt = 1;
 
-	GameSetting();
+	OnGameStart();
 }
 
-void SceneMain::GameSetting()
+void SceneMain::OnGameStart()
 {	
 	// ŠeŽžŠÔ—p•Ï”‚Ì‰Šú‰»
 	m_gameOverDelay = kGameOverDelay;
@@ -204,7 +204,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		else
 		{
 			m_pStage->SetNextStageState();
-			GameSetting();
+			OnGameStart();
 		}
 	}
 }
@@ -224,7 +224,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
 
 		if (!m_isPracticeMode) m_pStage->SetFirstStage();
-		GameSetting();
+		OnGameStart();
 		m_countAttempt++;
 		return;
 	}
@@ -249,7 +249,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 		if (m_gameOverDelay < 0)
 		{
 			if (!m_isPracticeMode) m_pStage->SetFirstStage();
-			GameSetting();
+			OnGameStart();
 			m_countAttempt++;
 			return;
 		}

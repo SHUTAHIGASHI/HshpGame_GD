@@ -37,6 +37,8 @@ public:
 	// プレイヤーの初期化
 	void Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound);
 
+	void End();
+
 	// プレイヤーのスポーン位置をセット
 	void SetSpawnPos();
 

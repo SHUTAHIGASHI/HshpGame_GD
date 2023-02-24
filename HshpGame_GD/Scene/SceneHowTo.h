@@ -19,7 +19,7 @@ public:
 	// ‰Šú‰»
 	void Init(int font);
 
-	void GameSetting();
+	void OnGameStart();
 
 	void PlayGameSound();
 

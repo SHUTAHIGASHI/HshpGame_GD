@@ -71,6 +71,10 @@ void Player::Init(int playerHandle, int waveBurner, int playerDeathEffect, int h
     SetSpawnPos();
 }
 
+void Player::End()
+{
+}
+
 void Player::SetSpawnPos()
 {
     if (m_pStage->GetStageState() == StageState::firstStage)
@@ -254,7 +258,7 @@ void Player::OnHitObject(const InputState& input)
                     m_isDashRingEnabled = false;
                     if (!m_isRevGravity)
                     {
-                        if (m_pStage->IsUnder(i, j, tempPos))
+                        if (m_pStage->IsUnder(tempPos))
                         {
                             m_isField = true;
                             m_vec.y = 0.0f;
@@ -265,7 +269,7 @@ void Player::OnHitObject(const InputState& input)
                     }
                     else if (m_isRevGravity)
                     {
-                        if (m_pStage->IsTop(i, j, tempPos))
+                        if (m_pStage->IsTop(tempPos))
                         {
                             m_pos.y = tempPos;
                             m_angle = 0.0f;

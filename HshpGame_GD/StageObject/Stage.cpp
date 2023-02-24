@@ -296,44 +296,128 @@ Stage::Stage() :
 	m_pPlayer(nullptr),
 	m_stageState(StageState::firstStage),
 	m_stage(),
+	tempNum(0),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),
 	m_canScroll(false),
-	m_hBg(-1),
-	m_hBlock(-1)
+	m_hBg(-1)
 {
 }
 
 void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock)
 {
+	End();
+	StageManage();
+
 	m_hBg = hBg;
-	m_hBlock = hBlock;
 	
 	m_scroll = 0;
 	m_scrollAcc = kScrollSpeed;
 	if(m_stageState == StageState::tenthStage) m_scrollAcc = -kScrollSpeed;
 
+	InitStage(hSpike, hPortal, hBlock);
+
+	SetStage();
+}
+
+void Stage::InitStage(int hSpike, int hPortal, int hBlock)
+{
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
 		{
-			m_ObjectGoalGate[i][j].Init(hPortal);
-			m_ObjectBlock[i][j].Init(hBlock);
-			m_ObjectJumpRing[i][j].Init();
-			m_ObjectJumpPad[i][j].Init();
-			m_ObjectSpike[i][j].Init(hSpike);
-			m_ObjectGravityRing[i][j].Init();
-			m_ObjectDashRing[i][j].Init();
-			m_ObjectReverseRing[i][j].Init();
+			if (m_stage[i][j] == 1)
+			{
+				m_ObjectGoalGate.push_back(ObjectGoalGate());
+			}
+			if (m_stage[i][j] == 2)
+			{
+				m_ObjectBlock.push_back(ObjectBlock());
+			}
+			if (m_stage[i][j] == 3)
+			{
+				m_ObjectJumpRing.push_back(ObjectJumpRing());
+			}
+			if (m_stage[i][j] == 4)
+			{
+				m_ObjectJumpPad.push_back(ObjectJumpPad());
+			}
+			if (m_stage[i][j] == 5)
+			{
+				m_ObjectSpike.push_back(ObjectSpike());
+			}
+			if (m_stage[i][j] == 6)
+			{
+				m_ObjectGravityRing.push_back(ObjectGravityRing());
+			}
+			if (m_stage[i][j] == 7)
+			{
+				m_ObjectDashRing.push_back(ObjectDashRing());
+			}
+			if (m_stage[i][j] == 8)
+			{
+				m_ObjectReverseRing.push_back(ObjectReverseRing());
+			}
 		}
 	}
 
-	StageManage();
-	SetStage();
+	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
+	{
+		m_ObjectGoalGate[i].Init(hPortal);
+	}
+
+	for (int i = 0; i < m_ObjectBlock.size(); i++)
+	{
+		m_ObjectBlock[i].Init(hBlock);
+	}
+
+	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
+	{
+		m_ObjectJumpRing[i].Init();
+	}
+
+	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
+	{
+		m_ObjectJumpPad[i].Init();
+	}
+
+	for (int i = 0; i < m_ObjectSpike.size(); i++)
+	{
+		m_ObjectSpike[i].Init(hSpike);
+	}
+
+	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
+	{
+		m_ObjectGravityRing[i].Init();
+	}
+
+	for (int i = 0; i < m_ObjectDashRing.size(); i++)
+	{
+		m_ObjectDashRing[i].Init();
+	}
+
+	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
+	{
+		m_ObjectReverseRing[i].Init();
+	}
+}
+
+void Stage::End()
+{
+	m_ObjectBlock.clear();
 }
 
 void Stage::SetStage()
 {	
+	int countGoal = 0;
+	int countBlock = 0;
+	int countJumpRing = 0;
+	int countJumpPad = 0;
+	int countSpike = 0;
+	int countGravRing = 0;
+	int countDashRing = 0;
+	int countRevRing = 0;
+
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
@@ -342,14 +426,54 @@ void Stage::SetStage()
 			blockPosX = j * Game::kBlockSize - m_scroll;
 			blockPosY = i * Game::kBlockSize;
 
-			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].SetPos(blockPosX, blockPosY);
-			if (m_stage[i][j] == 8) m_ObjectReverseRing[i][j].SetPos(blockPosX, blockPosY);
+			if (m_stage[i][j] == 1)
+			{
+				m_ObjectGoalGate[countGoal].SetPos(blockPosX, blockPosY);
+				countGoal++;
+				if (countGoal > m_ObjectGoalGate.size()) countGoal = m_ObjectGoalGate.size();
+			}
+			if (m_stage[i][j] == 2)
+			{
+				m_ObjectBlock[countBlock].SetPos(blockPosX, blockPosY);
+				countBlock++;
+				if (countBlock > m_ObjectBlock.size()) countBlock = m_ObjectBlock.size();
+			}
+			if (m_stage[i][j] == 3)
+			{
+				m_ObjectJumpRing[countJumpRing].SetPos(blockPosX, blockPosY);
+				countJumpRing++;
+				if (countJumpRing > m_ObjectJumpRing.size()) countJumpRing = m_ObjectJumpRing.size();
+			}
+			if (m_stage[i][j] == 4)
+			{
+				m_ObjectJumpPad[countJumpPad].SetPos(blockPosX, blockPosY);
+				countJumpPad++;
+				if (countJumpPad > m_ObjectJumpPad.size()) countJumpPad = m_ObjectJumpPad.size();
+			}
+			if (m_stage[i][j] == 5)
+			{
+				m_ObjectSpike[countSpike].SetPos(blockPosX, blockPosY);
+				countSpike++;
+				if (countSpike > m_ObjectSpike.size()) countSpike = m_ObjectSpike.size();
+			}
+			if (m_stage[i][j] == 6)
+			{
+				m_ObjectGravityRing[countGravRing].SetPos(blockPosX, blockPosY);
+				countGravRing++;
+				if (countGravRing > m_ObjectGravityRing.size()) countGravRing = m_ObjectGravityRing.size();
+			}
+			if (m_stage[i][j] == 7)
+			{
+				m_ObjectDashRing[countDashRing].SetPos(blockPosX, blockPosY);
+				countDashRing++;
+				if (countDashRing > m_ObjectDashRing.size()) countDashRing = m_ObjectDashRing.size();
+			}
+			if (m_stage[i][j] == 8)
+			{
+				m_ObjectReverseRing[countRevRing].SetPos(blockPosX, blockPosY);
+				countRevRing++;
+				if (countRevRing > m_ObjectReverseRing.size()) countRevRing = m_ObjectReverseRing.size();
+			}
 		}
 	}
 }
@@ -369,20 +493,44 @@ void Stage::Draw()
 	DrawExtendGraph(bgX + (Game::kScreenWidth) * 2, bgY, bgW + (Game::kScreenWidth) * 2, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
-		{
-			// ステージギミックの描画
-			if (m_stage[i][j] == 1) m_ObjectGoalGate[i][j].Draw();
-			if (m_stage[i][j] == 2) m_ObjectBlock[i][j].Draw();
-			if (m_stage[i][j] == 3) m_ObjectJumpRing[i][j].Draw(0xFFD700);
-			if (m_stage[i][j] == 4) m_ObjectJumpPad[i][j].Draw();
-			if (m_stage[i][j] == 5) m_ObjectSpike[i][j].Draw();
-			if (m_stage[i][j] == 6) m_ObjectGravityRing[i][j].Draw(0x00bfff);
-			if (m_stage[i][j] == 7) m_ObjectDashRing[i][j].Draw(0xdc143c);
-			if (m_stage[i][j] == 8) m_ObjectReverseRing[i][j].Draw(0x9932cc);
-		}
+		m_ObjectGoalGate[i].Draw();
+	}
+
+	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
+	{
+		m_ObjectJumpRing[i].Draw(0xFFD700);
+	}
+
+	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
+	{
+		m_ObjectJumpPad[i].Draw();
+	}
+
+	for (int i = 0; i < m_ObjectSpike.size(); i++)
+	{
+		m_ObjectSpike[i].Draw();
+	}
+
+	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
+	{
+		m_ObjectGravityRing[i].Draw(0x00bfff);
+	}
+
+	for (int i = 0; i < m_ObjectDashRing.size(); i++)
+	{
+		m_ObjectDashRing[i].Draw(0xdc143c);
+	}
+
+	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
+	{
+		m_ObjectReverseRing[i].Draw(0x9932cc);
+	}
+
+	for (int i = 0; i < m_ObjectBlock.size(); i++)
+	{
+		m_ObjectBlock[i].Draw();
 	}
 }
 
@@ -393,81 +541,106 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 
 	int playerScale = 1;
 
-	// 当たっている場合、trueを返す
-	// ブロックの当たり判定
-	if (m_ObjectBlock[H][W].CollisionCheck(m_pPlayer->GetPos()))
+	for (int i = 0; i < m_ObjectBlock.size(); i++)
 	{
-		object = ObjectType::Block;
-		return true;
+		if (m_ObjectBlock[i].CollisionCheck(m_pPlayer->GetPos()))
+		{
+			tempNum = i;
+			object = ObjectType::Block;
+			return true;
+		}
 	}
 	// ジャンプリングの当たり判定
-	if (m_ObjectJumpRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
+	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
 	{
-		object = ObjectType::JumpRing;
-		return true;
+		if (m_ObjectJumpRing[i].CollisionCheck(m_pPlayer->GetPos()))
+		{
+			object = ObjectType::JumpRing;
+			return true;
+		}
 	}
 	// ジャンプパッドの当たり判定
-	if (m_ObjectJumpPad[H][W].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize - (Game::kBlockSize / 4))))
+	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
 	{
-		object = ObjectType::JumpPad;
-		return true;
+		if (m_ObjectJumpPad[i].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize - (Game::kBlockSize / 4))))
+		{
+			object = ObjectType::JumpPad;
+			return true;
+		}
 	}
 	// スパイクの当たり判定
-	if (m_ObjectSpike[H][W].CollisionCheck(m_pPlayer->GetPos(), kResizeScale, playerScale))
+	for (int i = 0; i < m_ObjectSpike.size(); i++)
 	{
-		object = ObjectType::Spike;
-		return true;
+		if (m_ObjectSpike[i].CollisionCheck(m_pPlayer->GetPos(), kResizeScale, playerScale))
+		{
+			object = ObjectType::Spike;
+			return true;
+		}
 	}
 	// グラビティリングの当たり判定
-	if (m_ObjectGravityRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
+	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
 	{
-		object = ObjectType::GravityRing;
-		return true;
+		if (m_ObjectGravityRing[i].CollisionCheck(m_pPlayer->GetPos()))
+		{
+			object = ObjectType::GravityRing;
+			return true;
+		}
 	}
 	// ダッシュリングの当たり判定
-	if (m_ObjectDashRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
+	for (int i = 0; i < m_ObjectDashRing.size(); i++)
 	{
-		object = ObjectType::DashRing;
-		return true;
+		if (m_ObjectDashRing[i].CollisionCheck(m_pPlayer->GetPos()))
+		{
+			object = ObjectType::DashRing;
+			return true;
+		}
 	}
-	if (m_ObjectReverseRing[H][W].CollisionCheck(m_pPlayer->GetPos()))
+	// リバースリングの当たり判定
+	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
 	{
-		object = ObjectType::ReverseRing;
-		return true;
+		if (m_ObjectReverseRing[i].CollisionCheck(m_pPlayer->GetPos()))
+		{
+			object = ObjectType::ReverseRing;
+			return true;
+		}
 	}
 	// ゴールゲートの判定
-	if (m_ObjectGoalGate[H][W].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize * 2)))
+	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
-		object = ObjectType::GoalGate;
-		return true;
+		if (m_ObjectGoalGate[i].CollisionCheck(m_pPlayer->GetPos(), static_cast<int>(Game::kBlockSize * 2)))
+		{
+			object = ObjectType::GoalGate;
+			return true;
+		}
 	}
 
 	// 当たっていない場合、falseを返す
 	return false;
 }
 
-// オブジェクトがプレイヤーの下にあるかどうか
-bool Stage::IsUnder(int H, int W, float& tempPos)
-{	
-	if (m_ObjectBlock[H][W].GetTop() > m_pPlayer->GetCenterY())
-	{
-		// ブロックの座標を代入
-		tempPos = m_ObjectBlock[H][W].GetTop() - Game::kBlockSize;
-		return true;
-	}
+ //オブジェクトがプレイヤーの下にあるかどうか
+bool Stage::IsUnder(float& tempPos)
+{
+		if (m_ObjectBlock[tempNum].GetTop() > m_pPlayer->GetCenterY())
+		{
+			// ブロックの座標を代入
+			tempPos = m_ObjectBlock[tempNum].GetTop() - Game::kBlockSize;
+			return true;
+		}
 	
+
 	// 下ではない場合、falseを返す
 	return false;
 }
 
-bool Stage::IsTop(int H, int W, float& tempPos)
+bool Stage::IsTop(float& tempPos)
 {
-	if (m_ObjectBlock[H][W].GetTop() + Game::kBlockSize < m_pPlayer->GetCenterY())
-	{
-		// ブロックの座標を代入
-		tempPos = m_ObjectBlock[H][W].GetTop() + Game::kBlockSize;
-		return true;
-	}
+		if (m_ObjectBlock[tempNum].GetTop() + Game::kBlockSize < m_pPlayer->GetCenterY())
+		{
+			// ブロックの座標を代入
+			tempPos = m_ObjectBlock[tempNum].GetTop() + Game::kBlockSize;
+			return true;
+		}
 
 	// 上ではない場合、falseを返す
 	return false;
@@ -546,16 +719,29 @@ void Stage::NormalUpdate()
 {
 	if (m_pPlayer->IsDead()) return;
 
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
-		{
-			m_ObjectGoalGate[i][j].Update();
-			m_ObjectJumpRing[i][j].Update();
-			m_ObjectGravityRing[i][j].Update();
-			m_ObjectDashRing[i][j].Update();
-			m_ObjectReverseRing[i][j].Update();
-		}
+		m_ObjectGoalGate[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
+	{
+		m_ObjectJumpRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
+	{
+		m_ObjectGravityRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectDashRing.size(); i++)
+	{
+		m_ObjectDashRing[i].Update();
+	}
+	
+	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
+	{
+		m_ObjectReverseRing[i].Update();
 	}
 }
 
@@ -596,15 +782,28 @@ void Stage::ScrollUpdate()
 	SetStage();
 	m_scroll += m_scrollAcc;
 
-	for (int i = 0; i < Game::kScreenHeightNum; i++)
+	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
-		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
-		{
-			m_ObjectGoalGate[i][j].Update();
-			m_ObjectJumpRing[i][j].Update();
-			m_ObjectGravityRing[i][j].Update();
-			m_ObjectDashRing[i][j].Update();
-			m_ObjectReverseRing[i][j].Update();
-		}
+		m_ObjectGoalGate[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
+	{
+		m_ObjectJumpRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
+	{
+		m_ObjectGravityRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectDashRing.size(); i++)
+	{
+		m_ObjectDashRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
+	{
+		m_ObjectReverseRing[i].Update();
 	}
 }

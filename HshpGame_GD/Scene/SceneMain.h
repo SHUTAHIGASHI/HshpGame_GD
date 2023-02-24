@@ -22,7 +22,7 @@ public:
 	// ‰Šú‰»
 	void Init();
 
-	void GameSetting();
+	void OnGameStart();
 
 	void PlayGameSound();
 

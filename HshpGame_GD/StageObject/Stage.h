@@ -35,7 +35,11 @@ public:
 	
 	void SetPlayer(Player* player) { m_pPlayer = player; }
 	
-	void Init(int hSpike, int hBg, int hPortal, int hIcon);
+	void Init(int hSpike, int hBg, int hPortal, int hBlock);
+
+	void InitStage(int hSpike, int hPortal, int hBlock);
+
+	void End();
 
 	void SetStage();
 
@@ -45,9 +49,9 @@ public:
 
 	bool CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &object);
 
-	bool IsUnder(int H, int W, float &tempPos);
+	bool IsUnder(float &tempPos);
 
-	bool IsTop(int H, int W, float& tempPos);
+	bool IsTop(float& tempPos);
 
 	// ステージ情報の変更
 	void StageManage();
@@ -78,14 +82,14 @@ private:
 	m_tUpdateFunc m_updateFunc = nullptr;
 
 private:
-	ObjectGoalGate m_ObjectGoalGate[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectDashRing m_ObjectDashRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
-	ObjectReverseRing m_ObjectReverseRing[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
+	std::vector<ObjectGoalGate> m_ObjectGoalGate;
+	std::vector<ObjectBlock> m_ObjectBlock;
+	std::vector<ObjectJumpRing> m_ObjectJumpRing;
+	std::vector<ObjectJumpPad> m_ObjectJumpPad;
+	std::vector<ObjectSpike> m_ObjectSpike;
+	std::vector<ObjectGravityRing> m_ObjectGravityRing;
+	std::vector<ObjectDashRing> m_ObjectDashRing;
+	std::vector<ObjectReverseRing> m_ObjectReverseRing;
 
 	Player* m_pPlayer;
 
@@ -94,6 +98,9 @@ private:
 	// ステージ管理用二次元配列
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 
+	// 座標数値の一時保存
+	int tempNum;
+
 	// スクロール用変数
 	int m_scroll;
 	int m_scrollAcc;
@@ -101,6 +108,5 @@ private:
 
 	// 背景
 	int m_hBg;
-	int m_hBlock;
 };
 
