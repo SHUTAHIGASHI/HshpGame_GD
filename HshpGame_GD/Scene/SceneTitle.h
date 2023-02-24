@@ -16,7 +16,7 @@ public:
 		m_textTimer(0),
 		m_fadeCount(0),
 		m_isEnd(false),
-		m_hBg(LoadGraph("imagedata/GDbg.jpg")),
+		m_hBg(LoadGraph("imagedata/Bg.png")),
 		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.mp3")),
 		m_textScroll(0),
 		m_scroll(0),
@@ -50,6 +50,7 @@ public:
 	// m_isEnd ‚ðŽæ“¾
 	bool IsEnd() const { return m_isEnd; }
 
+	int GetMusicHandle()const { return m_hLoopBgm; }
 	int GetScroll()const { return m_scroll; }
 private:
 	using m_tUpdateFunc = void (SceneTitle::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);

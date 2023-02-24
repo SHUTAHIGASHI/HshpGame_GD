@@ -732,7 +732,7 @@ void Stage::StageManage()
 void Stage::SetNextStageState()
 {
 	m_stageState = static_cast<StageState>(static_cast<int>(m_stageState) + 1);
-	if (m_stageState == StageState::End) m_stageState = StageState::firstStage;
+	if (m_stageState == StageState::Empty) m_stageState = StageState::firstStage;
 }
 
 void Stage::NormalUpdate()

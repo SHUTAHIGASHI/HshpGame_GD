@@ -94,7 +94,7 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 			return;
 		case 2:
 			m_isEnd = true;
-			nextScene = NextSceneState::nextMenu;
+			nextScene = NextSceneState::nextTitle;
 			return;
 		default:
 			break;

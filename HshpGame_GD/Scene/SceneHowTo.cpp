@@ -71,7 +71,7 @@ void SceneHowTo::Init(int font)
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 	m_hPortal = LoadGraph("imagedata/OrangePortal.png");
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
-	m_hBg = LoadGraph("imagedata/GDbg.jpg");
+	m_hBg = LoadGraph("imagedata/Bg.png");
 
 	// ‰¹ƒf[ƒ^‚Ì“Ç‚Ýž‚Ý
 	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");
@@ -196,7 +196,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 {
 	if (input.IsTriggered(InputType::escape))
 	{
-		nextScene = NextSceneState::nextMenu;
+		nextScene = NextSceneState::nextTitle;
 		m_isEnd = true;
 	}
 
@@ -217,7 +217,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 		
 		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest && !m_isPrac)
 		{
-			nextScene = NextSceneState::nextMenu;
+			nextScene = NextSceneState::nextTitle;
 			m_isEnd = true;
 		}
 		

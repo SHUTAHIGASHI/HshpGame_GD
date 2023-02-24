@@ -28,7 +28,7 @@ void SceneStageSelect::Init()
 {
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBg = LoadGraph("imagedata/GDbg.jpg");
+	m_hBg = LoadGraph("imagedata/Bg.png");
 
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -53,13 +53,18 @@ void SceneStageSelect::Init()
 // 終了処理
 void SceneStageSelect::End()
 {
-	m_pTitle->StopMusic();
+	if(m_pManager->GetNextScene() != NextSceneState::nextTitle)m_pTitle->StopMusic();
 	DeleteGraph(m_hBg);
 }
 
 // 更新処理
 void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
+	if (!CheckSoundMem(m_pTitle->GetMusicHandle()))
+	{
+		PlaySoundMem(m_pTitle->GetMusicHandle(), DX_PLAYTYPE_BACK);
+	}
+
 	if (m_textTimer > 1000) m_textTimer = 10;
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
@@ -150,7 +155,7 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 
 	if (input.IsTriggered(InputType::escape))
 	{
-		nextScene = NextSceneState::nextMenu;
+		nextScene = NextSceneState::nextTitle;
 		m_updateFunc = &SceneStageSelect::SceneEndUpdate;
 		return;
 	}
@@ -268,7 +273,7 @@ void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, 
 		m_scroll = 0;
 	}
 
-	if (nextScene == NextSceneState::nextMenu)
+	if (nextScene == NextSceneState::nextTitle)
 	{
 		m_textScroll += 100;
 

@@ -168,7 +168,7 @@ void SceneRanking::NormalUpdate(const InputState& input, bool& isGameEnd, NextSc
 	if (input.IsTriggered(InputType::escape))
 	{
 		m_updateFunc = &SceneRanking::SceneEndUpdate;
-		nextScene = NextSceneState::nextMenu;
+		nextScene = NextSceneState::nextTitle;
 		return;
 	}
 

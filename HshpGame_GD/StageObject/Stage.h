@@ -24,7 +24,7 @@ enum class StageState
 	eighthStage,
 	ninthStage,
 	tenthStage,
-	End
+	Empty
 };
 
 class Stage

@@ -131,7 +131,7 @@ void SceneManager::Update(const InputState& input, int font, bool &isGameEnd)
 
 		switch (m_nextScene)
 		{
-		case NextSceneState::nextMenu:	// シーンがゲームクリアの場合、ゲーム終了
+		case NextSceneState::nextTitle:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンクリアのデータ削除
 			m_title.SetManager(this);
 			m_title.SetStageSelect(&m_stageSelect);

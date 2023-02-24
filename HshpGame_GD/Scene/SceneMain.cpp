@@ -68,7 +68,7 @@ void SceneMain::Init()
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);	// スパイク画像
 	m_hPortal = LoadGraph("imagedata/OrangePortal.png");	// ゴールポータル
 	m_hBlock = LoadGraph("imagedata/Tileset.png");	// ブロック
-	m_hBg = LoadGraph("imagedata/GDbg.jpg");	// 背景画像
+	m_hBg = LoadGraph("imagedata/Bg.png");	// 背景画像
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");	// 死亡時の音
@@ -85,7 +85,7 @@ void SceneMain::Init()
 	// チャレンジモードの場合、ステージ１をセット
 	if (!m_isPracticeMode) m_pStage->SetFirstStage();
 	// ステージが選ばれた場合、そのステージにセット
-	else if (m_selectedStage != StageState::End) m_pStage->SetSelectedStage(m_selectedStage);
+	else if (m_selectedStage != StageState::Empty) m_pStage->SetSelectedStage(m_selectedStage);
 	// クリア後に "次のステージ" が選ばれた場合、次ステージをセット
 	else if (m_pClear->IsNextStage()) m_pStage->SetNextStageState();
 	else assert(0);
@@ -125,7 +125,7 @@ void SceneMain::PlayGameSound()
 void SceneMain::End()
 {
 	// 選ばれたステージを空にセット
-	m_selectedStage = StageState::End;
+	m_selectedStage = StageState::Empty;
 
 	// ステージの終了処理
 	m_pStage->End();
@@ -267,7 +267,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 		// 練習モードの場合、ステージセレクトへ
 		if (m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
 		// それ以外の場合、タイトルメニューへ
-		else nextScene = NextSceneState::nextMenu;
+		else nextScene = NextSceneState::nextTitle;
 		// シーン終了フラグを true
 		m_isEnd = true;
 	}
