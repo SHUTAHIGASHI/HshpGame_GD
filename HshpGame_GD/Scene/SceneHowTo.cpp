@@ -10,7 +10,7 @@
 namespace
 {
 	// スタート時の遅延時間
-	constexpr int kStartDelay = 150;
+	constexpr int kStartDelay = 0;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
 

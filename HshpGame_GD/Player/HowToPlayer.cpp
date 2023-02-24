@@ -1,7 +1,9 @@
 #include "HowToPlayer.h"
 #include "game.h"
 #include "HowToStage.h"
+#include "EffectRing.h"
 #include <cassert>
+#include <memory>
 
 namespace
 {
@@ -32,6 +34,8 @@ namespace
 
 void HowToPlayer::Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound, bool isPrac)
 {
+    m_pEffectRing = std::make_shared<EffectRing>();
+    
     m_isStageClear = false;
     m_isDead = false;
     m_isRevGravity = false;
@@ -93,6 +97,8 @@ void HowToPlayer::Update(const InputState& input, bool isPrac)
 #endif
     if (m_isDead) return;
 
+    m_pEffectRing->Update();
+
     (this->*m_updateFunc)(input, isPrac);
 }
 
@@ -113,6 +119,7 @@ void HowToPlayer::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_isDashRingEnabled = false;
                 if (!m_isRevGravity) m_vec.y = kJumpRingJumpAcc;	// ジャンプ開始
                 else m_vec.y = -kJumpRingJumpAcc;
@@ -138,6 +145,7 @@ void HowToPlayer::OnHitObject(const InputState& input)
         {
             if (input.IsTriggered(InputType::jump))
             {
+                m_pEffectRing->SetEffect();
                 m_isDashRingEnabled = false;
                 if (!m_isRevGravity)
                 {
@@ -157,6 +165,7 @@ void HowToPlayer::OnHitObject(const InputState& input)
         
         if (object == ObjectType::DashRing)
         {
+            m_pEffectRing->SetEffect();
             if (input.IsTriggered(InputType::jump))
             {
                 m_vec.y = 0.0f;
@@ -167,6 +176,7 @@ void HowToPlayer::OnHitObject(const InputState& input)
         
         if (object == ObjectType::ReverseRing)
         {
+            m_pEffectRing->SetEffect();
             if (input.IsTriggered(InputType::jump))
             {
                 m_vec.x *= -1;
@@ -247,6 +257,8 @@ void HowToPlayer::Draw()
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
+
+    m_pEffectRing->Draw(m_pos);
 }
 
 void HowToPlayer::DrawMoveEffect()

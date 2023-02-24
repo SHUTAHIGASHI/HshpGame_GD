@@ -1,6 +1,8 @@
 #include "game.h"
+#include <memory>
 
 class HowToStage;
+class EffectRing;
 
 enum class PlayerState
 {
@@ -97,6 +99,8 @@ public:
 	Vec2 GetPos() const { return m_pos; }
 
 private:
+	std::shared_ptr<EffectRing> m_pEffectRing;
+	
 	// Œ»İ‚ÌƒvƒŒƒCƒ„[‚Ìó‘Ô
 	PlayerState m_playerState;
 

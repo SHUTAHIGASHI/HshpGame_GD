@@ -76,6 +76,7 @@ void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
 
 void Player::End()
 {
+    m_pEffectRing->End();
 }
 
 void Player::SetSpawnPos()
