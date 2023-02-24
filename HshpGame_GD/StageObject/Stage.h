@@ -99,7 +99,7 @@ private:
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthTripleNum];
 
 	// 座標数値の一時保存
-	int tempNum;
+	int m_tempNum;
 
 	// スクロール用変数
 	int m_scroll;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Game.h"
-#include "ObjectGoalGate.h"
 #include "ObjectBlock.h"
 #include "ObjectSpike.h"
 #include "ObjectJumpRing.h"
@@ -9,6 +8,7 @@
 #include "ObjectGravityRing.h"
 #include "ObjectDashRing.h"
 #include "ObjectReverseRing.h"
+#include <vector>
 
 class HowToPlayer;
 
@@ -31,6 +31,10 @@ public:
 	void SetPlayer(HowToPlayer* player) { m_pHPlayer = player; }
 
 	void Init(int hSpike, int hBg, int hPortal, int hIcon);
+
+	void InitStage(int hSpike, int hPortal, int hBlock);
+
+	void End();
 
 	void SetStage();
 
@@ -65,13 +69,13 @@ private:
 	m_tUpdateFunc m_updateFunc = nullptr;
 
 private:
-	ObjectBlock m_ObjectBlock[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectSpike m_ObjectSpike[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectJumpRing m_ObjectJumpRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectJumpPad m_ObjectJumpPad[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectGravityRing m_ObjectGravityRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectDashRing m_ObjectDashRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
-	ObjectReverseRing m_ObjectReverseRing[Game::kScreenHeightNum][Game::kScreenWidthNum];
+	std::vector<ObjectBlock> m_ObjectBlock;
+	std::vector<ObjectJumpRing> m_ObjectJumpRing;
+	std::vector<ObjectJumpPad> m_ObjectJumpPad;
+	std::vector<ObjectSpike> m_ObjectSpike;
+	std::vector<ObjectGravityRing> m_ObjectGravityRing;
+	std::vector<ObjectDashRing> m_ObjectDashRing;
+	std::vector<ObjectReverseRing> m_ObjectReverseRing;
 
 	HowToPlayer* m_pHPlayer;
 
@@ -80,8 +84,9 @@ private:
 	// ステージ管理用二次元配列
 	int m_stage[Game::kScreenHeightNum][Game::kScreenWidthNum];
 
+	int m_tempNum;
+
 	// 背景
 	int m_hBg;
-	int m_hBlock;
 };
 

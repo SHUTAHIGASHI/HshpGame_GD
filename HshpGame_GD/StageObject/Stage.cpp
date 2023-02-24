@@ -202,7 +202,7 @@ namespace
 
 	// ステージ８
 	int stage_eighth[Game::kScreenHeightNum][Game::kScreenWidthNum] = {
-		{2,2,2,2,2,2,2,0,0,0,0,0,0,0,2,2,2,2,2,0,0,2,2,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2},
+		{2,2,2,2,2,2,2,2,0,0,0,0,0,0,2,2,2,2,2,0,0,2,2,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2},
 		// ステージ天井
 		{0,0,0,0,0,0,0,0,0,0,3,0,0,0,2,2,2,2,2,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,5,0,0,0,6,0,0,0},
@@ -296,7 +296,7 @@ Stage::Stage() :
 	m_pPlayer(nullptr),
 	m_stageState(StageState::firstStage),
 	m_stage(),
-	tempNum(0),
+	m_tempNum(0),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),
 	m_canScroll(false),
@@ -552,7 +552,7 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
 	{
 		if (m_ObjectBlock[i].CollisionCheck(m_pPlayer->GetPos()))
 		{
-			tempNum = i;
+			m_tempNum = i;
 			object = ObjectType::Block;
 			return true;
 		}
@@ -628,13 +628,12 @@ bool Stage::CollisionCheck(const Vec2 playerPos, int H, int W, ObjectType &objec
  //オブジェクトがプレイヤーの下にあるかどうか
 bool Stage::IsUnder(float& tempPos)
 {
-		if (m_ObjectBlock[tempNum].GetTop() > m_pPlayer->GetCenterY())
-		{
-			// ブロックの座標を代入
-			tempPos = m_ObjectBlock[tempNum].GetTop() - Game::kBlockSize;
-			return true;
-		}
-	
+	if (m_ObjectBlock[m_tempNum].GetTop() > m_pPlayer->GetCenterY())
+	{
+		// ブロックの座標を代入
+		tempPos = m_ObjectBlock[m_tempNum].GetTop() - Game::kBlockSize;
+		return true;
+	}
 
 	// 下ではない場合、falseを返す
 	return false;
@@ -642,12 +641,12 @@ bool Stage::IsUnder(float& tempPos)
 
 bool Stage::IsTop(float& tempPos)
 {
-		if (m_ObjectBlock[tempNum].GetTop() + Game::kBlockSize < m_pPlayer->GetCenterY())
-		{
-			// ブロックの座標を代入
-			tempPos = m_ObjectBlock[tempNum].GetTop() + Game::kBlockSize;
-			return true;
-		}
+	if (m_ObjectBlock[m_tempNum].GetTop() + Game::kBlockSize < m_pPlayer->GetCenterY())
+	{
+		// ブロックの座標を代入
+		tempPos = m_ObjectBlock[m_tempNum].GetTop() + Game::kBlockSize;
+		return true;
+	}
 
 	// 上ではない場合、falseを返す
 	return false;

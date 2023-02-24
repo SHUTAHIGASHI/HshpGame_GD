@@ -115,8 +115,11 @@ void SceneMain::PlayGameSound()
 void SceneMain::End()
 {
 	m_selectedStage = StageState::End;
-
 	m_countAttempt = 0;
+
+	m_pStage->End();
+
+	// サウンドの停止
 	StopSoundMem(m_hPlayBgm);
 
 	// 画像データの削除
@@ -127,6 +130,7 @@ void SceneMain::End()
 	DeleteGraph(m_hBlock);
 	DeleteGraph(m_hBg);
 
+	// 音データの削除
 	DeleteSoundMem(m_hDeathSound);
 	DeleteSoundMem(m_hPracBgm);
 }
