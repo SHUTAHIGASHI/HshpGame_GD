@@ -32,7 +32,7 @@ void SceneRanking::Init(int font)
 
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBg = LoadGraph("imagedata/GDbg.jpg");
+	m_hBg = LoadGraph("imagedata/Bg.png");
 	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;
