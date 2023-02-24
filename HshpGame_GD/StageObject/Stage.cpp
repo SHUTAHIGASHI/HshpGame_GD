@@ -404,7 +404,14 @@ void Stage::InitStage(int hSpike, int hPortal, int hBlock)
 
 void Stage::End()
 {
+	m_ObjectGoalGate.clear();
 	m_ObjectBlock.clear();
+	m_ObjectJumpRing.clear();
+	m_ObjectJumpPad.clear();
+	m_ObjectSpike.clear();
+	m_ObjectGravityRing.clear();
+	m_ObjectDashRing.clear();
+	m_ObjectReverseRing.clear();
 }
 
 void Stage::SetStage()
