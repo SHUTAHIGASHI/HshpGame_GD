@@ -18,4 +18,7 @@ public:
 
 private:
     int m_hBlock;
+
+    int m_drawTileNumX;
+    int m_drawTileNumY;
 };
