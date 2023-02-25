@@ -171,16 +171,16 @@ void SceneMain::Draw()
 	// 現在のモードの描画
 	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
 
+	// フェード処理用の処理
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	// スタート時のカウントダウン描画
 	if (m_startDelay > 0)
 	{
 		DrawStartCount();
 	}
-
-	// フェード処理用の処理
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
-	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 // スタート時のカウントダウン描画
@@ -292,7 +292,11 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	// スタート遅延が 1 以上の場合処理終了
 	if (m_startDelay > 0) return;
 	// スタート遅延が 0 以下になったらそれ以上減らない
-	else m_startDelay = 0;
+	else
+	{
+		m_startDelay = 0;
+		m_fadeCount = 0;
+	}
 
 	// ゲームBGM再生
 	PlayGameSound();
@@ -336,11 +340,11 @@ void SceneMain::SceneStartUpdate(const InputState& input, NextSceneState& nextSc
 	// フェードの数値を５ずつ減らす
 	m_fadeCount -= 5;
 	
-	// フェードカウントが 0 以下になった場合
-	if (m_fadeCount < 0)
+	// フェードカウントが 150 以下になった場合
+	if (m_fadeCount < 150)
 	{
-		// 0 にセット
-		m_fadeCount = 0;
+		// 150 にセット
+		m_fadeCount = 150;
 		// 通常の更新処理をセット
 		m_updateFunc = &SceneMain::NormalUpdate;
 	}

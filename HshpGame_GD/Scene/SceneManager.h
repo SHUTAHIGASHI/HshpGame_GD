@@ -29,12 +29,12 @@ public:
 	virtual ~SceneManager();
 
 	// ‰Šú‰»
-	void Init(int font);
+	void Init(int font24, int font48);
 	// íœ
 	void End();
 
 	// XV
-	void Update(const InputState& input, int font, bool &isGameEnd);
+	void Update(const InputState& input, int font24, int font48, bool &isGameEnd);
 	// •`‰æ
 	void Draw();
 

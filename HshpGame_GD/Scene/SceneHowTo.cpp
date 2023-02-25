@@ -17,8 +17,8 @@ namespace
 	// オブジェクト名
 	const char* const kNextStageText = "→ ENTER で下へ";
 	const char* const kNextGimmickText = "→ ENTER で次へ";
-	const char* const kJumpText = "SPACE or UP or 左クリックでジャンプ";
-	const char* const kGimmickText = "重なったときにSPACE or UP or 左クリックでギミック作動";
+	const char* const kJumpText = "SPACE or ↑ でジャンプ";
+	const char* const kGimmickText = "SPACE or ↑ でギミック使用";
 }
 
 SceneHowTo::SceneHowTo() :
@@ -32,7 +32,8 @@ SceneHowTo::SceneHowTo() :
 	m_hPortal(-1),
 	m_hBlock(-1),
 	m_hBg(-1),
-	m_hFont(-1),
+	m_hFontS(-1),
+	m_hFontL(-1),
 	m_hDeathSound(-1),
 	m_hPracBgm(-1),
 	m_fadeCount(0),
@@ -51,9 +52,10 @@ SceneHowTo::~SceneHowTo()
 }
 
 // 初期化
-void SceneHowTo::Init(int font)
+void SceneHowTo::Init(int font24, int font48)
 {
-	m_hFont = font;
+	m_hFontS = font24;
+	m_hFontL = font48;
 	
 	// シーン終了変数を初期化
 	m_isEnd = false;
@@ -151,7 +153,7 @@ void SceneHowTo::DrawHowTo()
 {
 	DrawBox(0, static_cast<int>(Game::kBlockSize * 11), Game::kScreenWidth, static_cast<int>(Game::kBlockSize * 13), 0x000000, true);
 	
-	int textDrawX = Game::kScreenWidthHalf - 300, textDrawY = Game::kScreenHeightHalf + 40;
+	int textDrawX = Game::kScreenWidthHalf + 150, textDrawY = Game::kScreenHeightHalf + 27;
 	std::string drawTextMessage;
 
 	if (m_isPrac)
@@ -167,15 +169,15 @@ void SceneHowTo::DrawHowTo()
 	{
 		if ((m_countFrame / 10) % 4 != 0)
 		{
-			DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFont, "%s", drawTextMessage.c_str());
+			DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFontS, "%s", drawTextMessage.c_str());
 		}
 	}
 	else
 	{
-		DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFont, "%s", drawTextMessage.c_str());
+		DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFontS, "%s", drawTextMessage.c_str());
 	}
 
-	textDrawY = Game::kScreenHeightHalf + 12;
+
 	if (m_pHStage->GetStageState() == HowToStageState::CubeTest)
 	{
 		drawTextMessage = kJumpText;
@@ -184,7 +186,11 @@ void SceneHowTo::DrawHowTo()
 	{
 		drawTextMessage = kGimmickText;
 	}
-	DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFont, "%s", drawTextMessage.c_str());
+	SetFontSize(60);
+
+	textDrawX = Game::kScreenWidthHalf -(GetDrawStringWidth(drawTextMessage.c_str(), GetStringLength(drawTextMessage.c_str())) / 2);
+	textDrawY = Game::kScreenHeightHalf + 15;
+	DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFontL, "%s", drawTextMessage.c_str());
 
 	m_startTextSize--;
 	if (m_startTextSize < 60) m_startTextSize = 60;

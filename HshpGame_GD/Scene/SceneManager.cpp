@@ -14,7 +14,7 @@ SceneManager::~SceneManager()
 }
 
 // 初期化
-void SceneManager::Init(int font)
+void SceneManager::Init(int font24, int font48)
 {	
 	// 各シーンの初期化
 	m_kind = kSceneTitle;
@@ -33,10 +33,10 @@ void SceneManager::Init(int font)
 		break;
 	case SceneManager::kSceneHowTo:
 		m_howTo.SetClear(&m_clear);
-		m_howTo.Init(font);	// シーンクリアの初期化
+		m_howTo.Init(font24, font48);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneRanking:
-		m_ranking.Init(font);	// シーンクリアの初期化
+		m_ranking.Init(font24);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneMain:
 		m_main.SetManager(this);
@@ -45,7 +45,7 @@ void SceneManager::Init(int font)
 		m_main.Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.Init(font);	// シーンクリアの初期化
+		m_clear.Init(font24);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -87,7 +87,7 @@ void SceneManager::End()
 }
 
 // 更新
-void SceneManager::Update(const InputState& input, int font, bool &isGameEnd)
+void SceneManager::Update(const InputState& input, int font24, int font48, bool &isGameEnd)
 {
 	// 現在のシーンの更新処理を実行する
 	bool isEnd = false;
@@ -149,13 +149,13 @@ void SceneManager::Update(const InputState& input, int font, bool &isGameEnd)
 		case NextSceneState::nextHowTo:
 			End();
 			m_howTo.SetClear(&m_clear);
-			m_howTo.Init(font);	// シーンクリアの初期化
+			m_howTo.Init(font24, font48);	// シーンクリアの初期化
 			m_kind = kSceneHowTo;
 			break;
 		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンクリアのデータ削除
 			m_ranking.SetMain(&m_main);
-			m_ranking.Init(font);	// シーンタイトルの初期化
+			m_ranking.Init(font24);	// シーンタイトルの初期化
 			m_kind = kSceneRanking;
 			break;
 		case NextSceneState::nextGameMain:
@@ -167,7 +167,7 @@ void SceneManager::Update(const InputState& input, int font, bool &isGameEnd)
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:
-			m_clear.Init(font);	// シーンクリアの初期化
+			m_clear.Init(font24);	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
 		default:

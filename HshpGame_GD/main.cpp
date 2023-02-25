@@ -38,7 +38,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	ChangeFont("QuinqueFive");
-	int MisakiG = CreateFontToHandle("美咲ゴシック", 24, -1, -1);
+	int Misaki24 = CreateFontToHandle("美咲ゴシック", 24, -1, -1);
+	int Misaki48 = CreateFontToHandle("美咲ゴシック", 48, -1, -1);
 
 	SetMouseDispFlag(false);
 
@@ -47,7 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager scene;
 
 	// 画像のロード
-	scene.Init(MisakiG);
+	scene.Init(Misaki24, Misaki48);
 
 	bool isGameEnd = false;
 
@@ -62,14 +63,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		input.Update();
 
 		// 現在のシーンの更新
-		scene.Update(input, MisakiG, isGameEnd);
+		scene.Update(input, Misaki24, Misaki48, isGameEnd);
 
 		// 現在のシーンの描画
 		scene.Draw();
 
 #ifdef _DEBUG
 		auto drawcall = GetDrawCallCount();
-		DrawFormatStringToHandle(10, 100, 0xffffff, MisakiG, "DC = %d", drawcall);		
+		DrawFormatStringToHandle(10, 100, 0xffffff, Misaki24, "DC = %d", drawcall);		
 #endif
 
 		// 裏画面を表画面と入れ替える

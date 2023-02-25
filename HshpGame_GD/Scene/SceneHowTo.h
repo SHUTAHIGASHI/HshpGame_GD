@@ -17,7 +17,7 @@ public:
 	void SetClear(SceneClear* clear) { m_pClear = clear; }
 
 	// 初期化
-	void Init(int font);
+	void Init(int font24, int font48);
 
 	void OnGameStart();
 
@@ -56,7 +56,9 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 
-	int m_hFont;
+	// フォントハンドル
+	int m_hFontS;
+	int m_hFontL;
 
 	// 効果音
 	int m_hDeathSound;
