@@ -9,8 +9,8 @@ ObjectBlock::ObjectBlock():
 
 void ObjectBlock::Init(int hBlock)
 {
-	m_drawTileNumX = GetRand(10);
-	m_drawTileNumY = GetRand(2);
+	m_drawTileNumX = 0;//GetRand(10);
+	m_drawTileNumY = 0;// GetRand(1);
 
 	m_pos.x = 0;
 	m_pos.y = 0;

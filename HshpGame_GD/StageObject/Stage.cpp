@@ -304,7 +304,7 @@ Stage::Stage() :
 {
 }
 
-void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock)
+void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad)
 {
 	End();
 	StageManage();
@@ -315,11 +315,11 @@ void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock)
 	m_scrollAcc = kScrollSpeed;
 	if(m_stageState == StageState::tenthStage) m_scrollAcc = -kScrollSpeed;
 
-	InitStage(hSpike, hPortal, hBlock);
+	InitStage(hSpike, hPortal, hBlock, hJumpPad);
 	SetStage();
 }
 
-void Stage::InitStage(int hSpike, int hPortal, int hBlock)
+void Stage::InitStage(int hSpike, int hPortal, int hBlock, int hJumpPad)
 {
 	for (int i = 0; i < Game::kScreenHeightNum; i++)
 	{
@@ -377,7 +377,7 @@ void Stage::InitStage(int hSpike, int hPortal, int hBlock)
 
 	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
 	{
-		m_ObjectJumpPad[i].Init();
+		m_ObjectJumpPad[i].Init(hJumpPad);
 	}
 
 	for (int i = 0; i < m_ObjectSpike.size(); i++)
@@ -815,6 +815,11 @@ void Stage::ScrollUpdate()
 	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
 	{
 		m_ObjectJumpRing[i].Update();
+	}
+
+	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
+	{
+		m_ObjectJumpPad[i].Update();
 	}
 
 	for (int i = 0; i < m_ObjectGravityRing.size(); i++)

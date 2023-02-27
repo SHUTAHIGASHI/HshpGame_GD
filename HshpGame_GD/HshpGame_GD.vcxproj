@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util;$(ProjectDir)Effect</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util;$(ProjectDir)Effect</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util;$(ProjectDir)Effect</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXLIB_DIR);$(ProjectDir);$(ProjectDir)Scene;$(ProjectDir)Player;$(ProjectDir)StageObject;$(ProjectDir)Util;$(ProjectDir)Effect</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -151,9 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EffectRing.cpp" />
+    <ClCompile Include="Effect\EffectRing.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjectRingBase.cpp" />
     <ClCompile Include="Player\HowToPlayer.cpp" />
     <ClCompile Include="Scene\SceneHowTo.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
@@ -173,14 +172,14 @@
     <ClCompile Include="StageObject\ObjectJumpPad.cpp" />
     <ClCompile Include="StageObject\ObjectJumpRing.cpp" />
     <ClCompile Include="StageObject\ObjectReverseRing.cpp" />
+    <ClCompile Include="StageObject\ObjectRingBase.cpp" />
     <ClCompile Include="StageObject\ObjectSpike.cpp" />
     <ClCompile Include="StageObject\Stage.cpp" />
     <ClCompile Include="Util\InputState.cpp" />
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EffectRing.h" />
-    <ClInclude Include="ObjectRingBase.h" />
+    <ClInclude Include="Effect\EffectRing.h" />
     <ClInclude Include="Player\HowToPlayer.h" />
     <ClInclude Include="Scene\SceneHowTo.h" />
     <ClInclude Include="Scene\SceneRanking.h" />
@@ -201,6 +200,7 @@
     <ClInclude Include="StageObject\ObjectJumpPad.h" />
     <ClInclude Include="StageObject\ObjectJumpRing.h" />
     <ClInclude Include="StageObject\ObjectReverseRing.h" />
+    <ClInclude Include="StageObject\ObjectRingBase.h" />
     <ClInclude Include="StageObject\ObjectSpike.h" />
     <ClInclude Include="StageObject\Stage.h" />
     <ClInclude Include="Util\game.h" />

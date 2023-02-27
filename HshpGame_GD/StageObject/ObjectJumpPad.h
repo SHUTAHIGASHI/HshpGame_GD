@@ -8,7 +8,7 @@ public:
     ObjectJumpPad();
     ~ObjectJumpPad() {}
 
-    void Init();
+    void Init(int hJumpPad);
 
     void SetPos(float X, float Y);
 
@@ -18,6 +18,8 @@ public:
 
     bool CollisionCheck(Vec2 player, int resizeScale);
 private:
-    int countFrame;
+    double m_countFrame;
+
+    int m_hJumpPad;
 };
 

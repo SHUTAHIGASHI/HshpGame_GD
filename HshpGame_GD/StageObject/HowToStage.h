@@ -30,9 +30,9 @@ public:
 
 	void SetPlayer(HowToPlayer* player) { m_pHPlayer = player; }
 
-	void Init(int hSpike, int hBg, int hPortal, int hIcon);
+	void Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad);
 
-	void InitStage(int hSpike, int hPortal, int hBlock);
+	void InitStage(int hSpike, int hPortal, int hBlock, int hJumpPad);
 
 	void End();
 

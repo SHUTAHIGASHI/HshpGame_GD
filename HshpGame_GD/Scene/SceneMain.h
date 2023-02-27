@@ -65,6 +65,7 @@ private:
 	int m_hObjectSpike;
 	int m_hPortal;
 	int m_hBlock;
+	int m_hJumpPad;
 	// 背景のグラフィック
 	int m_hBg;
 

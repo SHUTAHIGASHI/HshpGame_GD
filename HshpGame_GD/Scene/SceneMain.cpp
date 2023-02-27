@@ -26,6 +26,7 @@ SceneMain::SceneMain() :
 	m_hObjectSpike(-1),
 	m_hPortal(-1),
 	m_hBlock(-1),
+	m_hJumpPad(-1),
 	m_hBg(-1), 
 	m_hDeathSound(-1),
 	m_hPracBgm(-1),
@@ -68,6 +69,7 @@ void SceneMain::Init()
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);	// スパイク画像
 	m_hPortal = LoadGraph("imagedata/OrangePortal.png");	// ゴールポータル
 	m_hBlock = LoadGraph("imagedata/Tileset.png");	// ブロック
+	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");	// ジャンプパッド
 	m_hBg = LoadGraph("imagedata/Bg.png");	// 背景画像
 
 	// 音データの読み込み
@@ -111,7 +113,7 @@ void SceneMain::OnGameStart()
 	// プレイヤー初期化
 	m_pPlayer->Init(m_hPlayer, m_hDeathEffect, m_hDeathSound);
 	// ステージ初期化
-	m_pStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
+	m_pStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock, m_hJumpPad);
 }
 
 // ゲーム中のBGM再生

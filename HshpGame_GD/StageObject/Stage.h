@@ -35,9 +35,9 @@ public:
 	
 	void SetPlayer(Player* player) { m_pPlayer = player; }
 	
-	void Init(int hSpike, int hBg, int hPortal, int hBlock);
+	void Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad);
 
-	void InitStage(int hSpike, int hPortal, int hBlock);
+	void InitStage(int hSpike, int hPortal, int hBlock, int hJumpPad);
 
 	void End();
 

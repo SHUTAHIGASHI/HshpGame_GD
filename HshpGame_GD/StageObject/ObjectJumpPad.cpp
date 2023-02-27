@@ -1,12 +1,17 @@
 #include "ObjectJumpPad.h"
+#include "game.h"
 
 ObjectJumpPad::ObjectJumpPad() :
-	countFrame(0)
+	m_countFrame(0.0),
+	m_hJumpPad(-1)
 {
 }
 
-void ObjectJumpPad::Init()
+void ObjectJumpPad::Init(int hJumpPad)
 {
+	m_hJumpPad = hJumpPad;
+	m_countFrame = 0.0;
+
 	m_pos.x = 0;
 	m_pos.y = 0;
 }
@@ -19,13 +24,17 @@ void ObjectJumpPad::SetPos(float X, float Y)
 
 void ObjectJumpPad::Update()
 {
-	//countFrame++;
+	m_countFrame += 0.2;
+	if(m_countFrame > 6) m_countFrame = 0.0;
 }
 
 void ObjectJumpPad::Draw()
 {
-	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY() + Game::kBlockSize - (Game::kBlockSize / 4)),
-		static_cast<int>(Game::kBlockSize / 2 - 2), 0xFFD700, true);
+	int imgX, imgY, imgW, imgH;
+	imgX = 50 * static_cast<int>(m_countFrame), imgY = 0;
+	imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+
+	DrawRectExtendGraphF(GetLeft(), GetTop(), GetRight(), GetBottom(), imgX, imgY, imgW, imgH, m_hJumpPad, true);
 }
 
 bool ObjectJumpPad::CollisionCheck(Vec2 player, int resizeScale)

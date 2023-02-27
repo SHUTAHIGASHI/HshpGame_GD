@@ -30,7 +30,8 @@ SceneHowTo::SceneHowTo() :
 	m_hDeathEffect(-1),
 	m_hObjectSpike(-1),
 	m_hPortal(-1),
-	m_hBlock(-1),
+	m_hBlock(-1), 
+	m_hJumpPad(-1),
 	m_hBg(-1),
 	m_hFontS(-1),
 	m_hFontL(-1),
@@ -73,6 +74,7 @@ void SceneHowTo::Init(int font24, int font48)
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
 	m_hPortal = LoadGraph("imagedata/OrangePortal.png");
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
+	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");
 	m_hBg = LoadGraph("imagedata/Bg.png");
 
 	// 音データの読み込み
@@ -99,7 +101,7 @@ void SceneHowTo::OnGameStart()
 	m_pHPlayer->Init(m_hPlayer, m_hPlayerWaveBurner, m_hDeathEffect, m_hDeathSound, m_isPrac);
 
 	// ステージ初期化
-	m_pHStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock);
+	m_pHStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock, m_hJumpPad);
 }
 
 void SceneHowTo::PlayGameSound()
