@@ -157,5 +157,6 @@ void SceneClear::NormalDraw()
 	if (m_selectPos == 2) drawText = kBackTitleText;
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 20, menuY, 0x333333, "%s", drawText.c_str());
+	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
+	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
 }
