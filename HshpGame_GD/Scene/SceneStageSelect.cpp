@@ -84,6 +84,7 @@ void SceneStageSelect::Draw()
 	// シーン名描画
 	SetFontSize(60);
 	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
+	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, (Game::kScreenHeight / 4) + 5, kGameTitle, 0xe9e9e9);
 
 	// ボタン用メッセージ
 	SetFontSize(20);	// フォントサイズの設定
@@ -136,7 +137,8 @@ void SceneStageSelect::Draw()
 
 	// 選択中の枠内の文字描画
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0x333333, "Stage %d", m_selectPos + 1);
+	DrawFormatString(menuX + 20 + m_textScroll + 2, menuY + 5, 0x333333, "Stage %d", m_selectPos + 1);
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xe9e9e9, "Stage %d", m_selectPos + 1);
 
 	// フェード処理用
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
