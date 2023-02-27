@@ -155,7 +155,7 @@ void SceneHowTo::DrawHowTo()
 {
 	DrawBox(0, static_cast<int>(Game::kBlockSize * 11), Game::kScreenWidth, static_cast<int>(Game::kBlockSize * 13), 0x000000, true);
 	
-	int textDrawX = Game::kScreenWidthHalf + 150, textDrawY = Game::kScreenHeightHalf + 27;
+	int textDrawX = Game::kScreenWidthHalf + 250, textDrawY = Game::kScreenHeightHalf + 27;
 	std::string drawTextMessage;
 
 	if (m_isPrac)

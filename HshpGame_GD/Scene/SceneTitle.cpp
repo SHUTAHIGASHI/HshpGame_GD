@@ -83,6 +83,7 @@ void SceneTitle::Draw()
 
 	SetFontSize(60);
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4 + 5, kGameTitle, 0xe9e9e9);
 
 	// フォントサイズの設定
 	SetFontSize(20);
@@ -90,7 +91,7 @@ void SceneTitle::Draw()
 	{		
 		if ((m_textTimer / 10) % 4 != 0)
 		{
-			// タイトルのテキストを表示
+			// ボタンヒントテキストを表示
 			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xE9E9E9);
 		}
 
@@ -129,7 +130,8 @@ void SceneTitle::Draw()
 	else if (m_selectPos == 3) drawText = kRankText;
 	else if (m_selectPos == 4) drawText = kGameEndText;
 
-	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0x333333, "%s", drawText.c_str());
+	DrawFormatString(menuX + 22 + m_textScroll, menuY + 5, 0x333333, "%s", drawText.c_str());
+	DrawFormatString(menuX + 20 + m_textScroll, menuY, 0xe9e9e9, "%s", drawText.c_str());
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);

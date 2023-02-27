@@ -204,21 +204,19 @@ void SceneMain::DrawStartCount()
 	else if (m_startDelay / 60 == 0)
 	{
 		// ‚O•b‚Ìê‡‚Í "GO!" ‚Ì•¶š‚ğ•`‰æ
-		// Œã‚ë‚Ì”’•¶š
-		SetFontSize(m_startTextSize + 5);
-		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xe9e9e9);
-		// Ô•¶š
 		SetFontSize(m_startTextSize);
+		// Œã‚ë‚Ì”’•¶š
+		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2) + 2, Game::kScreenHeightHalf + 5, "GO!", 0xe9e9e9);
+		// Ô•¶š
 		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
 	}
 	else
 	{
 		// ‚S`‚P•b‚ÌŠÔ‚Í‚»‚Ì”š‚ğ•`‰æ
-		// Œã‚ë‚Ì”’•¶š
-		SetFontSize(m_startTextSize + 5);
-		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xe9e9e9, "%d", m_startDelay / 60);
-		// Ô•¶š
 		SetFontSize(m_startTextSize);
+		// Œã‚ë‚Ì”’•¶š
+		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2) + 2, Game::kScreenHeightHalf + 5, 0xe9e9e9, "%d", m_startDelay / 60);
+		// Ô•¶š
 		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
 	}
 	// ƒtƒHƒ“ƒgƒTƒCƒY‚ğ•W€‚É–ß‚·
