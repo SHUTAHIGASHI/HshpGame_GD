@@ -93,7 +93,7 @@ void SceneMain::Init()
 	else assert(0);
 
 	// スタート遅延の初期化
-	m_startDelay = kStartDelay;
+	m_startDelay = 0;// kStartDelay;
 	// スタートカウントダウンの初期化
 	m_startTextSize = kStartTextSizeMax;
 

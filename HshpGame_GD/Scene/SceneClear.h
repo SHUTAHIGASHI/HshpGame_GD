@@ -13,9 +13,10 @@ public:
 		m_selectPos(0),
 		m_selectNamePos(0),
 		m_sceneChangeDelay(0),
+		m_shadowScale(0),
+		m_textFadeNum(0),
 		m_textScale(0),
 		m_textScaleAcc(0),
-		m_name(),
 		m_isNextStage(false),
 		m_isEnd(false),
 		m_pRanking(nullptr)
@@ -32,8 +33,6 @@ public:
 	virtual void Update(const InputState& input, NextSceneState& nextScene, const bool isPrac);
 	// 描画
 	virtual void Draw();
-
-	void OnRankIn();
 
 	bool IsNextStage() const { return m_isNextStage; }
 
@@ -62,10 +61,11 @@ private:
 	// タイトル表示までの遅延用変数
 	int m_sceneChangeDelay;
 	
+	int m_shadowScale;
+	int m_textFadeNum;
+
 	int m_textScale;
 	int m_textScaleAcc;
-
-	std::string m_name;
 
 	// 次のステージ
 	bool m_isNextStage;

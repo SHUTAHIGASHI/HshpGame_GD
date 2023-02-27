@@ -11,7 +11,9 @@ namespace
 
 	// テキストサイズ
 	constexpr int kTextSizeMin = 30;
-	constexpr int kTextSizeMax = 70;
+	constexpr int kTextSizeMax = 90;
+
+	constexpr int kTextFadeSpeed = 5;
 
 	// テキスト
 	const char* const kGameClear = "Game Clear";
@@ -43,6 +45,9 @@ void SceneClear::Init(int font)
 	// 遅延時間初期化
 	m_sceneChangeDelay = kTitleDelayMax;
 
+	m_shadowScale = kTextSizeMin;
+	m_textFadeNum = 255;
+
 	m_textScale = kTextSizeMin;
 	m_textScaleAcc = 1;
 	m_selectPos = 0;
@@ -67,16 +72,16 @@ void SceneClear::Draw()
 	(this->*m_drawFunc)();
 }
 
-void SceneClear::OnRankIn()
-{
-	
-}
-
 void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
 	if (m_textScale > kTextSizeMax) m_textScaleAcc = 0;
-
 	m_textScale += m_textScaleAcc;
+
+	if (m_textFadeNum > 0)
+	{
+		m_shadowScale += kTextFadeSpeed;
+		m_textFadeNum -= kTextFadeSpeed;
+	}
 
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
@@ -116,16 +121,20 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 
 void SceneClear::NormalDraw()
 {
-
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+
+	if (m_textFadeNum > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textFadeNum);
+		SetFontSize(m_shadowScale);
+		DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
+	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
+	// ゲームクリアテキスト
 	SetFontSize(m_textScale + 1);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xc0c0c0);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
 	SetFontSize(m_textScale);
 	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd733);
 	SetFontSize(20);
