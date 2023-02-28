@@ -173,6 +173,7 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	(this->*m_updateFunc)(input, nextScene);
 }
 
+// リトライ選択時の処理
 void SceneMain::OnRetry()
 {
 	m_isPause = false;
@@ -346,6 +347,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 }
 
+// スタートカウントダウン時の更新処理
 void SceneMain::StartDelayUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	// スタート遅延を毎フレーム減らす
