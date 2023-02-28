@@ -23,13 +23,13 @@ void SceneManager::Init(int font24, int font48)
 	case SceneManager::kSceneTitle:
 		m_title.SetManager(this);
 		m_title.SetStageSelect(&m_stageSelect);
-		m_title.Init();	// シーンタイトルの初期化
+		m_title.Init(m_isPrac);	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_stageSelect.SetManager(this);
 		m_stageSelect.SetMain(&m_main);
 		m_stageSelect.SetTitle(&m_title);
-		m_stageSelect.Init();	// シーンの初期化
+		m_stageSelect.Init(m_isPrac);	// シーンの初期化
 		break;
 	case SceneManager::kSceneHowTo:
 		m_howTo.SetClear(&m_clear);
@@ -95,7 +95,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンタイトルの更新
+		m_title.Update(input, isGameEnd, m_nextScene);	// シーンタイトルの更新
 		isEnd = m_title.IsEnd();
 		break;
 	case SceneManager::kSceneStageSelect:
@@ -132,18 +132,18 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 		switch (m_nextScene)
 		{
 		case NextSceneState::nextTitle:	// シーンがゲームクリアの場合、ゲーム終了
-			End();	// シーンクリアのデータ削除
+			End();	// シーンのデータ削除
 			m_title.SetManager(this);
 			m_title.SetStageSelect(&m_stageSelect);
-			m_title.Init();	// シーンタイトルの初期化
+			m_title.Init(m_isPrac);	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextStageSelect:
-			End();	// シーンタイトルのデータ削除
+			End();	// シーンのデータ削除
 			m_stageSelect.SetMain(&m_main);
 			m_stageSelect.SetManager(this);
 			m_stageSelect.SetTitle(&m_title);
-			m_stageSelect.Init();	// シーンメインの初期化
+			m_stageSelect.Init(m_isPrac);	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
 		case NextSceneState::nextHowTo:
@@ -153,13 +153,13 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_kind = kSceneHowTo;
 			break;
 		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
-			End();	// シーンクリアのデータ削除
+			End();	// シーンのデータ削除
 			m_ranking.SetMain(&m_main);
 			m_ranking.Init(font24);	// シーンタイトルの初期化
 			m_kind = kSceneRanking;
 			break;
 		case NextSceneState::nextGameMain:
-			End();	// シーンタイトルのデータ削除
+			End();	// シーンのデータ削除
 			m_main.SetClear(&m_clear);
 			m_main.SetRanking(&m_ranking);
 			m_main.SetPracticeMode(m_isPrac);

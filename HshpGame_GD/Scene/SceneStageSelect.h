@@ -32,7 +32,7 @@ public:
 	void SetTitle(SceneTitle* title) { m_pTitle = title; }
 
 	// ‰Šú‰»
-	virtual void Init();
+	virtual void Init(bool& isPrac);
 
 	// I—¹ˆ—
 	void End();

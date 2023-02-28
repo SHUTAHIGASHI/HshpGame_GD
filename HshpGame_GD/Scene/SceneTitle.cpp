@@ -30,8 +30,10 @@ namespace
 }
 
 // 初期化
-void SceneTitle::Init()
+void SceneTitle::Init(bool& isPrac)
 {
+	isPrac = false;
+
 	// シーン終了に false を代入
 	m_isEnd = false;
 
@@ -59,7 +61,7 @@ void SceneTitle::End()
 }
 
 // 更新処理
-void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool& isPrac)
+void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene)
 {	
 	if (!CheckSoundMem(m_hLoopBgm))
 	{
@@ -68,7 +70,7 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 
 	if (m_textTimer > 1000) m_textTimer = 10;
 
-	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
+	(this->*m_updateFunc)(input, isGameEnd, nextScene);
 }
 
 // 描画処理
@@ -146,7 +148,7 @@ void SceneTitle::StopMusic()
 	}
 }
 
-void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (m_scroll > Game::kScreenWidth)
 	{
@@ -169,12 +171,10 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 		case 0:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextGameMain;
-			isPrac = false;
 			return;
 		case 1:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextStageSelect;
-			isPrac = true;
 			return;
 		case 2:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
@@ -205,7 +205,7 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 	if (m_selectPos < 0) m_selectPos = 4;
 }
 
-void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (m_scroll > Game::kScreenWidth)
 	{
@@ -236,7 +236,7 @@ void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, Next
 	}
 }
 
-void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (m_scroll > Game::kScreenWidth)
 	{

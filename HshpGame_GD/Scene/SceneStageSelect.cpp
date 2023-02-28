@@ -24,8 +24,11 @@ namespace
 }
 
 // 初期化
-void SceneStageSelect::Init()
+void SceneStageSelect::Init(bool& isPrac)
 {
+	// 練習モードに切り替え
+	isPrac = true;
+
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/Bg.png");

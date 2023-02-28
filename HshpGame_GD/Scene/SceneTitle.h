@@ -35,13 +35,13 @@ public:
 	void SetStageSelect(SceneStageSelect* stageSelect) { m_pStageSelect = stageSelect; }
 
 	// 初期化
-	virtual void Init();
+	virtual void Init(bool &isPrac);
 	
 	// 終了処理
 	void End();
 
 	// 更新処理
-	void Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene, bool &isPrac);
+	void Update(const InputState& input, bool &isGameEnd, NextSceneState &nextScene);
 	// 描画
 	void Draw();
 
@@ -53,14 +53,14 @@ public:
 	int GetMusicHandle()const { return m_hLoopBgm; }
 	int GetScroll()const { return m_scroll; }
 private:
-	using m_tUpdateFunc = void (SceneTitle::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+	using m_tUpdateFunc = void (SceneTitle::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
-	void NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+	void NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 
-	void SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+	void SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 
-	void SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac);
+	void SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 private:	
 	// メニュー選択
 	int m_selectPos;

@@ -38,7 +38,8 @@ public:
 
 	// 毎フレームの描画
 	void Draw();
-
+	// ゲーム中の情報描画
+	void DrawGameInfo();
 	// ゲームスタート時のカウントダウン描画
 	void DrawStartCount();
 
@@ -100,6 +101,10 @@ private:
 	int m_gameOverDelay;
 	// 挑戦回数
 	int m_countAttempt;
+	// 挑戦回数描画時間
+	int m_attemptDrawTime;
+	// 挑戦回数描画の値
+	int m_attemptDrawNum;
 
 	// ゲームモード
 	bool m_isPracticeMode;

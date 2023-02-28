@@ -16,6 +16,8 @@ namespace
 	constexpr int kStartTextSizeMax = 100;
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
+	// 挑戦回数描画時間
+	constexpr int kAttemptDrawMax = 180;
 }
 
 SceneMain::SceneMain() :
@@ -40,6 +42,8 @@ SceneMain::SceneMain() :
 	m_startTextSize(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
+	m_attemptDrawTime(0),
+	m_attemptDrawNum(0),
 	m_isPracticeMode(false),
 	m_isPause(false),
 	m_isEnd(false),
@@ -115,6 +119,10 @@ void SceneMain::Init()
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
 {	
+	// 挑戦回数テキストの描画時間リセット
+	m_attemptDrawTime = kAttemptDrawMax;
+	m_attemptDrawNum = 255;
+
 	// ゲームオーバー時の遅延初期化
 	m_gameOverDelay = kGameOverDelay;
 
@@ -201,16 +209,13 @@ void SceneMain::Draw()
 	// プレイヤーの描画
 	m_pPlayer->Draw();
 
+	if(m_startDelay <= 0) DrawGameInfo();
+
 	if (m_isPause)
 	{
 		m_pPause->Draw();
 	}
 	
-	// 挑戦回数の描画
-	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
-	// 現在のモードの描画
-	if(m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
-
 	// フェード処理用の処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
@@ -221,6 +226,25 @@ void SceneMain::Draw()
 	{
 		DrawStartCount();
 	}
+}
+
+void SceneMain::DrawGameInfo()
+{
+	if (m_attemptDrawTime > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_attemptDrawNum);
+		int drawX, drawY;
+		drawX = static_cast<int>(m_pPlayer->GetPos().x - 100);
+		drawY = static_cast<int>(m_pPlayer->GetPos().y - 50);
+		if (drawX < 0) drawX = 0;
+
+		// 挑戦回数の描画
+		DrawFormatString(drawX, drawY, 0xe9e9e9, "Attempt : %d", m_countAttempt);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
+	// 現在のモードの描画
+	if (m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
 }
 
 // スタート時のカウントダウン描画
@@ -299,6 +323,14 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 // 通常時の更新処理
 void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 {
+	if (m_attemptDrawTime > 0)
+	{
+		m_attemptDrawTime--;
+		if ((m_attemptDrawTime / 60) < 2)
+		{
+			m_attemptDrawNum -= 10;
+		}
+	}
 	// escapeキーが押された場合
 	if (input.IsTriggered(InputType::escape))
 	{
