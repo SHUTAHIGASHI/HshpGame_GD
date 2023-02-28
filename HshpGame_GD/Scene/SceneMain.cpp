@@ -133,7 +133,7 @@ void SceneMain::OnGameStart()
 }
 
 // ゲーム中のBGM再生
-void SceneMain::PlayGameSound()
+void SceneMain::PlayGameLoopBgm()
 {
 	// BGMが流れていない場合、曲を再生
 	if(!CheckSoundMem(m_hPlayBgm)) PlaySoundMem(m_hPlayBgm, DX_PLAYTYPE_BACK);
@@ -151,7 +151,7 @@ void SceneMain::End()
 	m_pPause->End();
 
 	// サウンドの停止
-	StopSoundMem(m_hPlayBgm);
+	StopSoundMem(m_hPlayBgm, true);
 
 	// 画像データの削除
 	DeleteGraph(m_hPlayer);	// プレイヤー画像
@@ -174,7 +174,11 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	if (m_isPause)
 	{
 		m_pPause->Update(input, nextScene, m_isEnd);
-		if (input.IsTriggered(InputType::escape)) m_isPause = false;
+		if (input.IsTriggered(InputType::escape))
+		{
+			m_isPause = false;
+			PlaySoundMem(m_hPlayBgm, DX_PLAYTYPE_BACK, false);
+		}
 		return;
 	}
 
@@ -323,6 +327,9 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 // 通常時の更新処理
 void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 {
+	// ゲームBGM再生
+	PlayGameLoopBgm();
+
 	if (m_attemptDrawTime > 0)
 	{
 		m_attemptDrawTime--;
@@ -335,6 +342,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	if (input.IsTriggered(InputType::escape))
 	{
 		m_isPause = true;
+		StopSoundMem(m_hPlayBgm);
 	}
 
 	// Rキーが押された場合
@@ -342,9 +350,6 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	{
 		OnRetry();
 	}
-
-	// ゲームBGM再生
-	PlayGameSound();
 
 	// ステージの更新処理
 	m_pStage->Update();

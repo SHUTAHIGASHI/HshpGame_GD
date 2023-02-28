@@ -25,7 +25,7 @@ public:
 
 	void OnGameStart();
 
-	void PlayGameSound();
+	void PlayGameLoopBgm();
 
 	// I—¹ˆ—
 	void End();
