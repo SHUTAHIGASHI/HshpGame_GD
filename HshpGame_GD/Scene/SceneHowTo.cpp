@@ -33,6 +33,7 @@ SceneHowTo::SceneHowTo() :
 	m_hBlock(-1), 
 	m_hJumpPad(-1),
 	m_hBg(-1),
+	m_hTutoText(-1),
 	m_hFontS(-1),
 	m_hFontL(-1),
 	m_hDeathSound(-1),
@@ -76,6 +77,7 @@ void SceneHowTo::Init(int font24, int font48)
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
 	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");
 	m_hBg = LoadGraph("imagedata/Bg.png");
+	m_hTutoText = LoadGraph("imagedata/tutorialText.png");
 
 	// ‰¹ƒf[ƒ^‚Ì“Ç‚Ýž‚Ý
 	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");
@@ -121,6 +123,7 @@ void SceneHowTo::End()
 	DeleteGraph(m_hPortal);
 	DeleteGraph(m_hBlock);
 	DeleteGraph(m_hBg);
+	DeleteGraph(m_hTutoText);
 
 	DeleteSoundMem(m_hDeathSound);
 	DeleteSoundMem(m_hPracBgm);
@@ -145,6 +148,8 @@ void SceneHowTo::Draw()
 	m_pHPlayer->Draw();
 
 	DrawHowTo();
+
+	DrawGraph(0,0,m_hTutoText, true);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);

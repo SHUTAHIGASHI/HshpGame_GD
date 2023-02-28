@@ -338,6 +338,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 			m_attemptDrawNum -= 10;
 		}
 	}
+
 	// escapeƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
 	if (input.IsTriggered(InputType::escape))
 	{

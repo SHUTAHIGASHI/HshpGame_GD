@@ -56,6 +56,8 @@ private:
 	int m_hJumpPad;
 	// 背景のグラフィック
 	int m_hBg;
+	// テキスト画像
+	int m_hTutoText;
 
 	// フォントハンドル
 	int m_hFontS;
