@@ -5,6 +5,7 @@
 
 class Player;
 class Stage;
+class ScenePause;
 class SceneManager;
 class SceneClear;
 class SceneRanking;
@@ -31,9 +32,14 @@ public:
 
 	// 毎フレームの処理
 	void Update(const InputState& input, NextSceneState& nextScene);
+	
+	// リトライ選択時
+	void OnRetry();
+
 	// 毎フレームの描画
 	void Draw();
 
+	// ゲームスタート時のカウントダウン描画
 	void DrawStartCount();
 
 	// ステージクリア時
@@ -47,14 +53,20 @@ public:
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
 
+	// 挑戦回数を取得
 	int GetAttempt() const { return m_countAttempt; }
 
 private:
 	using m_tUpdateFunc = void (SceneMain::*) (const InputState& input, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
+	// 通常の更新処理
 	void NormalUpdate(const InputState& input, NextSceneState& nextScene);
 
+	// スタートカウント時の更新処理
+	void StartDelayUpdate(const InputState& input, NextSceneState& nextScene);
+
+	// シーンスタート時の更新処理
 	void SceneStartUpdate(const InputState& input, NextSceneState& nextScene);
 
 private:
@@ -92,6 +104,8 @@ private:
 	// ゲームモード
 	bool m_isPracticeMode;
 
+	// ポーズ中かどうか
+	bool m_isPause;
 	// シーン終了
 	bool m_isEnd;
 
@@ -102,6 +116,9 @@ private:
 	std::shared_ptr<Player> m_pPlayer;
 	// ステージ
 	std::shared_ptr<Stage> m_pStage;
+
+	// ポーズメニューシーン
+	std::shared_ptr<ScenePause> m_pPause;
 
 	SceneManager* m_pManager;
 	SceneClear* m_pClear;

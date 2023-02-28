@@ -1,7 +1,8 @@
 #include "SceneMain.h"
+#include "game.h"
 #include "Player.h"
 #include "Stage.h"
-#include "game.h"
+#include "ScenePause.h"
 #include "SceneClear.h"
 #include "SceneRanking.h"
 #include <cassert>
@@ -20,6 +21,7 @@ namespace
 SceneMain::SceneMain() :
 	m_pPlayer(std::make_shared<Player>()),
 	m_pStage(std::make_shared<Stage>()),
+	m_pPause(std::make_shared<ScenePause>()),
 	m_updateFunc(&SceneMain::SceneStartUpdate),
 	m_hPlayer(-1),
 	m_hDeathEffect(-1),
@@ -39,6 +41,7 @@ SceneMain::SceneMain() :
 	m_gameOverDelay(0),
 	m_countAttempt(0),
 	m_isPracticeMode(false),
+	m_isPause(false),
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr),
@@ -56,12 +59,17 @@ void SceneMain::Init()
 {
 	// シーン終了変数を初期化
 	m_isEnd = false;	// ゲーム終了フラグ
+	m_isPause = false;
 	m_fadeCount = 255;	// フェード処理の数値
 	m_updateFunc = &SceneMain::SceneStartUpdate;	// フェード処理を実行する
 
 	// アドレスの設定
 	m_pPlayer->SetStage(m_pStage.get());
 	m_pStage->SetPlayer(m_pPlayer.get());
+	m_pPause->SetMain(this);
+
+	// ポーズシーン初期化
+	m_pPause->Init();
 
 	// 画像読み込み
 	m_hPlayer = LoadGraph(Game::kPlayerImg);	// プレイヤー画像
@@ -93,7 +101,7 @@ void SceneMain::Init()
 	else assert(0);
 
 	// スタート遅延の初期化
-	m_startDelay = 0;// kStartDelay;
+	m_startDelay = kStartDelay;
 	// スタートカウントダウンの初期化
 	m_startTextSize = kStartTextSizeMax;
 
@@ -131,6 +139,8 @@ void SceneMain::End()
 
 	// ステージの終了処理
 	m_pStage->End();
+	// ポーズシーンの終了処理
+	m_pPause->End();
 
 	// サウンドの停止
 	StopSoundMem(m_hPlayBgm);
@@ -153,7 +163,29 @@ void SceneMain::End()
 // 毎フレームの処理
 void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
+	if (m_isPause)
+	{
+		m_pPause->Update(input, nextScene, m_isEnd);
+		if (input.IsTriggered(InputType::escape)) m_isPause = false;
+		return;
+	}
+
 	(this->*m_updateFunc)(input, nextScene);
+}
+
+void SceneMain::OnRetry()
+{
+	m_isPause = false;
+	
+	// チャレンジモードの場合、曲を停止
+	if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+	// チャレンジモードの場合、ステージ１をセット
+	if (!m_isPracticeMode) m_pStage->SetFirstStage();
+	// ゲーム状態初期化
+	OnGameStart();
+	// 挑戦回数を増やす
+	m_countAttempt++;
+	return;
 }
 
 // 毎フレームの描画
@@ -167,6 +199,11 @@ void SceneMain::Draw()
 
 	// プレイヤーの描画
 	m_pPlayer->Draw();
+
+	if (m_isPause)
+	{
+		m_pPause->Draw();
+	}
 	
 	// 挑戦回数の描画
 	DrawFormatString(10, 60, 0xffffff, "Attempt : %d", m_countAttempt);
@@ -264,38 +301,13 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	// escapeキーが押された場合
 	if (input.IsTriggered(InputType::escape))
 	{
-		// 練習モードの場合、ステージセレクトへ
-		if (m_isPracticeMode) nextScene = NextSceneState::nextStageSelect;
-		// それ以外の場合、タイトルメニューへ
-		else nextScene = NextSceneState::nextTitle;
-		// シーン終了フラグを true
-		m_isEnd = true;
+		m_isPause = true;
 	}
 
 	// Rキーが押された場合
 	if (input.IsTriggered(InputType::retry))
 	{
-		// チャレンジモードの場合、曲を停止
-		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
-
-		// チャレンジモードの場合、ステージ１をセット
-		if (!m_isPracticeMode) m_pStage->SetFirstStage();
-		// ゲーム状態初期化
-		OnGameStart();
-		// 挑戦回数を増やす
-		m_countAttempt++;
-		return;
-	}
-
-	// スタート遅延を毎フレーム減らす
-	m_startDelay--;
-	// スタート遅延が 1 以上の場合処理終了
-	if (m_startDelay > 0) return;
-	// スタート遅延が 0 以下になったらそれ以上減らない
-	else
-	{
-		m_startDelay = 0;
-		m_fadeCount = 0;
+		OnRetry();
 	}
 
 	// ゲームBGM再生
@@ -334,6 +346,19 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 }
 
+void SceneMain::StartDelayUpdate(const InputState& input, NextSceneState& nextScene)
+{
+	// スタート遅延を毎フレーム減らす
+	m_startDelay--;
+	// スタート遅延が 1 以上の場合処理終了
+	if (m_startDelay < 0)
+	{
+		m_updateFunc = &SceneMain::NormalUpdate;
+		m_startDelay = 0;
+		m_fadeCount = 0;
+	}
+}
+
 // シーン開始時の更新処理
 void SceneMain::SceneStartUpdate(const InputState& input, NextSceneState& nextScene)
 {
@@ -346,6 +371,6 @@ void SceneMain::SceneStartUpdate(const InputState& input, NextSceneState& nextSc
 		// 150 にセット
 		m_fadeCount = 150;
 		// 通常の更新処理をセット
-		m_updateFunc = &SceneMain::NormalUpdate;
+		m_updateFunc = &SceneMain::StartDelayUpdate;
 	}
 }

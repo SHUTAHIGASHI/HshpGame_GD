@@ -37,6 +37,12 @@
     <Filter Include="ヘッダー ファイル\Util">
       <UniqueIdentifier>{7dc26fff-f3da-4df1-8b4d-e6e302ee9071}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{5f38bf29-dc41-42d0-82eb-f91df4483e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Effect">
+      <UniqueIdentifier>{e1deb0f1-5119-42b0-964d-cb673921d4fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,11 +117,14 @@
     <ClCompile Include="StageObject\HowToStage.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectRingBase.cpp">
+    <ClCompile Include="StageObject\ObjectRingBase.cpp">
       <Filter>ソース ファイル\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="EffectRing.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Effect\EffectRing.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ScenePause.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +203,14 @@
     <ClInclude Include="Scene\SceneStageSelect.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectRingBase.h">
+    <ClInclude Include="StageObject\ObjectRingBase.h">
       <Filter>ヘッダー ファイル\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="EffectRing.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Effect\EffectRing.h">
+      <Filter>ヘッダー ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ScenePause.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
