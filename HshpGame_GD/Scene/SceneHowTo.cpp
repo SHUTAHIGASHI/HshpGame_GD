@@ -61,6 +61,8 @@ void SceneHowTo::Init(int font24, int font48)
 	
 	// シーン終了変数を初期化
 	m_isEnd = false;
+	m_isPrac = true;
+
 	m_fadeCount = 255;
 	m_updateFunc = &SceneHowTo::SceneStartUpdate;
 
@@ -209,8 +211,8 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 {
 	if (input.IsTriggered(InputType::escape))
 	{
-		nextScene = NextSceneState::nextTitle;
-		m_isEnd = true;
+		m_updateFunc = &SceneHowTo::SceneEndUpdate;
+		return;
 	}
 
 	// Rキーを押すとゲームリトライ
@@ -230,8 +232,8 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 		
 		if (m_pHStage->GetStageState() == HowToStageState::RevRingTest && !m_isPrac)
 		{
-			nextScene = NextSceneState::nextTitle;
-			m_isEnd = true;
+			m_updateFunc = &SceneHowTo::SceneEndUpdate;
+			return;
 		}
 		
 		if (m_isPrac)
@@ -276,5 +278,16 @@ void SceneHowTo::SceneStartUpdate(const InputState& input, NextSceneState& nextS
 	{
 		m_fadeCount = 0;
 		m_updateFunc = &SceneHowTo::NormalUpdate;
+	}
+}
+
+void SceneHowTo::SceneEndUpdate(const InputState& input, NextSceneState& nextScene)
+{
+	m_fadeCount += 5;
+
+	if (m_fadeCount > 255)
+	{
+		nextScene = NextSceneState::nextTitle;
+		m_isEnd = true;
 	}
 }

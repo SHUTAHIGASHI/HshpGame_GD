@@ -43,6 +43,7 @@ private:
 	void NormalUpdate(const InputState& input, NextSceneState& nextScene);
 
 	void SceneStartUpdate(const InputState& input, NextSceneState& nextScene);
+	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene);
 
 private:
 	// キャラクターのグラフィックハンドル
