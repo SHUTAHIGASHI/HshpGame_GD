@@ -17,7 +17,7 @@ public:
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(LoadGraph("imagedata/Bg.png")),
-		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.mp3")),
+		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.wav")),
 		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0),

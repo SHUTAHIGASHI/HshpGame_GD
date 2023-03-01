@@ -1,12 +1,14 @@
 #pragma once
 
 #include "game.h"
-#include "SceneTitle.h"
-#include "SceneMain.h"
-#include "SceneClear.h"
-#include "SceneStageSelect.h"
-#include "SceneRanking.h"
-#include "SceneHowTo.h"
+#include <memory>
+
+class SceneTitle;
+class SceneStageSelect;
+class SceneHowTo;
+class SceneRanking;
+class SceneMain;
+class SceneClear;
 
 class SceneManager
 {
@@ -49,10 +51,10 @@ private:
 	SceneKind m_lastScene;
 	NextSceneState m_nextScene;
 
-	SceneTitle	m_title;
-	SceneStageSelect m_stageSelect;
-	SceneHowTo m_howTo;
-	SceneRanking m_ranking;
-	SceneMain	m_main;
-	SceneClear	m_clear;
+	std::shared_ptr<SceneTitle> m_pTitle;
+	std::shared_ptr<SceneStageSelect> m_pStageSelect;
+	std::shared_ptr<SceneHowTo> m_pHowTo;
+	std::shared_ptr<SceneRanking> m_pRanking;
+	std::shared_ptr<SceneMain> m_pMain;
+	std::shared_ptr<SceneClear> m_pClear;
 };

@@ -3,6 +3,7 @@
 #include "game.h"
 #include "SceneMain.h"
 #include "SceneManager.h"
+#include "SceneTitle.h"
 
 namespace
 {

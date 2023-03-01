@@ -4,6 +4,7 @@
 #include "game.h"
 #include "SceneManager.h"
 #include "SceneMain.h"
+#include "SceneStageSelect.h"
 
 namespace
 {

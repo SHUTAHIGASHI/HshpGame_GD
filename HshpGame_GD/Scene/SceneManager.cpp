@@ -1,11 +1,23 @@
 #include "SceneManager.h"
+#include "SceneTitle.h"
+#include "SceneStageSelect.h"
+#include "SceneHowTo.h"
+#include "SceneRanking.h"
+#include "SceneMain.h"
+#include "SceneClear.h"
 #include <cassert>
 
 SceneManager::SceneManager():
 	m_isPrac(false),
 	m_kind(kSceneTitle),
 	m_nextScene (NextSceneState::nextGameMain),
-	m_lastScene()
+	m_lastScene(),
+	m_pTitle(std::make_shared<SceneTitle>()),
+	m_pStageSelect(std::make_shared<SceneStageSelect>()),
+	m_pHowTo(std::make_shared<SceneHowTo>()),
+	m_pRanking(std::make_shared<SceneRanking>()),
+	m_pMain(std::make_shared<SceneMain>()),
+	m_pClear(std::make_shared<SceneClear>())
 {
 }
 SceneManager::~SceneManager()
@@ -21,31 +33,31 @@ void SceneManager::Init(int font24, int font48)
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.SetManager(this);
-		m_title.SetStageSelect(&m_stageSelect);
-		m_title.Init(m_isPrac);	// シーンタイトルの初期化
+		m_pTitle->SetManager(this);
+		m_pTitle->SetStageSelect(m_pStageSelect.get());
+		m_pTitle->Init(m_isPrac);	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_stageSelect.SetManager(this);
-		m_stageSelect.SetMain(&m_main);
-		m_stageSelect.SetTitle(&m_title);
-		m_stageSelect.Init(m_isPrac);	// シーンの初期化
+		m_pStageSelect->SetManager(this);
+		m_pStageSelect->SetMain(m_pMain.get());
+		m_pStageSelect->SetTitle(m_pTitle.get());
+		m_pStageSelect->Init(m_isPrac);	// シーンの初期化
 		break;
 	case SceneManager::kSceneHowTo:
-		m_howTo.SetClear(&m_clear);
-		m_howTo.Init(font24, font48);	// シーンクリアの初期化
+		m_pHowTo->SetClear(m_pClear.get());
+		m_pHowTo->Init(font24, font48);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneRanking:
-		m_ranking.Init(font24);	// シーンクリアの初期化
+		m_pRanking->Init(font24);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneMain:
-		m_main.SetManager(this);
-		m_main.SetClear(&m_clear);
-		m_main.SetRanking(&m_ranking);
-		m_main.Init();	// シーンメインの初期化
+		m_pMain->SetManager(this);
+		m_pMain->SetClear(m_pClear.get());
+		m_pMain->SetRanking(m_pRanking.get());
+		m_pMain->Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.Init(font24);	// シーンクリアの初期化
+		m_pClear->Init(font24);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -61,23 +73,23 @@ void SceneManager::End()
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.End();	// シーンタイトルのデータ削除
+		m_pTitle->End();	// シーンタイトルのデータ削除
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_stageSelect.End();	// シーンクリアのデータ削除
+		m_pStageSelect->End();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneHowTo:
-		m_howTo.End();	// シーンクリアの初期化
+		m_pHowTo->End();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneRanking:
-		m_ranking.End();	// シーンクリアの初期化
+		m_pRanking->End();	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneMain:
-		m_main.End();	// シーンメインのデータ削除
+		m_pMain->End();	// シーンメインのデータ削除
 		break;
 	case SceneManager::kSceneClear:
-		m_main.End();	// シーンメインのデータ削除
-		m_clear.End();	// シーンクリアのデータ削除
+		m_pMain->End();	// シーンメインのデータ削除
+		m_pClear->End();	// シーンクリアのデータ削除
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -95,28 +107,28 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.Update(input, isGameEnd, m_nextScene);	// シーンタイトルの更新
-		isEnd = m_title.IsEnd();
+		m_pTitle->Update(input, isGameEnd, m_nextScene);	// シーンタイトルの更新
+		isEnd = m_pTitle->IsEnd();
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_stageSelect.Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
-		isEnd = m_stageSelect.IsEnd();
+		m_pStageSelect->Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
+		isEnd = m_pStageSelect->IsEnd();
 		break;
 	case SceneManager::kSceneHowTo:
-		m_howTo.Update(input, m_nextScene);
-		isEnd = m_howTo.IsEnd();
+		m_pHowTo->Update(input, m_nextScene);
+		isEnd = m_pHowTo->IsEnd();
 		break;
 	case SceneManager::kSceneRanking:
-		m_ranking.Update(input, isGameEnd, m_nextScene);	// シーンクリアの初期化
-		isEnd = m_ranking.IsEnd();
+		m_pRanking->Update(input, isGameEnd, m_nextScene);	// シーンクリアの初期化
+		isEnd = m_pRanking->IsEnd();
 		break;
 	case SceneManager::kSceneMain:
-		m_main.Update(input, m_nextScene);	// シーンメインの更新
-		isEnd = m_main.IsEnd();
+		m_pMain->Update(input, m_nextScene);	// シーンメインの更新
+		isEnd = m_pMain->IsEnd();
 		break;
 	case SceneManager::kSceneClear:
-		m_clear.Update(input, m_nextScene, m_isPrac);	// シーンクリアの更新
-		isEnd = m_clear.IsEnd();
+		m_pClear->Update(input, m_nextScene, m_isPrac);	// シーンクリアの更新
+		isEnd = m_pClear->IsEnd();
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -133,41 +145,41 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 		{
 		case NextSceneState::nextTitle:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンのデータ削除
-			m_title.SetManager(this);
-			m_title.SetStageSelect(&m_stageSelect);
-			m_title.Init(m_isPrac);	// シーンタイトルの初期化
+			m_pTitle->SetManager(this);
+			m_pTitle->SetStageSelect(m_pStageSelect.get());
+			m_pTitle->Init(m_isPrac);	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextStageSelect:
 			End();	// シーンのデータ削除
-			m_stageSelect.SetMain(&m_main);
-			m_stageSelect.SetManager(this);
-			m_stageSelect.SetTitle(&m_title);
-			m_stageSelect.Init(m_isPrac);	// シーンメインの初期化
+			m_pStageSelect->SetMain(m_pMain.get());
+			m_pStageSelect->SetManager(this);
+			m_pStageSelect->SetTitle(m_pTitle.get());
+			m_pStageSelect->Init(m_isPrac);	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
 		case NextSceneState::nextHowTo:
 			End();
-			m_howTo.SetClear(&m_clear);
-			m_howTo.Init(font24, font48);	// シーンクリアの初期化
+			m_pHowTo->SetClear(m_pClear.get());
+			m_pHowTo->Init(font24, font48);	// シーンクリアの初期化
 			m_kind = kSceneHowTo;
 			break;
 		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンのデータ削除
-			m_ranking.SetMain(&m_main);
-			m_ranking.Init(font24);	// シーンタイトルの初期化
+			m_pRanking->SetMain(m_pMain.get());
+			m_pRanking->Init(font24);	// シーンタイトルの初期化
 			m_kind = kSceneRanking;
 			break;
 		case NextSceneState::nextGameMain:
 			End();	// シーンのデータ削除
-			m_main.SetClear(&m_clear);
-			m_main.SetRanking(&m_ranking);
-			m_main.SetPracticeMode(m_isPrac);
-			m_main.Init();	// シーンメインの初期化
+			m_pMain->SetClear(m_pClear.get());
+			m_pMain->SetRanking(m_pRanking.get());
+			m_pMain->SetPracticeMode(m_isPrac);
+			m_pMain->Init();	// シーンメインの初期化
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:
-			m_clear.Init(font24);	// シーンクリアの初期化
+			m_pClear->Init(font24);	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
 		default:
@@ -184,23 +196,23 @@ void SceneManager::Draw()
 	switch (m_kind)
 	{
 	case SceneManager::kSceneTitle:
-		m_title.Draw();	// シーンタイトルの描画
+		m_pTitle->Draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_stageSelect.Draw();	// シーンクリアの描画
+		m_pStageSelect->Draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneHowTo:
-		m_howTo.Draw();
+		m_pHowTo->Draw();
 		break;
 	case SceneManager::kSceneRanking:
-		m_ranking.Draw();	// シーンタイトルの描画
+		m_pRanking->Draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneMain:
-		m_main.Draw();	// シーンメインの描画
+		m_pMain->Draw();	// シーンメインの描画
 		break;
 	case SceneManager::kSceneClear:
-		m_main.Draw();	// シーンメインの描画
-		m_clear.Draw();	// シーンクリアの描画
+		m_pMain->Draw();	// シーンメインの描画
+		m_pClear->Draw();	// シーンクリアの描画
 		break;
 	case SceneManager::kSceneKindNum:
 	default:

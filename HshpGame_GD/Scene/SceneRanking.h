@@ -20,6 +20,7 @@ public:
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(-1),
+		m_hKeyimg(-1),
 		m_hFont(-1),
 		m_pMain(nullptr)
 	{
@@ -76,6 +77,7 @@ private:
 
 	// 画像データ
 	int m_hBg;
+	int m_hKeyimg;
 	// 文字データ
 	int m_hFont;
 

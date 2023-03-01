@@ -7,7 +7,7 @@ namespace
 {
 	// タイトルメッセージ
 	const char* const kTextTitle = "Ranking";
-	const char* const kTitleMessage = "Back";
+	const char* const kTextBack = "Back";
 
 	// メニューメッセージ
 	const char* const kGameEndText = "Exit";
@@ -33,6 +33,7 @@ void SceneRanking::Init(int font)
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/Bg.png");
+	m_hKeyimg = LoadGraph("imagedata/KeyImg.png");
 	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -77,7 +78,12 @@ void SceneRanking::Draw()
 		if ((m_textTimer / 10) % 4 != 0)
 		{
 			// タイトルのテキストを表示
-			DrawString(50, Game::kScreenHeight - 50, kTitleMessage, 0xe9e9e9);
+			DrawString(50, Game::kScreenHeight - 50, kTextBack, 0xe9e9e9);
+
+			int drawX, drawY, drawW, drawH;
+			drawX = 32, drawY = 0, drawW = 32, drawH = 16;
+
+			DrawRectGraph(20, Game::kScreenHeight - 50, drawX, drawY, drawW, drawH, m_hKeyimg, true);
 		}
 
 		m_textTimer++;

@@ -81,7 +81,7 @@ void SceneHowTo::Init(int font24, int font48)
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");
-	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");
+	m_hPracBgm = LoadSoundMem("soundData/pracmode.ogg");
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;

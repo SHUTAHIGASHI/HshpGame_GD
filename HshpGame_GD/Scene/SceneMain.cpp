@@ -86,7 +86,7 @@ void SceneMain::Init()
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");	// 死亡時の音
-	m_hPracBgm = LoadSoundMem("soundData/StayInsideMe.mp3");	// 練習モードのBGM
+	m_hPracBgm = LoadSoundMem("soundData/pracmode.ogg");	// 練習モードのBGM
 	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");	// チャレンジモードのBGM
 
 	// BGMのセット
