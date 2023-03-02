@@ -33,8 +33,10 @@ public:
 	// 毎フレームの処理
 	void Update(const InputState& input, NextSceneState& nextScene);
 	
-	// リトライ選択時
+	// リトライ選択時の処理
 	void OnRetry();
+	// 死亡時の処理
+	void OnDead();
 
 	// 毎フレームの描画
 	void Draw();

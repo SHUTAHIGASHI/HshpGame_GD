@@ -8,8 +8,9 @@
 namespace
 {
 	// タイトルメッセージ
-	const char* const kGameTitle = "Stage Select";
-	const char* const kTitleMessage = "ENTER to Select";
+	const char* const kGameTitle = "StageSelect";
+	const char* const kSelectMessage = "で選択";
+	const char* const kBackMessage = "で戻る";
 
 	// メニューの選択項目の数
 	constexpr int kMenuMax = 10;
@@ -25,14 +26,18 @@ namespace
 }
 
 // 初期化
-void SceneStageSelect::Init(bool& isPrac)
+void SceneStageSelect::Init(int fontS, int fontL, bool& isPrac)
 {
+	m_hFontS = fontS;
+	m_hFontL = fontL;
+	
 	// 練習モードに切り替え
 	isPrac = true;
 
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/Bg.png");
+	m_hPadImg = LoadGraph("imagedata/PadImg.png");
 
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -87,8 +92,12 @@ void SceneStageSelect::Draw()
 
 	// シーン名描画
 	SetFontSize(60);
-	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
-	DrawString((Game::kScreenWidth / 2) - (GetDrawStringWidth(kTitleMessage, 12) / 2) + m_textScroll, (Game::kScreenHeight / 4) + 5, kGameTitle, 0xe9e9e9);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 11) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 11) / 2) + m_textScroll, (Game::kScreenHeight / 4) + 5, kGameTitle, 0xe9e9e9);
+
+	int drawX = 0, drawY = 0;
+	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;
+	int imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
 	// ボタン用メッセージ
 	SetFontSize(20);	// フォントサイズの設定
@@ -96,12 +105,23 @@ void SceneStageSelect::Draw()
 	{
 		if ((m_textTimer / 10) % 5 != 0)
 		{
+			drawX = 100, drawY = Game::kScreenHeight - 80;
 			// タイトルのテキストを表示
-			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xe9e9e9);
+			DrawStringToHandle(drawX, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
+
+			imgY = Game::kPadChipSize * 12;
+			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
 		m_textTimer++;
 	}
+
+	drawX = 250, drawY = Game::kScreenHeight - 80;
+	// タイトルのテキストを表示
+	DrawStringToHandle(drawX, drawY, kBackMessage, 0xe9e9e9, m_hFontS);
+
+	imgY = Game::kPadChipSize * 11;
+	DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 
 	// 選択枠の描画
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
@@ -159,7 +179,7 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 
 	m_scroll += m_scrollAcc;
 
-	if (input.IsTriggered(InputType::pause))
+	if (input.IsTriggered(InputType::back))
 	{
 		nextScene = NextSceneState::nextTitle;
 		m_updateFunc = &SceneStageSelect::SceneEndUpdate;

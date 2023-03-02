@@ -56,8 +56,17 @@ namespace Game
 	// 画像データ
 	const char* const kPlayerImg = "imagedata/PlayerImage.png";
 	const char* const kPlayerDeathEffectImg = "imagedata/deathEffect.png";
-
 	const char* const kObjectSpikeImg = "imagedata/ObjectSpike.png";
+	const char* const kPortalImg = "imagedata/OrangePortal.png";
+	const char* const kBlockImg = "imagedata/Tileset.png";
+	const char* const kJumpPadImg = "imagedata/JumpPad.png";
+	const char* const kBgImg = "imagedata/Bg.png";
+	const char* const kPadImg = "imagedata/PadImg.png";
+
+	// 音楽データ
+	const char* const kDeathSound = "soundData/deathSound.mp3";
+	const char* const kPracBgm = "soundData/pracmode.ogg";
+	const char* const kChallengeBgm = "soundData/ElectromanAdventuresV2.mp3";
 
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;

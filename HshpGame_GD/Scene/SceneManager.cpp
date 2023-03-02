@@ -35,13 +35,13 @@ void SceneManager::Init(int font24, int font48)
 	case SceneManager::kSceneTitle:
 		m_pTitle->SetManager(this);
 		m_pTitle->SetStageSelect(m_pStageSelect.get());
-		m_pTitle->Init(m_isPrac);	// シーンタイトルの初期化
+		m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_pStageSelect->SetManager(this);
 		m_pStageSelect->SetMain(m_pMain.get());
 		m_pStageSelect->SetTitle(m_pTitle.get());
-		m_pStageSelect->Init(m_isPrac);	// シーンの初期化
+		m_pStageSelect->Init(font24, font48, m_isPrac);	// シーンの初期化
 		break;
 	case SceneManager::kSceneHowTo:
 		m_pHowTo->SetClear(m_pClear.get());
@@ -147,7 +147,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			End();	// シーンのデータ削除
 			m_pTitle->SetManager(this);
 			m_pTitle->SetStageSelect(m_pStageSelect.get());
-			m_pTitle->Init(m_isPrac);	// シーンタイトルの初期化
+			m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextStageSelect:
@@ -155,7 +155,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_pStageSelect->SetMain(m_pMain.get());
 			m_pStageSelect->SetManager(this);
 			m_pStageSelect->SetTitle(m_pTitle.get());
-			m_pStageSelect->Init(m_isPrac);	// シーンメインの初期化
+			m_pStageSelect->Init(font24, font48, m_isPrac);	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
 		case NextSceneState::nextHowTo:

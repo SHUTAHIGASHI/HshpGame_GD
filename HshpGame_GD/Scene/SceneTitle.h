@@ -17,6 +17,9 @@ public:
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(LoadGraph("imagedata/Bg.png")),
+		m_hPadImg(-1),
+		m_hFontS(-1),
+		m_hFontL(-1),
 		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.wav")),
 		m_textScroll(0),
 		m_scroll(0),
@@ -35,7 +38,7 @@ public:
 	void SetStageSelect(SceneStageSelect* stageSelect) { m_pStageSelect = stageSelect; }
 
 	// 初期化
-	virtual void Init(bool &isPrac);
+	virtual void Init(int fontS, int fontL, bool &isPrac);
 	
 	// 終了処理
 	void End();
@@ -73,6 +76,11 @@ private:
 
 	// 画像データ
 	int m_hBg;
+	int m_hPadImg;
+	// フォントデータ
+	int m_hFontS;
+	int m_hFontL;
+	// 音楽データ
 	int m_hLoopBgm;
 
 	int m_textScroll;

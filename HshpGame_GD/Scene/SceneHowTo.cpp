@@ -71,6 +71,7 @@ void SceneHowTo::Init(int font24, int font48)
 	m_isEnd = false;
 	m_isPrac = true;
 
+	m_countPadNum = 1;
 	m_fadeCount = 255;
 	m_updateFunc = &SceneHowTo::SceneStartUpdate;
 
@@ -144,11 +145,11 @@ void SceneHowTo::End()
 // 毎フレームの処理
 void SceneHowTo::Update(const InputState& input, NextSceneState& nextScene)
 {
+	(this->*m_updateFunc)(input, nextScene);
+
 	m_countFrame++;
 	if(m_countFrame % 8 == 0)m_countPadNum++;
 	if (m_countPadNum > 4) m_countPadNum = 1;
-
-	(this->*m_updateFunc)(input, nextScene);
 }
 
 // 毎フレームの描画

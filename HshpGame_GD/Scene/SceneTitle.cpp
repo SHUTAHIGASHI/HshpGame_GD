@@ -10,7 +10,7 @@ namespace
 {
 	// タイトルメッセージ
 	const char* const kGameTitle = "SquareJumper";
-	const char* const kTitleMessage = "ENTER to Select";
+	const char* const kSelectMessage = "で選択";
 
 	// メニューメッセージ
 	const char* const kChallengeModeText = "ChallengeMode";
@@ -31,8 +31,11 @@ namespace
 }
 
 // 初期化
-void SceneTitle::Init(bool& isPrac)
+void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
 {
+	m_hFontS = fontS;
+	m_hFontL = fontL;
+	
 	isPrac = false;
 
 	// シーン終了に false を代入
@@ -44,6 +47,8 @@ void SceneTitle::Init(bool& isPrac)
 	m_scroll = 0;
 	m_scrollAcc = 7;
 	m_fadeCount = 0;
+
+	m_hPadImg = LoadGraph("imagedata/PadImg.png");
 
 	m_scroll = m_pStageSelect->GetScroll();
 
@@ -59,6 +64,8 @@ void SceneTitle::Init(bool& isPrac)
 void SceneTitle::End()
 {
 	StopMusic();
+
+	DeleteGraph(m_hPadImg);
 }
 
 // 更新処理
@@ -88,14 +95,22 @@ void SceneTitle::Draw()
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4 + 5, kGameTitle, 0xe9e9e9);
 
+	int drawX = 0, drawY = 0;
+	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;
+	int imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+
 	// フォントサイズの設定
 	SetFontSize(20);
 	if (m_textTimer > 0)
 	{		
 		if ((m_textTimer / 10) % 4 != 0)
 		{
-			// ボタンヒントテキストを表示
-			DrawString(Game::kScreenWidth / 2 - GetDrawStringWidth(kTitleMessage, 15) / 2 + m_textScroll, Game::kScreenHeightHalf + 300, kTitleMessage, 0xE9E9E9);
+			drawX = (Game::kScreenWidthHalf - GetDrawStringWidth(kSelectMessage, 6) / 2) + 15, drawY = Game::kScreenHeightHalf + 300;
+			// タイトルのテキストを表示
+			DrawStringToHandle(drawX, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
+
+			imgY = Game::kPadChipSize * 12;
+			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
 		m_textTimer++;
@@ -114,8 +129,8 @@ void SceneTitle::Draw()
 
 		menuY = menuY + (kMenuH / 2) - 15;
 
-		if (i == 0) drawText = kChallengeModeText;
-		else if (i == 1) drawText = kStageSelectText;
+		if (i == 0) drawText = kStageSelectText;
+		else if (i == 1) drawText = kChallengeModeText;
 		else if (i == 2) drawText = kTutorialText;
 		else if (i == 3) drawText = kRankText;
 		else if (i == 4) drawText = kGameEndText;
@@ -127,8 +142,8 @@ void SceneTitle::Draw()
 	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0x60CAAD, true);
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	if (m_selectPos == 0) drawText = kChallengeModeText;
-	else if (m_selectPos == 1) drawText = kStageSelectText;
+	if (m_selectPos == 0) drawText = kStageSelectText;
+	else if (m_selectPos == 1) drawText = kChallengeModeText;
 	else if (m_selectPos == 2) drawText = kTutorialText;
 	else if (m_selectPos == 3) drawText = kRankText;
 	else if (m_selectPos == 4) drawText = kGameEndText;
@@ -171,11 +186,11 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 		{
 		case 0:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
-			nextScene = NextSceneState::nextGameMain;
+			nextScene = NextSceneState::nextStageSelect;
 			return;
 		case 1:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
-			nextScene = NextSceneState::nextStageSelect;
+			nextScene = NextSceneState::nextGameMain;
 			return;
 		case 2:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;

@@ -79,15 +79,15 @@ void SceneMain::Init()
 	m_hPlayer = LoadGraph(Game::kPlayerImg);	// プレイヤー画像
 	m_hDeathEffect = LoadGraph(Game::kPlayerDeathEffectImg);	// 死亡エフェクト
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);	// スパイク画像
-	m_hPortal = LoadGraph("imagedata/OrangePortal.png");	// ゴールポータル
-	m_hBlock = LoadGraph("imagedata/Tileset.png");	// ブロック
-	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");	// ジャンプパッド
-	m_hBg = LoadGraph("imagedata/Bg.png");	// 背景画像
+	m_hPortal = LoadGraph(Game::kPortalImg);	// ゴールポータル
+	m_hBlock = LoadGraph(Game::kBlockImg);	// ブロック
+	m_hJumpPad = LoadGraph(Game::kJumpPadImg);	// ジャンプパッド
+	m_hBg = LoadGraph(Game::kBgImg);	// 背景画像
 
 	// 音データの読み込み
-	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");	// 死亡時の音
-	m_hPracBgm = LoadSoundMem("soundData/pracmode.ogg");	// 練習モードのBGM
-	m_hChallengeBgm = LoadSoundMem("soundData/ElectromanAdventuresV2.mp3");	// チャレンジモードのBGM
+	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
+	m_hPracBgm = LoadSoundMem(Game::kPracBgm);	// 練習モードのBGM
+	m_hChallengeBgm = LoadSoundMem(Game::kChallengeBgm);	// チャレンジモードのBGM
 
 	// BGMのセット
 	// 練習モードの場合、練習用BGMをセット
@@ -199,6 +199,27 @@ void SceneMain::OnRetry()
 	// 挑戦回数を増やす
 	m_countAttempt++;
 	return;
+}
+
+void SceneMain::OnDead()
+{
+	// 再生中のBGMを止める
+	if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+
+	// ゲームオーバー遅延が０以下になった場合
+	if (m_gameOverDelay < 0)
+	{
+		// チャレンジモードの場合、ステージ１をセット
+		if (!m_isPracticeMode) m_pStage->SetFirstStage();
+		// ゲーム状態初期化
+		OnGameStart();
+		// 挑戦回数を増やす
+		m_countAttempt++;
+		return;
+	}
+
+	// ゲームオーバー遅延を1フレームごとに減少させる
+	m_gameOverDelay--;
 }
 
 // 毎フレームの描画
@@ -364,23 +385,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	// プレイヤーの死亡判定が true の場合
 	if (m_pPlayer->IsDead())
 	{
-		// 再生中のBGMを止める
-		if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
-
-		// ゲームオーバー遅延が０以下になった場合
-		if (m_gameOverDelay < 0)
-		{
-			// チャレンジモードの場合、ステージ１をセット
-			if (!m_isPracticeMode) m_pStage->SetFirstStage();
-			// ゲーム状態初期化
-			OnGameStart();
-			// 挑戦回数を増やす
-			m_countAttempt++;
-			return;
-		}
-
-		// ゲームオーバー遅延を1フレームごとに減少させる
-		m_gameOverDelay--;
+		OnDead();
 		return;
 	}
 }

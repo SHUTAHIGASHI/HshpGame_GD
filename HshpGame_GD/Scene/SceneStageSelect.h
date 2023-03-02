@@ -17,6 +17,9 @@ public:
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(-1),
+		m_hPadImg(-1),
+		m_hFontS(-1),
+		m_hFontL(-1),
 		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0),
@@ -32,7 +35,7 @@ public:
 	void SetTitle(SceneTitle* title) { m_pTitle = title; }
 
 	// 初期化
-	virtual void Init(bool& isPrac);
+	virtual void Init(int fontS, int fontL, bool& isPrac);
 
 	// 終了処理
 	void End();
@@ -68,6 +71,10 @@ private:
 
 	// 画像データ
 	int m_hBg;
+	int m_hPadImg;
+	// フォントデータ
+	int m_hFontS;
+	int m_hFontL;
 
 	int m_textScroll;
 
