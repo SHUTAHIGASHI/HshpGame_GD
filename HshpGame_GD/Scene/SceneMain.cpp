@@ -255,10 +255,10 @@ void SceneMain::Draw()
 
 void SceneMain::DrawGameInfo()
 {
+	int drawX, drawY;
 	if (m_attemptDrawTime > 0)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_attemptDrawNum);
-		int drawX, drawY;
 		drawX = static_cast<int>(m_pPlayer->GetPos().x - 100);
 		drawY = static_cast<int>(m_pPlayer->GetPos().y - 50);
 		if (drawX < 0) drawX = 0;
@@ -268,8 +268,15 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	// 現在のモードの描画
-	if (m_isPracticeMode) DrawString(10, 100, "pracmode", 0xff0000);
+	if (m_isPracticeMode)
+	{
+		drawX = 10, drawY = 60;
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawBox(5, drawY, drawX + 190, drawY + 25, 0x000000, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		// 現在のモードの描画
+		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %d", static_cast<int>(m_pStage->GetStageState()) + 1);
+	}
 }
 
 // スタート時のカウントダウン描画
