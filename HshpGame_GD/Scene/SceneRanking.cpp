@@ -178,12 +178,6 @@ void SceneRanking::NormalUpdate(const InputState& input, bool& isGameEnd, NextSc
 		nextScene = NextSceneState::nextTitle;
 		return;
 	}
-
-	// キー入力があった場合、シーン終了を true にする
-	if (input.IsTriggered(InputType::enter))
-	{
-
-	}
 }
 
 void SceneRanking::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
