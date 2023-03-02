@@ -72,18 +72,19 @@ void SceneRanking::Draw()
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextTitle, 7) / 2), (Game::kScreenHeight / 6) + 5, kTextTitle, 0xe9e9e9);
 
 	// フォントサイズの設定
-	SetFontSize(20);
+	SetFontSize(25);
 	if (m_textTimer > 0)
 	{
 		if ((m_textTimer / 10) % 4 != 0)
 		{
+			int drawX = 100, drawY = Game::kScreenHeight - 80;
 			// タイトルのテキストを表示
-			DrawString(50, Game::kScreenHeight - 50, kTextBack, 0xe9e9e9);
+			DrawString(drawX, drawY, kTextBack, 0xe9e9e9);
 
 			int imgX, imgY, imgW, imgH;
 			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 12, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
-			DrawRectGraph(20, Game::kScreenHeight - 50, imgX, imgY, imgW, imgH, m_hKeyimg, true);
+			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hKeyimg, true);
 		}
 
 		m_textTimer++;
@@ -111,6 +112,8 @@ void SceneRanking::Draw()
 			DrawFormatString(menuX + 20, menuY, textColor, "%02d . attempt:%d", i + 1, m_savedAttempt[i]);
 		}
 	}
+
+	SetFontSize(20);
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
