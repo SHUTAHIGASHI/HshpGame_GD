@@ -159,7 +159,7 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 
 	m_scroll += m_scrollAcc;
 
-	if (input.IsTriggered(InputType::escape))
+	if (input.IsTriggered(InputType::pause))
 	{
 		nextScene = NextSceneState::nextTitle;
 		m_updateFunc = &SceneStageSelect::SceneEndUpdate;

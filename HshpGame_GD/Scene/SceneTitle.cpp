@@ -158,7 +158,7 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 
 	m_scroll += m_scrollAcc;
 
-	if (input.IsTriggered(InputType::escape))
+	if (input.IsTriggered(InputType::pause))
 	{
 		isGameEnd = true;
 		return;

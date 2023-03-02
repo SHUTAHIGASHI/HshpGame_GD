@@ -33,7 +33,7 @@ void SceneRanking::Init(int font)
 	// 画像データの読み込み
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/Bg.png");
-	m_hKeyimg = LoadGraph("imagedata/KeyImg.png");
+	m_hKeyimg = LoadGraph("imagedata/PadImg.png");
 	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -80,10 +80,10 @@ void SceneRanking::Draw()
 			// タイトルのテキストを表示
 			DrawString(50, Game::kScreenHeight - 50, kTextBack, 0xe9e9e9);
 
-			int drawX, drawY, drawW, drawH;
-			drawX = 32, drawY = 0, drawW = 32, drawH = 16;
+			int imgX, imgY, imgW, imgH;
+			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 12, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
-			DrawRectGraph(20, Game::kScreenHeight - 50, drawX, drawY, drawW, drawH, m_hKeyimg, true);
+			DrawRectGraph(20, Game::kScreenHeight - 50, imgX, imgY, imgW, imgH, m_hKeyimg, true);
 		}
 
 		m_textTimer++;

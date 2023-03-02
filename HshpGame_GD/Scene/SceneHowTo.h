@@ -57,6 +57,7 @@ private:
 	int m_hJumpPad;
 	// 背景のグラフィック
 	int m_hBg;
+	int m_hPadImg;
 	// テキスト画像
 	int m_hTutoText;
 
@@ -70,6 +71,7 @@ private:
 	int m_hPracBgm;
 
 	int m_fadeCount;
+	int m_countPadNum;
 
 	int m_countFrame;
 	// ゲームの制限時間

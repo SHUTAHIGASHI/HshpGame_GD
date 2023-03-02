@@ -62,6 +62,9 @@ namespace Game
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;
 
+	// パッド画像チップサイズ
+	constexpr int kPadChipSize = 16;
+
 	// ゲームの基本設定 //
 	// プレイヤーの基本設定
 	constexpr float kBlockSize = 48.0f;

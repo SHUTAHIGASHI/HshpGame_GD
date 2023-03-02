@@ -14,11 +14,17 @@ namespace
 	// 死亡時の遅延
 	constexpr int kGameOverDelay = 30;
 
+	// キー表示位置
+	constexpr int kKeyDrawY = Game::kScreenHeightHalf + 7;
+	constexpr int kKeyDrawH = Game::kScreenHeightHalf + 63;
+	constexpr int kKeyDrawW = 50;
+
 	// オブジェクト名
-	const char* const kNextStageText = "→ ENTER で下へ";
-	const char* const kNextGimmickText = "→ ENTER で次へ";
-	const char* const kJumpText = "SPACE or ↑ でジャンプ";
-	const char* const kGimmickText = "SPACE or ↑ でギミック使用";
+	const char* const kNextStageText = "で下へ";
+	const char* const kNextGimmickText = "で次へ";
+	const char* const kJumpText = "でジャンプ";
+	const char* const kGimmickText = "でギミック使用";
+	const char* const kBackTitleText = "でタイトルへ";
 }
 
 SceneHowTo::SceneHowTo() :
@@ -33,12 +39,14 @@ SceneHowTo::SceneHowTo() :
 	m_hBlock(-1), 
 	m_hJumpPad(-1),
 	m_hBg(-1),
+	m_hPadImg(-1),
 	m_hTutoText(-1),
 	m_hFontS(-1),
 	m_hFontL(-1),
 	m_hDeathSound(-1),
 	m_hPracBgm(-1),
 	m_fadeCount(0),
+	m_countPadNum(0),
 	m_countFrame(0),
 	m_startDelay(0),
 	m_startTextSize(0),
@@ -79,6 +87,7 @@ void SceneHowTo::Init(int font24, int font48)
 	m_hBlock = LoadGraph("imagedata/Tileset.png");
 	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");
 	m_hBg = LoadGraph("imagedata/Bg.png");
+	m_hPadImg = LoadGraph("imagedata/PadImg.png");
 	m_hTutoText = LoadGraph("imagedata/tutorialText.png");
 
 	// 音データの読み込み
@@ -125,6 +134,7 @@ void SceneHowTo::End()
 	DeleteGraph(m_hPortal);
 	DeleteGraph(m_hBlock);
 	DeleteGraph(m_hBg);
+	DeleteGraph(m_hPadImg);
 	DeleteGraph(m_hTutoText);
 
 	DeleteSoundMem(m_hDeathSound);
@@ -135,6 +145,8 @@ void SceneHowTo::End()
 void SceneHowTo::Update(const InputState& input, NextSceneState& nextScene)
 {
 	m_countFrame++;
+	if(m_countFrame % 8 == 0)m_countPadNum++;
+	if (m_countPadNum > 4) m_countPadNum = 1;
 
 	(this->*m_updateFunc)(input, nextScene);
 }
@@ -162,8 +174,10 @@ void SceneHowTo::DrawHowTo()
 {
 	DrawBox(0, static_cast<int>(Game::kBlockSize * 11), Game::kScreenWidth, static_cast<int>(Game::kBlockSize * 13), 0x000000, true);
 	
-	int textDrawX = Game::kScreenWidthHalf + 250, textDrawY = Game::kScreenHeightHalf + 27;
+	int textDrawX = Game::kScreenWidthHalf + 200, textDrawY = Game::kScreenHeightHalf + 27;
 	std::string drawTextMessage;
+	int imgX, imgY, imgW, imgH;
+	imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 14, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
 	if (m_isPrac)
 	{
@@ -173,20 +187,27 @@ void SceneHowTo::DrawHowTo()
 	{
 		drawTextMessage = kNextGimmickText;
 	}
-	
+
 	if (m_countFrame > 900)
 	{
 		if ((m_countFrame / 10) % 4 != 0)
 		{
 			DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFontS, "%s", drawTextMessage.c_str());
+			DrawRectExtendGraph(textDrawX - 50, kKeyDrawY, textDrawX, kKeyDrawH, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 	}
 	else
 	{
 		DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFontS, "%s", drawTextMessage.c_str());
+		DrawRectExtendGraph(textDrawX - 50, kKeyDrawY, textDrawX, kKeyDrawH, imgX, imgY, imgW, imgH, m_hPadImg, true);
 	}
 
+	imgX = Game::kPadChipSize * 10, imgY = Game::kPadChipSize * 14, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+	textDrawX = Game::kScreenWidthHalf + 400;
+	DrawFormatStringToHandle(textDrawX, textDrawY, 0xffffff, m_hFontS, "%s", kBackTitleText);
+	DrawRectExtendGraph(textDrawX - 50, kKeyDrawY, textDrawX, kKeyDrawH, imgX, imgY, imgW, imgH, m_hPadImg, true);
 
+	imgX = Game::kPadChipSize * m_countPadNum, imgY = Game::kPadChipSize * 12;
 	if (m_pHStage->GetStageState() == HowToStageState::CubeTest)
 	{
 		drawTextMessage = kJumpText;
@@ -197,9 +218,10 @@ void SceneHowTo::DrawHowTo()
 	}
 	SetFontSize(60);
 
-	textDrawX = Game::kScreenWidthHalf -(GetDrawStringWidth(drawTextMessage.c_str(), GetStringLength(drawTextMessage.c_str())) / 2);
+	textDrawX = 500;
 	textDrawY = Game::kScreenHeightHalf + 15;
 	DrawFormatStringToHandle(textDrawX, textDrawY, 0xffff00, m_hFontL, "%s", drawTextMessage.c_str());
+	DrawRectExtendGraph(textDrawX - 50, kKeyDrawY, textDrawX, kKeyDrawH, imgX, imgY, imgW, imgH, m_hPadImg, true);
 
 	m_startTextSize--;
 	if (m_startTextSize < 60) m_startTextSize = 60;
@@ -209,7 +231,7 @@ void SceneHowTo::DrawHowTo()
 
 void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 {
-	if (input.IsTriggered(InputType::escape))
+	if (input.IsTriggered(InputType::pause))
 	{
 		m_updateFunc = &SceneHowTo::SceneEndUpdate;
 		return;

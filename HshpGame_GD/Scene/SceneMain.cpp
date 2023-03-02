@@ -174,7 +174,7 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	if (m_isPause)
 	{
 		m_pPause->Update(input, nextScene, m_isEnd);
-		if (input.IsTriggered(InputType::escape))
+		if (input.IsTriggered(InputType::pause))
 		{
 			m_isPause = false;
 			PlaySoundMem(m_hPlayBgm, DX_PLAYTYPE_BACK, false);
@@ -340,7 +340,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 
 	// escapeƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
-	if (input.IsTriggered(InputType::escape))
+	if (input.IsTriggered(InputType::pause))
 	{
 		m_isPause = true;
 		StopSoundMem(m_hPlayBgm);
