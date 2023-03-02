@@ -4,8 +4,7 @@ enum class InputType
 {
 	escape,
 	enter, // 次へ行くボタン
-	space,
-	pause, // ポーズボタン
+	back,
 	right,	// 右
 	left,	// 左
 	up,		// 上
@@ -18,8 +17,8 @@ enum class InputType
 class InputState
 {
 private:
-	char keyPadState[256];
-	char lastKeyPadState[256];
+	int lastPadState = 0;
+	int padState = 0;
 	char keyMouseState[256];
 	char lastKeyMouseState[256];
 	char keyState[256];

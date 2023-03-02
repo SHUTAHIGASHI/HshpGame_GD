@@ -172,7 +172,7 @@ void SceneRanking::LoadRankingData()
 
 void SceneRanking::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
-	if (input.IsTriggered(InputType::escape))
+	if (input.IsTriggered(InputType::back))
 	{
 		m_updateFunc = &SceneRanking::SceneEndUpdate;
 		nextScene = NextSceneState::nextTitle;
