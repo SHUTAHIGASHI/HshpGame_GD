@@ -4,6 +4,7 @@
 #include <memory>
 
 class SceneTitle;
+class SceneDemo;
 class SceneStageSelect;
 class SceneHowTo;
 class SceneRanking;
@@ -17,6 +18,7 @@ public:
 	typedef enum SceneKind
 	{
 		kSceneTitle,
+		kSceneDemo,
 		kSceneHowTo,
 		kSceneRanking,
 		kSceneStageSelect,
@@ -52,6 +54,7 @@ private:
 	NextSceneState m_nextScene;
 
 	std::shared_ptr<SceneTitle> m_pTitle;
+	std::shared_ptr<SceneDemo> m_pDemo;
 	std::shared_ptr<SceneStageSelect> m_pStageSelect;
 	std::shared_ptr<SceneHowTo> m_pHowTo;
 	std::shared_ptr<SceneRanking> m_pRanking;

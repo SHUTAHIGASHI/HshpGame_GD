@@ -22,7 +22,12 @@ void InputState::Update()
 
 bool InputState::IsTriggered(InputType type)const
 {
-	if (type == InputType::pause)
+	if (type == InputType::all)
+	{
+		return !(lastPadState) &&
+			(padState);
+	}
+	else if (type == InputType::pause)
 	{
 		return !lastKeyState[KEY_INPUT_ESCAPE] &&
 			keyState[KEY_INPUT_ESCAPE] ||

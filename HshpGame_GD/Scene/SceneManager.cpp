@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "SceneTitle.h"
+#include "SceneDemo.h"
 #include "SceneStageSelect.h"
 #include "SceneHowTo.h"
 #include "SceneRanking.h"
@@ -13,6 +14,7 @@ SceneManager::SceneManager():
 	m_nextScene (NextSceneState::nextGameMain),
 	m_lastScene(),
 	m_pTitle(std::make_shared<SceneTitle>()),
+	m_pDemo(std::make_shared<SceneDemo>()),
 	m_pStageSelect(std::make_shared<SceneStageSelect>()),
 	m_pHowTo(std::make_shared<SceneHowTo>()),
 	m_pRanking(std::make_shared<SceneRanking>()),
@@ -36,6 +38,9 @@ void SceneManager::Init(int font24, int font48)
 		m_pTitle->SetManager(this);
 		m_pTitle->SetStageSelect(m_pStageSelect.get());
 		m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
+		break;
+	case SceneManager::kSceneDemo:
+		m_pDemo->Init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_pStageSelect->SetManager(this);
@@ -75,6 +80,9 @@ void SceneManager::End()
 	case SceneManager::kSceneTitle:
 		m_pTitle->End();	// シーンタイトルのデータ削除
 		break;
+	case SceneManager::kSceneDemo:
+		m_pDemo->End();	// シーンタイトルの初期化
+		break;
 	case SceneManager::kSceneStageSelect:
 		m_pStageSelect->End();	// シーンクリアのデータ削除
 		break;
@@ -109,6 +117,10 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 	case SceneManager::kSceneTitle:
 		m_pTitle->Update(input, isGameEnd, m_nextScene);	// シーンタイトルの更新
 		isEnd = m_pTitle->IsEnd();
+		break;
+	case SceneManager::kSceneDemo:
+		m_pDemo->Update(input, m_nextScene);	// シーンデモの初期化
+		isEnd = m_pDemo->IsEnd();
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_pStageSelect->Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
@@ -149,6 +161,11 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_pTitle->SetStageSelect(m_pStageSelect.get());
 			m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
+			break;
+		case NextSceneState::nextDemo:	// シーンがゲームクリアの場合、ゲーム終了
+			End();	// シーンのデータ削除
+			m_pDemo->Init();	// シーンタイトルの初期化
+			m_kind = kSceneDemo;
 			break;
 		case NextSceneState::nextStageSelect:
 			End();	// シーンのデータ削除
@@ -197,6 +214,9 @@ void SceneManager::Draw()
 	{
 	case SceneManager::kSceneTitle:
 		m_pTitle->Draw();	// シーンタイトルの描画
+		break;
+	case SceneManager::kSceneDemo:
+		m_pDemo->Draw();	// シーンタイトルの描画
 		break;
 	case SceneManager::kSceneStageSelect:
 		m_pStageSelect->Draw();	// シーンクリアの描画

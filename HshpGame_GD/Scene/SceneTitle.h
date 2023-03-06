@@ -14,10 +14,12 @@ public:
 		m_updateFunc(&SceneTitle::SceneStartUpdate),
 		m_selectPos(0),
 		m_textTimer(0),
+		m_countFrame(0),
 		m_fadeCount(0),
 		m_isEnd(false),
 		m_hBg(LoadGraph("imagedata/Bg.png")),
 		m_hPadImg(-1),
+		m_hTitleImg(-1),
 		m_hFontS(-1),
 		m_hFontL(-1),
 		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.wav")),
@@ -70,6 +72,7 @@ private:
 
 	int m_textTimer;
 
+	int m_countFrame;
 	int m_fadeCount;
 	// タイトル表示を終えるかどうか
 	bool m_isEnd;
@@ -77,6 +80,7 @@ private:
 	// 画像データ
 	int m_hBg;
 	int m_hPadImg;
+	int m_hTitleImg;
 	// フォントデータ
 	int m_hFontS;
 	int m_hFontL;

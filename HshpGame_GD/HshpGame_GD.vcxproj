@@ -153,7 +153,9 @@
   <ItemGroup>
     <ClCompile Include="Effect\EffectRing.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ParticleBase.cpp" />
     <ClCompile Include="Player\HowToPlayer.cpp" />
+    <ClCompile Include="SceneDemo.cpp" />
     <ClCompile Include="Scene\SceneHowTo.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
@@ -181,7 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Effect\EffectRing.h" />
+    <ClInclude Include="ParticleBase.h" />
     <ClInclude Include="Player\HowToPlayer.h" />
+    <ClInclude Include="SceneDemo.h" />
     <ClInclude Include="Scene\SceneHowTo.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Scene\SceneRanking.h" />

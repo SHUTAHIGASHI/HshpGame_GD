@@ -4,7 +4,9 @@
 class SceneBase
 {
 public:
-	SceneBase() {}
+	SceneBase():
+	m_isEnd(false)
+	{}
 	virtual ~SceneBase() {}
 
 	// ‰Šú‰»
@@ -17,5 +19,8 @@ public:
 	virtual void Draw() {}
 
 	// ƒV[ƒ“I—¹
-	virtual bool IsEnd() { return false; }
+	virtual bool IsEnd() { return m_isEnd; }
+
+protected:
+	bool m_isEnd;
 };

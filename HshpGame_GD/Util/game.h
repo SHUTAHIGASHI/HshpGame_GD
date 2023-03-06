@@ -9,6 +9,7 @@ enum class NextSceneState
 {
 	Empty,
 	nextTitle,
+	nextDemo,
 	nextHowTo,
 	nextRanking,
 	nextStageSelect,
@@ -92,4 +93,7 @@ namespace Game
 	constexpr int kScreenHeightNum = static_cast<int>(Game::kScreenHeight / Game::kBlockSize);
 
 	constexpr int kScreenHeightTripleNum = static_cast<int>(Game::kScreenHeightTriple / Game::kBlockSize);
+
+	// パーティクル用
+	constexpr int kParticleNum = 4096;
 }

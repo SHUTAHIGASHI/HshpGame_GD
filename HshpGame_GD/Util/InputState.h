@@ -2,6 +2,7 @@
 
 enum class InputType
 {
+	all,
 	pause,
 	enter, // Ÿ‚Ös‚­ƒ{ƒ^ƒ“
 	back,

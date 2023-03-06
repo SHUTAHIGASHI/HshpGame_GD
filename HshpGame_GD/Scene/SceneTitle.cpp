@@ -28,6 +28,9 @@ namespace
 
 	constexpr int kMenuW = 400;
 	constexpr int kMenuH = 60;
+
+	// デモを表示するまでの時間
+	constexpr int kDrawDemoTime = 600;
 }
 
 // 初期化
@@ -41,6 +44,7 @@ void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
 	// シーン終了に false を代入
 	m_isEnd = false;
 
+	m_countFrame = 0;
 	m_textScroll = -Game::kScreenWidth;
 	m_selectPos = 0;
 	m_textTimer = 10;
@@ -49,6 +53,7 @@ void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
 	m_fadeCount = 0;
 
 	m_hPadImg = LoadGraph("imagedata/PadImg.png");
+	m_hTitleImg = LoadGraph("imagedata/GameTitle.png");
 
 	m_scroll = m_pStageSelect->GetScroll();
 
@@ -66,6 +71,7 @@ void SceneTitle::End()
 	StopMusic();
 
 	DeleteGraph(m_hPadImg);
+	DeleteGraph(m_hTitleImg);
 }
 
 // 更新処理
@@ -79,6 +85,13 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 	if (m_textTimer > 1000) m_textTimer = 10;
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene);
+
+	if (m_countFrame > kDrawDemoTime)
+	{
+		m_updateFunc = &SceneTitle::SceneEndUpdate;
+		nextScene = NextSceneState::nextDemo;
+	}
+	m_countFrame++;
 }
 
 // 描画処理
@@ -91,9 +104,7 @@ void SceneTitle::Draw()
 	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	SetFontSize(60);
-	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4, kGameTitle, 0x60CAAD);
-	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kGameTitle, 12) / 2) + m_textScroll, Game::kScreenHeight / 4 + 5, kGameTitle, 0xe9e9e9);
+	DrawGraph(0, 0, m_hTitleImg, true);
 
 	int drawX = 0, drawY = 0;
 	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;

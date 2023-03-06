@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "game.h"
 #include "SceneRanking.h"
+#include "ParticleBase.h"
 #include <string>
 
 namespace
@@ -32,11 +33,21 @@ namespace
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
 	constexpr int kMenuW = 400;
 	constexpr int kMenuH = 60;
+
+	// パーティクル用
+	constexpr int kAuraInterval = 2;
 }
 
 // 初期化
 void SceneClear::Init(int font)
 {
+	sinRate = 0.0f;
+	for (auto& pPart : particle)
+	{
+		pPart = std::make_shared<ParticleBase>();
+	}
+	auraFrame = kAuraInterval;
+
 	m_updateFunc = &SceneClear::NormalUpdate;
 	m_drawFunc = &SceneClear::NormalDraw;
 
@@ -64,7 +75,61 @@ void SceneClear::End()
 // 更新
 void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
+	ParticleUpdate();
+
 	(this->*m_updateFunc)(input, nextScene, isPrac);
+}
+
+void SceneClear::ParticleUpdate()
+{
+	sinRate += 0.20f;
+	int mouseX, mouseY;
+	GetMousePoint(&mouseX, &mouseY);
+
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->update();
+	}
+	// パーティクル生成
+	auraFrame--;
+	if (auraFrame <= 0)
+	{
+		int count = 0;
+		for (auto& pPart : particle)
+		{
+			if (pPart->isExist())	continue;
+
+			float randSin = static_cast<float>(GetRand(360)) / 360.0f;
+			randSin *= DX_TWO_PI_F;
+			float randSpeed = static_cast<float>(GetRand(60)) / 10.0f + 1.0f;
+
+			Vec2 pos;
+			float dist = static_cast<float>(128 + GetRand(32));
+			pos.x = 256 * 3 + cosf(randSin) * dist;
+			pos.y = 512 + sinf(randSin) * dist;
+
+			Vec2 vec;
+			vec.x = cosf(randSin) * randSpeed;
+			vec.y = sinf(randSin) * randSpeed;
+
+			pPart->start(pos);
+			pPart->setVec(vec);
+			pPart->setRadius(4.0f);
+			pPart->setColor(0x80ff80);
+			pPart->setGravity(0.0f);
+			pPart->setAlphaDec(16);
+			pPart->setRadiusAcc(-0.05f);
+
+			count++;
+			if (count >= 32)
+			{
+				break;
+			}
+		}
+
+		auraFrame = kAuraInterval;
+	}
 }
 
 void SceneClear::Draw()
@@ -123,6 +188,14 @@ void SceneClear::NormalDraw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+
+	int count = 0;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->draw();
+		count++;
+	}
 
 	if (m_textFadeNum > 0)
 	{
