@@ -305,8 +305,6 @@ void Player::OnHitObject(const InputState& input)
 
 void Player::OnDead()
 {
-    m_pEffectRing->End();
-
     m_isDead = true;
     PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
 }

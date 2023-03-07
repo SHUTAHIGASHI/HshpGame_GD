@@ -81,19 +81,18 @@ void SceneHowTo::Init(int font24, int font48)
 
 	// 画像読み込み
 	m_hPlayer = LoadGraph(Game::kPlayerImg);
-	m_hPlayerWaveBurner = LoadGraph("imageData/AfterBurner.png");
 	m_hDeathEffect = LoadGraph(Game::kPlayerDeathEffectImg);
 	m_hObjectSpike = LoadGraph(Game::kObjectSpikeImg);
-	m_hPortal = LoadGraph("imagedata/OrangePortal.png");
-	m_hBlock = LoadGraph("imagedata/Tileset.png");
-	m_hJumpPad = LoadGraph("imagedata/JumpPad.png");
-	m_hBg = LoadGraph("imagedata/Bg.png");
-	m_hPadImg = LoadGraph("imagedata/PadImg.png");
+	m_hPortal = LoadGraph(Game::kPortalImg);
+	m_hBlock = LoadGraph(Game::kBlockImg);
+	m_hJumpPad = LoadGraph(Game::kJumpPadImg);
+	m_hBg = LoadGraph(Game::kBgImg);
+	m_hPadImg = LoadGraph(Game::kPadImg);
 	m_hTutoText = LoadGraph("imagedata/tutorialText.png");
 
 	// 音データの読み込み
-	m_hDeathSound = LoadSoundMem("soundData/deathSound.mp3");
-	m_hPracBgm = LoadSoundMem("soundData/pracmode.ogg");
+	m_hDeathSound = LoadSoundMem(Game::kDeathSound);
+	m_hPracBgm = LoadSoundMem(Game::kTutorialBgm);
 
 	// スタート遅延の初期化
 	m_startDelay = kStartDelay;

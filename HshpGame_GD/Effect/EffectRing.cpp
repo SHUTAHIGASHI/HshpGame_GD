@@ -40,7 +40,11 @@ void EffectRing::Update()
 	if (m_circleSize > kCircleSizeMax) m_circleSize = kCircleSizeMax;
 
 	m_blendNum -= kFadeSpeed;
-	if (m_blendNum < 0) m_blendNum = 0;
+	if (m_blendNum < 0)
+	{
+		m_blendNum = 0;
+		m_isExist = false;
+	}
 }
 
 void EffectRing::Draw(Vec2 playerPos)

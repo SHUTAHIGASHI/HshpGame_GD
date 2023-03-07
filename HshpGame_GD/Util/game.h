@@ -66,7 +66,8 @@ namespace Game
 
 	// 音楽データ
 	const char* const kDeathSound = "soundData/deathSound.mp3";
-	const char* const kPracBgm = "soundData/pracmode.ogg";
+	const char* const kPracBgm = "soundData/pracmode.wav";
+	const char* const kTutorialBgm = "soundData/pracmode.ogg";
 	const char* const kChallengeBgm = "soundData/ElectromanAdventuresV2.mp3";
 
 	// 基準のフォントサイズ

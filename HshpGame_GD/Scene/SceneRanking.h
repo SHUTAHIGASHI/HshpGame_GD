@@ -21,6 +21,7 @@ public:
 		m_isEnd(false),
 		m_hBg(-1),
 		m_hKeyimg(-1),
+		m_hBgm(-1),
 		m_hFont(-1),
 		m_pMain(nullptr)
 	{
@@ -78,6 +79,8 @@ private:
 	// 画像データ
 	int m_hBg;
 	int m_hKeyimg;
+	// 音楽データ
+	int m_hBgm;
 	// 文字データ
 	int m_hFont;
 

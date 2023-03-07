@@ -32,8 +32,9 @@ void SceneRanking::Init(int font)
 
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBg = LoadGraph("imagedata/Bg.png");
-	m_hKeyimg = LoadGraph("imagedata/PadImg.png");
+	m_hBg = LoadGraph(Game::kBgImg);
+	m_hKeyimg = LoadGraph(Game::kPadImg);
+	m_hBgm = LoadSoundMem("soundData/ranking.wav");
 	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -53,6 +54,11 @@ void SceneRanking::End()
 // 更新処理
 void SceneRanking::Update(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
+	if (!CheckSoundMem(m_hBgm))
+	{
+		PlaySoundMem(m_hBgm, DX_PLAYTYPE_BACK);
+	}
+
 	if (m_textTimer > 1000) m_textTimer = 10;
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene);
@@ -186,6 +192,7 @@ void SceneRanking::NormalUpdate(const InputState& input, bool& isGameEnd, NextSc
 void SceneRanking::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {	
 	m_fadeCount -= 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_hBgm);
 
 	if (m_fadeCount < 0)
 	{
@@ -197,6 +204,7 @@ void SceneRanking::SceneStartUpdate(const InputState& input, bool& isGameEnd, Ne
 void SceneRanking::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	m_fadeCount += 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_hBgm);
 
 	if (m_fadeCount > 255)
 	{
