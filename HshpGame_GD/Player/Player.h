@@ -23,6 +23,8 @@ public:
 		m_lastAngle(),
 		m_countFrame(0),
 		m_deathCountFrame(0),
+		m_brightness(0),
+		m_tBrightness(0),
 		m_isMoveRight(true),
 		m_isRevGravity(false),
 		m_isDashRingEnabled(false),
@@ -55,9 +57,10 @@ public:
 
 	// プレイヤーの描画処理
 	void Draw();
-
 	// プレイヤーの移動時のエフェクト
 	void DrawMoveEffect();
+	// プレイヤーの出現位置強調表示
+	void DrawSpawnPos();
 
 	// 右移動するかどうかの設定
 	void SetMoveRight(bool isRight) { m_isMoveRight = isRight; }
@@ -136,6 +139,9 @@ private:
 	// フレーム数をカウント
 	int m_countFrame;
 	int m_deathCountFrame;
+	// スタートカウントダウン時明るさ
+	int m_brightness;
+	int m_tBrightness;
 
 	// 移動方向
 	bool m_isMoveRight;

@@ -43,7 +43,7 @@ public:
 	// ゲーム中の情報描画
 	void DrawGameInfo();
 	// ゲームスタート時のカウントダウン描画
-	void DrawStartCount();
+	void OnStartCount();
 
 	// ステージクリア時
 	void OnStageClear(NextSceneState& nextScene);
@@ -91,6 +91,7 @@ private:
 	int m_hChallengeBgm;
 	int m_hPlayBgm;
 
+	// フェード処理用カウント
 	int m_fadeCount;
 
 	// スクロール用
@@ -99,6 +100,8 @@ private:
 	int m_startDelay;
 	// スタート遅延時のテキストサイズ
 	int m_startTextSize;
+	// スタート遅延の文字点滅
+	int m_textTimer;
 	// ゲームオーバー時の遅延時間
 	int m_gameOverDelay;
 	// 挑戦回数

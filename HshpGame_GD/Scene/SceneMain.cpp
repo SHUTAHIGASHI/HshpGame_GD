@@ -40,6 +40,7 @@ SceneMain::SceneMain() :
 	m_scroll(0),
 	m_startDelay(0), 
 	m_startTextSize(0),
+	m_textTimer(0),
 	m_gameOverDelay(0),
 	m_countAttempt(0),
 	m_attemptDrawTime(0),
@@ -249,7 +250,7 @@ void SceneMain::Draw()
 	// スタート時のカウントダウン描画
 	if (m_startDelay > 0)
 	{
-		DrawStartCount();
+		OnStartCount();
 	}
 }
 
@@ -280,7 +281,7 @@ void SceneMain::DrawGameInfo()
 }
 
 // スタート時のカウントダウン描画
-void SceneMain::DrawStartCount()
+void SceneMain::OnStartCount()
 {
 	// 数字のサイズ調整
 	// 余りが 0 になった場合、設定したフォントサイズに戻す
@@ -315,6 +316,22 @@ void SceneMain::DrawStartCount()
 	}
 	// フォントサイズを標準に戻す
 	SetFontSize(20);
+
+	if (m_startDelay / 60 != 5)
+	{
+		m_pPlayer->DrawSpawnPos();
+	}
+
+	if (m_startDelay / 60 == 2)
+	{
+		if ((m_textTimer / 10) % 2 != 0)
+		{
+			SetFontSize(40);
+			DrawString(static_cast<int>(m_pPlayer->GetPos().x) + 4, static_cast<int>(m_pPlayer->GetPos().y) - 50, "!", 0xff0000);
+			SetFontSize(0);
+		}
+		m_textTimer++;
+	}
 }
 
 // ステージクリア時の処理

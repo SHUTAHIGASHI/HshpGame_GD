@@ -29,6 +29,9 @@ namespace
     // óéâ∫ÇÃç≈ëÂë¨ìx
     constexpr float kCubeMaxSpeed = 20.0f;
     constexpr float kWaveSpeed = 12.0f;
+
+    // ñæÇÈÇ≥ÇÃïœâªë¨ìx
+    constexpr int kBrightSpeed = 8;
 }
 
 void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
@@ -50,6 +53,8 @@ void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
     m_hDeathSound = hDeathSound;
 
     m_playerScale = 1.0;
+    m_brightness = 0;
+    m_tBrightness = kBrightSpeed;
 	
     m_countFrame = 0;
     m_vec.x = Game::kMoveSpeed;
@@ -368,6 +373,23 @@ void Player::DrawMoveEffect()
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
+}
+
+void Player::DrawSpawnPos()
+{
+    if (m_brightness < 0) m_tBrightness *= -1;
+    else if (m_brightness > 255) m_tBrightness *= -1;
+    m_brightness += m_tBrightness;
+
+    float drawPosX = 0.0f, drawPosY = 0.0f;
+    int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
+
+    drawPosX = GetCenterX(), drawPosY = GetCenterY();
+    imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+
+    SetDrawBlendMode(DX_BLENDMODE_ADD, m_brightness);
+    DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void Player::SetPlayerVec(int scroll)
