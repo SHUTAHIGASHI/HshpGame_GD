@@ -174,7 +174,7 @@ void SceneTitle::Draw()
 
 void SceneTitle::StopMusic()
 {
-	if (m_pManager->GetNextScene() != NextSceneState::nextStageSelect ||
+	if (m_pManager->GetNextScene() != NextSceneState::nextStageSelect &&
 		m_pManager->GetNextScene() != NextSceneState::nextDemo)
 	{
 		StopSoundMem(m_hLoopBgm);

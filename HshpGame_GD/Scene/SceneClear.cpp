@@ -117,7 +117,7 @@ void SceneClear::ParticleUpdate()
 			pPart->setVec(vec);
 			pPart->setRadius(4.0f);
 			pPart->setColor(0x80ff80);
-			pPart->setGravity(0.0f);
+			pPart->setGravity(0.01f);
 			pPart->setAlphaDec(16);
 			pPart->setRadiusAcc(-0.05f);
 
