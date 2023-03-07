@@ -13,6 +13,7 @@ class SceneClear : public SceneBase
 public:
 	SceneClear():
 		m_hFont(-1),
+		m_hOr(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
 		m_sceneChangeDelay(0),
@@ -56,6 +57,7 @@ private:
 	void NormalDraw();
 private:
 	int m_hFont;
+	int m_hOr;
 
 	// ƒƒjƒ…[‘I‘ğ
 	int m_selectPos;

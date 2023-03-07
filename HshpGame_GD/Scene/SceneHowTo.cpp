@@ -296,6 +296,7 @@ void SceneHowTo::NormalUpdate(const InputState& input, NextSceneState& nextScene
 void SceneHowTo::SceneStartUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	m_fadeCount -= 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_hPracBgm);
 
 	if (m_fadeCount < 0)
 	{
@@ -307,6 +308,7 @@ void SceneHowTo::SceneStartUpdate(const InputState& input, NextSceneState& nextS
 void SceneHowTo::SceneEndUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	m_fadeCount += 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_hPracBgm);
 
 	if (m_fadeCount > 255)
 	{

@@ -46,6 +46,8 @@ void SceneClear::Init(int font)
 
 	m_hFont = font;
 
+	m_hOr = LoadGraph("imagedata/24.png");
+
 	// íxâÑéûä‘èâä˙âª
 	m_sceneChangeDelay = kTitleDelayMax;
 
@@ -125,6 +127,10 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 
 void SceneClear::NormalDraw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_hOr, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 

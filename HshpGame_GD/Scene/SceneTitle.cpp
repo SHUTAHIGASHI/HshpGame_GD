@@ -260,6 +260,7 @@ void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, Next
 	else
 	{
 		m_fadeCount -= 5;
+		ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
 
 		if (m_fadeCount < 0)
 		{
@@ -288,6 +289,7 @@ void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSc
 	else
 	{
 		m_fadeCount += 5;
+		ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
 
 		if (m_fadeCount > 255)
 		{

@@ -283,6 +283,7 @@ void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd
 	else
 	{
 		m_fadeCount -= 5;
+		ChangeVolumeSoundMem(255 - m_fadeCount, m_pTitle->GetMusicHandle());
 
 		if (m_fadeCount < 0)
 		{
@@ -311,6 +312,7 @@ void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, 
 	else
 	{
 		m_fadeCount += 5;
+		ChangeVolumeSoundMem(255 - m_fadeCount, m_pTitle->GetMusicHandle());
 
 		if (m_fadeCount > 255)
 		{
