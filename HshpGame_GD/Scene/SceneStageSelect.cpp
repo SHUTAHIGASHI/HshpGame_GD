@@ -107,10 +107,10 @@ void SceneStageSelect::Draw()
 		{
 			drawX = 100, drawY = Game::kScreenHeight - 80;
 			// タイトルのテキストを表示
-			DrawStringToHandle(drawX, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
+			DrawStringToHandle(drawX + m_textScroll, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
 
 			imgY = Game::kPadChipSize * 12;
-			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
+			DrawRectExtendGraph((drawX - 50) + m_textScroll, drawY - 10, drawX + m_textScroll, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
 		m_textTimer++;
@@ -118,10 +118,10 @@ void SceneStageSelect::Draw()
 
 	drawX = 250, drawY = Game::kScreenHeight - 80;
 	// タイトルのテキストを表示
-	DrawStringToHandle(drawX, drawY, kBackMessage, 0xe9e9e9, m_hFontS);
+	DrawStringToHandle(drawX + m_textScroll, drawY, kBackMessage, 0xe9e9e9, m_hFontS);
 
 	imgY = Game::kPadChipSize * 11;
-	DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
+	DrawRectExtendGraph((drawX - 50) + m_textScroll, drawY - 10, drawX + m_textScroll, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 
 	// 選択枠の描画
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;

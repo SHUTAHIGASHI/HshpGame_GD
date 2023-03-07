@@ -109,7 +109,7 @@ void SceneTitle::Draw()
 	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DrawGraph(0, 0, m_hTitleImg, true);
+	DrawGraph(0 + m_textScroll, 0, m_hTitleImg, true);
 
 	int drawX = 0, drawY = 0;
 	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;
@@ -123,10 +123,10 @@ void SceneTitle::Draw()
 		{
 			drawX = (Game::kScreenWidthHalf - GetDrawStringWidth(kSelectMessage, 6) / 2) + 15, drawY = Game::kScreenHeightHalf + 300;
 			// タイトルのテキストを表示
-			DrawStringToHandle(drawX, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
+			DrawStringToHandle(drawX + m_textScroll, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
 
 			imgY = Game::kPadChipSize * 14;
-			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
+			DrawRectExtendGraph((drawX - 50) + m_textScroll, drawY - 10, drawX + m_textScroll, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
 		m_textTimer++;
