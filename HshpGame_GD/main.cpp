@@ -70,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 #ifdef _DEBUG
 		auto drawcall = GetDrawCallCount();
-		DrawFormatStringToHandle(10, 100, 0xffffff, Misaki24, "DC = %d", drawcall);		
+		//DrawFormatStringToHandle(10, 100, 0xffffff, Misaki24, "DC = %d", drawcall);		
 #endif
 
 		// — ‰æ–Ê‚ð•\‰æ–Ê‚Æ“ü‚ê‘Ö‚¦‚é

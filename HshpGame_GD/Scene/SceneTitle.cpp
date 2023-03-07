@@ -86,6 +86,11 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene);
 
+	if (input.IsTriggered(InputType::all))
+	{
+		m_countFrame = 0;
+	}
+
 	if (m_countFrame > kDrawDemoTime)
 	{
 		m_updateFunc = &SceneTitle::SceneEndUpdate;
@@ -120,7 +125,7 @@ void SceneTitle::Draw()
 			// タイトルのテキストを表示
 			DrawStringToHandle(drawX, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
 
-			imgY = Game::kPadChipSize * 12;
+			imgY = Game::kPadChipSize * 14;
 			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
@@ -169,7 +174,8 @@ void SceneTitle::Draw()
 
 void SceneTitle::StopMusic()
 {
-	if (m_pManager->GetNextScene() != NextSceneState::nextStageSelect)
+	if (m_pManager->GetNextScene() != NextSceneState::nextStageSelect ||
+		m_pManager->GetNextScene() != NextSceneState::nextDemo)
 	{
 		StopSoundMem(m_hLoopBgm);
 	}

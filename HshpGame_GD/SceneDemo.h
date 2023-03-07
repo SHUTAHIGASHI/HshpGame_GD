@@ -11,6 +11,8 @@ public:
 
     void Init();
 
+    void End();
+
     void Update(const InputState& input, NextSceneState& nextScene);
 
     void Draw();
@@ -24,7 +26,15 @@ private:
 
     void SceneEndUpdate(const InputState& input, NextSceneState& nextScene);
 private:
+    // フレーム数カウント
     int m_countFrame;
+    // フェード用カウント
     int m_fadeCount;
+
+    // テキスト点滅
+    int m_textTimer;
+
+    // デモムービーハンドル
+    int m_hDemo;
 };
 
