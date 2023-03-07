@@ -41,6 +41,12 @@ namespace
 // èâä˙âª
 void SceneClear::Init(int font)
 {
+	for (auto& pPart : particle)
+	{
+		pPart = std::make_shared<ParticleBase>();
+	}
+	auraFrame = kAuraInterval;
+
 	m_updateFunc = &SceneClear::NormalUpdate;
 	m_drawFunc = &SceneClear::NormalDraw;
 
@@ -68,11 +74,69 @@ void SceneClear::End()
 // çXêV
 void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
+	sinRate += 0.20f;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->update();
+	}
+
+	ParticleUpdate();
+
 	(this->*m_updateFunc)(input, nextScene, isPrac);
+}
+
+void SceneClear::ParticleUpdate()
+{
+	if (auraFrame <= 0)
+	{
+		int count = 0;
+		for (auto& pPart : particle)
+		{
+			if (pPart->isExist())	continue;
+
+			float randSin = static_cast<float>(GetRand(360)) / 360.0f;
+			randSin *= DX_TWO_PI_F;
+			float randSpeed = static_cast<float>(GetRand(60)) / 10.0f + 1.0f;
+
+			Vec2 pos;
+			//float dist = static_cast<float>(128 + GetRand(32));
+			pos.x = static_cast<float>(GetRand(Game::kScreenWidth));//256 * 3 + cosf(randSin) * dist;
+			pos.y = static_cast<float>(GetRand(Game::kScreenHeight));//512 + sinf(randSin) * dist;
+
+			Vec2 vec;
+			vec.x = cosf(randSin) * randSpeed;
+			vec.y = sinf(randSin) * randSpeed;
+
+			pPart->start(pos);
+			pPart->setVec(vec);
+			pPart->setRadius(4.0f);
+			pPart->setColor(0x80ff80);
+			pPart->setGravity(0.1f);
+			pPart->setAlphaDec(8);
+			pPart->setRadiusAcc(-0.05f);
+
+			count++;
+			if (count >= 32)
+			{
+				break;
+			}
+		}
+
+		auraFrame = kAuraInterval;
+	}
 }
 
 void SceneClear::Draw()
 {
+	int count = 0;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->draw();
+		count++;
+	}
+
 	(this->*m_drawFunc)();
 }
 

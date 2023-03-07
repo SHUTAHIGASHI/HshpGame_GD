@@ -22,6 +22,8 @@ public:
 		m_textScaleAcc(0),
 		m_isNextStage(false),
 		m_isEnd(false),
+		sinRate(0),
+		auraFrame(0),
 		m_pRanking(nullptr)
 	{
 	}
@@ -33,7 +35,10 @@ public:
 	// 終了処理
 	void End();
 	// 更新
-	virtual void Update(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	void Update(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	// パーティクル用
+	void ParticleUpdate();
+	
 	// 描画
 	virtual void Draw();
 
@@ -74,6 +79,11 @@ private:
 	bool m_isNextStage;
 	// シーン終了
 	bool m_isEnd;
+
+	// パーティクル用
+	float sinRate;
+	int auraFrame;
+	std::array<std::shared_ptr<ParticleBase>, Game::kParticleNum> particle;
 
 	SceneRanking* m_pRanking;
 };
