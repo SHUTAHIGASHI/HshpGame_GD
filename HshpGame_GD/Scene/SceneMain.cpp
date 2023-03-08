@@ -33,8 +33,6 @@ SceneMain::SceneMain() :
 	m_hJumpPad(-1),
 	m_hBg(-1), 
 	m_hDeathSound(-1),
-	m_hPracBgm(-1),
-	m_hChallengeBgm(-1),
 	m_hPlayBgm(-1),
 	m_fadeCount(0),
 	m_scroll(0),
@@ -87,14 +85,10 @@ void SceneMain::Init()
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
-	m_hPracBgm = LoadSoundMem(Game::kPracBgm);	// 練習モードのBGM
-	m_hChallengeBgm = LoadSoundMem(Game::kChallengeBgm);	// チャレンジモードのBGM
 
 	// BGMのセット
-	// 練習モードの場合、練習用BGMをセット
-	if (m_isPracticeMode) m_hPlayBgm = m_hPracBgm;
-	// チャレンジモードの場合、チャレンジモード用BGMをセット
-	else m_hPlayBgm = m_hChallengeBgm;
+	if (m_isPracticeMode) m_hPlayBgm = LoadSoundMem(Game::kPracBgm); // 練習モードの場合、練習用BGMをセット
+	else m_hPlayBgm = LoadSoundMem(Game::kChallengeBgm); // チャレンジモードの場合、チャレンジモード用BGMをセット
 
 	// ステージ選択
 	// チャレンジモードの場合、ステージ１をセット
@@ -164,8 +158,6 @@ void SceneMain::End()
 
 	// 音データの削除
 	DeleteSoundMem(m_hDeathSound);	// 死亡サウンド
-	DeleteSoundMem(m_hPracBgm);	// 練習用BGM
-	DeleteSoundMem(m_hChallengeBgm);	// チャレンジモード用BGM
 	DeleteSoundMem(m_hPlayBgm);	// 現在再生するBGM
 }
 

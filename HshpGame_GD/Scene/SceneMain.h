@@ -89,8 +89,6 @@ private:
 	// 効果音
 	int m_hDeathSound;
 	// 音楽用
-	int m_hPracBgm;
-	int m_hChallengeBgm;
 	int m_hPlayBgm;
 
 	// フェード処理用カウント
