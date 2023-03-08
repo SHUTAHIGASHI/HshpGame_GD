@@ -84,6 +84,13 @@ void SceneTitle::Update(const InputState& input, bool &isGameEnd, NextSceneState
 
 	if (m_textTimer > 1000) m_textTimer = 10;
 
+	if (m_scroll > Game::kScreenWidth)
+	{
+		m_scroll = 0;
+	}
+
+	m_scroll += m_scrollAcc;
+
 	(this->*m_updateFunc)(input, isGameEnd, nextScene);
 
 	if (input.IsTriggered(InputType::all))
@@ -183,13 +190,6 @@ void SceneTitle::StopMusic()
 
 void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
-	m_scroll += m_scrollAcc;
-
 	if (input.IsTriggered(InputType::pause))
 	{
 		isGameEnd = true;
@@ -240,13 +240,6 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 
 void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
-	m_scroll += m_scrollAcc;
-	
 	if (m_pManager->GetLastScene() == SceneManager::kSceneStageSelect)
 	{
 		m_textScroll += 100;
@@ -260,7 +253,7 @@ void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, Next
 	else
 	{
 		m_fadeCount -= 5;
-		ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
+		if (m_pManager->GetLastScene() != SceneManager::kSceneDemo) ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
 
 		if (m_fadeCount < 0)
 		{
@@ -272,11 +265,6 @@ void SceneTitle::SceneStartUpdate(const InputState& input, bool& isGameEnd, Next
 
 void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
 	if (nextScene == NextSceneState::nextStageSelect)
 	{
 		m_textScroll -= 100;
@@ -289,13 +277,11 @@ void SceneTitle::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSc
 	else
 	{
 		m_fadeCount += 5;
-		ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
+		if (nextScene != NextSceneState::nextDemo) ChangeVolumeSoundMem(255 - m_fadeCount, m_hLoopBgm);
 
 		if (m_fadeCount > 255)
 		{
 			m_isEnd = true;
 		}
 	}
-
-	m_scroll += m_scrollAcc;
 }

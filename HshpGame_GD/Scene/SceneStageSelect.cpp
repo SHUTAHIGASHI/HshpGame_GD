@@ -77,6 +77,13 @@ void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextScen
 	if (m_textTimer > 1000) m_textTimer = 10;
 
 	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
+
+	if (m_scroll > Game::kScreenWidth)
+	{
+		m_scroll = 0;
+	}
+
+	m_scroll += m_scrollAcc;
 }
 
 // •`‰æˆ—
@@ -172,13 +179,6 @@ void SceneStageSelect::Draw()
 
 void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
-	m_scroll += m_scrollAcc;
-
 	if (input.IsTriggered(InputType::back))
 	{
 		nextScene = NextSceneState::nextTitle;
@@ -263,13 +263,6 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 
 void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
-	m_scroll += m_scrollAcc;
-
 	if (m_pManager->GetLastScene() == SceneManager::kSceneTitle)
 	{
 		m_textScroll -= 100;
@@ -295,11 +288,6 @@ void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd
 
 void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
 {
-	if (m_scroll > Game::kScreenWidth)
-	{
-		m_scroll = 0;
-	}
-
 	if (nextScene == NextSceneState::nextTitle)
 	{
 		m_textScroll += 100;
@@ -319,6 +307,4 @@ void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, 
 			m_isEnd = true;
 		}
 	}
-
-	m_scroll += m_scrollAcc;
 }
