@@ -62,6 +62,7 @@ void SceneManager::Init(int font24, int font48)
 		m_pMain->Init();	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
+		m_pClear->SetMain(m_pMain.get());
 		m_pClear->Init(font24);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
@@ -196,6 +197,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:
+			m_pClear->SetMain(m_pMain.get());
 			m_pClear->Init(font24);	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;

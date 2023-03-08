@@ -1,7 +1,7 @@
 #include "SceneClear.h"
 #include "DxLib.h"
 #include "game.h"
-#include "SceneRanking.h"
+#include "SceneMain.h"
 #include "ParticleBase.h"
 #include <string>
 
@@ -55,6 +55,8 @@ void SceneClear::Init(int font)
 	// 遅延時間初期化
 	m_sceneChangeDelay = kTitleDelayMax;
 
+	m_fadeCount = 0;
+
 	m_shadowScale = kTextSizeMin;
 	m_textFadeNum = 255;
 
@@ -74,13 +76,6 @@ void SceneClear::End()
 // 更新
 void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
-	sinRate += 0.20f;
-	for (auto& pPart : particle)
-	{
-		if (!pPart->isExist())	continue;
-		pPart->update();
-	}
-
 	ParticleUpdate();
 
 	(this->*m_updateFunc)(input, nextScene, isPrac);
@@ -88,6 +83,14 @@ void SceneClear::Update(const InputState& input, NextSceneState& nextScene, cons
 
 void SceneClear::ParticleUpdate()
 {
+	sinRate += 0.20f;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->update();
+	}
+
+	auraFrame--;
 	if (auraFrame <= 0)
 	{
 		int count = 0;
@@ -96,25 +99,24 @@ void SceneClear::ParticleUpdate()
 			if (pPart->isExist())	continue;
 
 			float randSin = static_cast<float>(GetRand(360)) / 360.0f;
-			randSin *= DX_TWO_PI_F;
+			//randSin *= DX_TWO_PI_F;
 			float randSpeed = static_cast<float>(GetRand(60)) / 10.0f + 1.0f;
 
 			Vec2 pos;
-			//float dist = static_cast<float>(128 + GetRand(32));
-			pos.x = static_cast<float>(GetRand(Game::kScreenWidth));//256 * 3 + cosf(randSin) * dist;
-			pos.y = static_cast<float>(GetRand(Game::kScreenHeight));//512 + sinf(randSin) * dist;
+			pos.x = static_cast<float>(GetRand(Game::kScreenWidth));
+			pos.y = -150;// static_cast<float>(GetRand(Game::kScreenHeight));
 
 			Vec2 vec;
-			vec.x = cosf(randSin) * randSpeed;
+			vec.x = cosf(randSin * DX_TWO_PI_F) * randSpeed;
 			vec.y = sinf(randSin) * randSpeed;
 
 			pPart->start(pos);
 			pPart->setVec(vec);
 			pPart->setRadius(4.0f);
-			pPart->setColor(0x80ff80);
-			pPart->setGravity(0.1f);
-			pPart->setAlphaDec(8);
-			pPart->setRadiusAcc(-0.05f);
+			pPart->setColor(GetRandColor());
+			pPart->setGravity(0.15f);
+			pPart->setAlphaDec(1);
+			pPart->setRadiusAcc(-0.02f);
 
 			count++;
 			if (count >= 32)
@@ -127,17 +129,42 @@ void SceneClear::ParticleUpdate()
 	}
 }
 
-void SceneClear::Draw()
+int SceneClear::GetRandColor()
 {
-	int count = 0;
-	for (auto& pPart : particle)
+	int tColorNum = 0;
+	tColorNum = GetRand(6);
+
+	switch (tColorNum)
 	{
-		if (!pPart->isExist())	continue;
-		pPart->draw();
-		count++;
+	case 0:
+		return 0x00bfff;
+	case 1:
+		return 0xdc143c;
+	case 2:
+		return 0x9932cc;
+	case 3:
+		return 0xFFD700;
+	case 4:
+		return 0x80ff80;
+	case 5:
+		return 0x60CAAD;
+	case 6:
+		return 0xe9e9e9;
+	default:
+		break;
 	}
 
+	return 0xffffff;
+}
+
+void SceneClear::Draw()
+{
 	(this->*m_drawFunc)();
+
+	// フェード処理用の処理
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
@@ -154,19 +181,18 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
+		m_updateFunc = &SceneClear::SceneEndUpdate;
+
 		switch (m_selectPos)
 		{
 		case 0:
-			m_isEnd = true;
 			m_isNextStage = true;
 			nextScene = NextSceneState::nextGameMain;
 			return;
 		case 1:
-			m_isEnd = true;
 			nextScene = NextSceneState::nextStageSelect;
 			return;
 		case 2:
-			m_isEnd = true;
 			nextScene = NextSceneState::nextTitle;
 			return;
 		default:
@@ -187,10 +213,30 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	if (m_selectPos < 0) m_selectPos = 2;
 }
 
+void SceneClear::SceneEndUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+{
+	m_fadeCount += 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_pMain->GetMusicHandle());
+
+	if (m_fadeCount > 255)
+	{
+		m_isEnd = true;
+	}
+}
+
 void SceneClear::NormalDraw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	int count = 0;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->draw();
+		count++;
+	}
 
 	if (m_textFadeNum > 0)
 	{

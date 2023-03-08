@@ -24,7 +24,7 @@ void ParticleBase::init()
 	m_vec = Vec2(0, 0);
 	m_radius = 1.0f;
 	m_color = 0xffffff;
-	m_alpha = 255;
+	m_alpha = 200;
 	m_isExist = false;
 	m_gravity = 0.0f;
 	m_alphaDec = 4;

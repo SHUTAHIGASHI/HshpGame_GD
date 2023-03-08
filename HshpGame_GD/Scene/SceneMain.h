@@ -59,6 +59,8 @@ public:
 	// ’§í‰ñ”‚ğæ“¾
 	int GetAttempt() const { return m_countAttempt; }
 
+	int GetMusicHandle() const { return m_hPlayBgm; }
+
 private:
 	using m_tUpdateFunc = void (SceneMain::*) (const InputState& input, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
