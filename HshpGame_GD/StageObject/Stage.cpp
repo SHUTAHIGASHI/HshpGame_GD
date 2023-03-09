@@ -311,6 +311,7 @@ void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad)
 	StageManage();
 
 	m_hBg = hBg;
+	m_isScrollStage = false;
 	m_isScroll = false;
 	
 	m_scroll = 0;
@@ -667,8 +668,11 @@ void Stage::StageManage()
 
 	if (m_stageState == StageState::firstStage || m_stageState == StageState::secondStage ||
 		m_stageState == StageState::thirdStage || m_stageState == StageState::sixthStage ||
-		m_stageState == StageState::eighthStage || m_stageState == StageState::ninthStage) 
+		m_stageState == StageState::eighthStage || m_stageState == StageState::ninthStage)
+	{
+		m_isScrollStage = false;
 		m_updateFunc = &Stage::NormalUpdate;
+	}
 	else if (m_stageState == StageState::fourthStage || m_stageState == StageState::fifthStage ||
 		m_stageState == StageState::seventhStage || m_stageState == StageState::tenthStage)
 	{

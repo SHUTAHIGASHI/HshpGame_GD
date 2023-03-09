@@ -171,7 +171,26 @@ void Player::Update(const InputState& input)
 
     m_pEffectRing->Update();
 
+    int stageWidth = Game::kScreenWidth;
+    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
+
+    if (m_pos.x < 0)
+    {
+        m_vec.x *= -1;
+        m_isMoveRight = true;
+    }
+    else if (m_pos.x + Game::kBlockSize > stageWidth)
+    {
+        m_vec.x *= -1;
+        m_isMoveRight = false;
+    }
+
     (this->*m_updateFunc)(input);
+
+    m_lastPos[m_countFrame] = m_pos;
+    m_lastAngle[m_countFrame] = m_angle;
+    m_countFrame++;
+    if (m_countFrame > 4) m_countFrame = 0;
 }
 
 void Player::OnHitObject(const InputState& input)
@@ -385,20 +404,6 @@ void Player::SetPlayerVec(int scroll)
 
 void Player::CubeNormalUpdate(const InputState& input)
 {
-    int stageWidth =Game::kScreenWidth;
-    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
-
-    if (m_pos.x < 0)
-    {
-        m_vec.x *= -1;
-        m_isMoveRight = true;
-    }
-    else if (m_pos.x + Game::kBlockSize > stageWidth)
-    {
-        m_vec.x *= -1;
-        m_isMoveRight = false;
-    }
-
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if(!m_isDashRingEnabled) m_vec.y += kGravity;
@@ -429,29 +434,10 @@ void Player::CubeNormalUpdate(const InputState& input)
     {
         OnDead();
     }
-
-    m_lastPos[m_countFrame] = m_pos;
-    m_lastAngle[m_countFrame] = m_angle;
-    m_countFrame++;
-    if (m_countFrame > 4) m_countFrame = 0;
 }
 
 void Player::CubeRevGravityUpdate(const InputState& input)
 {
-    int stageWidth = Game::kScreenWidth;
-    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
-
-    if (m_pos.x < 0)
-    {
-        m_vec.x *= -1;
-        m_isMoveRight = true;
-    }
-    else if (m_pos.x + Game::kBlockSize > stageWidth)
-    {
-        m_vec.x *= -1;
-        m_isMoveRight = false;
-    }
-
     // プレイヤーの挙動の処理
     m_pos += m_vec;
     if (!m_isDashRingEnabled) m_vec.y += -kGravity;
@@ -482,11 +468,6 @@ void Player::CubeRevGravityUpdate(const InputState& input)
     {
         OnDead();
     }
-
-    m_lastPos[m_countFrame] = m_pos;
-    m_lastAngle[m_countFrame] = m_angle;
-    m_countFrame++;
-    if (m_countFrame > 4) m_countFrame = 0;
 }
 
 void Player::GoalUpdate(const InputState& input)

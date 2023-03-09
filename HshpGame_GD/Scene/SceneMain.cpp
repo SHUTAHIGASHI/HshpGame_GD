@@ -315,7 +315,7 @@ void SceneMain::OnStartCount()
 		m_pPlayer->DrawSpawnPos();
 	}
 
-	if (m_startDelay / 60 <= 2 && m_startDelay / 60 != 0)
+	if (m_startDelay / 60 <= 2)
 	{
 		if (m_pPlayer->IsMoveRight())
 		{
