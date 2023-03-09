@@ -22,7 +22,7 @@ public:
 
 	void Update();
 
-	void Draw(Vec2 playerPos);
+	void Draw(Vec2 playerPos, int scroll);
 
 private:
 	Vec2 m_drawPos;

@@ -66,9 +66,7 @@ public:
 	void SetFirstStage() { m_stageState = StageState::firstStage; }
 
 	// スクロール処理に関して
-	bool SetCanScroll() { m_canScroll = true; }
-	void ChangeScroll() { m_scrollAcc *= -1; }
-
+	bool IsScroll() const { return m_isScrollStage; }
 	int GetScroll() const { return m_scroll; }
 
 	//ステージの状態を確保
@@ -104,9 +102,14 @@ private:
 	int m_tempNum;
 
 	// スクロール用変数
+	// スクロールするステージかどうか
+	bool m_isScrollStage;
+	// 現在スクロール中かどうか
+	bool m_isScroll;
+	// スクロール数値
 	int m_scroll;
+	// スクロールの変化速度
 	int m_scrollAcc;
-	bool m_canScroll;
 
 	// 背景
 	int m_hBg;

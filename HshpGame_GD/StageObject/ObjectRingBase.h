@@ -14,7 +14,7 @@ public:
 
     virtual void Update();
 
-    virtual void Draw(int color);
+    virtual void Draw(int scroll, int color);
 
 private:
     float circleSize;

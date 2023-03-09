@@ -14,7 +14,7 @@ public:
 
     void Update();
 
-    void Draw();
+    void Draw(int scroll);
 
 private:
     int m_hBlock;

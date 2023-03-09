@@ -14,7 +14,7 @@ public:
 
     void Update();
 
-    void Draw();
+    void Draw(int scroll);
 
     bool CollisionCheck(Vec2 player, int resizeScale);
 private:

@@ -297,9 +297,10 @@ Stage::Stage() :
 	m_stageState(StageState::firstStage),
 	m_stage(),
 	m_tempNum(0),
+	m_isScrollStage(false),
 	m_scroll(0),
 	m_scrollAcc(kScrollSpeed),
-	m_canScroll(false),
+	m_isScroll(false),
 	m_hBg(-1)
 {
 }
@@ -310,10 +311,10 @@ void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad)
 	StageManage();
 
 	m_hBg = hBg;
+	m_isScroll = true;
 	
 	m_scroll = 0;
 	m_scrollAcc = kScrollSpeed;
-	if(m_stageState == StageState::tenthStage) m_scrollAcc = -kScrollSpeed;
 
 	InitStage(hSpike, hPortal, hBlock, hJumpPad);
 	SetStage();
@@ -429,7 +430,7 @@ void Stage::SetStage()
 		for (int j = 0; j < Game::kScreenWidthTripleNum; j++)
 		{
 			float blockPosX, blockPosY;
-			blockPosX = j * Game::kBlockSize - m_scroll;
+			blockPosX = j * Game::kBlockSize;
 			blockPosY = i * Game::kBlockSize;
 
 			if (m_stage[i][j] == 1)
@@ -501,42 +502,42 @@ void Stage::Draw()
 
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
-		m_ObjectGoalGate[i].Draw();
+		m_ObjectGoalGate[i].Draw(m_scroll);
 	}
 
 	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
 	{
-		m_ObjectJumpRing[i].Draw(0xFFD700);
+		m_ObjectJumpRing[i].Draw(m_scroll, 0xFFD700);
 	}
 
 	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
 	{
-		m_ObjectJumpPad[i].Draw();
+		m_ObjectJumpPad[i].Draw(m_scroll);
 	}
 
 	for (int i = 0; i < m_ObjectSpike.size(); i++)
 	{
-		m_ObjectSpike[i].Draw();
+		m_ObjectSpike[i].Draw(m_scroll);
 	}
 
 	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
 	{
-		m_ObjectGravityRing[i].Draw(0x00bfff);
+		m_ObjectGravityRing[i].Draw(m_scroll, 0x00bfff);
 	}
 
 	for (int i = 0; i < m_ObjectDashRing.size(); i++)
 	{
-		m_ObjectDashRing[i].Draw(0xdc143c);
+		m_ObjectDashRing[i].Draw(m_scroll, 0xdc143c);
 	}
 
 	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
 	{
-		m_ObjectReverseRing[i].Draw(0x9932cc);
+		m_ObjectReverseRing[i].Draw(m_scroll, 0x9932cc);
 	}
 
 	for (int i = 0; i < m_ObjectBlock.size(); i++)
 	{
-		m_ObjectBlock[i].Draw();
+		m_ObjectBlock[i].Draw(m_scroll);
 	}
 }
 
@@ -671,6 +672,7 @@ void Stage::StageManage()
 	else if (m_stageState == StageState::fourthStage || m_stageState == StageState::fifthStage ||
 		m_stageState == StageState::seventhStage || m_stageState == StageState::tenthStage)
 	{
+		m_isScrollStage = true;
 		m_updateFunc = &Stage::ScrollUpdate;
 		stageWidthNum = Game::kScreenWidthTripleNum;
 	}
@@ -774,38 +776,36 @@ void Stage::ScrollUpdate()
 {
 	if (m_pPlayer->IsDead()) return;
 
-	if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
-	{
-		m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
-		m_scrollAcc = 0;
-		m_pPlayer->SetPlayerVec(m_scroll);
-	}
-	else if (m_scroll < 0)
-	{
-		m_scroll = 0;
-		m_scrollAcc = 0;
-		m_pPlayer->SetPlayerVec(m_scroll);
-	}
-
-	if (m_pPlayer->GetRight() > Game::kScreenWidth || m_pPlayer->GetLeft() < 0)
-	{
-		m_canScroll = true;
-	}
-
-	if (m_canScroll)
-	{
-		if (m_pPlayer->GetCenterX() > Game::kScreenWidthHalf - (Game::kBlockSize / 2)
-			&& m_pPlayer->GetCenterX() < Game::kScreenWidthHalf + (Game::kBlockSize / 2))
+	if (m_isScroll)
+	{		
+		if (m_pPlayer->IsMoveRight())
 		{
-			if (m_pPlayer->IsMoveRight()) m_scrollAcc = kScrollSpeed;
-			else m_scrollAcc = -kScrollSpeed;
-			m_pPlayer->DeleteVecX();
-			m_canScroll = false;
+			m_scroll += m_scrollAcc;
+		}
+		else
+		{
+			m_scroll += -m_scrollAcc;
+		}
+
+		if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
+		{
+			m_isScroll = false;
+			m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
+		}
+		else if (m_scroll < 0)
+		{
+			m_isScroll = false;
+			m_scroll = 0;
 		}
 	}
-
-	SetStage();
-	m_scroll += m_scrollAcc;
+	else
+	{
+		if (m_pPlayer->GetCenterX() > Game::kScreenWidthHalf 
+			&& m_pPlayer->GetCenterX() < (Game::kScreenWidthTriple - Game::kScreenWidthHalf))
+		{
+			m_isScroll = true;
+		}
+	}
 
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{

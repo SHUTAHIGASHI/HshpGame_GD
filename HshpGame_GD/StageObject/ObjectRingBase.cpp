@@ -29,8 +29,8 @@ void ObjectRingBase::Update()
 	else if (circleSize < (Game::kBlockSize / 2) - 10) sizeAcc *= -1;
 }
 
-void ObjectRingBase::Draw(int color)
+void ObjectRingBase::Draw(int scroll, int color)
 {
-	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize), color, true);
-	DrawCircle(static_cast<int>(GetCenterX()), static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
+	DrawCircle(static_cast<int>(GetCenterX()) - scroll , static_cast<int>(GetCenterY()), static_cast<int>(circleSize), color, true);
+	DrawCircle(static_cast<int>(GetCenterX()) - scroll, static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }

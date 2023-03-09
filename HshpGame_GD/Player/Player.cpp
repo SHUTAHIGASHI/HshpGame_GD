@@ -64,7 +64,7 @@ void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
     {
-        m_vec.x = 0.0f;
+        //m_vec.x = 0.0f;
         m_isScroll = true;
     }
 
@@ -253,7 +253,6 @@ void Player::OnHitObject(const InputState& input)
                 m_vec.x *= -1;
                 if (m_isMoveRight) m_isMoveRight = false;
                 else m_isMoveRight = true;
-                m_pStage->ChangeScroll();
             }
             return;
         }
@@ -303,6 +302,10 @@ void Player::OnDead()
 
 void Player::Draw()
 {
+    Vec2 playerDrawPos;
+    playerDrawPos.x = m_pos.x + m_pStage->GetScroll();
+    playerDrawPos.y = m_pos.y;
+
     float effectW = 0.0f, effectH = 0.0f;
     effectW = static_cast<float>(m_effectWidth / 4);
     effectH = m_effectHeight;
@@ -314,8 +317,10 @@ void Player::Draw()
     
     if (m_isDead)
     {
-        DrawRectExtendGraphF(m_pos.x - effectScale, m_pos.y - effectScale, 
-            (m_pos.x + Game::kBlockSize) + effectScale, (m_pos.y + Game::kBlockSize) + effectScale,
+        DrawRectExtendGraphF(playerDrawPos.x - effectScale, 
+            playerDrawPos.y - effectScale,
+            (playerDrawPos.x + Game::kBlockSize) + effectScale,
+            (playerDrawPos.y + Game::kBlockSize) + effectScale,
             effectX, effectY, 
             static_cast<int>(effectW), static_cast<int>(effectH),
             m_hDeathEffect, true);
@@ -328,13 +333,13 @@ void Player::Draw()
         float drawPosX = 0.0f, drawPosY = 0.0f;
         int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 
-        drawPosX = GetCenterX(), drawPosY = GetCenterY();
+        drawPosX = GetCenterX() - m_pStage->GetScroll(), drawPosY = GetCenterY();
         imgW = Game::kBlockSize, imgH = Game::kBlockSize;
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
 
-    m_pEffectRing->Draw(m_pos);
+    m_pEffectRing->Draw(m_pos, m_pStage->GetScroll());
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 
@@ -345,19 +350,9 @@ void Player::DrawMoveEffect()
     
     for (int i = 0; i < 5; i++)
     {
-        if (!m_isScroll)
-        {
-            drawPosX = m_lastPos[i].x + (Game::kBlockSize / 2);
-            drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
-            imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-        }
-        else
-        {
-            if (m_isMoveRight) drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - (Game::kMoveSpeed * i);
-            else drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) + (Game::kMoveSpeed * i);
-            drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
-            imgW = Game::kBlockSize, imgH = Game::kBlockSize;
-        }
+        drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - m_pStage->GetScroll();
+        drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
+        imgW = Game::kBlockSize, imgH = Game::kBlockSize;
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
@@ -390,12 +385,15 @@ void Player::SetPlayerVec(int scroll)
 
 void Player::CubeNormalUpdate(const InputState& input)
 {
+    int stageWidth =Game::kScreenWidth;
+    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
+
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
         m_isMoveRight = true;
     }
-    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    else if (m_pos.x + Game::kBlockSize > stageWidth)
     {
         m_vec.x *= -1;
         m_isMoveRight = false;
@@ -440,12 +438,15 @@ void Player::CubeNormalUpdate(const InputState& input)
 
 void Player::CubeRevGravityUpdate(const InputState& input)
 {
+    int stageWidth = Game::kScreenWidth;
+    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
+
     if (m_pos.x < 0)
     {
         m_vec.x *= -1;
         m_isMoveRight = true;
     }
-    else if (m_pos.x + Game::kBlockSize > Game::kScreenWidth)
+    else if (m_pos.x + Game::kBlockSize > stageWidth)
     {
         m_vec.x *= -1;
         m_isMoveRight = false;

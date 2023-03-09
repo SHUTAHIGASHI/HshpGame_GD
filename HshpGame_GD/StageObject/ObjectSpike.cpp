@@ -22,7 +22,7 @@ void ObjectSpike::Update()
 {
 }
 
-void ObjectSpike::Draw()
+void ObjectSpike::Draw(int scroll)
 {
-	DrawRotaGraphF(GetCenterX(), GetCenterY(), 1, 0, m_hObjectImg, true, false);
+	DrawRotaGraphF(GetCenterX() - scroll, GetCenterY(), 1, 0, m_hObjectImg, true, false);
 }

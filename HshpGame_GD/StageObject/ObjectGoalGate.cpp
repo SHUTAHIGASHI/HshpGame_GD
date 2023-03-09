@@ -30,16 +30,20 @@ void ObjectGoalGate::Update()
 	if (m_drawFrame > 8) m_drawFrame = 0;
 }
 
-void ObjectGoalGate::Draw()
+void ObjectGoalGate::Draw(int scroll)
 {	
+	Vec2 draw;
+	draw.x = m_pos.x - scroll;
+	draw.y = m_pos.y;
+
 	m_imgX = static_cast<int>(m_drawFrame * Game::kBlockSize);
 	m_imgY = 0;
 	int imgW = 0, imgH = 0;
 	imgW = Game::kBlockSize;
 	imgH = Game::kBlockSize;
 
-	DrawRectExtendGraphF(m_pos.x, m_pos.y,
-		m_pos.x + Game::kBlockSize, m_pos.y + (Game::kBlockSize * 3), 
+	DrawRectExtendGraphF(draw.x, draw.y,
+		draw.x + Game::kBlockSize, draw.y + (Game::kBlockSize * 3), 
 		m_imgX, m_imgY, imgW, imgH, 
 		m_hPortal, true);
 }

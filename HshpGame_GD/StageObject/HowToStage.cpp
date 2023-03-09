@@ -339,37 +339,37 @@ void HowToStage::Draw()
 
 	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
 	{
-		m_ObjectJumpRing[i].Draw(0xFFD700);
+		m_ObjectJumpRing[i].Draw(0,0xFFD700);
 	}
 
 	for (int i = 0; i < m_ObjectJumpPad.size(); i++)
 	{
-		m_ObjectJumpPad[i].Draw();
+		m_ObjectJumpPad[i].Draw(0);
 	}
 
 	for (int i = 0; i < m_ObjectSpike.size(); i++)
 	{
-		m_ObjectSpike[i].Draw();
+		m_ObjectSpike[i].Draw(0);
 	}
 
 	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
 	{
-		m_ObjectGravityRing[i].Draw(0x00bfff);
+		m_ObjectGravityRing[i].Draw(0,0x00bfff);
 	}
 
 	for (int i = 0; i < m_ObjectDashRing.size(); i++)
 	{
-		m_ObjectDashRing[i].Draw(0xdc143c);
+		m_ObjectDashRing[i].Draw(0,0xdc143c);
 	}
 
 	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
 	{
-		m_ObjectReverseRing[i].Draw(0x9932cc);
+		m_ObjectReverseRing[i].Draw(0,0x9932cc);
 	}
 
 	for (int i = 0; i < m_ObjectBlock.size(); i++)
 	{
-		m_ObjectBlock[i].Draw();
+		m_ObjectBlock[i].Draw(0);
 	}
 }
 

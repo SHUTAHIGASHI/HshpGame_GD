@@ -28,13 +28,17 @@ void ObjectJumpPad::Update()
 	if(m_countFrame > 6) m_countFrame = 0.0;
 }
 
-void ObjectJumpPad::Draw()
+void ObjectJumpPad::Draw(int scroll)
 {
+	Vec2 draw;
+	draw.x = m_pos.x - scroll;
+	draw.y = m_pos.y;
+
 	int imgX, imgY, imgW, imgH;
 	imgX = 50 * static_cast<int>(m_countFrame), imgY = 0;
 	imgW = Game::kBlockSize, imgH = Game::kBlockSize;
 
-	DrawRectExtendGraphF(GetLeft(), GetTop(), GetRight(), GetBottom(), imgX, imgY, imgW, imgH, m_hJumpPad, true);
+	DrawRectExtendGraphF(draw.x, draw.y, draw.x + Game::kBlockSize, draw.y + Game::kBlockSize, imgX, imgY, imgW, imgH, m_hJumpPad, true);
 }
 
 bool ObjectJumpPad::CollisionCheck(Vec2 player, int resizeScale)
