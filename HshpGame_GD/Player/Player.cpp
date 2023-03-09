@@ -132,7 +132,7 @@ void Player::SetSpawnPos()
     else if (m_pStage->GetStageState() == StageState::eighthStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageUpperLimit - (Game::kBlockSize * 3);
+        m_pos.y = Game::kBlockSize * 5;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::ninthStage)
@@ -159,15 +159,7 @@ void Player::SetSpawnPos()
 
 void Player::ChangeUpdateType()
 {
-    if (m_pStage->GetStageState() == StageState::eighthStage)
-    {
-        m_updateFunc = &Player::CubeRevGravityUpdate;
-        m_isRevGravity = true;
-    }
-    else
-    {
-        m_updateFunc = &Player::CubeNormalUpdate;
-    }
+    m_updateFunc = &Player::CubeNormalUpdate;
 }
 
 void Player::Update(const InputState& input)

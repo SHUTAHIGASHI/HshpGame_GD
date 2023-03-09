@@ -31,12 +31,12 @@ SceneMain::SceneMain() :
 	m_hPortal(-1),
 	m_hBlock(-1),
 	m_hJumpPad(-1),
-	m_hBg(-1), 
+	m_hBg(-1),
 	m_hDeathSound(-1),
 	m_hPlayBgm(-1),
 	m_fadeCount(0),
 	m_scroll(0),
-	m_startDelay(0), 
+	m_startDelay(0),
 	m_startTextSize(0),
 	m_textTimer(0),
 	m_gameOverDelay(0),
@@ -275,6 +275,8 @@ void SceneMain::DrawGameInfo()
 // スタート時のカウントダウン描画
 void SceneMain::OnStartCount()
 {
+	std::string temp = "";
+
 	// 数字のサイズ調整
 	// 余りが 0 になった場合、設定したフォントサイズに戻す
 	if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
@@ -316,10 +318,21 @@ void SceneMain::OnStartCount()
 
 	if (m_startDelay / 60 <= 2 && m_startDelay / 60 != 0)
 	{
+		if (m_pPlayer->IsMoveRight())
+		{
+			temp = "→";
+		}
+		else
+		{
+			temp = "←";
+		}
+
 		if ((m_textTimer / 10) % 2 != 0)
 		{
 			SetFontSize(40);
-			DrawString(static_cast<int>(m_pPlayer->GetPos().x) + 4, static_cast<int>(m_pPlayer->GetPos().y) - 50, "!", 0xff0000);
+			DrawFormatString(static_cast<int>(m_pPlayer->GetPos().x) + 5, 
+				static_cast<int>(m_pPlayer->GetPos().y) - 50,
+				0xff0000, "%s", temp.c_str());
 			SetFontSize(0);
 		}
 		m_textTimer++;
@@ -353,6 +366,8 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		}
 		else
 		{
+			m_startDelay = 180;
+			m_updateFunc = &SceneMain::StartDelayUpdate;	// フェード処理を実行する
 			// 次のステージ状態をセット
 			m_pStage->SetNextStageState();
 			// ゲームスタート時の処理へ

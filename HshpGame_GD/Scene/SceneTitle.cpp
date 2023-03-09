@@ -25,7 +25,6 @@ namespace
 	// メニューのサイズ
 	constexpr int kMenuX = Game::kScreenWidthHalf - 200;
 	constexpr int kMenuY = Game::kScreenHeightHalf - 100;
-
 	constexpr int kMenuW = 400;
 	constexpr int kMenuH = 60;
 
