@@ -116,7 +116,7 @@ void SceneStageSelect::Draw()
 			// タイトルのテキストを表示
 			DrawStringToHandle(drawX + m_textScroll, drawY, kSelectMessage, 0xe9e9e9, m_hFontS);
 
-			imgY = Game::kPadChipSize * 12;
+			imgY = Game::kPadChipSize * 14;
 			DrawRectExtendGraph((drawX - 50) + m_textScroll, drawY - 10, drawX + m_textScroll, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
@@ -127,7 +127,7 @@ void SceneStageSelect::Draw()
 	// タイトルのテキストを表示
 	DrawStringToHandle(drawX + m_textScroll, drawY, kBackMessage, 0xe9e9e9, m_hFontS);
 
-	imgY = Game::kPadChipSize * 11;
+	imgY = Game::kPadChipSize * 12;
 	DrawRectExtendGraph((drawX - 50) + m_textScroll, drawY - 10, drawX + m_textScroll, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 
 	// 選択枠の描画
