@@ -34,7 +34,7 @@ public:
 	void SetMain(SceneMain* main) { m_pMain = main; }
 
 	// 初期化
-	virtual void Init(int font);
+	void Init(int font);
 	
 	// 終了処理
 	void End();
@@ -48,6 +48,9 @@ public:
 	// 描画
 	virtual void Draw();
 
+	// ステージ全クリ時
+	void OnAllClear();
+
 	// 次のステージへ進むかどうか
 	bool IsNextStage() const { return m_isNextStage; }
 
@@ -59,14 +62,24 @@ private:
 	using m_tUpdateFunc = void (SceneClear::*) (const InputState& input, NextSceneState& nextScene, const bool isPrac);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
+	// 通常更新処理
 	void NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+
+	// ステージ全クリ時更新処理
+	void AllClearUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+
+	// シーン終了時更新処理
 	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
 
 	// Draw
 	using m_tDrawFunc = void (SceneClear::*) ();
 	m_tDrawFunc m_drawFunc = nullptr;
 
+	// 通常の描画処理
 	void NormalDraw();
+
+	// ステージ全クリ時の描画処理
+	void AllClearDraw();
 private:
 	// フォントのハンドル
 	int m_hFont;

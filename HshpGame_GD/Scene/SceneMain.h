@@ -56,9 +56,13 @@ public:
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
 
+	// 現在のステージ情報取得
+	StageState GetStageState() const { return m_pStage->GetStageState(); }
+
 	// 挑戦回数を取得
 	int GetAttempt() const { return m_countAttempt; }
 
+	// BGMハンドル取得
 	int GetMusicHandle() const { return m_hPlayBgm; }
 
 private:

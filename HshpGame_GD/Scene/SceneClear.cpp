@@ -47,8 +47,15 @@ void SceneClear::Init(int font)
 	}
 	auraFrame = kAuraInterval;
 
-	m_updateFunc = &SceneClear::NormalUpdate;
-	m_drawFunc = &SceneClear::NormalDraw;
+	if (m_pMain->GetStageState() == StageState::tenthStage)
+	{
+		OnAllClear();
+	}
+	else
+	{
+		m_updateFunc = &SceneClear::NormalUpdate;
+		m_drawFunc = &SceneClear::NormalDraw;
+	}
 
 	m_hFont = font;
 
@@ -77,6 +84,15 @@ void SceneClear::End()
 void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
 	ParticleUpdate();
+
+	if (m_textScale > kTextSizeMax) m_textScaleAcc = 0;
+	m_textScale += m_textScaleAcc;
+
+	if (m_textFadeNum > 0)
+	{
+		m_shadowScale += kTextFadeSpeed;
+		m_textFadeNum -= kTextFadeSpeed;
+	}
 
 	(this->*m_updateFunc)(input, nextScene, isPrac);
 }
@@ -159,6 +175,33 @@ int SceneClear::GetRandColor()
 
 void SceneClear::Draw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	int count = 0;
+	for (auto& pPart : particle)
+	{
+		if (!pPart->isExist())	continue;
+		pPart->draw();
+		count++;
+	}
+
+	if (m_textFadeNum > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textFadeNum);
+		SetFontSize(m_shadowScale);
+		DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	// ゲームクリアテキスト
+	SetFontSize(m_textScale + 1);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
+	SetFontSize(m_textScale);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd733);
+	SetFontSize(20);
+
 	(this->*m_drawFunc)();
 
 	// フェード処理用の処理
@@ -167,17 +210,14 @@ void SceneClear::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
+void SceneClear::OnAllClear()
+{
+	m_updateFunc = &SceneClear::AllClearUpdate;
+	m_drawFunc = &SceneClear::AllClearDraw;
+}
+
 void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
-	if (m_textScale > kTextSizeMax) m_textScaleAcc = 0;
-	m_textScale += m_textScaleAcc;
-
-	if (m_textFadeNum > 0)
-	{
-		m_shadowScale += kTextFadeSpeed;
-		m_textFadeNum -= kTextFadeSpeed;
-	}
-
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
@@ -213,6 +253,39 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	if (m_selectPos < 0) m_selectPos = 2;
 }
 
+void SceneClear::AllClearUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+{
+	// キー入力があった場合、シーン終了を true にする
+	if (input.IsTriggered(InputType::enter))
+	{
+		m_updateFunc = &SceneClear::SceneEndUpdate;
+
+		switch (m_selectPos)
+		{
+		case 0:
+			nextScene = NextSceneState::nextStageSelect;
+			return;
+		case 1:
+			nextScene = NextSceneState::nextTitle;
+			return;
+		default:
+			break;
+		}
+	}
+
+	if (input.IsTriggered(InputType::down))
+	{
+		m_selectPos++;
+	}
+	if (input.IsTriggered(InputType::up))
+	{
+		m_selectPos--;
+	}
+
+	if (m_selectPos > 1) m_selectPos = 0;
+	if (m_selectPos < 0) m_selectPos = 1;
+}
+
 void SceneClear::SceneEndUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
 {
 	m_fadeCount += 5;
@@ -226,33 +299,6 @@ void SceneClear::SceneEndUpdate(const InputState& input, NextSceneState& nextSce
 
 void SceneClear::NormalDraw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	int count = 0;
-	for (auto& pPart : particle)
-	{
-		if (!pPart->isExist())	continue;
-		pPart->draw();
-		count++;
-	}
-
-	if (m_textFadeNum > 0)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textFadeNum);
-		SetFontSize(m_shadowScale);
-		DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
-	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	// ゲームクリアテキスト
-	SetFontSize(m_textScale + 1);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
-	SetFontSize(m_textScale);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd733);
-	SetFontSize(20);
-
 	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
 	std::string drawText;
 
@@ -278,6 +324,37 @@ void SceneClear::NormalDraw()
 	if (m_selectPos == 0) drawText = kNextText;
 	if (m_selectPos == 1) drawText = kBackStageSelectText;
 	if (m_selectPos == 2) drawText = kBackTitleText;
+
+	menuY = menuY + (kMenuH / 2) - 15;
+	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
+	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+}
+
+void SceneClear::AllClearDraw()
+{
+	int menuX = kMenuX, menuY = kMenuY, menuW = kMenuX + kMenuW, menuH = kMenuY + kMenuH;
+	std::string drawText;
+
+	for (int i = 0; i < 2; i++)
+	{
+		menuY = kMenuY + (kMenuH * i) + 10;
+		DrawBox(menuX, menuY, menuW, menuH + (kMenuH * i), 0xe9e9e9, false);
+
+		// フォントサイズの設定
+		SetFontSize(20);
+
+		if (i == 0) drawText = kBackStageSelectText;
+		if (i == 1) drawText = kBackTitleText;
+
+		menuY = menuY + (kMenuH / 2) - 15;
+		DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+	}
+
+	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
+	DrawBox(menuX, menuY, menuW, menuH + (kMenuH * m_selectPos), 0x60CAAD, true);
+
+	if (m_selectPos == 0) drawText = kBackStageSelectText;
+	if (m_selectPos == 1) drawText = kBackTitleText;
 
 	menuY = menuY + (kMenuH / 2) - 15;
 	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
