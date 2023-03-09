@@ -53,6 +53,9 @@ public:
 
 	bool IsTop(float& tempPos);
 
+	// すべてのオブジェクトをクリア
+	void ClearAllObject();
+
 	// 現在のステージ情報の初期化
 	void ResetStage();
 	// 現在のステージ情報の変更
@@ -66,7 +69,7 @@ public:
 	void SetFirstStage() { m_stageState = StageState::firstStage; }
 
 	// スクロール処理に関して
-	bool IsScroll() const { return m_isScrollStage; }
+	bool IsScrollStage() const { return m_isScrollStage; }
 	int GetScroll() const { return m_scroll; }
 
 	//ステージの状態を確保

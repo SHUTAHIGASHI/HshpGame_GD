@@ -307,16 +307,14 @@ Stage::Stage() :
 
 void Stage::Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad)
 {
-	End();
-	StageManage();
-
 	m_hBg = hBg;
 	m_isScrollStage = false;
 	m_isScroll = false;
-	
 	m_scroll = 0;
 	m_scrollAcc = kScrollSpeed;
 
+	ClearAllObject();
+	StageManage();
 	InitStage(hSpike, hPortal, hBlock, hJumpPad);
 	SetStage();
 }
@@ -405,14 +403,7 @@ void Stage::InitStage(int hSpike, int hPortal, int hBlock, int hJumpPad)
 
 void Stage::End()
 {
-	m_ObjectGoalGate.clear();
-	m_ObjectBlock.clear();
-	m_ObjectJumpRing.clear();
-	m_ObjectJumpPad.clear();
-	m_ObjectSpike.clear();
-	m_ObjectGravityRing.clear();
-	m_ObjectDashRing.clear();
-	m_ObjectReverseRing.clear();
+	ClearAllObject();
 }
 
 void Stage::SetStage()
@@ -649,6 +640,18 @@ bool Stage::IsTop(float& tempPos)
 
 	// è„Ç≈ÇÕÇ»Ç¢èÍçáÅAfalseÇï‘Ç∑
 	return false;
+}
+
+void Stage::ClearAllObject()
+{
+	m_ObjectGoalGate.clear();
+	m_ObjectBlock.clear();
+	m_ObjectJumpRing.clear();
+	m_ObjectJumpPad.clear();
+	m_ObjectSpike.clear();
+	m_ObjectGravityRing.clear();
+	m_ObjectDashRing.clear();
+	m_ObjectReverseRing.clear();
 }
 
 void Stage::ResetStage()

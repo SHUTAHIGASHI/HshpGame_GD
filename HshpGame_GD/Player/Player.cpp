@@ -172,7 +172,7 @@ void Player::Update(const InputState& input)
     m_pEffectRing->Update();
 
     int stageWidth = Game::kScreenWidth;
-    if (m_pStage->IsScroll()) stageWidth = Game::kScreenWidthTriple;
+    if (m_pStage->IsScrollStage()) stageWidth = Game::kScreenWidthTriple;
 
     if (m_pos.x < 0)
     {
