@@ -98,8 +98,6 @@ private:
 	// フェード処理用カウント
 	int m_fadeCount;
 
-	// スクロール用
-	int m_scroll;
 	// ゲームの制限時間
 	int m_startDelay;
 	// スタート遅延時のテキストサイズ

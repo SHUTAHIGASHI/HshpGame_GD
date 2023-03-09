@@ -107,13 +107,13 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::fourthStage)
     {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.x = 0;
         m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::fifthStage)
     {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.x = 0;
         m_pos.y = Game::kStageLowerLimit;
         m_isMoveRight = true;
     }
@@ -125,7 +125,7 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::seventhStage)
     {
-        m_pos.x = Game::kScreenWidthHalf - (Game::kBlockSize / 2);
+        m_pos.x = 0;
         m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
@@ -303,7 +303,7 @@ void Player::OnDead()
 void Player::Draw()
 {
     Vec2 playerDrawPos;
-    playerDrawPos.x = m_pos.x + m_pStage->GetScroll();
+    playerDrawPos.x = m_pos.x - m_pStage->GetScroll();
     playerDrawPos.y = m_pos.y;
 
     float effectW = 0.0f, effectH = 0.0f;
@@ -339,7 +339,7 @@ void Player::Draw()
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
 
-    m_pEffectRing->Draw(m_pos, m_pStage->GetScroll());
+    m_pEffectRing->Draw(playerDrawPos);
 	//DrawBox(GetLeft(), GetTop(), GetRight(), GetBottom(), GetColor(255, 255, 255), false);
 }
 

@@ -258,7 +258,7 @@ void HowToPlayer::Draw()
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
 
-    m_pEffectRing->Draw(m_pos, 0);
+    m_pEffectRing->Draw(m_pos);
 }
 
 void HowToPlayer::DrawMoveEffect()

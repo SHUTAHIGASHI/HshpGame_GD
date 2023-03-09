@@ -47,11 +47,11 @@ void EffectRing::Update()
 	}
 }
 
-void EffectRing::Draw(Vec2 playerPos, int scroll)
+void EffectRing::Draw(Vec2 playerPos)
 {
 	if (!m_isExist) return;
 
-	m_drawPos.x = (playerPos.x + (Game::kBlockSize / 2)) - scroll;
+	m_drawPos.x = (playerPos.x + (Game::kBlockSize / 2));
 	m_drawPos.y = (playerPos.y + (Game::kBlockSize / 2));
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_blendNum);

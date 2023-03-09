@@ -35,7 +35,6 @@ SceneMain::SceneMain() :
 	m_hDeathSound(-1),
 	m_hPlayBgm(-1),
 	m_fadeCount(0),
-	m_scroll(0),
 	m_startDelay(0),
 	m_startTextSize(0),
 	m_textTimer(0),
@@ -249,17 +248,17 @@ void SceneMain::Draw()
 void SceneMain::DrawGameInfo()
 {
 	int drawX, drawY;
-	//if (m_attemptDrawTime > 0)
-	//{
-	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_attemptDrawNum);
-	//	drawX = static_cast<int>(m_pPlayer->GetPos().x - 100);
-	//	drawY = static_cast<int>(m_pPlayer->GetPos().y - 50);
-	//	if (drawX < 0) drawX = 0;
+	if (m_attemptDrawTime > 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_attemptDrawNum);
+		drawX = static_cast<int>(m_pPlayer->GetPos().x - 100);
+		drawY = static_cast<int>(m_pPlayer->GetPos().y - 50);
+		if (drawX < 0) drawX = 0;
 
-	//	// ’§í‰ñ”‚Ì•`‰æ
-	//	DrawFormatString(drawX, drawY, 0xe9e9e9, "Attempt : %d", m_countAttempt);
-	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	//}
+		// ’§í‰ñ”‚Ì•`‰æ
+		DrawFormatString(drawX - m_pStage->GetScroll(), drawY, 0xe9e9e9, "Attempt : %d", m_countAttempt);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
 	if (m_isPracticeMode)
 	{
