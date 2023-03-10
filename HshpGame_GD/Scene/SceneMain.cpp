@@ -43,6 +43,7 @@ SceneMain::SceneMain() :
 	m_attemptDrawTime(0),
 	m_attemptDrawNum(0),
 	m_isPracticeMode(false),
+	m_isArcadeMode(false),
 	m_isPause(false),
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
@@ -69,6 +70,7 @@ void SceneMain::Init()
 	m_pPlayer->SetStage(m_pStage.get());
 	m_pStage->SetPlayer(m_pPlayer.get());
 	m_pPause->SetMain(this);
+	m_pPlayer->SetMain(this);
 
 	// ポーズシーン初期化
 	m_pPause->Init();
@@ -86,12 +88,15 @@ void SceneMain::Init()
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
 
 	// BGMのセット
-	if (m_isPracticeMode) m_hPlayBgm = LoadSoundMem(Game::kPracBgm); // 練習モードの場合、練習用BGMをセット
+	if (m_isArcadeMode) m_hPlayBgm = LoadSoundMem(Game::kArcadeBgm); // 練習モードの場合、練習用BGMをセット
+	else if (m_isPracticeMode) m_hPlayBgm = LoadSoundMem(Game::kPracBgm); // 練習モードの場合、練習用BGMをセット
 	else m_hPlayBgm = LoadSoundMem(Game::kChallengeBgm); // チャレンジモードの場合、チャレンジモード用BGMをセット
 
-	// ステージ選択
+	// ステージ選択 //
+	// アーケードモードの場合 チュートリアルをセット
+	if (m_isArcadeMode) m_pStage->SetTutorialStage();
 	// チャレンジモードの場合、ステージ１をセット
-	if (!m_isPracticeMode) m_pStage->SetFirstStage();
+	else if (!m_isPracticeMode) m_pStage->SetFirstStage();
 	// ステージが選ばれた場合、そのステージにセット
 	else if (m_selectedStage != StageState::Empty) m_pStage->SetSelectedStage(m_selectedStage);
 	// クリア後に "次のステージ" が選ばれた場合、次ステージをセット
@@ -144,6 +149,9 @@ void SceneMain::End()
 	// ポーズシーンの終了処理
 	m_pPause->End();
 
+	m_isPracticeMode = false;
+	m_isArcadeMode = false;
+
 	// サウンドの停止
 	StopSoundMem(m_hPlayBgm, true);
 
@@ -183,9 +191,9 @@ void SceneMain::OnRetry()
 	m_isPause = false;
 	
 	// チャレンジモードの場合、曲を停止
-	if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+	if (!m_isPracticeMode && !m_isArcadeMode) StopSoundMem(m_hPlayBgm);
 	// チャレンジモードの場合、ステージ１をセット
-	if (!m_isPracticeMode) m_pStage->SetFirstStage();
+	if (!m_isPracticeMode && !m_isArcadeMode) m_pStage->SetFirstStage();
 	// ゲーム状態初期化
 	OnGameStart();
 	// 挑戦回数を増やす
@@ -196,13 +204,13 @@ void SceneMain::OnRetry()
 void SceneMain::OnDead()
 {
 	// 再生中のBGMを止める
-	if (!m_isPracticeMode) StopSoundMem(m_hPlayBgm);
+	if (!m_isPracticeMode && !m_isArcadeMode) StopSoundMem(m_hPlayBgm);
 
 	// ゲームオーバー遅延が０以下になった場合
 	if (m_gameOverDelay < 0)
 	{
 		// チャレンジモードの場合、ステージ１をセット
-		if (!m_isPracticeMode) m_pStage->SetFirstStage();
+		if (!m_isPracticeMode && !m_isArcadeMode) m_pStage->SetFirstStage();
 		// ゲーム状態初期化
 		OnGameStart();
 		// 挑戦回数を増やす

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "game.h"
+#include "SceneMain.h"
 #include "Stage.h"
 #include "EffectRing.h"
 #include <cassert>
@@ -152,7 +153,7 @@ void Player::SetSpawnPos()
     else
     {
         m_pos.x = 0;
-        m_pos.y = Game::kBlockSize * 5;
+        m_pos.y = Game::kBlockSize * 6;
         m_isMoveRight = true;
     }
 }

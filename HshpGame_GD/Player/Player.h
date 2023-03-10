@@ -1,6 +1,7 @@
 #include "game.h"
 #include <memory>
 
+class SceneMain;
 class Stage;
 class EffectRing;
 
@@ -8,6 +9,7 @@ class Player
 {
 public:
 	Player() :
+		m_pMain(nullptr),
 		m_pStage(nullptr),
 		m_updateFunc(&Player::CubeNormalUpdate),
 		m_pos(),
@@ -36,6 +38,7 @@ public:
 	virtual ~Player() {}
 
 	void SetStage(Stage* stage) { m_pStage = stage; }
+	void SetMain(SceneMain* main) { m_pMain = main; }
 
 	// プレイヤーの初期化
 	void Init(int playerHandle, int playerDeathEffect, int hDeathSound);
@@ -98,8 +101,9 @@ public:
 private:
 	std::shared_ptr<EffectRing> m_pEffectRing;
 
-	// ステージのポインタ
+	// ポインタ
 	Stage* m_pStage;
+	SceneMain* m_pMain;
 
 	// キューブの通常時の更新処理
 	void CubeNormalUpdate(const InputState& input);

@@ -13,9 +13,9 @@ namespace
 	const char* const kSelectMessage = "で選択";
 
 	// メニューメッセージ
+	const char* const kArcadeText = "NormalMode";
 	const char* const kChallengeModeText = "ChallengeMode";
 	const char* const kStageSelectText = "StageSelect";
-	const char* const kTutorialText = "Tutorial";
 	const char* const kRankText = "Ranking";
 	const char* const kGameEndText = "Exit";
 
@@ -151,9 +151,9 @@ void SceneTitle::Draw()
 
 		menuY = menuY + (kMenuH / 2) - 15;
 
-		if (i == 0) drawText = kStageSelectText;
+		if (i == 0) drawText = kArcadeText;
 		else if (i == 1) drawText = kChallengeModeText;
-		else if (i == 2) drawText = kTutorialText;
+		else if (i == 2) drawText = kStageSelectText;
 		else if (i == 3) drawText = kRankText;
 		else if (i == 4) drawText = kGameEndText;
 
@@ -164,9 +164,9 @@ void SceneTitle::Draw()
 	DrawBox(menuX + m_textScroll, menuY, menuW + m_textScroll, menuH + (kMenuH * m_selectPos), 0x60CAAD, true);
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	if (m_selectPos == 0) drawText = kStageSelectText;
+	if (m_selectPos == 0) drawText = kArcadeText;
 	else if (m_selectPos == 1) drawText = kChallengeModeText;
-	else if (m_selectPos == 2) drawText = kTutorialText;
+	else if (m_selectPos == 2) drawText = kStageSelectText;
 	else if (m_selectPos == 3) drawText = kRankText;
 	else if (m_selectPos == 4) drawText = kGameEndText;
 
@@ -202,7 +202,8 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 		{
 		case 0:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
-			nextScene = NextSceneState::nextStageSelect;
+			nextScene = NextSceneState::nextGameMain;
+			m_pMain->SetArcadeMode();
 			return;
 		case 1:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
@@ -210,7 +211,7 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 			return;
 		case 2:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
-			nextScene = NextSceneState::nextHowTo;
+			nextScene = NextSceneState::nextStageSelect;
 			return;
 		case 3:
 			m_updateFunc = &SceneTitle::SceneEndUpdate;

@@ -14,6 +14,11 @@ class Player;
 
 enum class StageState
 {
+	tutrialCube,
+	tutrialJump,
+	tutrialGravity,
+	tutrialDash,
+	tutrialRev,
 	firstStage,
 	secondStage,
 	thirdStage,
@@ -61,9 +66,11 @@ public:
 	// 現在のステージ情報の変更
 	void StageManage();
 
+	// チュートリアルステージをセット1
+	void SetTutorialStage() { m_stageState = StageState::tutrialCube; }
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_stageState = stage; }
-	// 各ステージのセット
+	// 次のステージのセット
 	void SetNextStageState();
 	// ステージを一番最初にセット
 	void SetFirstStage() { m_stageState = StageState::firstStage; }

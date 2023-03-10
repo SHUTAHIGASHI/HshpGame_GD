@@ -154,13 +154,10 @@
     <ClCompile Include="Effect\EffectRing.cpp" />
     <ClCompile Include="Effect\ParticleBase.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player\HowToPlayer.cpp" />
     <ClCompile Include="Scene\SceneDemo.cpp" />
-    <ClCompile Include="Scene\SceneHowTo.cpp" />
     <ClCompile Include="Scene\ScenePause.cpp" />
     <ClCompile Include="Scene\SceneRanking.cpp" />
     <ClCompile Include="Scene\SceneStageSelect.cpp" />
-    <ClCompile Include="StageObject\HowToStage.cpp" />
     <ClCompile Include="StageObject\ObjectDashRing.cpp" />
     <ClCompile Include="StageObject\ObjectGoalGate.cpp" />
     <ClCompile Include="StageObject\ObjectGravityRing.cpp" />
@@ -184,13 +181,10 @@
   <ItemGroup>
     <ClInclude Include="Effect\EffectRing.h" />
     <ClInclude Include="Effect\ParticleBase.h" />
-    <ClInclude Include="Player\HowToPlayer.h" />
     <ClInclude Include="Scene\SceneDemo.h" />
-    <ClInclude Include="Scene\SceneHowTo.h" />
     <ClInclude Include="Scene\ScenePause.h" />
     <ClInclude Include="Scene\SceneRanking.h" />
     <ClInclude Include="Scene\SceneStageSelect.h" />
-    <ClInclude Include="StageObject\HowToStage.h" />
     <ClInclude Include="StageObject\ObjectDashRing.h" />
     <ClInclude Include="StageObject\ObjectGoalGate.h" />
     <ClInclude Include="StageObject\ObjectGravityRing.h" />

@@ -51,8 +51,10 @@ public:
 	// m_isEndを取得
 	virtual bool IsEnd() const { return m_isEnd; }
 
-	// チャレンジモードにセット
+	// モード切り替え
 	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
+	virtual void SetArcadeMode() { m_isArcadeMode = true; }
+
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
 
@@ -115,6 +117,7 @@ private:
 
 	// ゲームモード
 	bool m_isPracticeMode;
+	bool m_isArcadeMode;
 
 	// ポーズ中かどうか
 	bool m_isPause;

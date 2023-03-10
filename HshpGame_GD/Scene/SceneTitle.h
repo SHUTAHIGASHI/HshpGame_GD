@@ -26,6 +26,7 @@ public:
 		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0),
+		m_pMain(nullptr),
 		m_pManager(nullptr),
 		m_pStageSelect(nullptr)
 	{
@@ -36,6 +37,7 @@ public:
 		DeleteSoundMem(m_hLoopBgm);
 	}
 
+	void SetMain(SceneMain* main) { m_pMain = main; }
 	void SetManager(SceneManager* manager) { m_pManager = manager; }
 	void SetStageSelect(SceneStageSelect* stageSelect) { m_pStageSelect = stageSelect; }
 
@@ -92,6 +94,7 @@ private:
 	int m_scroll;
 	int m_scrollAcc;
 
+	SceneMain* m_pMain;
 	SceneManager* m_pManager;
 	SceneStageSelect* m_pStageSelect;
 };
