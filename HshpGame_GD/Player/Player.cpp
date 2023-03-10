@@ -94,7 +94,7 @@ void Player::SetSpawnPos()
     }
     else if (m_pStage->GetStageState() == StageState::secondStage)
     {
-        m_pos.x = Game::kScreenWidth - Game::kBlockSize;
+        m_pos.x = Game::kScreenWidth - (Game::kBlockSize * 2);
         m_pos.y = Game::kStageLowerLimit;
         m_vec.x = -Game::kMoveSpeed;
         m_isMoveRight = false;
