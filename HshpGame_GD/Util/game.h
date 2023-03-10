@@ -97,5 +97,5 @@ namespace Game
 	constexpr int kScreenHeightTripleNum = static_cast<int>(Game::kScreenHeightTriple / Game::kBlockSize);
 
 	// パーティクル用
-	constexpr int kParticleNum = 4096;
+	constexpr int kParticleNum = 1024;
 }

@@ -117,7 +117,7 @@ void SceneMain::Init()
 
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
-{	
+{
 	// 挑戦回数テキストの描画時間リセット
 	m_attemptDrawTime = kAttemptDrawMax;
 	m_attemptDrawNum = 255;
@@ -373,6 +373,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		}
 		else
 		{
+			m_fadeCount = 100;
 			m_startDelay = 180;
 			m_updateFunc = &SceneMain::StartDelayUpdate;	// フェード処理を実行する
 			// 次のステージ状態をセット

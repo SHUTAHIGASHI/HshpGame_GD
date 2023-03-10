@@ -424,7 +424,7 @@ namespace
 	constexpr int kResizeScale = 8;
 
 	// ƒŠƒ“ƒO‚Ì“–‚½‚è”»’è”ÍˆÍ
-	constexpr int kRingResizeScale = 10;
+	constexpr int kRingResizeScale = 5;
 }
 
 Stage::Stage() :
