@@ -19,6 +19,9 @@ namespace
 	constexpr int kKeyDrawH = Game::kScreenHeightHalf + 63;
 	constexpr int kKeyDrawW = 50;
 
+	// テキスト点滅タイミング
+	constexpr int kFlashingTime = 300;
+
 	// オブジェクト名
 	const char* const kNextStageText = "で下へ";
 	const char* const kNextGimmickText = "で次へ";
@@ -32,7 +35,6 @@ SceneHowTo::SceneHowTo() :
 	m_pHStage(std::make_shared<HowToStage>()),
 	m_updateFunc(&SceneHowTo::SceneStartUpdate),
 	m_hPlayer(-1),
-	m_hPlayerWaveBurner(-1),
 	m_hDeathEffect(-1),
 	m_hObjectSpike(-1),
 	m_hPortal(-1),
@@ -111,7 +113,7 @@ void SceneHowTo::OnGameStart()
 	m_gameOverDelay = kGameOverDelay;
 
 	// プレイヤー初期化
-	m_pHPlayer->Init(m_hPlayer, m_hPlayerWaveBurner, m_hDeathEffect, m_hDeathSound, m_isPrac);
+	m_pHPlayer->Init(m_hPlayer, m_hDeathEffect, m_hDeathSound, m_isPrac);
 
 	// ステージ初期化
 	m_pHStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock, m_hJumpPad);
@@ -188,7 +190,7 @@ void SceneHowTo::DrawHowTo()
 		drawTextMessage = kNextGimmickText;
 	}
 
-	if (m_countFrame > 900)
+	if (m_countFrame > kFlashingTime)
 	{
 		if ((m_countFrame / 10) % 4 != 0)
 		{

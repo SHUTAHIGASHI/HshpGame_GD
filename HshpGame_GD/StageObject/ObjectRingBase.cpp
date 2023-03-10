@@ -34,3 +34,17 @@ void ObjectRingBase::Draw(int scroll, int color)
 	DrawCircle(static_cast<int>(GetCenterX()) - scroll , static_cast<int>(GetCenterY()), static_cast<int>(circleSize), color, true);
 	DrawCircle(static_cast<int>(GetCenterX()) - scroll, static_cast<int>(GetCenterY()), static_cast<int>(circleSize) + 5, 0xffffff, false);
 }
+
+bool ObjectRingBase::CollisionCheck(Vec2 player, int resizeScale)
+{
+	// オブジェクトの当たり判定
+	if (GetRight() + resizeScale > player.x &&
+		(player.x + Game::kBlockSize) > GetLeft() - resizeScale &&
+		GetBottom() + resizeScale > player.y &&
+		(player.y + Game::kBlockSize) > GetTop() - resizeScale)
+	{
+		return true;
+	}
+
+	return false;
+}

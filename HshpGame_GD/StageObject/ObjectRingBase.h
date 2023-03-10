@@ -16,6 +16,8 @@ public:
 
     virtual void Draw(int scroll, int color);
 
+    virtual bool CollisionCheck(Vec2 player, int resizeScale);
+
 private:
     float circleSize;
     float sizeAcc;

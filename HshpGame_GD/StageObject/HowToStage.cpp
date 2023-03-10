@@ -151,6 +151,9 @@ namespace
 
 	// サイズ調整用定数
 	constexpr int kResizeScale = 8;
+
+	// リングの当たり判定範囲
+	constexpr int kRingResizeScale = 10;
 }
 
 HowToStage::HowToStage() :
@@ -390,7 +393,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, ObjectType& object)
 	// ジャンプリングの当たり判定
 	for (int i = 0; i < m_ObjectJumpRing.size(); i++)
 	{
-		if (m_ObjectJumpRing[i].CollisionCheck(m_pHPlayer->GetPos()))
+		if (m_ObjectJumpRing[i].CollisionCheck(m_pHPlayer->GetPos(), kRingResizeScale))
 		{
 			object = ObjectType::JumpRing;
 			return true;
@@ -417,7 +420,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, ObjectType& object)
 	// グラビティリングの当たり判定
 	for (int i = 0; i < m_ObjectGravityRing.size(); i++)
 	{
-		if (m_ObjectGravityRing[i].CollisionCheck(m_pHPlayer->GetPos()))
+		if (m_ObjectGravityRing[i].CollisionCheck(m_pHPlayer->GetPos(), kRingResizeScale))
 		{
 			object = ObjectType::GravityRing;
 			return true;
@@ -426,7 +429,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, ObjectType& object)
 	// ダッシュリングの当たり判定
 	for (int i = 0; i < m_ObjectDashRing.size(); i++)
 	{
-		if (m_ObjectDashRing[i].CollisionCheck(m_pHPlayer->GetPos()))
+		if (m_ObjectDashRing[i].CollisionCheck(m_pHPlayer->GetPos(), kRingResizeScale))
 		{
 			object = ObjectType::DashRing;
 			return true;
@@ -435,7 +438,7 @@ bool HowToStage::CollisionCheck(const Vec2 playerPos, ObjectType& object)
 	// リバースリングの当たり判定
 	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
 	{
-		if (m_ObjectReverseRing[i].CollisionCheck(m_pHPlayer->GetPos()))
+		if (m_ObjectReverseRing[i].CollisionCheck(m_pHPlayer->GetPos(), kRingResizeScale))
 		{
 			object = ObjectType::ReverseRing;
 			return true;

@@ -32,7 +32,7 @@ namespace
     constexpr float kWaveSpeed = 12.0f;
 }
 
-void HowToPlayer::Init(int playerHandle, int waveBurner, int playerDeathEffect, int hDeathSound, bool isPrac)
+void HowToPlayer::Init(int playerHandle, int playerDeathEffect, int hDeathSound, bool isPrac)
 {
     m_pEffectRing = std::make_shared<EffectRing>();
     
@@ -42,7 +42,6 @@ void HowToPlayer::Init(int playerHandle, int waveBurner, int playerDeathEffect, 
     m_isDashRingEnabled = false;
 
     m_hPlayer = playerHandle;
-    m_hWaveBurner = waveBurner;
     m_hDeathEffect = playerDeathEffect;
     m_deathCountFrame = 0;
     GetGraphSizeF(m_hDeathEffect, &m_effectWidth, &m_effectHeight);
