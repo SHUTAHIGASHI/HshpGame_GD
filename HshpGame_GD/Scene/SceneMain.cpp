@@ -45,6 +45,7 @@ SceneMain::SceneMain() :
 	m_isPracticeMode(false),
 	m_isArcadeMode(false),
 	m_isPause(false),
+	m_isPauseEnd(false),
 	m_isEnd(false),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr),
@@ -63,6 +64,7 @@ void SceneMain::Init()
 	// シーン終了変数を初期化
 	m_isEnd = false;	// ゲーム終了フラグ
 	m_isPause = false;
+	m_isPauseEnd = false;
 	m_fadeCount = 255;	// フェード処理の数値
 	m_updateFunc = &SceneMain::SceneStartUpdate;	// フェード処理を実行する
 
@@ -173,12 +175,19 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 {		
 	if (m_isPause)
 	{
-		m_pPause->Update(input, nextScene, m_isEnd);
+		m_pPause->Update(input, nextScene, m_isPauseEnd);
 		if (input.IsTriggered(InputType::pause))
 		{
 			m_isPause = false;
 			PlaySoundMem(m_hPlayBgm, DX_PLAYTYPE_BACK, false);
 		}
+		
+		if (m_isPauseEnd)
+		{
+			m_isPause = false;
+			m_updateFunc = &SceneMain::SceneEndUpdate;
+		}
+
 		return;
 	}
 
@@ -456,5 +465,16 @@ void SceneMain::SceneStartUpdate(const InputState& input, NextSceneState& nextSc
 		m_fadeCount = 150;
 		// 通常の更新処理をセット
 		m_updateFunc = &SceneMain::StartDelayUpdate;
+	}
+}
+
+void SceneMain::SceneEndUpdate(const InputState& input, NextSceneState& nextScene)
+{
+	m_fadeCount += 5;
+	ChangeVolumeSoundMem(255 - m_fadeCount, m_hPlayBgm);
+
+	if (m_fadeCount > 255)
+	{
+		m_isEnd = true;
 	}
 }

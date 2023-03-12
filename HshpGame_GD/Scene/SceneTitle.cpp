@@ -53,6 +53,7 @@ void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
 
 	m_hPadImg = LoadGraph("imagedata/PadImg.png");
 	m_hTitleImg = LoadGraph("imagedata/GameTitle.png");
+	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
 
 	m_scroll = m_pStageSelect->GetScroll();
 
@@ -71,6 +72,8 @@ void SceneTitle::End()
 
 	DeleteGraph(m_hPadImg);
 	DeleteGraph(m_hTitleImg);
+
+	DeleteSoundMem(m_hSelectSound);
 }
 
 // 更新処理
@@ -198,23 +201,22 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
+		m_updateFunc = &SceneTitle::SceneEndUpdate;
+		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
+
 		switch (m_selectPos)
 		{
 		case 0:
-			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextGameMain;
 			m_pMain->SetArcadeMode();
 			return;
 		case 1:
-			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextGameMain;
 			return;
 		case 2:
-			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextStageSelect;
 			return;
 		case 3:
-			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextRanking;
 			return;
 		case 4:

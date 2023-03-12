@@ -12,6 +12,7 @@ class SceneClear : public SceneBase
 {
 public:
 	SceneClear():
+		m_hSelectSound(-1),
 		m_hFont(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
@@ -81,6 +82,9 @@ private:
 	// ステージ全クリ時の描画処理
 	void AllClearDraw();
 private:
+	// 音データ
+	int m_hSelectSound;
+
 	// フォントのハンドル
 	int m_hFont;
 

@@ -38,6 +38,7 @@ void SceneStageSelect::Init(int fontS, int fontL, bool& isPrac)
 	// ゲームタイトル
 	m_hBg = LoadGraph("imagedata/Bg.png");
 	m_hPadImg = LoadGraph("imagedata/PadImg.png");
+	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
 
 	// シーン終了に false を代入
 	m_isEnd = false;
@@ -64,6 +65,8 @@ void SceneStageSelect::End()
 {
 	if(m_pManager->GetNextScene() != NextSceneState::nextTitle)m_pTitle->StopMusic();
 	DeleteGraph(m_hBg);
+	DeleteGraph(m_hPadImg);
+	DeleteSoundMem(m_hSelectSound);
 }
 
 // 更新処理
@@ -190,6 +193,7 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 	if (input.IsTriggered(InputType::enter))
 	{
 		m_updateFunc = &SceneStageSelect::SceneEndUpdate;
+		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
 
 		switch (m_selectPos)
 		{

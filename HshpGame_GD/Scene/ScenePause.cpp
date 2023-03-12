@@ -39,6 +39,8 @@ void ScenePause::Init()
 	m_updateFunc = &ScenePause::NormalUpdate;
 	m_drawFunc = &ScenePause::NormalDraw;
 
+	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
+
 	m_textScale = kTextSizeMin;
 	m_textScaleAcc = 1;
 	m_selectPos = 0;
@@ -49,6 +51,7 @@ void ScenePause::Init()
 // 終了処理
 void ScenePause::End()
 {
+	DeleteSoundMem(m_hSelectSound);
 }
 
 // 更新
@@ -62,7 +65,7 @@ void ScenePause::Draw()
 	(this->*m_drawFunc)();
 }
 
-void ScenePause::NormalUpdate(const InputState& input, NextSceneState& nextScene, bool& isEnd)
+void ScenePause::NormalUpdate(const InputState& input, NextSceneState& nextScene, bool& isPEnd)
 {
 	if (m_textScale > kTextSizeMax) m_textScaleAcc *= -1;
 	else if (m_textScale < kTextSizeMin) m_textScaleAcc *= -1;
@@ -71,17 +74,19 @@ void ScenePause::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
+		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
+
 		switch (m_selectPos)
 		{
 		case 0:
 			m_pMain->OnRetry();
 			return;
 		case 1:
-			isEnd = true;
+			isPEnd = true;
 			nextScene = NextSceneState::nextStageSelect;
 			return;
 		case 2:
-			isEnd = true;
+			isPEnd = true;
 			nextScene = NextSceneState::nextTitle;
 			return;
 		default:

@@ -9,6 +9,7 @@ class ScenePause : public SceneBase
 {
 public:
 	ScenePause() :
+		m_hSelectSound(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
 		m_textScale(0),
@@ -27,7 +28,7 @@ public:
 	// 終了処理
 	void End();
 	// 更新
-	virtual void Update(const InputState& input, NextSceneState& nextScene, bool &isEnd);
+	virtual void Update(const InputState& input, NextSceneState& nextScene, bool &isPEnd);
 	// 描画
 	virtual void Draw();
 
@@ -44,6 +45,9 @@ private:
 
 	void NormalDraw();
 private:
+	// 音データ
+	int m_hSelectSound;
+
 	// メニュー選択
 	int m_selectPos;
 	int m_selectNamePos;

@@ -80,6 +80,8 @@ private:
 	// シーンスタート時の更新処理
 	void SceneStartUpdate(const InputState& input, NextSceneState& nextScene);
 
+	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene);
+
 private:
 	// キャラクターのグラフィックハンドル
 	int m_hPlayer;
@@ -121,6 +123,7 @@ private:
 
 	// ポーズ中かどうか
 	bool m_isPause;
+	bool m_isPauseEnd;
 	// シーン終了
 	bool m_isEnd;
 

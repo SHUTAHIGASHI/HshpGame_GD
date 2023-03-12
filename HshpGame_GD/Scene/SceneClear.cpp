@@ -57,6 +57,8 @@ void SceneClear::Init(int font)
 		m_drawFunc = &SceneClear::NormalDraw;
 	}
 
+	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
+
 	m_hFont = font;
 
 	// ’x‰„ŠÔ‰Šú‰»
@@ -78,6 +80,7 @@ void SceneClear::Init(int font)
 // I—¹ˆ—
 void SceneClear::End()
 {
+	DeleteSoundMem(m_hSelectSound);
 }
 
 // XV
@@ -222,6 +225,7 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	if (input.IsTriggered(InputType::enter))
 	{
 		m_updateFunc = &SceneClear::SceneEndUpdate;
+		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
 
 		switch (m_selectPos)
 		{

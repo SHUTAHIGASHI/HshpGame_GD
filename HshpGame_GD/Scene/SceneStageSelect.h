@@ -18,6 +18,7 @@ public:
 		m_isEnd(false),
 		m_hBg(-1),
 		m_hPadImg(-1),
+		m_hSelectSound(-1),
 		m_hFontS(-1),
 		m_hFontL(-1),
 		m_textScroll(0),
@@ -72,6 +73,8 @@ private:
 	// 画像データ
 	int m_hBg;
 	int m_hPadImg;
+	// 音楽データ
+	int m_hSelectSound;
 	// フォントデータ
 	int m_hFontS;
 	int m_hFontL;

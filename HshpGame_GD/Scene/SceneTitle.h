@@ -23,6 +23,7 @@ public:
 		m_hFontS(-1),
 		m_hFontL(-1),
 		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.wav")),
+		m_hSelectSound(-1),
 		m_textScroll(0),
 		m_scroll(0),
 		m_scrollAcc(0),
@@ -88,6 +89,7 @@ private:
 	int m_hFontL;
 	// 音楽データ
 	int m_hLoopBgm;
+	int m_hSelectSound;
 
 	int m_textScroll;
 
