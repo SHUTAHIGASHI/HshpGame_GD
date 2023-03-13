@@ -18,7 +18,7 @@ namespace
 
 	// テキスト
 	const char* const kGameClear = "Game Clear";
-	const char* const kRankin = "RankIn";
+	const char* const kStageClear = "StageClear";
 
 	// メニューメッセージ
 	const char* const kNextText = "NextStage";
@@ -119,7 +119,7 @@ void SceneClear::ParticleUpdate()
 
 			float randSin = static_cast<float>(GetRand(360)) / 360.0f;
 			//randSin *= DX_TWO_PI_F;
-			float randSpeed = static_cast<float>(GetRand(60)) / 10.0f + 1.0f;
+			float randSpeed = static_cast<float>(GetRand(30)) / 10.0f + 1.0f;
 
 			Vec2 pos;
 			pos.x = static_cast<float>(GetRand(Game::kScreenWidth));
@@ -190,19 +190,23 @@ void SceneClear::Draw()
 		count++;
 	}
 
+	std::string clearText;
+	if (m_pMain->GetStageState() == StageState::tenthStage) clearText = kGameClear;
+	else clearText = kStageClear;
+
 	if (m_textFadeNum > 0)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_textFadeNum);
 		SetFontSize(m_shadowScale);
-		DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
+		DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(clearText.c_str(), 10) / 2, Game::kScreenHeight / 4, clearText.c_str(), 0xe9e9e9);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	// ゲームクリアテキスト
 	SetFontSize(m_textScale + 1);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xe9e9e9);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(clearText.c_str(), 10) / 2, Game::kScreenHeight / 4, clearText.c_str(), 0xe9e9e9);
 	SetFontSize(m_textScale);
-	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(kGameClear, 10) / 2, Game::kScreenHeight / 4, kGameClear, 0xffd733);
+	DrawString((Game::kScreenWidth / 2) - GetDrawStringWidth(clearText.c_str(), 10) / 2, Game::kScreenHeight / 4, clearText.c_str(), 0xffd733);
 	SetFontSize(20);
 
 	(this->*m_drawFunc)();
