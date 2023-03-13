@@ -21,7 +21,7 @@ public:
 	void SetRanking(SceneRanking* rank) { m_pRanking = rank; }
 
 	// 初期化
-	void Init();
+	void Init(int font);
 
 	void OnGameStart();
 
@@ -42,6 +42,9 @@ public:
 	void Draw();
 	// ゲーム中の情報描画
 	void DrawGameInfo();
+
+	// 操作説明描画
+	void DrawHowTo(int X, int Y);
 	// ゲームスタート時のカウントダウン描画
 	void OnStartCount();
 
@@ -91,16 +94,24 @@ private:
 	int m_hPortal;
 	int m_hBlock;
 	int m_hJumpPad;
+	int m_hPadImg;
 	// 背景のグラフィック
 	int m_hBg;
-
+	// フォントデータ
+	int m_hFont;
 	// 効果音
 	int m_hDeathSound;
 	// 音楽用
 	int m_hPlayBgm;
 
+	// 毎フレームカウント
+	int m_countFrame;
+
 	// フェード処理用カウント
 	int m_fadeCount;
+
+	// パッドカウント
+	int m_padCount;
 
 	// ゲームの制限時間
 	int m_startDelay;
@@ -120,6 +131,7 @@ private:
 	// ゲームモード
 	bool m_isPracticeMode;
 	bool m_isArcadeMode;
+	bool m_isTutorial;
 
 	// ポーズ中かどうか
 	bool m_isPause;

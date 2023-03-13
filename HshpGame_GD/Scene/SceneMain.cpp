@@ -31,10 +31,14 @@ SceneMain::SceneMain() :
 	m_hPortal(-1),
 	m_hBlock(-1),
 	m_hJumpPad(-1),
+	m_hPadImg(-1),
 	m_hBg(-1),
+	m_hFont(-1),
 	m_hDeathSound(-1),
 	m_hPlayBgm(-1),
+	m_countFrame(0),
 	m_fadeCount(0),
+	m_padCount(0),
 	m_startDelay(0),
 	m_startTextSize(0),
 	m_textTimer(0),
@@ -44,6 +48,7 @@ SceneMain::SceneMain() :
 	m_attemptDrawNum(0),
 	m_isPracticeMode(false),
 	m_isArcadeMode(false),
+	m_isTutorial(false),
 	m_isPause(false),
 	m_isPauseEnd(false),
 	m_isEnd(false),
@@ -59,7 +64,7 @@ SceneMain::~SceneMain()
 }
 
 // 初期化
-void SceneMain::Init()
+void SceneMain::Init(int font)
 {
 	// シーン終了変数を初期化
 	m_isEnd = false;	// ゲーム終了フラグ
@@ -84,7 +89,11 @@ void SceneMain::Init()
 	m_hPortal = LoadGraph(Game::kPortalImg);	// ゴールポータル
 	m_hBlock = LoadGraph(Game::kBlockImg);	// ブロック
 	m_hJumpPad = LoadGraph(Game::kJumpPadImg);	// ジャンプパッド
+	m_hPadImg = LoadGraph(Game::kPadImg); // パッド画像
 	m_hBg = LoadGraph(Game::kBgImg);	// 背景画像
+
+	// フォントデータの代入
+	m_hFont = font;
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
@@ -113,6 +122,8 @@ void SceneMain::Init()
 	// 挑戦回数のカウント初期化
 	m_countAttempt = 1;
 
+	m_padCount = 0;
+
 	// ゲームスタート(再スタート)時の初期化処理
 	OnGameStart();
 }
@@ -120,6 +131,10 @@ void SceneMain::Init()
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
 {
+	if (m_pStage->GetStageState() == StageState::tutrialCube || m_pStage->GetStageState() == StageState::tutrialJump
+		|| m_pStage->GetStageState() == StageState::tutrialGravity || m_pStage->GetStageState() == StageState::tutrialDash
+		|| m_pStage->GetStageState() == StageState::tutrialRev) m_isTutorial = true;
+
 	// 挑戦回数テキストの描画時間リセット
 	m_attemptDrawTime = kAttemptDrawMax;
 	m_attemptDrawNum = 255;
@@ -191,6 +206,9 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 		return;
 	}
 
+	m_countFrame++;
+	if (m_countFrame > 1000) m_countFrame = 0;
+
 	(this->*m_updateFunc)(input, nextScene);
 }
 
@@ -243,7 +261,10 @@ void SceneMain::Draw()
 	// プレイヤーの描画
 	m_pPlayer->Draw();
 
-	if(m_startDelay <= 0) DrawGameInfo();
+	if (m_startDelay <= 0)
+	{
+		DrawGameInfo();
+	}
 
 	if (m_isPause)
 	{
@@ -284,8 +305,33 @@ void SceneMain::DrawGameInfo()
 		DrawBox(5, drawY, drawX + 190, drawY + 25, 0x000000, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		// 現在のモードの描画
-		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %d", static_cast<int>(m_pStage->GetStageState()) + 1);
+		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1);
 	}
+
+	if (m_isTutorial)
+	{
+		DrawHowTo(100, 100);
+	}
+}
+
+void SceneMain::DrawHowTo(int X, int Y)
+{
+	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;
+	int imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+
+	int drawPosX, drawPosY;
+	drawPosX = X, drawPosY = Y;
+
+	DrawStringToHandle(drawPosX, drawPosY, "ボタンでジャンプ！", 0xffffff, m_hFont);
+
+	imgX = Game::kPadChipSize * m_padCount;
+	imgY = Game::kPadChipSize * 12;
+	DrawRectExtendGraph(drawPosX - 50, drawPosY,
+		drawPosX, drawPosY + 50,
+		imgX, imgY, imgW, imgH, m_hPadImg, true);
+
+	if(m_countFrame%5 == 0)m_padCount++;
+	if (m_padCount > 5) m_padCount = 1;
 }
 
 // スタート時のカウントダウン描画
@@ -353,6 +399,8 @@ void SceneMain::OnStartCount()
 		}
 		m_textTimer++;
 	}
+
+	if(m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 190, Game::kScreenHeightHalf - 100);
 }
 
 // ステージクリア時の処理
