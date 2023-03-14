@@ -278,6 +278,7 @@ void SceneMain::Draw()
 	if (m_isPause)
 	{
 		m_pPause->Draw();
+		return;
 	}
 	
 	// フェード処理用の処理

@@ -355,7 +355,7 @@ void Player::Draw()
         drawPosX = GetCenterX() - m_pStage->GetScroll(), drawPosY = GetCenterY();
         imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
-        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
+        DrawRotaGraphF(drawPosX, drawPosY, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
 
     m_pEffectRing->Draw(playerDrawPos);
