@@ -48,7 +48,11 @@ void SceneRanking::Init(int font)
 void SceneRanking::End()
 {
 	SaveRankingData();
+
 	DeleteGraph(m_hBg);
+	DeleteGraph(m_hKeyimg);
+	
+	DeleteSoundMem(m_hBgm);
 }
 
 // XVˆ—

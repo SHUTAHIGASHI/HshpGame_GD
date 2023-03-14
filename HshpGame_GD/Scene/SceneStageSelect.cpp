@@ -64,6 +64,7 @@ void SceneStageSelect::Init(int fontS, int fontL, bool& isPrac)
 void SceneStageSelect::End()
 {
 	if(m_pManager->GetNextScene() != NextSceneState::nextTitle)m_pTitle->StopMusic();
+
 	DeleteGraph(m_hBg);
 	DeleteGraph(m_hPadImg);
 	DeleteSoundMem(m_hSelectSound);

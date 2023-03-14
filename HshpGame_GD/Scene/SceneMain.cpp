@@ -179,6 +179,8 @@ void SceneMain::End()
 	DeleteGraph(m_hObjectSpike);	// スパイク画像
 	DeleteGraph(m_hPortal);	// ゴールポータル画像
 	DeleteGraph(m_hBlock);	// ブロック
+	DeleteGraph(m_hJumpPad);	// ジャンプパッド
+	DeleteGraph(m_hPadImg);	// ゲームパッド
 	DeleteGraph(m_hBg);	// 背景画像
 
 	// 音データの削除

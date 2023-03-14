@@ -69,7 +69,7 @@ namespace Game
 	const char* const kArcadeBgm = "soundData/Electroman.mp3";
 	const char* const kPracBgm = "soundData/pracmode.wav";
 	const char* const kTutorialBgm = "soundData/pracmode.ogg";
-	const char* const kChallengeBgm = "soundData/challeBGM.mp3";// ElectromanAdventuresV2.mp3";
+	const char* const kChallengeBgm = "soundData/challeBGM.mp3";
 
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;

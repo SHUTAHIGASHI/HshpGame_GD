@@ -65,7 +65,6 @@ void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
     if (m_pStage->GetStageState() == StageState::fourthStage || m_pStage->GetStageState() == StageState::fifthStage
         || m_pStage->GetStageState() == StageState::seventhStage || m_pStage->GetStageState() == StageState::tenthStage)
     {
-        //m_vec.x = 0.0f;
         m_isScroll = true;
     }
 

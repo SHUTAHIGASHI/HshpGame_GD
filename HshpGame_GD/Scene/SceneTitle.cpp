@@ -51,6 +51,7 @@ void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
 	m_scrollAcc = 7;
 	m_fadeCount = 0;
 
+	m_hBg = LoadGraph("imagedata/Bg.png");
 	m_hPadImg = LoadGraph("imagedata/PadImg.png");
 	m_hTitleImg = LoadGraph("imagedata/GameTitle.png");
 	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
@@ -70,6 +71,7 @@ void SceneTitle::End()
 {
 	StopMusic();
 
+	DeleteGraph(m_hBg);
 	DeleteGraph(m_hPadImg);
 	DeleteGraph(m_hTitleImg);
 

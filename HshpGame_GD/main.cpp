@@ -68,11 +68,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 現在のシーンの描画
 		scene.Draw();
 
-#ifdef _DEBUG
-		auto drawcall = GetDrawCallCount();
-		//DrawFormatStringToHandle(10, 100, 0xffffff, Misaki24, "DC = %d", drawcall);		
-#endif
-
 		// 裏画面を表画面と入れ替える
 		ScreenFlip();
 			
@@ -88,6 +83,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 画像のアンロード
 	scene.End();
+
+	DeleteFontToHandle(Misaki24);
+	DeleteFontToHandle(Misaki48);
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

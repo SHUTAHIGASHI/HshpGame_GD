@@ -17,7 +17,7 @@ public:
 		m_countFrame(0),
 		m_fadeCount(0),
 		m_isEnd(false),
-		m_hBg(LoadGraph("imagedata/Bg.png")),
+		m_hBg(-1),
 		m_hPadImg(-1),
 		m_hTitleImg(-1),
 		m_hFontS(-1),
@@ -34,7 +34,6 @@ public:
 	}
 	virtual ~SceneTitle() 
 	{
-		DeleteGraph(m_hBg);
 		DeleteSoundMem(m_hLoopBgm);
 	}
 
