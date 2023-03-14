@@ -416,7 +416,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 		if (m_pStage->GetStageState() == StageState::tenthStage || m_isPracticeMode)
 		{
 			// チャレンジモードの場合
-			if (!m_isPracticeMode)
+			if (m_isArcadeMode)
 			{
 				// ランキングデータ読み込み
 				m_pRanking->LoadRankingData();
