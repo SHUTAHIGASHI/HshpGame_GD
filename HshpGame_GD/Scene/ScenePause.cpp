@@ -89,6 +89,7 @@ void ScenePause::DrawPadText()
 
 		m_textTimer++;
 	}
+	SetFontSize(20);
 }
 
 void ScenePause::NormalUpdate(const InputState& input, NextSceneState& nextScene, bool& isPEnd)
