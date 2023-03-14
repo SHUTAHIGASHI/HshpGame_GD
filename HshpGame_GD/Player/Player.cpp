@@ -15,7 +15,7 @@ namespace
     constexpr float kPlayerDrawPosX = 16.0f;
     constexpr float kPlayerDrawPosY = 34.0f;
 
-    constexpr float kPlayerInitPos = 0 - Game::kBlockSize;
+    constexpr float kPlayerInitPos = -Game::kBlockSize;
 
     // Šî–{‚ÌƒWƒƒƒ“ƒv—Í
     constexpr float kJumpAcc = -14.0f;
@@ -353,7 +353,7 @@ void Player::Draw()
         int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 
         drawPosX = GetCenterX() - m_pStage->GetScroll(), drawPosY = GetCenterY();
-        imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+        imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);
     }
@@ -371,7 +371,7 @@ void Player::DrawMoveEffect()
     {
         drawPosX = (m_lastPos[i].x + (Game::kBlockSize / 2)) - m_pStage->GetScroll();
         drawPosY = m_lastPos[i].y + (Game::kBlockSize / 2);
-        imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+        imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
         DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
@@ -389,7 +389,7 @@ void Player::DrawSpawnPos()
     int imgX = 0, imgY = 0, imgW = 0, imgH = 0;
 
     drawPosX = GetCenterX(), drawPosY = GetCenterY();
-    imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+    imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
     SetDrawBlendMode(DX_BLENDMODE_ADD, m_brightness);
     DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_angle, m_hPlayer, true, !m_isMoveRight);

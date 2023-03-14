@@ -36,7 +36,7 @@ void ObjectJumpPad::Draw(int scroll)
 
 	int imgX, imgY, imgW, imgH;
 	imgX = 50 * static_cast<int>(m_countFrame), imgY = 0;
-	imgW = Game::kBlockSize, imgH = Game::kBlockSize;
+	imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
 	DrawRectExtendGraphF(draw.x, draw.y, draw.x + Game::kBlockSize, draw.y + Game::kBlockSize, imgX, imgY, imgW, imgH, m_hJumpPad, true);
 }

@@ -39,8 +39,8 @@ void ObjectGoalGate::Draw(int scroll)
 	m_imgX = static_cast<int>(m_drawFrame * Game::kBlockSize);
 	m_imgY = 0;
 	int imgW = 0, imgH = 0;
-	imgW = Game::kBlockSize;
-	imgH = Game::kBlockSize;
+	imgW = static_cast<int>(Game::kBlockSize);
+	imgH = static_cast<int>(Game::kBlockSize);
 
 	DrawRectExtendGraphF(draw.x, draw.y,
 		draw.x + Game::kBlockSize, draw.y + (Game::kBlockSize * 3), 
