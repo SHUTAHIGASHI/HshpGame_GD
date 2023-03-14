@@ -131,6 +131,8 @@ void SceneMain::Init(int font)
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
 {
+	m_isTutorial = false;
+
 	if (m_pStage->GetStageState() == StageState::tutrialCube || m_pStage->GetStageState() == StageState::tutrialJump
 		|| m_pStage->GetStageState() == StageState::tutrialGravity || m_pStage->GetStageState() == StageState::tutrialDash
 		|| m_pStage->GetStageState() == StageState::tutrialRev) m_isTutorial = true;
