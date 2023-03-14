@@ -131,11 +131,10 @@ void SceneMain::Init(int font)
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
 {
-	m_isTutorial = false;
-
 	if (m_pStage->GetStageState() == StageState::tutrialCube || m_pStage->GetStageState() == StageState::tutrialJump
 		|| m_pStage->GetStageState() == StageState::tutrialGravity || m_pStage->GetStageState() == StageState::tutrialDash
 		|| m_pStage->GetStageState() == StageState::tutrialRev) m_isTutorial = true;
+	else m_isTutorial = false;
 
 	// 挑戦回数テキストの描画時間リセット
 	m_attemptDrawTime = kAttemptDrawMax;
@@ -332,7 +331,7 @@ void SceneMain::DrawHowTo(int X, int Y)
 		drawPosX, drawPosY + 50,
 		imgX, imgY, imgW, imgH, m_hPadImg, true);
 
-	if(m_countFrame%5 == 0)m_padCount++;
+	if(m_countFrame%6 == 0)m_padCount++;
 	if (m_padCount > 5) m_padCount = 1;
 }
 
