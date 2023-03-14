@@ -212,6 +212,12 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 	m_countFrame++;
 	if (m_countFrame > 1000) m_countFrame = 0;
 
+	if (m_isTutorial)
+	{
+		if (m_countFrame % 6 == 0)m_padCount++;
+		if (m_padCount > 5) m_padCount = 1;
+	}
+
 	(this->*m_updateFunc)(input, nextScene);
 }
 
@@ -261,13 +267,13 @@ void SceneMain::Draw()
 	// ゲームクリアしている場合、処理終了
 	if (m_pPlayer->IsStageClear()) return;
 
-	// プレイヤーの描画
-	m_pPlayer->Draw();
-
 	if (m_startDelay <= 0)
 	{
 		DrawGameInfo();
 	}
+
+	// プレイヤーの描画
+	m_pPlayer->Draw();
 
 	if (m_isPause)
 	{
@@ -288,6 +294,11 @@ void SceneMain::Draw()
 
 void SceneMain::DrawGameInfo()
 {
+	if (m_isTutorial)
+	{
+		DrawHowTo(100, 100);
+	}
+
 	int drawX, drawY;
 	if (m_attemptDrawTime > 0)
 	{
@@ -310,11 +321,6 @@ void SceneMain::DrawGameInfo()
 		// 現在のモードの描画
 		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1);
 	}
-
-	if (m_isTutorial)
-	{
-		DrawHowTo(100, 100);
-	}
 }
 
 void SceneMain::DrawHowTo(int X, int Y)
@@ -332,9 +338,6 @@ void SceneMain::DrawHowTo(int X, int Y)
 	DrawRectExtendGraph(drawPosX - 50, drawPosY,
 		drawPosX, drawPosY + 50,
 		imgX, imgY, imgW, imgH, m_hPadImg, true);
-
-	if(m_countFrame%6 == 0)m_padCount++;
-	if (m_padCount > 5) m_padCount = 1;
 }
 
 // スタート時のカウントダウン描画
@@ -409,38 +412,34 @@ void SceneMain::OnStartCount()
 // ステージクリア時の処理
 void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
-	// ステージクリアのフラグが true かどうか
-	if (m_pPlayer->IsStageClear())
+	// ステージ１０ or 練習モード の場合の処理
+	if (m_pStage->GetStageState() == StageState::tenthStage || m_isPracticeMode)
 	{
-		// ステージ１０ or 練習モード の場合の処理
-		if (m_pStage->GetStageState() == StageState::tenthStage || m_isPracticeMode)
+		// チャレンジモードの場合
+		if (m_isArcadeMode)
 		{
-			// チャレンジモードの場合
-			if (m_isArcadeMode)
-			{
-				// ランキングデータ読み込み
-				m_pRanking->LoadRankingData();
-				// ランキングデータの更新
-				m_pRanking->SetRanking(m_countAttempt, m_pStage->GetStageState());
-			}
+			// ランキングデータ読み込み
+			m_pRanking->LoadRankingData();
+			// ランキングデータの更新
+			m_pRanking->SetRanking(m_countAttempt, m_pStage->GetStageState());
+		}
 
-			// 挑戦回数を初期化
-			m_countAttempt = 1;
-			// 次のシーンを設定
-			nextScene = NextSceneState::nextClear;
-			// シーン終了フラグ
-			m_isEnd = true;
-		}
-		else
-		{
-			m_fadeCount = 100;
-			m_startDelay = 180;
-			m_updateFunc = &SceneMain::StartDelayUpdate;	// フェード処理を実行する
-			// 次のステージ状態をセット
-			m_pStage->SetNextStageState();
-			// ゲームスタート時の処理へ
-			OnGameStart();
-		}
+		// 挑戦回数を初期化
+		m_countAttempt = 1;
+		// 次のシーンを設定
+		nextScene = NextSceneState::nextClear;
+		// シーン終了フラグ
+		m_isEnd = true;
+	}
+	else
+	{
+		m_fadeCount = 100;
+		m_startDelay = 180;
+		m_updateFunc = &SceneMain::StartDelayUpdate;	// フェード処理を実行する
+		// 次のステージ状態をセット
+		m_pStage->SetNextStageState();
+		// ゲームスタート時の処理へ
+		OnGameStart();
 	}
 }
 
@@ -478,8 +477,12 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	// ステージの更新処理
 	m_pStage->Update();
 
-	// ステージクリア時の処理
-	OnStageClear(nextScene);
+	// ステージクリアのフラグが true かどうか
+	if (m_pPlayer->IsStageClear())
+	{
+		// ステージクリア時の処理
+		OnStageClear(nextScene);
+	}
 
 	// プレイヤーの死亡判定が true の場合
 	if (m_pPlayer->IsDead())
