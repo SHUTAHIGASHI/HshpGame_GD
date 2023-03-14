@@ -164,9 +164,6 @@ void Player::ChangeUpdateType()
 
 void Player::Update(const InputState& input)
 {
-#ifdef _DEBUG
-    if (input.IsTriggered(InputType::right)) m_isStageClear = true;
-#endif
     if (m_isDead) return;
 
     m_pEffectRing->Update();

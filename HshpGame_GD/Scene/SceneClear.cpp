@@ -57,7 +57,7 @@ void SceneClear::Init(int font)
 		m_drawFunc = &SceneClear::NormalDraw;
 	}
 
-	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
+	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
 	m_hFont = font;
 

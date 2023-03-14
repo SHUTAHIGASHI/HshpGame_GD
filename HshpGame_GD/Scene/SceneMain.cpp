@@ -11,7 +11,7 @@
 namespace
 {
 	// スタート時の遅延時間
-	constexpr int kStartDelay = 300;
+	constexpr int kStartDelay = 240;
 	// スタートカウントダウンの文字サイズ
 	constexpr int kStartTextSizeMax = 100;
 	// 死亡時の遅延
@@ -35,6 +35,7 @@ SceneMain::SceneMain() :
 	m_hBg(-1),
 	m_hFont(-1),
 	m_hDeathSound(-1),
+	m_hCountDown(-1),
 	m_hPlayBgm(-1),
 	m_countFrame(0),
 	m_fadeCount(0),
@@ -52,6 +53,7 @@ SceneMain::SceneMain() :
 	m_isPause(false),
 	m_isPauseEnd(false),
 	m_isEnd(false),
+	m_isOnlyOnceSE(false),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr),
 	m_pClear(nullptr),
@@ -70,6 +72,7 @@ void SceneMain::Init(int font)
 	m_isEnd = false;	// ゲーム終了フラグ
 	m_isPause = false;
 	m_isPauseEnd = false;
+	m_isOnlyOnceSE = false;
 	m_fadeCount = 255;	// フェード処理の数値
 	m_updateFunc = &SceneMain::SceneStartUpdate;	// フェード処理を実行する
 
@@ -97,6 +100,7 @@ void SceneMain::Init(int font)
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
+	m_hCountDown = LoadSoundMem("soundData/countDown.wav");
 
 	// BGMのセット
 	if (m_isArcadeMode) m_hPlayBgm = LoadSoundMem(Game::kArcadeBgm); // 練習モードの場合、練習用BGMをセット
@@ -185,6 +189,7 @@ void SceneMain::End()
 
 	// 音データの削除
 	DeleteSoundMem(m_hDeathSound);	// 死亡サウンド
+	DeleteSoundMem(m_hCountDown);
 	DeleteSoundMem(m_hPlayBgm);	// 現在再生するBGM
 }
 
@@ -355,7 +360,7 @@ void SceneMain::OnStartCount()
 	if (m_startTextSize < 60) m_startTextSize = 60;
 
 	// カウントダウン描画
-	if (m_startDelay / 60 == 5)
+	if (m_startDelay / 60 == 4)
 	{
 		// ５秒の場合は何も描画しない
 	}
@@ -370,7 +375,7 @@ void SceneMain::OnStartCount()
 	}
 	else
 	{
-		// ４～１秒の間はその数字を描画
+		// ３～１秒の間はその数字を描画
 		SetFontSize(m_startTextSize);
 		// 後ろの白文字
 		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2) + 2, Game::kScreenHeightHalf + 5, 0xe9e9e9, "%d", m_startDelay / 60);
@@ -380,9 +385,17 @@ void SceneMain::OnStartCount()
 	// フォントサイズを標準に戻す
 	SetFontSize(20);
 
-	if (m_startDelay / 60 != 5)
+	if (m_startDelay / 60 != 4)
 	{
+		if (!m_isOnlyOnceSE)
+		{
+			PlaySoundMem(m_hCountDown, DX_PLAYTYPE_BACK);
+			m_isOnlyOnceSE = true;
+		}
+
 		m_pPlayer->DrawSpawnPos();
+
+		if (m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 190, Game::kScreenHeightHalf - 100);
 	}
 
 	if (m_startDelay / 60 <= 2)
@@ -406,8 +419,6 @@ void SceneMain::OnStartCount()
 		}
 		m_textTimer++;
 	}
-
-	if(m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 190, Game::kScreenHeightHalf - 100);
 }
 
 // ステージクリア時の処理

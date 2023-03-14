@@ -36,9 +36,9 @@ void SceneStageSelect::Init(int fontS, int fontL, bool& isPrac)
 
 	// 画像データの読み込み
 	// ゲームタイトル
-	m_hBg = LoadGraph("imagedata/Bg.png");
-	m_hPadImg = LoadGraph("imagedata/PadImg.png");
-	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
+	m_hBg = LoadGraph(Game::kBgImg);
+	m_hPadImg = LoadGraph(Game::kPadImg);
+	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
 	// シーン終了に false を代入
 	m_isEnd = false;

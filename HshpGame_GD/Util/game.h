@@ -65,11 +65,11 @@ namespace Game
 	const char* const kPadImg = "imagedata/PadImg.png";
 
 	// 音データ
-	const char* const kSelectSound = "soundData/Select.wav";
+	const char* const kSelectSound = "soundData/Select.mp3";
 
 	// 音楽データ
 	const char* const kDeathSound = "soundData/deathSound.mp3";
-	const char* const kArcadeBgm = "soundData/Electroman.mp3";
+	const char* const kArcadeBgm = "soundData/Arcade.wav";
 	const char* const kPracBgm = "soundData/pracmode.wav";
 	const char* const kChallengeBgm = "soundData/challeBGM.mp3";
 

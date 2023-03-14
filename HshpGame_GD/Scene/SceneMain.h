@@ -101,6 +101,7 @@ private:
 	int m_hFont;
 	// 効果音
 	int m_hDeathSound;
+	int m_hCountDown;
 	// 音楽用
 	int m_hPlayBgm;
 
@@ -138,6 +139,9 @@ private:
 	bool m_isPauseEnd;
 	// シーン終了
 	bool m_isEnd;
+
+	// カウントダウンを一度だけ
+	bool m_isOnlyOnceSE;
 
 	// 選ばれたステージ
 	StageState m_selectedStage;
