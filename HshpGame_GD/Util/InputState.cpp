@@ -27,12 +27,21 @@ bool InputState::IsTriggered(InputType type)const
 		return !(lastPadState) &&
 			(padState);
 	}
-	else if (type == InputType::pause)
+	else if (type == InputType::start)
 	{
 		return !lastKeyState[KEY_INPUT_ESCAPE] &&
 			keyState[KEY_INPUT_ESCAPE] ||
 			!(lastPadState & PAD_INPUT_8) &&
 			(padState & PAD_INPUT_8);
+	}
+	else if (type == InputType::pause)
+	{
+		return !lastKeyState[KEY_INPUT_ESCAPE] &&
+			keyState[KEY_INPUT_ESCAPE] ||
+			!(lastPadState & PAD_INPUT_8) &&
+			(padState & PAD_INPUT_8) ||
+			!(lastPadState & PAD_INPUT_1) &&
+			(padState & PAD_INPUT_1);;
 	}
 	else if (type == InputType::enter)
 	{

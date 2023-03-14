@@ -9,9 +9,11 @@ class ScenePause : public SceneBase
 {
 public:
 	ScenePause() :
+		m_hPadImg(-1),
 		m_hSelectSound(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
+		m_textTimer(0),
 		m_textScale(0),
 		m_textScaleAcc(0),
 		m_isNextStage(false),
@@ -32,6 +34,8 @@ public:
 	// 描画
 	virtual void Draw();
 
+	void DrawPadText();
+
 private:
 	// Update
 	using m_tUpdateFunc = void (ScenePause::*) (const InputState& input, NextSceneState& nextScene, bool& isEnd);
@@ -45,6 +49,8 @@ private:
 
 	void NormalDraw();
 private:
+	// 画像データ
+	int m_hPadImg;
 	// 音データ
 	int m_hSelectSound;
 
@@ -52,6 +58,10 @@ private:
 	int m_selectPos;
 	int m_selectNamePos;
 
+	// テキスト点滅
+	int m_textTimer;
+
+	// 文字のサイズ
 	int m_textScale;
 	int m_textScaleAcc;
 

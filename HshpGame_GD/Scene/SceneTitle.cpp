@@ -194,7 +194,7 @@ void SceneTitle::StopMusic()
 
 void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
-	if (input.IsTriggered(InputType::pause))
+	if (input.IsTriggered(InputType::start))
 	{
 		isGameEnd = true;
 		return;

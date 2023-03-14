@@ -13,10 +13,9 @@ namespace
 	constexpr int kTextSizeMin = 50;
 	constexpr int kTextSizeMax = 80;
 
-	constexpr int kTextFadeSpeed = 5;
-
 	// テキスト
 	const char* const kGameClear = "Pause";
+	const char* const kBackText = "Back";
 
 	// メニューメッセージ
 	const char* const kRetryText = "Restart";
@@ -39,7 +38,8 @@ void ScenePause::Init()
 	m_updateFunc = &ScenePause::NormalUpdate;
 	m_drawFunc = &ScenePause::NormalDraw;
 
-	m_hSelectSound = LoadSoundMem("soundData/Select.wav");
+	m_hPadImg = LoadGraph(Game::kPadImg);
+	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
 	m_textScale = kTextSizeMin;
 	m_textScaleAcc = 1;
@@ -51,18 +51,44 @@ void ScenePause::Init()
 // 終了処理
 void ScenePause::End()
 {
+	DeleteGraph(m_hPadImg);
+
 	DeleteSoundMem(m_hSelectSound);
 }
 
 // 更新
 void ScenePause::Update(const InputState& input, NextSceneState& nextScene, bool& isEnd)
 {
+	m_textTimer++;
+
 	(this->*m_updateFunc)(input, nextScene, isEnd);
 }
 
 void ScenePause::Draw()
 {
 	(this->*m_drawFunc)();
+}
+
+void ScenePause::DrawPadText()
+{
+	// フォントサイズの設定
+	SetFontSize(25);
+	if (m_textTimer > 0)
+	{
+		if ((m_textTimer / 10) % 8 != 0)
+		{
+			int drawX = 100, drawY = Game::kScreenHeight - 80;
+			// タイトルのテキストを表示
+			DrawString(drawX, drawY, kBackText, 0xe9e9e9);
+
+			int imgX, imgY, imgW, imgH;
+			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 12, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+
+			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
+		}
+
+		m_textTimer++;
+	}
 }
 
 void ScenePause::NormalUpdate(const InputState& input, NextSceneState& nextScene, bool& isPEnd)
@@ -147,4 +173,6 @@ void ScenePause::NormalDraw()
 	menuY = menuY + (kMenuH / 2) - 15;
 	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
 	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+
+	DrawPadText();
 }

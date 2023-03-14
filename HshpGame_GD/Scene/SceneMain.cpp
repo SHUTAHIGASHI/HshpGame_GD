@@ -460,7 +460,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 
 	// escapeƒL[‚ª‰Ÿ‚³‚ê‚½ê‡
-	if (input.IsTriggered(InputType::pause))
+	if (input.IsTriggered(InputType::start))
 	{
 		m_isPause = true;
 		StopSoundMem(m_hPlayBgm);
