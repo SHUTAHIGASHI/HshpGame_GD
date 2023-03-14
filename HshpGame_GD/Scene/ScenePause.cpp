@@ -82,7 +82,7 @@ void ScenePause::DrawPadText()
 			DrawString(drawX, drawY, kBackText, 0xe9e9e9);
 
 			int imgX, imgY, imgW, imgH;
-			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 12, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+			imgX = Game::kPadChipSize * 10, imgY = Game::kPadChipSize * 14, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
 			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
