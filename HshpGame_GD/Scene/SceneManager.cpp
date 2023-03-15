@@ -55,7 +55,7 @@ void SceneManager::Init(int font24, int font48)
 		m_pMain->SetManager(this);
 		m_pMain->SetClear(m_pClear.get());
 		m_pMain->SetRanking(m_pRanking.get());
-		m_pMain->Init(font48);	// シーンメインの初期化
+		m_pMain->Init(font24, font48);	// シーンメインの初期化
 		break;
 	case SceneManager::kSceneClear:
 		m_pClear->SetMain(m_pMain.get());
@@ -177,7 +177,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_pMain->SetClear(m_pClear.get());
 			m_pMain->SetRanking(m_pRanking.get());
 			m_pMain->SetPracticeMode(m_isPrac);
-			m_pMain->Init(font48);	// シーンメインの初期化
+			m_pMain->Init(font24, font48);	// シーンメインの初期化
 			m_kind = kSceneMain;
 			break;
 		case NextSceneState::nextClear:

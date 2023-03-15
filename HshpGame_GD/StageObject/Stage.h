@@ -11,11 +11,13 @@
 #include "ObjectReverseRing.h"
 
 class Player;
+class SceneMain;
 
 enum class StageState
 {
 	tutrialCube,
-	tutrialJump,
+	tutrialJumpPad,
+	tutrialJumpRing,
 	tutrialGravity,
 	tutrialDash,
 	tutrialRev,
@@ -39,6 +41,7 @@ public:
 	~Stage(){}
 	
 	void SetPlayer(Player* player) { m_pPlayer = player; }
+	void SetMain(SceneMain* main) { m_pMain = main; }
 	
 	void Init(int hSpike, int hBg, int hPortal, int hBlock, int hJumpPad);
 
@@ -102,6 +105,7 @@ private:
 	std::vector<ObjectReverseRing> m_ObjectReverseRing;
 
 	Player* m_pPlayer;
+	SceneMain* m_pMain;
 
 	// ステージ管理用変数
 	StageState m_stageState;

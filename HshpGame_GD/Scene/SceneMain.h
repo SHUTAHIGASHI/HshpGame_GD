@@ -2,6 +2,7 @@
 #include "game.h"
 #include "Stage.h"
 #include <memory>
+#include <string>
 
 class Player;
 class Stage;
@@ -21,7 +22,7 @@ public:
 	void SetRanking(SceneRanking* rank) { m_pRanking = rank; }
 
 	// 初期化
-	void Init(int font);
+	void Init(int fontS, int fontL);
 
 	void OnGameStart();
 
@@ -57,6 +58,7 @@ public:
 	// モード切り替え
 	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
 	virtual void SetArcadeMode() { m_isArcadeMode = true; }
+	virtual void SetTutorialMode() { m_isTutorial = true; }
 
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
@@ -98,7 +100,8 @@ private:
 	// 背景のグラフィック
 	int m_hBg;
 	// フォントデータ
-	int m_hFont;
+	int m_hFontL;
+	int m_hFontS;
 	// 効果音
 	int m_hDeathSound;
 	int m_hCountDown;
@@ -142,6 +145,8 @@ private:
 
 	// カウントダウンを一度だけ
 	bool m_isOnlyOnceSE;
+
+	std::string m_tutorialText;
 
 	// 選ばれたステージ
 	StageState m_selectedStage;

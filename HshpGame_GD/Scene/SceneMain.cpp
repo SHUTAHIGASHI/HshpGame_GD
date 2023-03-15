@@ -33,7 +33,8 @@ SceneMain::SceneMain() :
 	m_hJumpPad(-1),
 	m_hPadImg(-1),
 	m_hBg(-1),
-	m_hFont(-1),
+	m_hFontL(-1),
+	m_hFontS(-1),
 	m_hDeathSound(-1),
 	m_hCountDown(-1),
 	m_hPlayBgm(-1),
@@ -54,6 +55,7 @@ SceneMain::SceneMain() :
 	m_isPauseEnd(false),
 	m_isEnd(false),
 	m_isOnlyOnceSE(false),
+	m_tutorialText(),
 	m_selectedStage(StageState::firstStage),
 	m_pManager(nullptr),
 	m_pClear(nullptr),
@@ -66,7 +68,7 @@ SceneMain::~SceneMain()
 }
 
 // 初期化
-void SceneMain::Init(int font)
+void SceneMain::Init(int fontS, int fontL)
 {
 	// シーン終了変数を初期化
 	m_isEnd = false;	// ゲーム終了フラグ
@@ -81,6 +83,7 @@ void SceneMain::Init(int font)
 	m_pStage->SetPlayer(m_pPlayer.get());
 	m_pPause->SetMain(this);
 	m_pPlayer->SetMain(this);
+	m_pStage->SetMain(this);
 
 	// ポーズシーン初期化
 	m_pPause->Init();
@@ -96,7 +99,8 @@ void SceneMain::Init(int font)
 	m_hBg = LoadGraph(Game::kBgImg);	// 背景画像
 
 	// フォントデータの代入
-	m_hFont = font;
+	m_hFontL = fontL;
+	m_hFontS = fontS;
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
@@ -135,14 +139,12 @@ void SceneMain::Init(int font)
 // ゲームスタート(再スタート)時の初期化処理
 void SceneMain::OnGameStart()
 {
-	if (m_pStage->GetStageState() == StageState::tutrialCube || m_pStage->GetStageState() == StageState::tutrialJump
-		|| m_pStage->GetStageState() == StageState::tutrialGravity || m_pStage->GetStageState() == StageState::tutrialDash
-		|| m_pStage->GetStageState() == StageState::tutrialRev) m_isTutorial = true;
-	else m_isTutorial = false;
-
 	// 挑戦回数テキストの描画時間リセット
 	m_attemptDrawTime = kAttemptDrawMax;
 	m_attemptDrawNum = 255;
+
+	// ステージモード
+	m_isTutorial = false;
 
 	// ゲームオーバー時の遅延初期化
 	m_gameOverDelay = kGameOverDelay;
@@ -151,6 +153,17 @@ void SceneMain::OnGameStart()
 	m_pPlayer->Init(m_hPlayer, m_hDeathEffect, m_hDeathSound);
 	// ステージ初期化
 	m_pStage->Init(m_hObjectSpike, m_hBg, m_hPortal, m_hBlock, m_hJumpPad);
+
+	if (m_isTutorial)
+	{
+		if (m_pStage->GetStageState() == StageState::tutrialCube) m_tutorialText = "ボタンでジャンプ！";
+		else if (m_pStage->GetStageState() == StageState::tutrialJumpPad) m_tutorialText = "乗ると大ジャンプ";
+		else if (m_pStage->GetStageState() == StageState::tutrialJumpRing) m_tutorialText = "ボタンで大ジャンプ";
+		else if (m_pStage->GetStageState() == StageState::tutrialGravity) m_tutorialText = "ボタンで重力反転！";
+		else if (m_pStage->GetStageState() == StageState::tutrialDash) m_tutorialText = "ボタンで空中浮遊！";
+		else if (m_pStage->GetStageState() == StageState::tutrialRev) m_tutorialText = "ボタンで方向逆転！";
+		else m_tutorialText = "でギミックを使用！";
+	}
 }
 
 // ゲーム中のBGM再生
@@ -327,7 +340,7 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		SetFontSize(20);
 		// 現在のモードの描画
-		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 5);
+		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 6);
 	}
 }
 
@@ -335,22 +348,23 @@ void SceneMain::DrawHowTo(int X, int Y)
 {
 	int imgX = Game::kPadChipSize, imgY = Game::kPadChipSize;
 	int imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
-
 	int drawPosX, drawPosY;
+
+	drawPosX = X, drawPosY = Y - 30;
+	DrawStringToHandle(drawPosX, drawPosY + 2, "～チュートリアル～", 0xe9e9e9, m_hFontS);
+	DrawStringToHandle(drawPosX, drawPosY, "～チュートリアル～", 0xff0000, m_hFontS);
+	
 	drawPosX = X, drawPosY = Y;
+	DrawStringToHandle(drawPosX, drawPosY, m_tutorialText.c_str(), 0xe9e9e9, m_hFontL);
 
-	std::string drawText;
-
-	if (m_pStage->GetStageState() == StageState::tutrialCube) drawText = "ボタンでジャンプ！";
-	else drawText = "でギミックを使用！";
-
-	DrawStringToHandle(drawPosX, drawPosY, drawText.c_str(), 0xffffff, m_hFont);
-
-	imgX = Game::kPadChipSize * m_padCount;
-	imgY = Game::kPadChipSize * 12;
-	DrawRectExtendGraph(drawPosX - 50, drawPosY,
-		drawPosX, drawPosY + 50,
-		imgX, imgY, imgW, imgH, m_hPadImg, true);
+	if (m_pStage->GetStageState() != StageState::tutrialJumpPad)
+	{
+		imgX = Game::kPadChipSize * m_padCount;
+		imgY = Game::kPadChipSize * 12;
+		DrawRectExtendGraph(drawPosX - 52, drawPosY,
+			drawPosX - 2, drawPosY + 50,
+			imgX, imgY, imgW, imgH, m_hPadImg, true);
+	}
 }
 
 // スタート時のカウントダウン描画
@@ -402,7 +416,7 @@ void SceneMain::OnStartCount()
 
 		m_pPlayer->DrawSpawnPos();
 
-		if (m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 190, Game::kScreenHeightHalf - 100);
+		if (m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 193, Game::kScreenHeightHalf - 100);
 	}
 
 	if (m_startDelay / 60 <= 2)
@@ -452,7 +466,7 @@ void SceneMain::OnStageClear(NextSceneState& nextScene)
 	}
 	else
 	{
-		m_fadeCount = 100;
+		m_fadeCount = 150;
 		m_startDelay = 180;
 		m_updateFunc = &SceneMain::StartDelayUpdate;	// フェード処理を実行する
 		// 次のステージ状態をセット
