@@ -371,7 +371,7 @@ void Player::DrawMoveEffect()
         imgW = static_cast<int>(Game::kBlockSize), imgH = static_cast<int>(Game::kBlockSize);
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
-        DrawRectRotaGraphF(drawPosX, drawPosY, imgX, imgY, imgW, imgH, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
+        DrawRotaGraphF(drawPosX, drawPosY, m_playerScale, m_lastAngle[i], m_hPlayer, true, !m_isMoveRight);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
 }
