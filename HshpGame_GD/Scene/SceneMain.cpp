@@ -324,8 +324,9 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 		DrawBox(5, drawY, drawX + 190, drawY + 25, 0x000000, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetFontSize(20);
 		// åªç›ÇÃÉÇÅ[ÉhÇÃï`âÊ
-		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1);
+		DrawFormatString(drawX, drawY, 0xe9e9e9, "stage %02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 5);
 	}
 }
 
