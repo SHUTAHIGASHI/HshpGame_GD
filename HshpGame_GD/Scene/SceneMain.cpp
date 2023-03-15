@@ -251,7 +251,7 @@ void SceneMain::OnRetry()
 	// ƒQ[ƒ€ó‘Ô‰Šú‰»
 	OnGameStart();
 	// ’§í‰ñ”‚ğ‘‚â‚·
-	m_countAttempt++;
+	if(!m_isTutorial) m_countAttempt++;
 	return;
 }
 
@@ -268,7 +268,7 @@ void SceneMain::OnDead()
 		// ƒQ[ƒ€ó‘Ô‰Šú‰»
 		OnGameStart();
 		// ’§í‰ñ”‚ğ‘‚â‚·
-		m_countAttempt++;
+		if (!m_isTutorial) m_countAttempt++;
 		return;
 	}
 
@@ -316,6 +316,7 @@ void SceneMain::DrawGameInfo()
 	if (m_isTutorial)
 	{
 		DrawHowTo(100, 100);
+		return;
 	}
 
 	int drawX, drawY;
