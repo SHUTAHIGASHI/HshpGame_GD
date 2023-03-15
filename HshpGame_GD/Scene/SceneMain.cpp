@@ -313,6 +313,7 @@ void SceneMain::DrawGameInfo()
 		drawY = static_cast<int>(m_pPlayer->GetPos().y - 50);
 		if (drawX < 0) drawX = 0;
 
+		SetFontSize(20);
 		// 挑戦回数の描画
 		DrawFormatString(drawX - m_pStage->GetScroll(), drawY, 0xe9e9e9, "Attempt : %d", m_countAttempt);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -338,7 +339,12 @@ void SceneMain::DrawHowTo(int X, int Y)
 	int drawPosX, drawPosY;
 	drawPosX = X, drawPosY = Y;
 
-	DrawStringToHandle(drawPosX, drawPosY, "ボタンでジャンプ！", 0xffffff, m_hFont);
+	std::string drawText;
+
+	if (m_pStage->GetStageState() == StageState::tutrialCube) drawText = "ボタンでジャンプ！";
+	else drawText = "でギミックを使用！";
+
+	DrawStringToHandle(drawPosX, drawPosY, drawText.c_str(), 0xffffff, m_hFont);
 
 	imgX = Game::kPadChipSize * m_padCount;
 	imgY = Game::kPadChipSize * 12;
