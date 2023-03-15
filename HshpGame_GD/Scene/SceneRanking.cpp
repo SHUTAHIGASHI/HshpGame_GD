@@ -6,6 +6,7 @@
 namespace
 {
 	// タイトルメッセージ
+	const char* const kTextMode = "NormalMode";
 	const char* const kTextTitle = "Ranking";
 	const char* const kTextBack = "Back";
 
@@ -78,6 +79,8 @@ void SceneRanking::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	SetFontSize(50);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextMode, 10) / 2), Game::kScreenHeight / 6 -70, kTextMode, 0x60CAAD);
+	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextMode, 10) / 2), (Game::kScreenHeight / 6) - 70 + 5, kTextMode, 0xe9e9e9);
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextTitle, 7) / 2), Game::kScreenHeight / 6, kTextTitle, 0x60CAAD);
 	DrawString(Game::kScreenWidthHalf - (GetDrawStringWidth(kTextTitle, 7) / 2), (Game::kScreenHeight / 6) + 5, kTextTitle, 0xe9e9e9);
 
