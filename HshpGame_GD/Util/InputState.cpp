@@ -40,8 +40,8 @@ bool InputState::IsTriggered(InputType type)const
 			keyState[KEY_INPUT_ESCAPE] ||
 			!(lastPadState & PAD_INPUT_8) &&
 			(padState & PAD_INPUT_8) ||
-			!(lastPadState & PAD_INPUT_1) &&
-			(padState & PAD_INPUT_1);;
+			!(lastPadState & PAD_INPUT_4) &&
+			(padState & PAD_INPUT_4);;
 	}
 	else if (type == InputType::enter)
 	{

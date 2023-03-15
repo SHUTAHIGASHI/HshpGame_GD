@@ -51,6 +51,7 @@ SceneMain::SceneMain() :
 	m_isPracticeMode(false),
 	m_isArcadeMode(false),
 	m_isTutorial(false),
+	m_isDoTutorial(false),
 	m_isPause(false),
 	m_isPauseEnd(false),
 	m_isEnd(false),
@@ -112,8 +113,14 @@ void SceneMain::Init(int fontS, int fontL)
 	else m_hPlayBgm = LoadSoundMem(Game::kChallengeBgm); // チャレンジモードの場合、チャレンジモード用BGMをセット
 
 	// ステージ選択 //
-	// アーケードモードの場合 チュートリアルをセット
-	if (m_isArcadeMode) m_pStage->SetTutorialStage();
+	// アーケードモードの場合
+	if (m_isArcadeMode)
+	{
+		// チュートリアルを行う場合はチュートリアルをセット
+		if (m_isDoTutorial) m_pStage->SetTutorialStage();
+		// 行わない場合はステージ１
+		else m_pStage->SetFirstStage();
+	}
 	// チャレンジモードの場合、ステージ１をセット
 	else if (!m_isPracticeMode) m_pStage->SetFirstStage();
 	// ステージが選ばれた場合、そのステージにセット
@@ -186,6 +193,8 @@ void SceneMain::End()
 
 	m_isPracticeMode = false;
 	m_isArcadeMode = false;
+	m_isTutorial = false;
+	m_isDoTutorial = false;
 
 	// サウンドの停止
 	StopSoundMem(m_hPlayBgm, true);
@@ -493,7 +502,7 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	}
 
 	// escapeキーが押された場合
-	if (input.IsTriggered(InputType::start))
+	if (input.IsTriggered(InputType::pause))
 	{
 		m_isPause = true;
 		StopSoundMem(m_hPlayBgm);

@@ -13,6 +13,7 @@ public:
 	SceneTitle() :
 		m_updateFunc(&SceneTitle::SceneStartUpdate),
 		m_selectPos(0),
+		m_selectTutorial(0),
 		m_textTimer(0),
 		m_countFrame(0),
 		m_fadeCount(0),
@@ -63,14 +64,29 @@ private:
 	using m_tUpdateFunc = void (SceneTitle::*) (const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
+	// 通常の更新処理
 	void NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
+
+	// チュートリアル選択
+	void ModeSelectUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 
 	void SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
 
 	void SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene);
+	
+	///
+	using m_tDrawFunc = void (SceneTitle::*) ();
+	m_tDrawFunc m_drawFunc = nullptr;
+	// 通常の描画処理
+	void NormalDraw();
+
+	void ModeSelectDraw();
+
 private:	
 	// メニュー選択
 	int m_selectPos;
+	// チュートリアルモード切替の選択
+	int m_selectTutorial;
 
 	int m_textTimer;
 

@@ -59,6 +59,7 @@ public:
 	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
 	virtual void SetArcadeMode() { m_isArcadeMode = true; }
 	virtual void SetTutorialMode() { m_isTutorial = true; }
+	virtual void SetDoTutorialMode() { m_isDoTutorial = true; }
 
 	// 選んだステージをセット
 	void SetSelectedStage(StageState stage) { m_selectedStage = stage; }
@@ -78,15 +79,11 @@ private:
 
 	// 通常の更新処理
 	void NormalUpdate(const InputState& input, NextSceneState& nextScene);
-
 	// スタートカウント時の更新処理
 	void StartDelayUpdate(const InputState& input, NextSceneState& nextScene);
-
-	// シーンスタート時の更新処理
+	// シーン変更時の更新処理
 	void SceneStartUpdate(const InputState& input, NextSceneState& nextScene);
-
 	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene);
-
 private:
 	// キャラクターのグラフィックハンドル
 	int m_hPlayer;
@@ -136,6 +133,7 @@ private:
 	bool m_isPracticeMode;
 	bool m_isArcadeMode;
 	bool m_isTutorial;
+	bool m_isDoTutorial;
 
 	// ポーズ中かどうか
 	bool m_isPause;
