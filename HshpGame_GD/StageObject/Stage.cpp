@@ -942,8 +942,6 @@ void Stage::SetNextStageState()
 
 void Stage::NormalUpdate()
 {
-	if (m_pPlayer->IsDead()) return;
-
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
 		m_ObjectGoalGate[i].Update();
@@ -977,8 +975,6 @@ void Stage::NormalUpdate()
 
 void Stage::ScrollUpdate()
 {
-	if (m_pPlayer->IsDead()) return;
-
 	if (m_isScroll)
 	{		
 		if (m_pPlayer->IsMoveRight())

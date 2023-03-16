@@ -39,6 +39,8 @@ public:
 	// 死亡時の処理
 	void OnDead();
 
+	void OnDeadDraw();
+
 	// 毎フレームの描画
 	void Draw();
 	// ゲーム中の情報描画
@@ -104,6 +106,8 @@ private:
 	int m_hCountDown;
 	// 音楽用
 	int m_hPlayBgm;
+	// 死亡時の揺れるスクリーンハンドル
+	int m_hDeadScreen = 0;
 
 	// 毎フレームカウント
 	int m_countFrame;
@@ -128,6 +132,10 @@ private:
 	int m_attemptDrawTime;
 	// 挑戦回数描画の値
 	int m_attemptDrawNum;
+	// 画面振動
+	int m_quakeScale = 0;
+	int m_quakeY = 0;
+	int m_quakeX = 0;
 
 	// ゲームモード
 	bool m_isPracticeMode;

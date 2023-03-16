@@ -149,6 +149,9 @@ void SceneMain::OnGameStart()
 	// 挑戦回数テキストの描画時間リセット
 	m_attemptDrawTime = kAttemptDrawMax;
 	m_attemptDrawNum = 255;
+	m_quakeScale = 10;
+	m_quakeX = 0;
+	m_quakeY = 0;
 
 	// ステージモード
 	m_isTutorial = false;
@@ -208,6 +211,7 @@ void SceneMain::End()
 	DeleteGraph(m_hJumpPad);	// ジャンプパッド
 	DeleteGraph(m_hPadImg);	// ゲームパッド
 	DeleteGraph(m_hBg);	// 背景画像
+	DeleteGraph(m_hDeadScreen);
 
 	// 音データの削除
 	DeleteSoundMem(m_hDeathSound);	// 死亡サウンド
@@ -230,6 +234,7 @@ void SceneMain::Update(const InputState& input, NextSceneState& nextScene)
 		if (m_isPauseEnd)
 		{
 			m_isPause = false;
+			m_fadeCount = 200;
 			m_updateFunc = &SceneMain::SceneEndUpdate;
 		}
 
@@ -280,9 +285,31 @@ void SceneMain::OnDead()
 		if (!m_isTutorial) m_countAttempt++;
 		return;
 	}
+	
+	if (m_quakeScale > 0)--m_quakeScale;
+	m_quakeY = m_quakeScale;
+	m_quakeX = m_quakeScale;
+	m_quakeScale *= -1;
 
 	// ゲームオーバー遅延を1フレームごとに減少させる
 	m_gameOverDelay--;
+}
+
+void SceneMain::OnDeadDraw()
+{
+	m_hDeadScreen = MakeScreen(Game::kScreenWidth, Game::kScreenHeight);
+	SetDrawScreen(m_hDeadScreen);
+
+	// ステージの描画
+	m_pStage->Draw();
+	if (m_startDelay <= 0)
+	{
+		DrawGameInfo();
+	}
+	// プレイヤーの描画
+	m_pPlayer->Draw();
+
+	SetDrawScreen(DX_SCREEN_BACK);
 }
 
 // 毎フレームの描画
@@ -317,6 +344,12 @@ void SceneMain::Draw()
 	if (m_startDelay > 0)
 	{
 		OnStartCount();
+	}
+
+	if (m_pPlayer->IsDead())
+	{
+		OnDeadDraw();
+		DrawGraph(m_quakeX, m_quakeY, m_hDeadScreen, true);
 	}
 }
 
@@ -531,7 +564,6 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 	if (m_pPlayer->IsDead())
 	{
 		OnDead();
-		return;
 	}
 }
 
