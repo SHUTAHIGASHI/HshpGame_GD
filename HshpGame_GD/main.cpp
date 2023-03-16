@@ -7,6 +7,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	// ウィンドウモード設定
 	ChangeWindowMode(Game::kWindowMode);
+	// ウィンドウモードのサイズ変更
+	SetWindowSizeChangeEnableFlag(true);
 	// ウィンドウ名設定
 	SetMainWindowText(Game::kTitleText);
 	// 画面サイズの設定
