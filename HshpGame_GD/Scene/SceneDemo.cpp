@@ -4,7 +4,7 @@
 namespace
 {
 	// ムービー表示時間
-	constexpr int kDrawTime = 720;
+	constexpr int kDrawTime = 1980;
 }
 
 SceneDemo::SceneDemo() :
