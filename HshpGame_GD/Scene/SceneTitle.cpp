@@ -15,7 +15,7 @@ namespace
 	// メニューメッセージ
 	const char* const kArcadeText = "ノーマルモード";
 	const char* const kChallengeModeText = "チャレンジモード";
-	const char* const kStageSelectText = "ステージセレクト";
+	const char* const kStageSelectText = "ステージ選択";
 	const char* const kRankText = "ランキング";
 	const char* const kGameEndText = "ゲーム終了";
 

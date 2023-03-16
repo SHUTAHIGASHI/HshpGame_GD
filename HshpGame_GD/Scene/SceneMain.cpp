@@ -342,7 +342,7 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	if (m_isPracticeMode)
+	if (m_isPracticeMode || m_isArcadeMode && !m_isTutorial)
 	{
 		drawX = 10, drawY = 60;
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
@@ -361,8 +361,8 @@ void SceneMain::DrawHowTo(int X, int Y)
 	int drawPosX, drawPosY;
 
 	drawPosX = X, drawPosY = Y - 30;
-	DrawStringToHandle(drawPosX, drawPosY + 2, "～チュートリアル～", 0xe9e9e9, m_hFontS);
-	DrawStringToHandle(drawPosX, drawPosY, "～チュートリアル～", 0xff0000, m_hFontS);
+	DrawStringToHandle(drawPosX, drawPosY + 2, "～チュートリアル～", 0x333333, m_hFontS);
+	DrawStringToHandle(drawPosX, drawPosY, "～チュートリアル～", 0xff2848, m_hFontS);
 	
 	drawPosX = X, drawPosY = Y;
 	DrawStringToHandle(drawPosX, drawPosY, m_tutorialText.c_str(), 0xe9e9e9, m_hFontL);
@@ -402,7 +402,7 @@ void SceneMain::OnStartCount()
 		// 後ろの白文字
 		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2) + 2, Game::kScreenHeightHalf + 5, "GO!", 0xe9e9e9);
 		// 赤文字
-		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2222);
+		DrawString(Game::kScreenWidthHalf - (m_startTextSize * 3 / 2), Game::kScreenHeightHalf, "GO!", 0xff2848);
 	}
 	else
 	{
@@ -411,7 +411,7 @@ void SceneMain::OnStartCount()
 		// 後ろの白文字
 		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2) + 2, Game::kScreenHeightHalf + 5, 0xe9e9e9, "%d", m_startDelay / 60);
 		// 赤文字
-		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2222, "%d", m_startDelay / 60);
+		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2848, "%d", m_startDelay / 60);
 	}
 	// フォントサイズを標準に戻す
 	SetFontSize(20);
@@ -445,7 +445,7 @@ void SceneMain::OnStartCount()
 			SetFontSize(40);
 			DrawFormatString(static_cast<int>(m_pPlayer->GetPos().x) + 5, 
 				static_cast<int>(m_pPlayer->GetPos().y) - 50,
-				0xff0000, "%s", temp.c_str());
+				0xff2848, "%s", temp.c_str());
 			SetFontSize(0);
 		}
 		m_textTimer++;
