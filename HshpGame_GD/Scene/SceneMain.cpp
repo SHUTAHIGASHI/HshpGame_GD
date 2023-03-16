@@ -335,6 +335,12 @@ void SceneMain::Draw()
 		return;
 	}
 	
+	if (m_pPlayer->IsDead())
+	{
+		OnDeadDraw();
+		DrawGraph(m_quakeX, m_quakeY, m_hDeadScreen, true);
+	}
+
 	// フェード処理用の処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
@@ -344,12 +350,6 @@ void SceneMain::Draw()
 	if (m_startDelay > 0)
 	{
 		OnStartCount();
-	}
-
-	if (m_pPlayer->IsDead())
-	{
-		OnDeadDraw();
-		DrawGraph(m_quakeX, m_quakeY, m_hDeadScreen, true);
 	}
 }
 
