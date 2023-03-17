@@ -578,6 +578,9 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 // スタートカウントダウン時の更新処理
 void SceneMain::StartDelayUpdate(const InputState& input, NextSceneState& nextScene)
 {
+	// ステージの更新処理
+	m_pStage->Update();
+
 	// スタート遅延を毎フレーム減らす
 	m_startDelay--;
 	// スタート遅延が 1 以上の場合処理終了

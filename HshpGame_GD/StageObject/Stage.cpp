@@ -975,37 +975,6 @@ void Stage::NormalUpdate()
 
 void Stage::ScrollUpdate()
 {
-	if (m_isScroll)
-	{		
-		if (m_pPlayer->IsMoveRight())
-		{
-			m_scroll += m_scrollAcc;
-		}
-		else
-		{
-			m_scroll += -m_scrollAcc;
-		}
-
-		if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
-		{
-			m_isScroll = false;
-			m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
-		}
-		else if (m_scroll < 0)
-		{
-			m_isScroll = false;
-			m_scroll = 0;
-		}
-	}
-	else
-	{
-		if (m_pPlayer->GetCenterX() > Game::kScreenWidthHalf 
-			&& m_pPlayer->GetCenterX() < (Game::kScreenWidthTriple - Game::kScreenWidthHalf))
-		{
-			m_isScroll = true;
-		}
-	}
-
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{
 		m_ObjectGoalGate[i].Update();
@@ -1034,5 +1003,38 @@ void Stage::ScrollUpdate()
 	for (int i = 0; i < m_ObjectReverseRing.size(); i++)
 	{
 		m_ObjectReverseRing[i].Update();
+	}
+
+	if (m_pPlayer->IsDead()) return;
+
+	if (m_isScroll)
+	{
+		if (m_pPlayer->IsMoveRight())
+		{
+			m_scroll += m_scrollAcc;
+		}
+		else
+		{
+			m_scroll += -m_scrollAcc;
+		}
+
+		if (m_scroll > Game::kScreenWidthTriple - Game::kScreenWidth)
+		{
+			m_isScroll = false;
+			m_scroll = Game::kScreenWidthTriple - Game::kScreenWidth;
+		}
+		else if (m_scroll < 0)
+		{
+			m_isScroll = false;
+			m_scroll = 0;
+		}
+	}
+	else
+	{
+		if (m_pPlayer->GetCenterX() > Game::kScreenWidthHalf
+			&& m_pPlayer->GetCenterX() < (Game::kScreenWidthTriple - Game::kScreenWidthHalf))
+		{
+			m_isScroll = true;
+		}
 	}
 }
