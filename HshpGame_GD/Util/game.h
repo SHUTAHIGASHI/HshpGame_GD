@@ -69,7 +69,7 @@ namespace Game
 
 	// 音楽データ
 	const char* const kDeathSound = "soundData/deathSound.mp3";
-	const char* const kArcadeBgm = "soundData/Arcade.wav";
+	const char* const kArcadeBgm = "soundData/Electroman.mp3";
 	const char* const kPracBgm = "soundData/pracmode.wav";
 	const char* const kChallengeBgm = "soundData/challeBGM.mp3";
 
