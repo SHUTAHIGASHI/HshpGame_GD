@@ -114,13 +114,13 @@ void Player::SetSpawnPos()
     else if (m_pStage->GetStageState() == StageState::fifthStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit;
+        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::sixthStage)
     {
         m_pos.x = 0;
-        m_pos.y = Game::kStageLowerLimit - Game::kBlockSize;
+        m_pos.y = Game::kStageLowerLimit;
         m_isMoveRight = true;
     }
     else if (m_pStage->GetStageState() == StageState::seventhStage)
