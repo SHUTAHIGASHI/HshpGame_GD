@@ -15,7 +15,7 @@ namespace
 
 	// テキスト
 	const char* const kGameClear = "Pause";
-	const char* const kBackText = "Back";
+	const char* const kBackText = "Close";
 
 	// メニューメッセージ
 	const char* const kRetryText = "Restart";
