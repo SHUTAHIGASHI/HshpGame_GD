@@ -9,7 +9,6 @@
 #include <cassert>
 
 SceneManager::SceneManager():
-	m_isPrac(false),
 	m_kind(kSceneTitle),
 	m_nextScene (NextSceneState::nextGameMain),
 	m_lastScene(),
@@ -37,7 +36,7 @@ void SceneManager::Init(int font24, int font48)
 		m_pTitle->SetMain(m_pMain.get());
 		m_pTitle->SetManager(this);
 		m_pTitle->SetStageSelect(m_pStageSelect.get());
-		m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
+		m_pTitle->Init(font24, font48);	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneDemo:
 		m_pDemo->Init();	// シーンタイトルの初期化
@@ -46,7 +45,7 @@ void SceneManager::Init(int font24, int font48)
 		m_pStageSelect->SetManager(this);
 		m_pStageSelect->SetMain(m_pMain.get());
 		m_pStageSelect->SetTitle(m_pTitle.get());
-		m_pStageSelect->Init(font24, font48, m_isPrac);	// シーンの初期化
+		m_pStageSelect->Init(font24, font48);	// シーンの初期化
 		break;
 	case SceneManager::kSceneRanking:
 		m_pRanking->Init(font24);	// シーンクリアの初期化
@@ -117,7 +116,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 		isEnd = m_pDemo->IsEnd();
 		break;
 	case SceneManager::kSceneStageSelect:
-		m_pStageSelect->Update(input, isGameEnd, m_nextScene, m_isPrac);	// シーンクリアの更新
+		m_pStageSelect->Update(input, isGameEnd, m_nextScene);	// シーンクリアの更新
 		isEnd = m_pStageSelect->IsEnd();
 		break;
 	case SceneManager::kSceneRanking:
@@ -129,7 +128,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 		isEnd = m_pMain->IsEnd();
 		break;
 	case SceneManager::kSceneClear:
-		m_pClear->Update(input, m_nextScene, m_isPrac);	// シーンクリアの更新
+		m_pClear->Update(input, m_nextScene);	// シーンクリアの更新
 		isEnd = m_pClear->IsEnd();
 		break;
 	case SceneManager::kSceneKindNum:
@@ -150,7 +149,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_pTitle->SetMain(m_pMain.get());
 			m_pTitle->SetManager(this);
 			m_pTitle->SetStageSelect(m_pStageSelect.get());
-			m_pTitle->Init(font24, font48, m_isPrac);	// シーンタイトルの初期化
+			m_pTitle->Init(font24, font48);	// シーンタイトルの初期化
 			m_kind = kSceneTitle;
 			break;
 		case NextSceneState::nextDemo:	// シーンがゲームクリアの場合、ゲーム終了
@@ -163,7 +162,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			m_pStageSelect->SetMain(m_pMain.get());
 			m_pStageSelect->SetManager(this);
 			m_pStageSelect->SetTitle(m_pTitle.get());
-			m_pStageSelect->Init(font24, font48, m_isPrac);	// シーンメインの初期化
+			m_pStageSelect->Init(font24, font48);	// シーンメインの初期化
 			m_kind = kSceneStageSelect;
 			break;
 		case NextSceneState::nextRanking:	// シーンがゲームクリアの場合、ゲーム終了
@@ -176,7 +175,6 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			End();	// シーンのデータ削除
 			m_pMain->SetClear(m_pClear.get());
 			m_pMain->SetRanking(m_pRanking.get());
-			m_pMain->SetPracticeMode(m_isPrac);
 			m_pMain->Init(font24, font48);	// シーンメインの初期化
 			m_kind = kSceneMain;
 			break;

@@ -40,7 +40,7 @@ public:
 	// 終了処理
 	void End();
 	// 更新
-	void Update(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	void Update(const InputState& input, NextSceneState& nextScene);
 	// パーティクル用
 	void ParticleUpdate();
 	// 指定した色をランダムに取得
@@ -60,17 +60,17 @@ public:
 
 private:
 	// Update
-	using m_tUpdateFunc = void (SceneClear::*) (const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	using m_tUpdateFunc = void (SceneClear::*) (const InputState& input, NextSceneState& nextScene);
 	m_tUpdateFunc m_updateFunc = nullptr;
 
 	// 通常更新処理
-	void NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	void NormalUpdate(const InputState& input, NextSceneState& nextScene);
 
 	// ステージ全クリ時更新処理
-	void AllClearUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	void AllClearUpdate(const InputState& input, NextSceneState& nextScene);
 
 	// シーン終了時更新処理
-	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac);
+	void SceneEndUpdate(const InputState& input, NextSceneState& nextScene);
 
 	// Draw
 	using m_tDrawFunc = void (SceneClear::*) ();

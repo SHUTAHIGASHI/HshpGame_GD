@@ -26,13 +26,10 @@ namespace
 }
 
 // 初期化
-void SceneStageSelect::Init(int fontS, int fontL, bool& isPrac)
+void SceneStageSelect::Init(int fontS, int fontL)
 {
 	m_hFontS = fontS;
 	m_hFontL = fontL;
-	
-	// 練習モードに切り替え
-	isPrac = true;
 
 	// 画像データの読み込み
 	// ゲームタイトル
@@ -71,7 +68,7 @@ void SceneStageSelect::End()
 }
 
 // 更新処理
-void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (!CheckSoundMem(m_pTitle->GetMusicHandle()))
 	{
@@ -80,7 +77,7 @@ void SceneStageSelect::Update(const InputState& input, bool& isGameEnd, NextScen
 
 	if (m_textTimer > 1000) m_textTimer = 10;
 
-	(this->*m_updateFunc)(input, isGameEnd, nextScene, isPrac);
+	(this->*m_updateFunc)(input, isGameEnd, nextScene);
 
 	if (m_scroll > Game::kScreenWidth)
 	{
@@ -181,7 +178,7 @@ void SceneStageSelect::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (input.IsTriggered(InputType::back))
 	{
@@ -193,8 +190,9 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
-		m_updateFunc = &SceneStageSelect::SceneEndUpdate;
 		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
+		m_updateFunc = &SceneStageSelect::SceneEndUpdate;
+		m_pMain->SetPracticeMode();
 
 		switch (m_selectPos)
 		{
@@ -266,7 +264,7 @@ void SceneStageSelect::NormalUpdate(const InputState& input, bool& isGameEnd, Ne
 	if (m_selectPos < 0) m_selectPos = 9;
 }
 
-void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (m_pManager->GetLastScene() == SceneManager::kSceneTitle)
 	{
@@ -291,7 +289,7 @@ void SceneStageSelect::SceneStartUpdate(const InputState& input, bool& isGameEnd
 	}
 }
 
-void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene, bool& isPrac)
+void SceneStageSelect::SceneEndUpdate(const InputState& input, bool& isGameEnd, NextSceneState& nextScene)
 {
 	if (nextScene == NextSceneState::nextTitle)
 	{

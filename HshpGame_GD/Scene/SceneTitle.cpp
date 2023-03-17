@@ -34,12 +34,10 @@ namespace
 }
 
 // ‰Šú‰»
-void SceneTitle::Init(int fontS, int fontL, bool& isPrac)
+void SceneTitle::Init(int fontS, int fontL)
 {
 	m_hFontS = fontS;
 	m_hFontL = fontL;
-	
-	isPrac = false;
 
 	// ƒV[ƒ“I—¹‚É false ‚ğ‘ã“ü
 	m_isEnd = false;

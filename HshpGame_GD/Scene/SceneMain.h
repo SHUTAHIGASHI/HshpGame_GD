@@ -4,6 +4,13 @@
 #include <memory>
 #include <string>
 
+enum class gameMode
+{
+	Arcade,
+	Challenge,
+	Practice
+};
+
 class Player;
 class Stage;
 class ScenePause;
@@ -58,7 +65,7 @@ public:
 	virtual bool IsEnd() const { return m_isEnd; }
 
 	// ÉÇÅ[ÉhêÿÇËë÷Ç¶
-	virtual void SetPracticeMode(bool isPrac) { m_isPracticeMode = isPrac; }
+	virtual void SetPracticeMode() { m_isPracticeMode = true; }
 	virtual void SetArcadeMode() { m_isArcadeMode = true; }
 	virtual void SetTutorialMode() { m_isTutorial = true; }
 	virtual void SetDoTutorialMode() { m_isDoTutorial = true; }

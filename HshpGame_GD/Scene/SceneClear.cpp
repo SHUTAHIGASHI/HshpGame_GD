@@ -84,7 +84,7 @@ void SceneClear::End()
 }
 
 // 更新
-void SceneClear::Update(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+void SceneClear::Update(const InputState& input, NextSceneState& nextScene)
 {
 	ParticleUpdate();
 
@@ -97,7 +97,7 @@ void SceneClear::Update(const InputState& input, NextSceneState& nextScene, cons
 		m_textFadeNum -= kTextFadeSpeed;
 	}
 
-	(this->*m_updateFunc)(input, nextScene, isPrac);
+	(this->*m_updateFunc)(input, nextScene);
 }
 
 void SceneClear::ParticleUpdate()
@@ -223,7 +223,7 @@ void SceneClear::OnAllClear()
 	m_drawFunc = &SceneClear::AllClearDraw;
 }
 
-void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
@@ -261,7 +261,7 @@ void SceneClear::NormalUpdate(const InputState& input, NextSceneState& nextScene
 	if (m_selectPos < 0) m_selectPos = 2;
 }
 
-void SceneClear::AllClearUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+void SceneClear::AllClearUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
@@ -294,7 +294,7 @@ void SceneClear::AllClearUpdate(const InputState& input, NextSceneState& nextSce
 	if (m_selectPos < 0) m_selectPos = 1;
 }
 
-void SceneClear::SceneEndUpdate(const InputState& input, NextSceneState& nextScene, const bool isPrac)
+void SceneClear::SceneEndUpdate(const InputState& input, NextSceneState& nextScene)
 {
 	m_fadeCount += 5;
 	ChangeVolumeSoundMem(255 - m_fadeCount, m_pMain->GetMusicHandle());

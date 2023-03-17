@@ -43,10 +43,7 @@ public:
 	SceneKind GetLastScene() { return m_lastScene; }
 	NextSceneState GetNextScene() { return m_nextScene; }
 
-private:
-	// —ûKƒ‚[ƒh
-	bool m_isPrac;
-	
+private:	
 	SceneKind m_kind;
 	SceneKind m_lastScene;
 	NextSceneState m_nextScene;

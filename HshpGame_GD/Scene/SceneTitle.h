@@ -43,7 +43,7 @@ public:
 	void SetStageSelect(SceneStageSelect* stageSelect) { m_pStageSelect = stageSelect; }
 
 	// ‰Šú‰»
-	virtual void Init(int fontS, int fontL, bool &isPrac);
+	virtual void Init(int fontS, int fontL);
 	
 	// I—¹ˆ—
 	void End();
