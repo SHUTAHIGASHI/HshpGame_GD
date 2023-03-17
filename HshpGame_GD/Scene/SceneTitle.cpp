@@ -180,6 +180,7 @@ void SceneTitle::NormalUpdate(const InputState& input, bool& isGameEnd, NextScen
 			m_drawFunc = &SceneTitle::ModeSelectDraw;
 			return;
 		case 1:
+			m_pMain->SetChallengeMode();
 			m_updateFunc = &SceneTitle::SceneEndUpdate;
 			nextScene = NextSceneState::nextGameMain;
 			return;
@@ -229,6 +230,7 @@ void SceneTitle::ModeSelectUpdate(const InputState& input, bool& isGameEnd, Next
 	// キー入力があった場合、シーン終了を true にする
 	if (input.IsTriggered(InputType::enter))
 	{
+		m_pMain->SetArcadeMode();
 		m_updateFunc = &SceneTitle::SceneEndUpdate;
 		PlaySoundMem(m_hSelectSound, DX_PLAYTYPE_BACK);
 
@@ -236,12 +238,10 @@ void SceneTitle::ModeSelectUpdate(const InputState& input, bool& isGameEnd, Next
 		{
 		case 0:
 			nextScene = NextSceneState::nextGameMain;
-			m_pMain->SetArcadeMode();
 			m_pMain->SetDoTutorialMode();
 			return;
 		case 1:
 			nextScene = NextSceneState::nextGameMain;
-			m_pMain->SetArcadeMode();
 			return;
 		}
 	}

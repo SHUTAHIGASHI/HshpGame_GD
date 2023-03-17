@@ -6,6 +6,7 @@
 
 enum class gameMode
 {
+	Empty,
 	Arcade,
 	Challenge,
 	Practice
@@ -65,8 +66,9 @@ public:
 	virtual bool IsEnd() const { return m_isEnd; }
 
 	// モード切り替え
-	virtual void SetPracticeMode() { m_isPracticeMode = true; }
-	virtual void SetArcadeMode() { m_isArcadeMode = true; }
+	virtual void SetPracticeMode() { m_gameMode = gameMode::Practice; }
+	virtual void SetArcadeMode() { m_gameMode = gameMode::Arcade; }
+	virtual void SetChallengeMode() { m_gameMode = gameMode::Challenge; }
 	virtual void SetTutorialMode() { m_isTutorial = true; }
 	virtual void SetDoTutorialMode() { m_isDoTutorial = true; }
 
@@ -145,8 +147,7 @@ private:
 	int m_quakeX = 0;
 
 	// ゲームモード
-	bool m_isPracticeMode;
-	bool m_isArcadeMode;
+	gameMode m_gameMode;
 	bool m_isTutorial;
 	bool m_isDoTutorial;
 

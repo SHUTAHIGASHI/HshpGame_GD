@@ -48,8 +48,7 @@ SceneMain::SceneMain() :
 	m_countAttempt(0),
 	m_attemptDrawTime(0),
 	m_attemptDrawNum(0),
-	m_isPracticeMode(false),
-	m_isArcadeMode(false),
+	m_gameMode(gameMode::Empty),
 	m_isTutorial(false),
 	m_isDoTutorial(false),
 	m_isPause(false),
@@ -108,13 +107,13 @@ void SceneMain::Init(int fontS, int fontL)
 	m_hCountDown = LoadSoundMem("soundData/countDown.wav");
 
 	// BGMのセット
-	if (m_isArcadeMode) m_hPlayBgm = LoadSoundMem(Game::kArcadeBgm); // 練習モードの場合、練習用BGMをセット
-	else if (m_isPracticeMode) m_hPlayBgm = LoadSoundMem(Game::kPracBgm); // 練習モードの場合、練習用BGMをセット
+	if (m_gameMode == gameMode::Arcade) m_hPlayBgm = LoadSoundMem(Game::kArcadeBgm); // 練習モードの場合、練習用BGMをセット
+	else if (m_gameMode == gameMode::Practice) m_hPlayBgm = LoadSoundMem(Game::kPracBgm); // 練習モードの場合、練習用BGMをセット
 	else m_hPlayBgm = LoadSoundMem(Game::kChallengeBgm); // チャレンジモードの場合、チャレンジモード用BGMをセット
 
 	// ステージ選択 //
 	// アーケードモードの場合
-	if (m_isArcadeMode)
+	if (m_gameMode == gameMode::Arcade)
 	{
 		// チュートリアルを行う場合はチュートリアルをセット
 		if (m_isDoTutorial) m_pStage->SetTutorialStage();
@@ -122,11 +121,24 @@ void SceneMain::Init(int fontS, int fontL)
 		else m_pStage->SetFirstStage();
 	}
 	// チャレンジモードの場合、ステージ１をセット
-	else if (!m_isPracticeMode) m_pStage->SetFirstStage();
-	// ステージが選ばれた場合、そのステージにセット
-	else if (m_selectedStage != StageState::Empty) m_pStage->SetSelectedStage(m_selectedStage);
-	// クリア後に "次のステージ" が選ばれた場合、次ステージをセット
-	else if (m_pClear->IsNextStage()) m_pStage->SetNextStageState();
+	else if (m_gameMode == gameMode::Challenge)
+	{
+		m_pStage->SetFirstStage();
+	}
+	// プラクティスモードの場合
+	else if (m_gameMode == gameMode::Practice)
+	{
+		// ステージが選択された場合、そのステージをセット
+		if(m_selectedStage != StageState::Empty)
+		{
+			m_pStage->SetSelectedStage(m_selectedStage);
+		}
+		// クリア後に "次のステージ" が選ばれた場合、次ステージをセット
+		else if (m_pClear->IsNextStage())
+		{
+			m_pStage->SetNextStageState();
+		}
+	}
 	else assert(0);
 
 	// スタート遅延の初期化
@@ -194,8 +206,6 @@ void SceneMain::End()
 	// ポーズシーンの終了処理
 	m_pPause->End();
 
-	m_isPracticeMode = false;
-	m_isArcadeMode = false;
 	m_isTutorial = false;
 	m_isDoTutorial = false;
 
@@ -259,9 +269,13 @@ void SceneMain::OnRetry()
 	m_isPause = false;
 	
 	// チャレンジモードの場合、曲を停止
-	if (!m_isPracticeMode && !m_isArcadeMode) StopSoundMem(m_hPlayBgm);
 	// チャレンジモードの場合、ステージ１をセット
-	if (!m_isPracticeMode && !m_isArcadeMode) m_pStage->SetFirstStage();
+	if (m_gameMode == gameMode::Challenge)
+	{
+		StopSoundMem(m_hPlayBgm);
+		m_pStage->SetFirstStage();
+	}
+
 	// ゲーム状態初期化
 	OnGameStart();
 	// 挑戦回数を増やす
@@ -272,13 +286,13 @@ void SceneMain::OnRetry()
 void SceneMain::OnDead()
 {
 	// 再生中のBGMを止める
-	if (!m_isPracticeMode && !m_isArcadeMode) StopSoundMem(m_hPlayBgm);
+	if (m_gameMode == gameMode::Challenge) StopSoundMem(m_hPlayBgm);
 
 	// ゲームオーバー遅延が０以下になった場合
 	if (m_gameOverDelay < 0)
 	{
 		// チャレンジモードの場合、ステージ１をセット
-		if (!m_isPracticeMode && !m_isArcadeMode) m_pStage->SetFirstStage();
+		if (m_gameMode == gameMode::Challenge) m_pStage->SetFirstStage();
 		// ゲーム状態初期化
 		OnGameStart();
 		// 挑戦回数を増やす
@@ -375,7 +389,7 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	if (m_isPracticeMode || m_isArcadeMode && !m_isTutorial)
+	if (m_gameMode == gameMode::Practice || m_gameMode == gameMode::Arcade && !m_isTutorial)
 	{
 		drawX = 10, drawY = 60;
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
@@ -489,10 +503,10 @@ void SceneMain::OnStartCount()
 void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
 	// ステージ１０ or 練習モード の場合の処理
-	if (m_pStage->GetStageState() == StageState::tenthStage || m_isPracticeMode)
+	if (m_pStage->GetStageState() == StageState::tenthStage || m_gameMode == gameMode::Practice)
 	{
-		// チャレンジモードの場合
-		if (m_isArcadeMode)
+		// アーケードモードの場合
+		if (m_gameMode == gameMode::Arcade)
 		{
 			// ランキングデータ読み込み
 			m_pRanking->LoadRankingData();
