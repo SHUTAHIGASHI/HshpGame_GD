@@ -15,12 +15,12 @@ namespace
 
 	// テキスト
 	const char* const kGameClear = "Pause";
-	const char* const kBackText = "Close";
+	const char* const kBackText = "閉じる";
 
 	// メニューメッセージ
-	const char* const kRetryText = "Restart";
-	const char* const kBackStageSelectText = "StageSelect";
-	const char* const kBackTitleText = "TitleMenu";
+	const char* const kRetryText = "リスタート";
+	const char* const kBackStageSelectText = "ステージ選択へ";
+	const char* const kBackTitleText = "メニューに戻る";
 
 	// メニューの選択項目の数
 	constexpr int kMenuMax = 3;
@@ -33,13 +33,15 @@ namespace
 }
 
 // 初期化
-void ScenePause::Init()
+void ScenePause::Init(int fontS)
 {
 	m_updateFunc = &ScenePause::NormalUpdate;
 	m_drawFunc = &ScenePause::NormalDraw;
 
 	m_hPadImg = LoadGraph(Game::kPadImg);
 	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
+
+	m_hFontS = fontS;
 
 	m_textScale = kTextSizeMin;
 	m_textScaleAcc = 1;
@@ -79,12 +81,12 @@ void ScenePause::DrawPadText()
 		{
 			int drawX = 100, drawY = Game::kScreenHeight - 80;
 			// タイトルのテキストを表示
-			DrawString(drawX, drawY, kBackText, 0xe9e9e9);
+			DrawStringToHandle(drawX, drawY, kBackText, 0xe9e9e9, m_hFontS);
 
 			int imgX, imgY, imgW, imgH;
 			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 11, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
-			DrawRectExtendGraph(drawX - 50, drawY - 10, drawX, drawY + 40, imgX, imgY, imgW, imgH, m_hPadImg, true);
+			DrawRectExtendGraph(drawX - 50, drawY - 15, drawX, drawY + 35, imgX, imgY, imgW, imgH, m_hPadImg, true);
 		}
 
 		m_textTimer++;
@@ -161,7 +163,7 @@ void ScenePause::NormalDraw()
 		if (i == 2) drawText = kBackTitleText;
 
 		menuY = menuY + (kMenuH / 2) - 15;
-		DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+		DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
@@ -172,8 +174,8 @@ void ScenePause::NormalDraw()
 	if (m_selectPos == 2) drawText = kBackTitleText;
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
-	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 22, menuY + 5, 0x333333, m_hFontS, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 
 	DrawPadText();
 }

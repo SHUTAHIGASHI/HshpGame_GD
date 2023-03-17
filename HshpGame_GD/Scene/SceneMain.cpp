@@ -86,7 +86,7 @@ void SceneMain::Init(int fontS, int fontL)
 	m_pStage->SetMain(this);
 
 	// ポーズシーン初期化
-	m_pPause->Init();
+	m_pPause->Init(fontS);
 
 	// 画像読み込み
 	m_hPlayer = LoadGraph(Game::kPlayerImg);	// プレイヤー画像

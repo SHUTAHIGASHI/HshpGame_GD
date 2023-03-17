@@ -21,9 +21,9 @@ namespace
 	const char* const kStageClear = "StageClear";
 
 	// メニューメッセージ
-	const char* const kNextText = "NextStage";
-	const char* const kBackStageSelectText = "StageSelect";
-	const char* const kBackTitleText = "TitleMenu";
+	const char* const kNextText = "次のステージへ";
+	const char* const kBackStageSelectText = "ステージ選択へ";
+	const char* const kBackTitleText = "メニューに戻る";
 
 	// メニューの選択項目の数
 	constexpr int kMenuMax = 3;
@@ -39,7 +39,7 @@ namespace
 }
 
 // 初期化
-void SceneClear::Init(int font)
+void SceneClear::Init(int fontS, int fontL)
 {
 	for (auto& pPart : particle)
 	{
@@ -59,7 +59,8 @@ void SceneClear::Init(int font)
 
 	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
-	m_hFont = font;
+	m_hFontS = fontS;
+	m_hFontL = fontL;
 
 	// 遅延時間初期化
 	m_sceneChangeDelay = kTitleDelayMax;
@@ -323,7 +324,7 @@ void SceneClear::NormalDraw()
 		if (i == 2) drawText = kBackTitleText;
 
 		menuY = menuY + (kMenuH / 2) - 15;
-		DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+		DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
@@ -334,8 +335,8 @@ void SceneClear::NormalDraw()
 	if (m_selectPos == 2) drawText = kBackTitleText;
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
-	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 22, menuY + 5, 0x333333, m_hFontS, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 }
 
 void SceneClear::AllClearDraw()
@@ -355,7 +356,7 @@ void SceneClear::AllClearDraw()
 		if (i == 1) drawText = kBackTitleText;
 
 		menuY = menuY + (kMenuH / 2) - 15;
-		DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+		DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 	}
 
 	menuY = kMenuY + (kMenuH * m_selectPos) + 10;
@@ -365,6 +366,6 @@ void SceneClear::AllClearDraw()
 	if (m_selectPos == 1) drawText = kBackTitleText;
 
 	menuY = menuY + (kMenuH / 2) - 15;
-	DrawFormatString(menuX + 22, menuY + 5, 0x333333, "%s", drawText.c_str());
-	DrawFormatString(menuX + 20, menuY, 0xe9e9e9, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 22, menuY + 5, 0x333333, m_hFontS, "%s", drawText.c_str());
+	DrawFormatStringToHandle(menuX + 20, menuY, 0xe9e9e9, m_hFontS, "%s", drawText.c_str());
 }

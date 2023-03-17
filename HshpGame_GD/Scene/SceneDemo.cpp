@@ -1,17 +1,19 @@
 #include "SceneDemo.h"
 #include "game.h"
+#include "SceneTitle.h"
 
 namespace
 {
 	// ムービー表示時間
-	constexpr int kDrawTime = 1980;
+	constexpr int kDrawTime = 2400;
 }
 
 SceneDemo::SceneDemo() :
 	m_countFrame(0),
 	m_fadeCount(0),
 	m_textTimer(0),
-	m_hDemo(-1)
+	m_hDemo(-1),
+	m_pTitle(nullptr)
 {
 }
 
@@ -41,6 +43,11 @@ void SceneDemo::Update(const InputState& input, NextSceneState& nextScene)
 {
 	m_textTimer++;
 	m_countFrame++;
+
+	if (!CheckSoundMem(m_pTitle->GetMusicHandle()))
+	{
+		PlaySoundMem(m_pTitle->GetMusicHandle(), DX_PLAYTYPE_BACK);
+	}
 
 	(this->*m_updateFunc)(input, nextScene);
 }

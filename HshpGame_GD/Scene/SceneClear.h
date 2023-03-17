@@ -13,7 +13,8 @@ class SceneClear : public SceneBase
 public:
 	SceneClear():
 		m_hSelectSound(-1),
-		m_hFont(-1),
+		m_hFontS(-1),
+		m_hFontL(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
 		m_sceneChangeDelay(0),
@@ -35,7 +36,7 @@ public:
 	void SetMain(SceneMain* main) { m_pMain = main; }
 
 	// 初期化
-	void Init(int font);
+	void Init(int fontS, int fontL);
 	
 	// 終了処理
 	void End();
@@ -86,7 +87,8 @@ private:
 	int m_hSelectSound;
 
 	// フォントのハンドル
-	int m_hFont;
+	int m_hFontS;
+	int m_hFontL;
 
 	// メニュー選択
 	int m_selectPos;

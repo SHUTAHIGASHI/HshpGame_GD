@@ -2,12 +2,16 @@
 #include "SceneBase.h"
 #include "game.h"
 
+class SceneTitle;
+
 class SceneDemo :
     public SceneBase
 {
 public:
     SceneDemo();
     ~SceneDemo();
+
+    void SetTitle(SceneTitle* title) { m_pTitle = title; }
 
     void Init();
 
@@ -36,5 +40,7 @@ private:
 
     // デモムービーハンドル
     int m_hDemo;
+
+    SceneTitle* m_pTitle;
 };
 

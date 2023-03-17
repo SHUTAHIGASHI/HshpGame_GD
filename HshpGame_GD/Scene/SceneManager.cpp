@@ -39,6 +39,7 @@ void SceneManager::Init(int font24, int font48)
 		m_pTitle->Init(font24, font48);	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneDemo:
+		m_pDemo->SetTitle(m_pTitle.get());
 		m_pDemo->Init();	// シーンタイトルの初期化
 		break;
 	case SceneManager::kSceneStageSelect:
@@ -58,7 +59,7 @@ void SceneManager::Init(int font24, int font48)
 		break;
 	case SceneManager::kSceneClear:
 		m_pClear->SetMain(m_pMain.get());
-		m_pClear->Init(font24);	// シーンクリアの初期化
+		m_pClear->Init(font24, font48);	// シーンクリアの初期化
 		break;
 	case SceneManager::kSceneKindNum:
 	default:
@@ -154,6 +155,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			break;
 		case NextSceneState::nextDemo:	// シーンがゲームクリアの場合、ゲーム終了
 			End();	// シーンのデータ削除
+			m_pDemo->SetTitle(m_pTitle.get());
 			m_pDemo->Init();	// シーンタイトルの初期化
 			m_kind = kSceneDemo;
 			break;
@@ -180,7 +182,7 @@ void SceneManager::Update(const InputState& input, int font24, int font48, bool 
 			break;
 		case NextSceneState::nextClear:
 			m_pClear->SetMain(m_pMain.get());
-			m_pClear->Init(font24);	// シーンクリアの初期化
+			m_pClear->Init(font24, font48);	// シーンクリアの初期化
 			m_kind = kSceneClear;
 			break;
 		default:

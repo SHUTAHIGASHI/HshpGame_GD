@@ -9,6 +9,7 @@ class ScenePause : public SceneBase
 {
 public:
 	ScenePause() :
+		m_hFontS(-1),
 		m_hPadImg(-1),
 		m_hSelectSound(-1),
 		m_selectPos(0),
@@ -25,7 +26,7 @@ public:
 	void SetMain(SceneMain* main) { m_pMain = main; }
 
 	// 初期化
-	void Init();
+	void Init(int fontS);
 
 	// 終了処理
 	void End();
@@ -49,6 +50,8 @@ private:
 
 	void NormalDraw();
 private:
+	// フォントデータ
+	int m_hFontS;
 	// 画像データ
 	int m_hPadImg;
 	// 音データ
