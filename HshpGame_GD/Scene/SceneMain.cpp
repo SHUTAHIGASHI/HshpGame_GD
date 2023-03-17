@@ -555,12 +555,6 @@ void SceneMain::NormalUpdate(const InputState& input, NextSceneState& nextScene)
 		StopSoundMem(m_hPlayBgm);
 	}
 
-	// Rキーが押された場合
-	if (input.IsTriggered(InputType::retry))
-	{
-		OnRetry();
-	}
-
 	// プレイヤーの更新処理
 	m_pPlayer->Update(input);
 
