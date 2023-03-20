@@ -9,7 +9,6 @@ namespace
 {
     // 画像の回転速度
     constexpr float kRotaSpeed = 0.2f;
-    constexpr float kShipRotaSpeed = 0.06f;
 
     // 画像の表示位置
     constexpr float kPlayerDrawPosX = 16.0f;
@@ -29,7 +28,6 @@ namespace
     constexpr float kRevGravityAcc = 2.0f;
     // 落下の最大速度
     constexpr float kCubeMaxSpeed = 20.0f;
-    constexpr float kWaveSpeed = 12.0f;
 
     // 明るさの変化速度
     constexpr int kBrightSpeed = 8;

@@ -16,6 +16,7 @@ namespace
 	// テキスト
 	const char* const kGameClear = "Pause";
 	const char* const kBackText = "閉じる";
+	const char* const kSelectText = "選択";
 
 	// メニューメッセージ
 	const char* const kRetryText = "リスタート";
@@ -73,17 +74,18 @@ void ScenePause::Draw()
 
 void ScenePause::DrawPadText()
 {
+	int drawX, drawY;
+	int imgX, imgY, imgW, imgH;
 	// フォントサイズの設定
 	SetFontSize(25);
 	if (m_textTimer > 0)
 	{
 		if ((m_textTimer / 10) % 8 != 0)
 		{
-			int drawX = 100, drawY = Game::kScreenHeight - 80;
+			drawX = 100, drawY = Game::kScreenHeight - 80;
 			// タイトルのテキストを表示
 			DrawStringToHandle(drawX, drawY, kBackText, 0xe9e9e9, m_hFontS);
 
-			int imgX, imgY, imgW, imgH;
 			imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 11, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
 
 			DrawRectExtendGraph(drawX - 50, drawY - 15, drawX, drawY + 35, imgX, imgY, imgW, imgH, m_hPadImg, true);
@@ -91,6 +93,15 @@ void ScenePause::DrawPadText()
 
 		m_textTimer++;
 	}
+
+	drawX = 250, drawY = Game::kScreenHeight - 80;
+	// タイトルのテキストを表示
+	DrawStringToHandle(drawX, drawY, kSelectText, 0xe9e9e9, m_hFontS);
+
+	imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 14, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+
+	DrawRectExtendGraph(drawX - 50, drawY - 15, drawX, drawY + 35, imgX, imgY, imgW, imgH, m_hPadImg, true);
+
 	SetFontSize(20);
 }
 
