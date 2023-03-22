@@ -389,7 +389,7 @@ void SceneMain::DrawGameInfo()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	if (m_gameMode == gameMode::Practice || m_gameMode == gameMode::Arcade && !m_isTutorial)
+	if (!m_isTutorial)
 	{
 		drawX = 10, drawY = 60;
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
@@ -430,8 +430,6 @@ void SceneMain::OnStartCount()
 	std::string temp = "";
 
 	// 数字のサイズ調整
-	// 余りが 0 になった場合、設定したフォントサイズに戻す
-	if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
 	// 毎フレームフォントサイズを小さくする
 	m_startTextSize--;
 	// フォントサイズは 60 より小さくしない
@@ -460,6 +458,8 @@ void SceneMain::OnStartCount()
 		// 赤文字
 		DrawFormatString(Game::kScreenWidthHalf - (m_startTextSize / 2), Game::kScreenHeightHalf, 0xff2848, "%d", m_startDelay / 60);
 	}
+	// 余りが 0 になった場合、設定したフォントサイズに戻す
+	if (m_startDelay % 60 == 0) m_startTextSize = kStartTextSizeMax;
 	// フォントサイズを標準に戻す
 	SetFontSize(20);
 
@@ -473,8 +473,18 @@ void SceneMain::OnStartCount()
 
 		m_pPlayer->DrawSpawnPos();
 
-		if (m_isTutorial) DrawHowTo(Game::kScreenWidthHalf - 193, Game::kScreenHeightHalf - 100);
+		if (m_isTutorial)
+		{
+			DrawHowTo(Game::kScreenWidthHalf - 193, Game::kScreenHeightHalf - 100);
+		}
+		else
+		{
+			SetFontSize(50);
+			DrawFormatString(Game::kScreenWidthHalf - 215 , Game::kScreenHeightHalf - 100, 0xe9e9e9, "stage%02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 6);
+		}
 	}
+	// フォントサイズを標準に戻す
+	SetFontSize(20);
 
 	if (m_startDelay / 60 <= 2)
 	{
