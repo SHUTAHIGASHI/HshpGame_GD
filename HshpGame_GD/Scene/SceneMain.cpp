@@ -480,6 +480,7 @@ void SceneMain::OnStartCount()
 		else
 		{
 			SetFontSize(50);
+			DrawFormatString(Game::kScreenWidthHalf - 210, Game::kScreenHeightHalf - 95, 0x333333, "stage%02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 6);
 			DrawFormatString(Game::kScreenWidthHalf - 215 , Game::kScreenHeightHalf - 100, 0xe9e9e9, "stage%02d", static_cast<int>(m_pStage->GetStageState()) + 1 - 6);
 		}
 	}
