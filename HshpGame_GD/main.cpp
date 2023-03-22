@@ -5,6 +5,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	bool isWindowMode = false;
 	// ウィンドウモード設定
 	ChangeWindowMode(Game::kWindowMode);
 	// ウィンドウモードのサイズ変更
@@ -13,6 +14,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetMainWindowText(Game::kTitleText);
 	// 画面サイズの設定
 	SetGraphMode(Game::kScreenWidth, Game::kScreenHeight, Game::kColorDepth);
+
+	SetChangeScreenModeGraphicsSystemResetFlag(false);
 
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
