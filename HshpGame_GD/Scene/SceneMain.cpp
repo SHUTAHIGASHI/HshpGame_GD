@@ -115,10 +115,21 @@ void SceneMain::Init(int fontS, int fontL)
 	// アーケードモードの場合
 	if (m_gameMode == gameMode::Arcade)
 	{
+		if (m_pClear->IsNextStage())
+		{
+			m_pStage->SetNextStageState();
+			m_pClear->ResetIsNext();
+		}
 		// チュートリアルを行う場合はチュートリアルをセット
-		if (m_isDoTutorial) m_pStage->SetTutorialStage();
+		else if (m_isDoTutorial)
+		{
+			m_pStage->SetTutorialStage();
+		}
 		// 行わない場合はステージ１
-		else m_pStage->SetFirstStage();
+		else
+		{
+			m_pStage->SetFirstStage();
+		}
 	}
 	// チャレンジモードの場合、ステージ１をセット
 	else if (m_gameMode == gameMode::Challenge)
@@ -137,6 +148,7 @@ void SceneMain::Init(int fontS, int fontL)
 		else if (m_pClear->IsNextStage())
 		{
 			m_pStage->SetNextStageState();
+			m_pClear->ResetIsNext();
 		}
 	}
 	else assert(0);
@@ -514,7 +526,8 @@ void SceneMain::OnStartCount()
 void SceneMain::OnStageClear(NextSceneState& nextScene)
 {
 	// ステージ１０ or 練習モード の場合の処理
-	if (m_pStage->GetStageState() == StageState::tenthStage || m_gameMode == gameMode::Practice)
+	if (m_pStage->GetStageState() == StageState::tenthStage || m_gameMode == gameMode::Practice
+		|| m_gameMode == gameMode::Arcade && m_isTutorial)
 	{
 		// アーケードモードの場合
 		if (m_gameMode == gameMode::Arcade)

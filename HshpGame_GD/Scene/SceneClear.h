@@ -59,6 +59,8 @@ public:
 	// m_isEnd ‚ðŽæ“¾
 	virtual bool IsEnd() { return m_isEnd; }
 
+	void ResetIsNext() { m_isNextStage = false; }
+
 private:
 	// Update
 	using m_tUpdateFunc = void (SceneClear::*) (const InputState& input, NextSceneState& nextScene);
