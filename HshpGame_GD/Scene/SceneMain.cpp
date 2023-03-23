@@ -210,7 +210,7 @@ void SceneMain::End()
 	m_isDoTutorial = false;
 
 	// サウンドの停止
-	StopSoundMem(m_hPlayBgm, true);
+	StopSoundMem(m_hPlayBgm);
 
 	// 画像データの削除
 	DeleteGraph(m_hPlayer);	// プレイヤー画像
