@@ -24,6 +24,7 @@ namespace
 	const char* const kNextText = "次のステージへ";
 	const char* const kBackStageSelectText = "ステージ選択へ";
 	const char* const kBackTitleText = "メニューに戻る";
+	const char* const kSelectText = "選択";
 
 	// メニューの選択項目の数
 	constexpr int kMenuMax = 3;
@@ -57,6 +58,7 @@ void SceneClear::Init(int fontS, int fontL)
 		m_drawFunc = &SceneClear::NormalDraw;
 	}
 
+	m_hPadImg = LoadGraph(Game::kPadImg);
 	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
 	m_hFontS = fontS;
@@ -212,10 +214,29 @@ void SceneClear::Draw()
 
 	(this->*m_drawFunc)();
 
+	DrawPadText();
+
 	// フェード処理用の処理
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCount);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void SceneClear::DrawPadText()
+{
+	int drawX, drawY;
+	int imgX, imgY, imgW, imgH;
+	// フォントサイズの設定
+	SetFontSize(25);
+	drawX = 100, drawY = Game::kScreenHeight - 80;
+	// タイトルのテキストを表示
+	DrawStringToHandle(drawX, drawY, kSelectText, 0xe9e9e9, m_hFontS);
+
+	imgX = Game::kPadChipSize, imgY = Game::kPadChipSize * 14, imgW = Game::kPadChipSize, imgH = Game::kPadChipSize;
+
+	DrawRectExtendGraph(drawX - 50, drawY - 15, drawX, drawY + 35, imgX, imgY, imgW, imgH, m_hPadImg, true);
+
+	SetFontSize(20);
 }
 
 void SceneClear::OnAllClear()

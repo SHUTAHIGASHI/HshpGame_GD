@@ -429,7 +429,7 @@ void SceneMain::DrawHowTo(int X, int Y)
 	if (m_pStage->GetStageState() != StageState::tutrialJumpPad)
 	{
 		imgX = Game::kPadChipSize * m_padCount;
-		imgY = Game::kPadChipSize * 12;
+		imgY = Game::kPadChipSize * 14;
 		DrawRectExtendGraph(drawPosX - 52, drawPosY,
 			drawPosX - 2, drawPosY + 50,
 			imgX, imgY, imgW, imgH, m_hPadImg, true);

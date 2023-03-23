@@ -15,6 +15,7 @@ public:
 		m_hSelectSound(-1),
 		m_hFontS(-1),
 		m_hFontL(-1),
+		m_hPadImg(-1),
 		m_selectPos(0),
 		m_selectNamePos(0),
 		m_sceneChangeDelay(0),
@@ -49,6 +50,9 @@ public:
 	
 	// 描画
 	virtual void Draw();
+
+	// パッド画像描画
+	void DrawPadText();
 
 	// ステージ全クリ時
 	void OnAllClear();
@@ -91,6 +95,9 @@ private:
 	// フォントのハンドル
 	int m_hFontS;
 	int m_hFontL;
+
+	// 画像データ
+	int m_hPadImg;
 
 	// メニュー選択
 	int m_selectPos;

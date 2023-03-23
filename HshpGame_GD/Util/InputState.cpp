@@ -93,8 +93,8 @@ bool InputState::IsTriggered(InputType type)const
 			keyState[KEY_INPUT_UP] ||
 			!lastKeyMouseState[MOUSE_INPUT_LEFT] &&
 			keyMouseState[MOUSE_INPUT_LEFT] ||
-			!(lastPadState & PAD_INPUT_1) &&
-			(padState & PAD_INPUT_1);
+			!(lastPadState & PAD_INPUT_2) &&
+			(padState & PAD_INPUT_2);
 	}
 	else if (type == InputType::retry)
 	{
@@ -119,7 +119,7 @@ bool InputState::IsPressed(InputType type)const
 		return keyState[KEY_INPUT_SPACE] ||
 			keyState[KEY_INPUT_UP] ||
 			keyMouseState[MOUSE_INPUT_LEFT] ||
-			(padState & PAD_INPUT_1);
+			(padState & PAD_INPUT_2);
 	}
 	return false;
 }
