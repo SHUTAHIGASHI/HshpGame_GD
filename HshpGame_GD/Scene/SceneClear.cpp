@@ -84,6 +84,7 @@ void SceneClear::Init(int fontS, int fontL)
 void SceneClear::End()
 {
 	DeleteSoundMem(m_hSelectSound);
+	DeleteGraph(m_hPadImg);
 }
 
 // çXêV
