@@ -655,11 +655,9 @@ void Stage::Draw()
 {
 	int bgX = 0, bgY = 0, bgW = Game::kScreenWidth, bgH = Game::kScreenHeight;
 	bgX -= m_scroll, bgW -= m_scroll;
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 	DrawExtendGraph(bgX, bgY, bgW, bgH, m_hBg, true);
 	DrawExtendGraph(bgX + Game::kScreenWidth, bgY, bgW + Game::kScreenWidth, bgH, m_hBg, true);
 	DrawExtendGraph(bgX + (Game::kScreenWidth) * 2, bgY, bgW + (Game::kScreenWidth) * 2, bgH, m_hBg, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 	for (int i = 0; i < m_ObjectGoalGate.size(); i++)
 	{

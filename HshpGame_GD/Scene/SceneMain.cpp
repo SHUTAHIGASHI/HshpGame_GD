@@ -342,30 +342,31 @@ void SceneMain::OnDeadDraw()
 // 毎フレームの描画
 void SceneMain::Draw()
 {
-	// ステージの描画
-	m_pStage->Draw();
-
-	// ゲームクリアしている場合、処理終了
-	if (m_pPlayer->IsStageClear()) return;
-
-	if (m_startDelay <= 0)
+	if (m_pPlayer->IsDead())
 	{
-		DrawGameInfo();
+		OnDeadDraw();
+		DrawGraph(m_quakeX, m_quakeY, m_hDeadScreen, true);
 	}
+	else
+	{
+		// ステージの描画
+		m_pStage->Draw();
 
-	// プレイヤーの描画
-	m_pPlayer->Draw();
+		// ゲームクリアしている場合、処理終了
+		if (m_pPlayer->IsStageClear()) return;
+
+		if (m_startDelay <= 0)
+		{
+			DrawGameInfo();
+		}
+		// プレイヤーの描画
+		m_pPlayer->Draw();
+	}
 
 	if (m_isPause)
 	{
 		m_pPause->Draw();
 		return;
-	}
-	
-	if (m_pPlayer->IsDead())
-	{
-		OnDeadDraw();
-		DrawGraph(m_quakeX, m_quakeY, m_hDeadScreen, true);
 	}
 
 	// フェード処理用の処理
