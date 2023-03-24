@@ -35,6 +35,8 @@ namespace
 
 void Player::Init(int playerHandle, int playerDeathEffect, int hDeathSound)
 {    
+    m_pMain->DeleteDeadScreen();
+
     m_pEffectRing = std::make_shared<EffectRing>();
     m_pEffectRing->Init();
 
@@ -310,6 +312,7 @@ void Player::OnHitObject(const InputState& input)
 
 void Player::OnDead()
 {
+    m_pMain->CreateDeadScreen();
     m_isDead = true;
     PlaySoundMem(m_hDeathSound, DX_PLAYTYPE_BACK);
 }

@@ -49,6 +49,10 @@ public:
 
 	void OnDeadDraw();
 
+	// €–S‚Ì•`‰æƒXƒNƒŠ[ƒ“ì¬
+	void CreateDeadScreen() { m_hDeadScreen = MakeScreen(Game::kScreenWidth, Game::kScreenHeight); }
+	void DeleteDeadScreen() { DeleteGraph(m_hDeadScreen); }
+
 	// –ˆƒtƒŒ[ƒ€‚Ì•`‰æ
 	void Draw();
 	// ƒQ[ƒ€’†‚Ìî•ñ•`‰æ

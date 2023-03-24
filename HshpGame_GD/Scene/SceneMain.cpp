@@ -325,7 +325,6 @@ void SceneMain::OnDead()
 
 void SceneMain::OnDeadDraw()
 {
-	m_hDeadScreen = MakeScreen(Game::kScreenWidth, Game::kScreenHeight);
 	SetDrawScreen(m_hDeadScreen);
 
 	// ステージの描画
