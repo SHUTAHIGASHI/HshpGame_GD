@@ -198,6 +198,8 @@ void SceneMain::OnGameStart()
 		else if (m_pStage->GetStageState() == StageState::tutrialRev) m_tutorialText = "ボタンで方向逆転！";
 		else m_tutorialText = "でギミックを使用！";
 	}
+
+	DeleteGraph(m_hDeadScreen);
 }
 
 // ゲーム中のBGM再生
