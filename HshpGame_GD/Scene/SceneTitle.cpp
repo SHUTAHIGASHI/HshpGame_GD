@@ -53,7 +53,7 @@ void SceneTitle::Init(int fontS, int fontL)
 
 	m_hBg = LoadGraph(Game::kBgImg);
 	m_hPadImg = LoadGraph(Game::kPadImg);
-	m_hTitleImg = LoadGraph("imageData/GameTitle.png");
+	m_hTitleImg = LoadGraph("Data/imageData/GameTitle.png");
 	m_hSelectSound = LoadSoundMem(Game::kSelectSound);
 
 	m_scroll = m_pStageSelect->GetScroll();

@@ -23,7 +23,7 @@ public:
 		m_hTitleImg(-1),
 		m_hFontS(-1),
 		m_hFontL(-1),
-		m_hLoopBgm(LoadSoundMem("soundData/MenuLoop.wav")),
+		m_hLoopBgm(LoadSoundMem("Data/soundData/MenuLoop.wav")),
 		m_hSelectSound(-1),
 		m_textScroll(0),
 		m_scroll(0),

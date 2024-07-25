@@ -35,7 +35,7 @@ void SceneRanking::Init(int font)
 	// ゲームタイトル
 	m_hBg = LoadGraph(Game::kBgImg);
 	m_hKeyimg = LoadGraph(Game::kPadImg);
-	m_hBgm = LoadSoundMem("soundData/ranking.wav");
+	m_hBgm = LoadSoundMem("Data/soundData/ranking.wav");
 	m_hFont = font;
 	// シーン終了に false を代入
 	m_isEnd = false;

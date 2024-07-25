@@ -25,7 +25,7 @@ void SceneDemo::Init()
 {
 	m_isEnd = false;
 	
-	m_hDemo = LoadGraph("imagedata/stage6demo.mp4");
+	m_hDemo = LoadGraph("Data/imagedata/stage6demo.mp4");
 	PlayMovieToGraph(m_hDemo);
 
 	m_updateFunc = &SceneDemo::SceneStartUpdate;

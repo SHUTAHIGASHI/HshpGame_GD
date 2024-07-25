@@ -55,23 +55,23 @@ namespace Game
 	constexpr int kColorDepth = 32;
 	
 	// 画像データ
-	const char* const kPlayerImg = "imagedata/cube.png";
-	const char* const kPlayerDeathEffectImg = "imagedata/deathEffect.png";
-	const char* const kObjectSpikeImg = "imagedata/ObjectSpike.png";
-	const char* const kPortalImg = "imagedata/OrangePortal.png";
-	const char* const kBlockImg = "imagedata/Tileset.png";
-	const char* const kJumpPadImg = "imagedata/JumpPad.png";
-	const char* const kBgImg = "imagedata/Bg.png";
-	const char* const kPadImg = "imagedata/PadImg.png";
+	const char* const kPlayerImg = "Data/imagedata/cube.png";
+	const char* const kPlayerDeathEffectImg = "Data/imagedata/deathEffect.png";
+	const char* const kObjectSpikeImg = "Data/imagedata/ObjectSpike.png";
+	const char* const kPortalImg = "Data/imagedata/OrangePortal.png";
+	const char* const kBlockImg = "Data/imagedata/Tileset.png";
+	const char* const kJumpPadImg = "Data/imagedata/JumpPad.png";
+	const char* const kBgImg = "Data/imagedata/Bg.png";
+	const char* const kPadImg = "Data/imagedata/PadImg.png";
 
 	// 音データ
-	const char* const kSelectSound = "soundData/Select.mp3";
+	const char* const kSelectSound = "Data/soundData/Select.mp3";
 
 	// 音楽データ
-	const char* const kDeathSound = "soundData/deathSound.mp3";
-	const char* const kArcadeBgm = "soundData/Arcade.mp3";
-	const char* const kPracBgm = "soundData/pracmode.wav";
-	const char* const kChallengeBgm = "soundData/challeBGM.mp3";
+	const char* const kDeathSound = "Data/soundData/DeathSound.mp3";
+	const char* const kArcadeBgm = "Data/soundData/Arcade.mp3";
+	const char* const kPracBgm = "Data/soundData/Pracmode.wav";
+	const char* const kChallengeBgm = "Data/soundData/Challenge.mp3";
 
 	// 基準のフォントサイズ
 	constexpr int kFontSize = 60;

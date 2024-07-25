@@ -5,6 +5,8 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	// ウィンドウ非選択時も実行する
+	SetAlwaysRunFlag(true);
 	// ウィンドウモード設定
 	ChangeWindowMode(Game::kWindowMode);
 	// ウィンドウモードのサイズ変更
@@ -20,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// リソースの読み込み
-	LPCSTR font1 = "fontData/QuinqueFive.otf";	// 読み込むフォントファイルのパス
+	LPCSTR font1 = "Data/fontData/QuinqueFive.otf";	// 読み込むフォントファイルのパス
 	if (AddFontResourceEx(font1, FR_PRIVATE, NULL) > 0) {
 	}
 	else {
@@ -28,7 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		MessageBox(NULL, "フォント読み込み失敗", "", MB_OK);
 	}
 
-	LPCSTR font2 = "fontData/misaki_gothic.ttf";	// 読み込むフォントファイルのパス
+	LPCSTR font2 = "Data/fontData/misaki_gothic.ttf";	// 読み込むフォントファイルのパス
 	if (AddFontResourceEx(font2, FR_PRIVATE, NULL) > 0) {
 	}
 	else {
@@ -57,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (ProcessMessage() == 0)
 	{
 		LONGLONG time = GetNowHiPerformanceCount();
-		SetMousePoint(static_cast<int>(Game::kScreenWidthHalf), static_cast<int>(Game::kScreenHeightHalf));
+		//SetMousePoint(static_cast<int>(Game::kScreenWidthHalf), static_cast<int>(Game::kScreenHeightHalf));
 
 		// 画面のクリア
 		ClearDrawScreen();

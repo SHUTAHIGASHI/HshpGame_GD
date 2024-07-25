@@ -104,7 +104,7 @@ void SceneMain::Init(int fontS, int fontL)
 
 	// 音データの読み込み
 	m_hDeathSound = LoadSoundMem(Game::kDeathSound);	// 死亡時の音
-	m_hCountDown = LoadSoundMem("soundData/countDown.wav");
+	m_hCountDown = LoadSoundMem("Data/soundData/countDown.wav");
 
 	// BGMのセット
 	if (m_gameMode == gameMode::Arcade) m_hPlayBgm = LoadSoundMem(Game::kArcadeBgm); // 練習モードの場合、練習用BGMをセット
